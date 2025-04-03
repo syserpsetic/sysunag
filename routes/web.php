@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,8 +12,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages/auth/login');
+
+Route::get('/login', [ApiAuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [ApiAuthController::class, 'login']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout');
+    Route::get('/', function () {
+        return view('dashboard');
+    });
 });
 
 Route::group(['prefix' => 'email'], function(){

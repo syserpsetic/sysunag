@@ -16,14 +16,15 @@
             <div class="auth-form-wrapper px-4 py-5">
               <a href="#" class="noble-ui-logo d-block mb-2">SYS <span>UNAG</span></a>
               <h5 class="text-muted fw-normal mb-4">¡BIENVENIDOS! INICIA SESIÓN PARA INGRESAR</h5>
-              <form class="forms-sample">
+              <form class="forms-sample" method="POST" action="{{ route('login') }}">
+              @csrf
                 <div class="mb-3">
                   <label for="userEmail" class="form-label">Usuario o Correo Electrónico</label>
-                  <input type="email" class="form-control" id="userEmail" placeholder="Escribe tu usuario o correo electrónico">
+                  <input required type="text" class="form-control" name="email" id="userEmail" placeholder="Escribe tu usuario o correo electrónico">
                 </div>
                 <div class="mb-3">
                   <label for="userPassword" class="form-label">Contraseña</label>
-                  <input type="password" class="form-control" id="userPassword" autocomplete="current-password" placeholder="Escribe tu contraseña">
+                  <input required type="password" class="form-control" name="password" id="userPassword" autocomplete="current-password" placeholder="Escribe tu contraseña">
                 </div>
                 <!-- <div class="form-check mb-3">
                   <input type="checkbox" class="form-check-input" id="authCheck">
@@ -32,7 +33,7 @@
                   </label>
                 </div> -->
                 <div>
-                  <a href="{{ url('/') }}" class="btn btn-primary me-2 mb-2 mb-md-0">Ingresar</a>
+                  <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">Ingresar</button>
                   <!-- <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
                     <i class="btn-icon-prepend" data-feather="twitter"></i>
                     Login with twitter
