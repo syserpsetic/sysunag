@@ -35,6 +35,9 @@ License: For each use you must have a valid license purchased only from above li
   <link href="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" />
   <!-- end plugin css -->
 
+  {{-- custom css --}}
+  <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
+
   @stack('plugin-styles')
 
   <!-- common css -->
