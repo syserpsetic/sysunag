@@ -48,6 +48,15 @@
     color: var(--verde) !important;
   }
 
+  div.sidebar-header{
+    background-color: var(--verde) !important;
+  }
+  
+  .sidebar-brand, .txt-blanco, div.sidebar-toggler span{
+    color: var(--blanco) !important;
+  }
+  
+
   /* Botones */
 
   .btn-primary {

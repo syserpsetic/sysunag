@@ -2,7 +2,7 @@
   <div class="sidebar-header">
     <a href="{{ url('/') }}" class="sidebar-brand">
         <img src="{{ url(asset('/assets/images/escudo.png')) }}" alt="Logo" style="height: 40px; width: auto; margin-right: 5px;">
-        SYS<span>UNAG</span>
+        SYS<span class="txt-blanco">UNAG</span>
     </a>
     <div class="sidebar-toggler not-active">
       <span></span>
