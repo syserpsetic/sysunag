@@ -1,7 +1,8 @@
 <nav class="sidebar">
   <div class="sidebar-header">
-    <a href="#" class="sidebar-brand">
-      Noble<span>UI</span>
+    <a href="{{ url('/') }}" class="sidebar-brand">
+        <img src="{{ url(asset('/assets/images/escudo.png')) }}" alt="Logo" style="height: 40px; width: auto; margin-right: 5px;">
+        SYS<span>UNAG</span>
     </a>
     <div class="sidebar-toggler not-active">
       <span></span>
@@ -11,14 +12,20 @@
   </div>
   <div class="sidebar-body">
     <ul class="nav">
-      <li class="nav-item nav-category">Main</li>
+      <li class="nav-item nav-category">Todo</li>
       <li class="nav-item {{ active_class(['/']) }}">
         <a href="{{ url('/') }}" class="nav-link">
-          <i class="link-icon" data-feather="box"></i>
-          <span class="link-title">Dashboard</span>
+          <i class="link-icon" data-feather="home"></i>
+          <span class="link-title">Home</span>
         </a>
       </li>
-      <li class="nav-item nav-category">web apps</li>
+      <li class="nav-item {{ active_class(['setic/malla_validacion']) }}">
+        <a href="{{ url('/setic/malla_validacion') }}" class="nav-link">
+          <i class="link-icon" data-feather="grid"></i>
+          <span class="link-title">Malla de Validación</span>
+        </a>
+      </li>
+      <!-- <li class="nav-item nav-category">web apps</li>
       <li class="nav-item {{ active_class(['email/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
           <i class="link-icon" data-feather="mail"></i>
@@ -38,8 +45,8 @@
             </li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item {{ active_class(['apps/chat']) }}">
+      </li> -->
+      <!-- <li class="nav-item {{ active_class(['apps/chat']) }}">
         <a href="{{ url('/apps/chat') }}" class="nav-link">
           <i class="link-icon" data-feather="message-square"></i>
           <span class="link-title">Chat</span>
@@ -131,8 +138,8 @@
             </li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item {{ active_class(['advanced-ui/*']) }}">
+      </li> -->
+      <!-- <li class="nav-item {{ active_class(['advanced-ui/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#advanced-ui" role="button" aria-expanded="{{ is_active_route(['advanced-ui/*']) }}" aria-controls="advanced-ui">
           <i class="link-icon" data-feather="anchor"></i>
           <span class="link-title">Advanced UI</span>
@@ -154,8 +161,8 @@
             </li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item {{ active_class(['forms/*']) }}">
+      </li> -->
+      <!-- <li class="nav-item {{ active_class(['forms/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#forms" role="button" aria-expanded="{{ is_active_route(['forms/*']) }}" aria-controls="forms">
           <i class="link-icon" data-feather="inbox"></i>
           <span class="link-title">Forms</span>
@@ -177,8 +184,8 @@
             </li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item {{ active_class(['charts/*']) }}">
+      </li> -->
+      <!-- <li class="nav-item {{ active_class(['charts/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#charts" role="button" aria-expanded="{{ is_active_route(['charts/*']) }}" aria-controls="charts">
           <i class="link-icon" data-feather="pie-chart"></i>
           <span class="link-title">Charts</span>
@@ -203,8 +210,8 @@
             </li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item {{ active_class(['tables/*']) }}">
+      </li> -->
+      <!-- <li class="nav-item {{ active_class(['tables/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#tables" role="button" aria-expanded="{{ is_active_route(['tables/*']) }}" aria-controls="tables">
           <i class="link-icon" data-feather="layout"></i>
           <span class="link-title">Tables</span>
@@ -237,8 +244,8 @@
             </li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item nav-category">Pages</li>
+      </li> -->
+      <!-- <li class="nav-item nav-category">Pages</li>
       <li class="nav-item {{ active_class(['general/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#general" role="button" aria-expanded="{{ is_active_route(['general/*']) }}" aria-controls="general">
           <i class="link-icon" data-feather="book"></i>
@@ -267,8 +274,8 @@
             </li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item {{ active_class(['auth/*']) }}">
+      </li> -->
+      <!-- <li class="nav-item {{ active_class(['auth/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#auth" role="button" aria-expanded="{{ is_active_route(['auth/*']) }}" aria-controls="auth">
           <i class="link-icon" data-feather="unlock"></i>
           <span class="link-title">Authentication</span>
@@ -284,8 +291,8 @@
             </li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item {{ active_class(['error/*']) }}">
+      </li> -->
+      <!-- <li class="nav-item {{ active_class(['error/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#error" role="button" aria-expanded="{{ is_active_route(['error/*']) }}" aria-controls="error">
           <i class="link-icon" data-feather="cloud-off"></i>
           <span class="link-title">Error</span>
@@ -301,18 +308,18 @@
             </li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item nav-category">Docs</li>
+      </li> -->
+      <!-- <li class="nav-item nav-category">Docs</li>
       <li class="nav-item">
         <a href="https://www.nobleui.com/laravel/documentation/docs.html" target="_blank" class="nav-link">
           <i class="link-icon" data-feather="hash"></i>
           <span class="link-title">Documentation</span>
         </a>
-      </li>
+      </li> -->
     </ul>
   </div>
 </nav>
-<nav class="settings-sidebar">
+<!-- <nav class="settings-sidebar">
   <div class="sidebar-body">
     <a href="#" class="settings-sidebar-toggler">
       <i data-feather="settings"></i>
@@ -343,4 +350,4 @@
       </a>
     </div>
   </div>
-</nav>
+</nav> -->
