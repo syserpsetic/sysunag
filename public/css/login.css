@@ -140,6 +140,7 @@ footer{
     right: 250px;
     top: -80px;
     width: 180px;
+    filter: blur(1px);
 }
 
 .hojas-container img#hoja-02{
@@ -148,6 +149,17 @@ footer{
     bottom: -790px;
     width: 250px;
     rotate: 120deg;
+    
+}
+
+
+.hojas-container img#hoja-03{
+    position: relative;
+    right: -90px;
+    top: 100px;
+    width: 150px;
+    rotate: 120deg;
+    filter: blur(2px);
 }
 
 
@@ -161,19 +173,14 @@ footer{
     width: 60px;
 }
 
-.card-logi{
-    
-    /* background-color: var(--verde); */
+/* .card-login{
     overflow: hidden;
     backdrop-filter: blur(11px) saturate(62%);
     -webkit-backdrop-filter: blur(11px) saturate(62%);
     background-color: rgba(23, 34, 23, 0.627);
     border-radius: 12px;
     height: 45vh;
-    /* border: solid;
-    border-width: 1px;
-    border-color: white; */
-}
+} */
 
 @media screen and (max-width: 600px) {
     #logo_unag{
@@ -201,6 +208,10 @@ footer{
         bottom: -110px;
         width: 220px;
         rotate: 95deg;
+    }
+
+    .hojas-container img#hoja-03{
+       display: none;
     }
 
     

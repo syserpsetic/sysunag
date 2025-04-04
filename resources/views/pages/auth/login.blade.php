@@ -11,6 +11,7 @@
     <div class="hojas-container">
         <img id="hoja-01" src="{{ asset('/assets/images/login/hoja-cayendo-unag.png') }}" alt="">
         <img id="hoja-02" src="{{ asset('/assets/images/login/hoja-cayendo-unag.png') }}" alt="">
+        <img id="hoja-03" src="{{ asset('/assets/images/login/hoja-cayendo-unag.png') }}" alt="">
     </div>
 
     <div class="overlay"></div>
