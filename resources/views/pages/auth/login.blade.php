@@ -1,7 +1,134 @@
-@extends('layout.master2')
+@extends('layout.login-layout')
 
 @section('content')
-<div class="page-content d-flex align-items-center justify-content-center">
+    <div id="loading" class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div>
+      <img src="{{ asset('/assets/images/hoja-cayendo-unag.png') }}" alt="">
+    </div>
+
+    <div class="overlay"></div>
+
+    <section id="fondo-imagenes">
+        <div class="uk-position-relative uk-visible-toggle uk-light uk-slideshow" tabindex="-1"
+            data-uk-slideshow="animation: scale; autoplay: true">
+            <ul class="uk-slideshow-items" data-uk-height-viewport="" style="min-height: calc(100vh);">
+                <li tabindex="-1" class="">
+                    <div
+                        class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
+                        <img src="{{ asset('/assets/images/login/login-bg-01.jpg') }}" autoplay muted loop playsinline
+                            uk-cover />
+                    </div>
+                </li>
+                <li tabindex="-1" class="">
+                    <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
+                        <img src="{{ asset('/assets/images/login/login-bg-02.jpg') }}" autoplay muted loop playsinline
+                            uk-cover />
+                    </div>
+                </li>
+                <li tabindex="-1" class="">
+                    <div
+                        class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
+                        <img src="{{ asset('/assets/images/login/login-bg-03.jpg') }}" autoplay muted loop playsinline
+                            uk-cover />
+                    </div>
+                </li>
+                <li tabindex="-1" class="">
+                    <div
+                        class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-right">
+                        <img src="{{ asset('/assets/images/login/login-bg-05.jpg') }}" autoplay muted loop playsinline
+                            uk-cover />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="content uk-padding">
+
+        <div class="uk-position-small uk-position-top-right">
+            <a id="btn-portal" href="https://portal.unag.edu.hn" class="uk-text-small uk-icon-button blob white"
+                uk-icon="home" target="_blank"></a>
+        </div>
+
+        <div class="uk-position-small uk-position-bottom-left uk-visible@l"">
+            <img id="logo_setic" class="uk-transition-scale-up uk-transition-opaque" src="{{ asset('/images/setic.svg') }}"
+                alt="">
+        </div>
+
+        <div class="uk-magin-top-large uk-position-top">
+            <img id="logo_unag" class="uk-transition-scale-up uk-transition-opaque"
+                src="{{ asset('/assets/images/unag-oficial-blanco.png') }}" alt="">
+        </div>
+
+        <br>
+
+        <div class="uk-grid-small uk-flex-middle uk-animation-slide-top-medium uk-margin-bottom" uk-grid>
+            <div class="uk-width-1-1 icon-container">
+                <lord-icon src="https://cdn.lordicon.com/kdduutaw.json" trigger="loop" state="hover-looking-around"
+                    colors="primary:#ffffff,secondary:#ffffff" style="width:60px;height:60px">
+                </lord-icon>
+            </div>
+
+        </div>
+
+        <p class="txt-blanco">Ingrese sus credenciales:</p>
+
+
+
+        <div
+            class="uk-width-large uk-padding uk-margin-remove-top uk-padding-remove-top uk-padding-remove-bottom uk-animation-slide-top-medium">
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: user"></span>
+                    <input id="input-usuario" class="uk-input uk-form-width-large" placeholder="Usuario" type="text">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                    <input id="input-password" type="password" class="uk-input uk-form-width-large"
+                        placeholder="Contraseña">
+                </div>
+            </div>
+
+            {{-- <div class="uk-flex uk-flex-between">
+                <label class="txt-recuerdame"><input class="uk-checkbox uk-margin-remove-left" type="checkbox"> Recuérdame</label>
+                <label class="uk-toggle txt-olvide-contrasenia"><a href="{{url('/reiniciar-contraseña')}}" style="" class="uk-margin-remove-top uk-link-reset">¡Olvidé mi
+                        contraseña!</a></label>
+            </div> --}}
+
+
+        </div>
+
+
+
+        <button
+            id="btn-ingresar"class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
+
+        <!-- <hr class="uk-divider-icon"> -->
+        <div id="mensaje" class="uk-margin-top"></div>
+
+        <br>
+
+        {{-- <div>
+            <p class="uk-text-small uk-animation-slide-top-medium uk-margin-remove-top">- O Ingresar con -</p>
+            <button id="google"
+                class="uk-button uk-button-secondary uk-animation-slide-top-medium uk-margin-remove-top">Google</button>
+        </div> --}}
+
+
+    </div>
+
+
+
+    {{-- <div class="page-content d-flex align-items-center justify-content-center">
 
   <div class="row w-100 mx-0 auth-page">
     <div class="col-md-8 col-xl-6 mx-auto">
@@ -47,5 +174,5 @@
     </div>
   </div>
 
-</div>
+</div> --}}
 @endsection

@@ -12,3 +12,13 @@
     --rojo: #ff0000;
     --colorTexto: #303030;
   }
+
+  .btn-primary {
+    background-color: var(--verde) !important;
+    border: none !important;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--verdeOscuro) !important;
+    border: none !important;
+  }
