@@ -84,21 +84,22 @@
 
 
             <p class="txt-blanco">Ingrese sus credenciales:</p>
-
+            <form class="forms-sample" method="POST" action="{{ route('login') }}">
+            @csrf
             <div
                 class="uk-width-large uk-padding uk-margin-remove-top uk-padding-remove-top uk-padding-remove-bottom uk-animation-slide-top-medium">
                 <div class="uk-margin">
                     <div class="uk-inline">
                         <span class="uk-form-icon" uk-icon="icon: user"></span>
-                        <input id="input-usuario" class="uk-input " placeholder="Usuario" type="text">
+                        <input id="input-usuario" class="uk-input " name="email" placeholder="Usuario" type="text" required>
                     </div>
                 </div>
 
                 <div class="uk-margin">
                     <div class="uk-inline">
                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                        <input id="input-password" type="password" class="uk-input "
-                            placeholder="Contraseña">
+                        <input id="input-password" type="password" class="uk-input " name="password"
+                            placeholder="Contraseña" required>
                     </div>
                 </div>
                 {{-- <div class="uk-flex uk-flex-between">
@@ -109,7 +110,7 @@
             </div>
 
             <button
-                id="btn-ingresar"class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
+                type="submit" class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
                     uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
 
 
@@ -121,6 +122,7 @@
                 class="uk-button uk-button-secondary uk-animation-slide-top-medium uk-margin-remove-top">Google</button>
         </div> --}}
         </div>
+        </form>
 
 
     </div>
