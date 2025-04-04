@@ -1,5 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
+
+:root {
+    --verde: #1ba333;
+    --amarillo: #ffcc00;
+    --azul: #203b76;
+    --verdeOscuro: #135423;
+    --verdeClaro: #d3eed7;
+    --cafe: #5b3700;
+    --azulClaro: #0094e9;
+    --blanco: #fff;
+    --gris6: #666;
+    --gris9: #999;
+    --rojo: #e30d0d;
+    --colorTexto: #303030;
+  }
+  
 body {
     position: fixed;
     width: 100%;
@@ -12,7 +28,6 @@ body {
     font-family: 'Montserrat' !important;
 
 }
-
 .overlay {
     backdrop-filter: blur(5px);
     position: fixed;

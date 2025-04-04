@@ -1,5 +1,22 @@
 <?php
 
+use App\Http\Controllers\ApiAuthController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\DarkModeController;
+use App\Http\Controllers\ColorSchemeController;
+use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\Solicitudes\SolicitudesController;
+use App\Http\Controllers\Solicitudes\ControladorViatico;
+use App\Http\Controllers\Configuracion\EstadosController;
+use App\Http\Controllers\Configuracion\TiposSolicitudesController;
+use App\Http\Controllers\Configuracion\ZonasController;
+use App\Http\Controllers\Configuracion\CapitulosController;
+use App\Http\Controllers\Configuracion\CategoriasController;
+use App\Http\Controllers\Tienda\ControladorTiendaUNAG;
+use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\googleController;
+use App\Http\Controllers\MallaValidacion\MallaValidacionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,8 +28,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages/auth/login');
+
+Route::get('/login', [ApiAuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [ApiAuthController::class, 'login']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout');
+    Route::get('/', function () {
+        return view('dashboard');
+    });
+
+    Route::get('/setic/malla_validacion', [MallaValidacionController::class, 'malla_validaciones'])->name('malla_validacion');
+    Route::post("setic/malla_validacion/tareas_pendientes_personas", [MallaValidacionController::class, 'malla_validaciones_tareas_pendientes_personas']); 
 });
 
 Route::group(['prefix' => 'email'], function(){

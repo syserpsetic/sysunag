@@ -84,21 +84,22 @@
 
 
             <p class="txt-blanco">Ingrese sus credenciales:</p>
-
+            <form class="forms-sample" method="POST" action="{{ route('login') }}">
+            @csrf
             <div
                 class="uk-width-large uk-padding uk-margin-remove-top uk-padding-remove-top uk-padding-remove-bottom uk-animation-slide-top-medium">
                 <div class="uk-margin">
                     <div class="uk-inline">
                         <span class="uk-form-icon" uk-icon="icon: user"></span>
-                        <input id="input-usuario" class="uk-input " placeholder="Usuario" type="text">
+                        <input id="input-usuario" class="uk-input " name="email" placeholder="Usuario" type="text" required>
                     </div>
                 </div>
 
                 <div class="uk-margin">
                     <div class="uk-inline">
                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                        <input id="input-password" type="password" class="uk-input "
-                            placeholder="Contraseña">
+                        <input id="input-password" type="password" class="uk-input " name="password"
+                            placeholder="Contraseña" required>
                     </div>
                 </div>
                 {{-- <div class="uk-flex uk-flex-between">
@@ -109,7 +110,7 @@
             </div>
 
             <button
-                id="btn-ingresar"class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
+                type="submit" class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
                     uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
 
 
@@ -121,6 +122,7 @@
                 class="uk-button uk-button-secondary uk-animation-slide-top-medium uk-margin-remove-top">Google</button>
         </div> --}}
         </div>
+        </form>
 
 
     </div>
@@ -142,14 +144,15 @@
             <div class="auth-form-wrapper px-4 py-5">
               <a href="#" class="noble-ui-logo d-block mb-2">SYS <span>UNAG</span></a>
               <h5 class="text-muted fw-normal mb-4">¡BIENVENIDOS! INICIA SESIÓN PARA INGRESAR</h5>
-              <form class="forms-sample">
+              <form class="forms-sample" method="POST" action="{{ route('login') }}">
+              @csrf
                 <div class="mb-3">
                   <label for="userEmail" class="form-label">Usuario o Correo Electrónico</label>
-                  <input type="email" class="form-control" id="userEmail" placeholder="Escribe tu usuario o correo electrónico">
+                  <input required type="text" class="form-control" name="email" id="userEmail" placeholder="Escribe tu usuario o correo electrónico">
                 </div>
                 <div class="mb-3">
                   <label for="userPassword" class="form-label">Contraseña</label>
-                  <input type="password" class="form-control" id="userPassword" autocomplete="current-password" placeholder="Escribe tu contraseña">
+                  <input required type="password" class="form-control" name="password" id="userPassword" autocomplete="current-password" placeholder="Escribe tu contraseña">
                 </div>
                 <!-- <div class="form-check mb-3">
                   <input type="checkbox" class="form-check-input" id="authCheck">
@@ -158,7 +161,7 @@
                   </label>
                 </div> -->
                 <div>
-                  <a href="{{ url('/') }}" class="btn btn-primary me-2 mb-2 mb-md-0">Ingresar</a>
+                  <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">Ingresar</button>
                   <!-- <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
                     <i class="btn-icon-prepend" data-feather="twitter"></i>
                     Login with twitter

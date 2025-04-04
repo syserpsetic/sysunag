@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.19.2/dist/css/uikit.min.css" />
 
     {{-- custom css --}}
-    <link rel="stylesheet" href="{{ asset('/css/custom.css') }}" />
     <link rel="stylesheet" href="{{ asset('/css/login.css') }}" />
     <link rel="stylesheet" href="{{ asset('/css/login-loading.css') }}" />
 
