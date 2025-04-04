@@ -1,0 +1,264 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    box-sizing: border-box;
+    z-index: 0;
+    font-family: 'Montserrat' !important;
+
+}
+
+.overlay {
+    backdrop-filter: blur(5px);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.623);
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.content {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+.txt-blanco{
+    color: #FFF;
+}
+
+
+::selection{
+    background: var(--verde) !important;
+}
+
+
+.uk-input:focus, .uk-select:focus{
+	border-color: var(--verde);
+}
+
+.uk-input:hover{
+    background-color: var(--verdeClaro);
+}
+
+.uk-checkbox:hover{
+    background-color: var(--verdeClaro);
+}
+
+.uk-checkbox:focus, .uk-radio:focus{
+    border-color: var(--verde);
+}
+
+.uk-checkbox:checked{
+    background-color: var(--verde);
+}
+
+label:hover{
+    color: var(--verdeClaro);
+}
+
+#logo_setic{
+    width: 100px;
+}
+
+#logo_unag{
+    margin-top: 30px;
+    width: 150px;
+    height: 100%;
+}
+
+footer{
+    z-index: 1;
+}
+
+
+.uk-input{
+    border-radius: 30px;
+}
+
+.uk-button-primary{
+    background-color: #1BA333;
+    border-radius: 20px;
+    transition: background-color 0.4s ease-out 90ms
+}
+
+.uk-button-secondary{
+    background-color: #181818;
+    /* border-radius: 5px; */
+    color:white;
+    transition: background-color 0.4s ease-out 90ms
+}
+
+.uk-button-secondary:hover{
+    background-color: var(--verdeOscuro);
+    
+    /* border-radius: 5px; */
+}
+
+
+.uk-button-primary:hover{
+    background-color: #135423;
+}
+
+
+.uk-text-small, label{
+    color: #FFF;
+}
+
+#btn-portal:hover{
+    color: var(--amarillo);
+}
+
+.hojas-container{
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.hojas-container img#hoja-01{
+    position: relative;
+    right: 250px;
+    top: -80px;
+    width: 180px;
+    filter: blur(1px);
+}
+
+.hojas-container img#hoja-02{
+    position: relative;
+    left: 250px;
+    bottom: -790px;
+    width: 250px;
+    rotate: 120deg;
+    
+}
+
+
+.hojas-container img#hoja-03{
+    position: relative;
+    right: -90px;
+    top: 100px;
+    width: 150px;
+    rotate: 120deg;
+    filter: blur(2px);
+}
+
+
+.icon-container{
+    background-color: var(--verde);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 9px;
+    border-radius: 10px;
+    width: 60px;
+}
+
+/* .card-login{
+    overflow: hidden;
+    backdrop-filter: blur(11px) saturate(62%);
+    -webkit-backdrop-filter: blur(11px) saturate(62%);
+    background-color: rgba(23, 34, 23, 0.627);
+    border-radius: 12px;
+    height: 45vh;
+} */
+
+@media screen and (max-width: 600px) {
+    #logo_unag{
+        width: 150px;
+    }
+
+    #logo_setic{
+        width: 100px;
+    }
+
+   label{
+        font-size: 13px;
+    }
+
+    .hojas-container img#hoja-01{
+        position: relative;
+        right: 110px;
+        top: -80px;
+        width: 180px;
+    }
+    
+    .hojas-container img#hoja-02{
+        position: relative;
+        left: 150px;
+        bottom: -110px;
+        width: 220px;
+        rotate: 95deg;
+    }
+
+    .hojas-container img#hoja-03{
+       display: none;
+    }
+
+    
+}
+
+@media screen and (max-width: 280px) {
+    
+    div .blob{
+        display: none;
+    }
+    
+    label{
+        font-size: 8px;
+    }
+}
+
+
+.blob {
+    background: black;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+    margin: 10px;
+    height: 45px;
+    width: 45px;
+    transform: scale(1);
+    animation: pulse-black 2s infinite;
+  }
+  
+.blob.white {
+    background: var(--verde);
+    box-shadow: 0 0 0 0 rgb(29, 208, 5);
+    animation: pulse-white 2s infinite;
+  }
+  
+  @keyframes pulse-white {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(116, 250, 107, 0.7);
+    }
+    
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+    
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+  }
