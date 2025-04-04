@@ -8,8 +8,9 @@
         <div></div>
     </div>
 
-    <div>
-      <img src="{{ asset('/assets/images/hoja-cayendo-unag.png') }}" alt="">
+    <div class="hojas-container">
+        <img id="hoja-01" src="{{ asset('/assets/images/login/hoja-cayendo-unag.png') }}" alt="">
+        <img id="hoja-02" src="{{ asset('/assets/images/login/hoja-cayendo-unag.png') }}" alt="">
     </div>
 
     <div class="overlay"></div>
@@ -27,7 +28,7 @@
                 </li>
                 <li tabindex="-1" class="">
                     <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
-                        <img src="{{ asset('/assets/images/login/login-bg-02.jpg') }}" autoplay muted loop playsinline
+                        <img src="{{ asset('/assets/images/login/login-bg-06.jpg') }}" autoplay muted loop playsinline
                             uk-cover />
                     </div>
                 </li>
@@ -41,7 +42,7 @@
                 <li tabindex="-1" class="">
                     <div
                         class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-right">
-                        <img src="{{ asset('/assets/images/login/login-bg-05.jpg') }}" autoplay muted loop playsinline
+                        <img src="{{ asset('/assets/images/login/login-bg-07.jpg') }}" autoplay muted loop playsinline
                             uk-cover />
                     </div>
                 </li>
@@ -68,60 +69,57 @@
 
         <br>
 
-        <div class="uk-grid-small uk-flex-middle uk-animation-slide-top-medium uk-margin-bottom" uk-grid>
-            <div class="uk-width-1-1 icon-container">
-                <lord-icon src="https://cdn.lordicon.com/kdduutaw.json" trigger="loop" state="hover-looking-around"
-                    colors="primary:#ffffff,secondary:#ffffff" style="width:60px;height:60px">
-                </lord-icon>
-            </div>
-
-        </div>
-
-        <p class="txt-blanco">Ingrese sus credenciales:</p>
+        <div class="card-login">
 
 
-
-        <div
-            class="uk-width-large uk-padding uk-margin-remove-top uk-padding-remove-top uk-padding-remove-bottom uk-animation-slide-top-medium">
-            <div class="uk-margin">
-                <div class="uk-inline">
-                    <span class="uk-form-icon" uk-icon="icon: user"></span>
-                    <input id="input-usuario" class="uk-input uk-form-width-large" placeholder="Usuario" type="text">
+            <div class="uk-flex uk-flex-center uk-flex-middle uk-margin-medium-top">
+                <div class="icon-container">
+                    <lord-icon src="https://cdn.lordicon.com/kdduutaw.json" trigger="loop" state="hover-looking-around"
+                        colors="primary:#ffffff,secondary:#ffffff" style="width:60px;height:60px">
+                    </lord-icon>
                 </div>
             </div>
 
-            <div class="uk-margin">
-                <div class="uk-inline">
-                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                    <input id="input-password" type="password" class="uk-input uk-form-width-large"
-                        placeholder="Contraseña">
-                </div>
-            </div>
 
-            {{-- <div class="uk-flex uk-flex-between">
+
+            <p class="txt-blanco">Ingrese sus credenciales:</p>
+
+            <div
+                class="uk-width-large uk-padding uk-margin-remove-top uk-padding-remove-top uk-padding-remove-bottom uk-animation-slide-top-medium">
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input id="input-usuario" class="uk-input " placeholder="Usuario" type="text">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <input id="input-password" type="password" class="uk-input "
+                            placeholder="Contraseña">
+                    </div>
+                </div>
+                {{-- <div class="uk-flex uk-flex-between">
                 <label class="txt-recuerdame"><input class="uk-checkbox uk-margin-remove-left" type="checkbox"> Recuérdame</label>
                 <label class="uk-toggle txt-olvide-contrasenia"><a href="{{url('/reiniciar-contraseña')}}" style="" class="uk-margin-remove-top uk-link-reset">¡Olvidé mi
                         contraseña!</a></label>
             </div> --}}
+            </div>
+
+            <button
+                id="btn-ingresar"class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
+                    uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
 
 
-        </div>
+            <br>
 
-
-
-        <button
-            id="btn-ingresar"class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
-
-        <!-- <hr class="uk-divider-icon"> -->
-        <div id="mensaje" class="uk-margin-top"></div>
-
-        <br>
-
-        {{-- <div>
+            {{-- <div>
             <p class="uk-text-small uk-animation-slide-top-medium uk-margin-remove-top">- O Ingresar con -</p>
             <button id="google"
                 class="uk-button uk-button-secondary uk-animation-slide-top-medium uk-margin-remove-top">Google</button>
         </div> --}}
+        </div>
 
 
     </div>
