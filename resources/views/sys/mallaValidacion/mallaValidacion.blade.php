@@ -197,7 +197,7 @@
                                             <ul class="list-unstyled chat-list px-1">
                                                 @foreach ($personas as $row)
                                                 <li class="chat-item pe-1">
-                                                    <a href="#" class="d-flex align-items-center">
+                                                    <a href="javascript:void(0);" onclick="detalle_tareas({{ $row['id_member'] }}, {{ $row['tareas'] }})" class="d-flex align-items-center">
                                                         <figure class="mb-0 me-2">
                                                             <img
                                                                 src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{$row['foto']}}"
@@ -281,7 +281,56 @@
         </div>
     </div>
 </div>
-
+<!-- Extra large modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".modal_detalle_tareas_personas">Extra large modal</button> -->
+      <div class="modal fade modal_detalle_tareas_personas" id="modal_detalle_tareas_personas" tabindex="-1" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+      
+            <div class="modal-header bg-primary">
+              <h5 class="modal-title h4 text-white" id="myExtraLargeModalLabel"><i class="icon-lg text-muted pb-3px" data-feather="clock"></i> Detalles de tareas pendientes</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="position-relative">
+                                <center>
+                                    <div id="modal_detalle_tareas_personas_responsable">
+                                        <img class="wd-70 rounded-circle" src="https://portal.unag.edu.hn/matricula/documentos/fotos/" alt="profile" onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
+                                        <span class="h4 ms-3 text-dark">Amiah Burton</span>
+                                    </div>
+                                </center>
+                                <div class="card-body">
+                                    <div class="card">
+                                        <h5 class="card-header bg-success text-white">Tareas Pendientes</h5>
+                                        <div class="card-body">
+                                            <div class="list-group" id="modal_detalle_tareas_personas_lista">
+                                                <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">List group item heading</h5>
+                                                    <small>3 days ago</small>
+                                                    </div>
+                                                    <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                                    <small>And some small print.</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-dark">
+            <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Large modal -->
 
 @endsection
 
@@ -295,6 +344,7 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
   <script type="text/javascript">
+    var url_setic_malla_validacion_tareas_pendientes_personas = "{{url('setic/malla_validacion/tareas_pendientes_personas')}}"; 
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {
@@ -369,5 +419,69 @@
         });
 
         });
+
+
+        function detalle_tareas(id_member, pendientes){
+            //alert(id_member);
+            $.ajax({
+                type: "post",
+                url: url_setic_malla_validacion_tareas_pendientes_personas,
+                data: {
+                    "id_member": id_member,
+                },
+                success: function (data) {
+                    if (data.msgError != null) {
+                        titleMsg = "Error al Cargar";
+                        textMsg = data.msgError;
+                        typeMsg = "error";
+                    } else {
+                        titleMsg = "Datos Cargados";
+                        textMsg = data.msgSuccess;
+                        typeMsg = "success";
+                        var detalle_tareas = data.detalle_tareas;
+                        $("#modal_detalle_tareas_personas_responsable").html('');
+                        $("#modal_detalle_tareas_personas_total").html('');
+                        $("#modal_detalle_tareas_personas_lista").html('');
+                        for (var i = 0; i < detalle_tareas.length; i++) {
+                            var row = detalle_tareas[i];
+                            $("#modal_detalle_tareas_personas_responsable").html(
+                                '<div style="display: flex; align-items: center; justify-content: center; text-align: center; gap: 10px; width: 100%;">' +
+                                    '<img width="90" height="90" class="rounded-circle" src="https://portal.unag.edu.hn/matricula/documentos/fotos/' + row.foto + '" alt="profile" onerror="this.onerror=null; this.src=\'{{ url(asset('/assets/images/user2-403d6e88.png')) }}\';">'+
+                                    '<span class="h4 ms-3 text-dark">' + row.member + '</span>'+
+                                '</div>'
+                            );
+
+
+
+                            $("#modal_detalle_tareas_personas_total").html(pendientes+' <i class="fa fa-exclamation-circle"></i>');
+                            $("#modal_detalle_tareas_personas_lista").append(
+                                                '<a href="#" class="list-group-item list-group-item-action" aria-current="true">'+
+                                                    '<div class="d-flex w-100 justify-content-between">'+
+                                                    '<h5 class="mb-1">' + row.name + '</h5>'+
+                                                    '<small>'+ row.estado +'</small>'+
+                                                    '</div>'+
+                                                    '<p class="mb-1"></p>'+
+                                                    '<small><strong>Fecha de Inicio:</strong> ' + row.fecha_inicio +' | <strong>Fecha de Finalización: </strong>' + row.fecha_vencimiento +'</small>'+
+                                                '</a>'
+                                );
+
+                            //console.log(row.id)
+                        }
+                        $("#modal_detalle_tareas_personas").modal('show');
+                    }
+                    // $(function () {
+                    //     new PNotify({
+                    //         title: titleMsg,
+                    //         text: textMsg,
+                    //         type: typeMsg,
+                    //         shadow: true,
+                    //     });
+                    // });
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                },
+            });
+        }
   </script>
 @endpush
