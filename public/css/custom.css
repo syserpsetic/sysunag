@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 :root {
     --verde: #1ba333;
     --amarillo: #ffcc00;
@@ -9,9 +11,50 @@
     --blanco: #fff;
     --gris6: #666;
     --gris9: #999;
-    --rojo: #ff0000;
+    --rojo: #e30d0d;
     --colorTexto: #303030;
   }
+
+  body {
+    font-family: "Montserrat" !important;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, div, li, span {
+    color: var(--colorTexto) !important;
+  }
+
+  .border-primary{
+    border-color: var(--verde) !important;
+  }
+
+  .bg-primary{
+    background-color: var(--azul) !important;
+    color: var(--blanco) !important;
+  }
+
+  .nav-link::before{
+    background-color: var(--verde) !important;
+  }
+  
+  .sidebar .sidebar-body .nav .nav-item.active .nav-link .link-icon{
+    color: var(--verdeOscuro) !important;
+  }
+
+  a.nav-link:hover{
+    color: var(--verde) !important;
+  }
+
+  span svg{
+    color: var(--verde) !important;
+  }
+
+  div.sidebar-header{
+    background-color: var(--verde) !important;
+  }
+  
+  
+
+  /* Botones */
 
   .btn-primary {
     background-color: var(--verde) !important;
@@ -22,3 +65,16 @@
     background-color: var(--verdeOscuro) !important;
     border: none !important;
   }
+
+  .btn-outline-primary{
+    color: var(--verdeOscuro) !important;
+    border-color: var(--verde) !important;
+  }
+
+  .btn-outline-primary:hover{
+    color: var(--blanco) !important;
+    border-color: var(--verdeOscuro) !important;
+    background-color: var(--verdeOscuro) !important;
+  }
+
+  /* Fin Botones */
