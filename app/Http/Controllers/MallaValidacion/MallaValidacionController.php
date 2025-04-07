@@ -43,6 +43,7 @@ class MallaValidacionController extends Controller
         $id_member = $request->id_member;
         $msgError = null;
         $msgSuccess = null;
+        
         $response = Http::withHeaders([
             'Authorization' => session('token'),
         ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/tareas_pendientes_personas', [
