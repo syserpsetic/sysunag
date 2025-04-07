@@ -159,7 +159,7 @@
                     @foreach($noticias as $row)
                     <h2 style="display: flex; align-items: center; gap: 8px;">
                         <div class="news-perfil">
-                            <img src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{$row['foto']}}" 
+                            <img src="{{ asset('/matricula/documentos/fotos/')}}/{{$row['foto']}}" 
                             alt="Foto_perfil"
                             onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
 
