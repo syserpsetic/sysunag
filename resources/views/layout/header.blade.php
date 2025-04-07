@@ -3,16 +3,16 @@
     <i data-feather="menu"></i>
   </a>
   <div class="navbar-content">
-    <form class="search-form">
+    <!-- <form class="search-form">
       <div class="input-group">
         <div class="input-group-text">
           <i data-feather="search"></i>
         </div>
         <input type="text" class="form-control" id="navbarForm" placeholder="Search here...">
       </div>
-    </form>
+    </form> -->
     <ul class="navbar-nav">
-      <li class="nav-item dropdown">
+      <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img src="{{ url('assets/images/flags/us.svg') }}" class="wd-20 me-1" title="us" alt="us"> <span class="ms-1 me-1 d-none d-md-inline-block">English</span>
         </a>
@@ -51,8 +51,8 @@
             <a href="javascript:;">View all</a>
           </div>
         </div>
-      </li>
-      <li class="nav-item dropdown">
+      </li> -->
+      <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i data-feather="mail"></i>
         </a>
@@ -127,8 +127,8 @@
             <a href="javascript:;">View all</a>
           </div>
         </div>
-      </li>
-      <li class="nav-item dropdown">
+      </li> -->
+      <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i data-feather="bell"></i>
           <div class="indicator">
@@ -191,23 +191,23 @@
             <a href="javascript:;">View all</a>
           </div>
         </div>
-      </li>
+      </li> -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img class="wd-30 ht-30 rounded-circle" src="{{ url('https://via.placeholder.com/30x30') }}" alt="profile">
+          <img class="wd-30 ht-30 rounded-circle" src="{{ url('https://via.placeholder.com/30x30') }}" alt="profile" onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
         </a>
         <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
           <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
             <div class="mb-3">
-              <img class="wd-80 ht-80 rounded-circle" src="{{ url('https://via.placeholder.com/80x80') }}" alt="">
+              <img class="wd-80 ht-80 rounded-circle" src="{{ url('https://via.placeholder.com/80x80') }}" alt="" onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
             </div>
             <div class="text-center">
-              <p class="tx-16 fw-bolder">Amiah Burton</p>
-              <p class="tx-12 text-muted">amiahburton@gmail.com</p>
+              <p class="tx-16 fw-bolder">{{ Auth::user()->name }}</p>
+              <p class="tx-12 text-muted">{{ Auth::user()->username }}</p>
             </div>
           </div>
           <ul class="list-unstyled p-1">
-            <li class="dropdown-item py-2">
+            <!-- <li class="dropdown-item py-2">
               <a href="{{ url('/general/profile') }}" class="text-body ms-0">
                 <i class="me-2 icon-md" data-feather="user"></i>
                 <span>Profile</span>
@@ -224,11 +224,11 @@
                 <i class="me-2 icon-md" data-feather="repeat"></i>
                 <span>Switch User</span>
               </a>
-            </li>
+            </li> -->
             <li class="dropdown-item py-2">
-              <a href="javascript:;" class="text-body ms-0">
+              <a href="{{ route('logout') }}" class="text-body ms-0">
                 <i class="me-2 icon-md" data-feather="log-out"></i>
-                <span>Log Out</span>
+                <span>Cerrar Sesión</span>
               </a>
             </li>
           </ul>

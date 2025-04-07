@@ -28,12 +28,15 @@ License: For each use you must have a valid license purchased only from above li
   <!-- CSRF Token -->
   <meta name="_token" content="{{ csrf_token() }}">
   
-  <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
+  <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
 
   <!-- plugin css -->
   <link href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" />
   <!-- end plugin css -->
+
+  {{-- custom css --}}
+  <link rel="stylesheet" href="{{ asset('/css/custom.css') }}" />
 
   @stack('plugin-styles')
 
