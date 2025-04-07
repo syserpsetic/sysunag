@@ -62,4 +62,46 @@ class MallaValidacionController extends Controller
             "detalle_tareas" => $detalle_tareas
         ]);
     }
+
+    public function malla_cobro_repetido_estudiantes(Request $request){
+        // if (session('malla_validacion_leer_cobros_repetidos')!='1') {
+        //     return view("error")->with("code_error",'403');
+        // }
+
+        // $estudiantes = DB::select("WITH
+        //         PERIODO_ACTUAL AS (
+        //             SELECT
+        //                 *
+        //             FROM
+        //                 DBLINK (
+        //                     'dbname=una_dev host=".env('DB_HOST')." user=".env('DB_USERNAME')." password=".env('DB_PASSWORD')."',
+        //                     '
+        //                     select anio, periodo from tbl_utic_periodo_academico where borrado = false'
+        //                 ) X (ANIO INTEGER, PERIODO INTEGER)
+        //         )
+        //     SELECT
+        //         MVE.NUMERO_REGISTRO_ASIGNADO,
+        //         MVE.ID_TIPO_MOVIMIENTO,
+        //         TM.NOMBRE MOVIMIENTO,
+        //         COUNT(1) COBROS_REPETIDOS
+        //     FROM
+        //         COREBANK.CORE_MOVIMIENTO_COBROS_ESTUDIANTE MVE
+        //         JOIN COREBANK.CORE_TIPO_MOVIMIENTO TM ON MVE.ID_TIPO_MOVIMIENTO = TM.ID_TIPO_MOVIMIENTO
+        //         JOIN PERIODO_ACTUAL PA ON TRUE
+        //     WHERE
+        //         MVE.ANIO = PA.ANIO
+        //         AND MVE.PERIODO = PA.PERIODO
+        //         AND MVE.BORRADO = FALSE
+        //         AND TM.BORRADO = FALSE
+        //         AND MVE.ID_TIPO_MOVIMIENTO != 11
+        //     GROUP BY
+        //         MVE.NUMERO_REGISTRO_ASIGNADO,
+        //         MVE.ID_TIPO_MOVIMIENTO,
+        //         TM.NOMBRE
+        //     HAVING
+        //         COUNT(1) > 1");
+
+        throw New Exception('Llegamos');
+        return view("sys.mallaValidacion.cobroRepetedidoEstudiantes")->with("estudiantes", $estudiantes);
+    }
 }

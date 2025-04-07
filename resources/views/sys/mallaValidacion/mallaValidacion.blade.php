@@ -33,7 +33,7 @@
             display: flex;
             align-items: center;
             width: 100%;
-            background: linear-gradient(90deg, #135423, #000);
+            background: linear-gradient(90deg, #1ba333, #000);
             padding: 10px 20px;
             overflow: hidden;
             position: relative;
@@ -249,7 +249,7 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                 <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="alert-circle" class="icon-sm me-2"></i> <span class="">Info</span></a>
-                                                                <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
+                                                                <a class="dropdown-item d-flex align-items-center" href="{{url($row['btn_detalle_ruta'])}}"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
                                                                 @if($row['btn_accion_id'] != null)
                                                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="refresh-ccw" class="icon-sm me-2"></i> <span class="">Refrescar Vista</span></a>
                                                                 @endif
