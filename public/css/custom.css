@@ -27,8 +27,8 @@
     border-color: var(--verde) !important;
   }
 
-  .bg-primary{
-    background-color: var(--azul) !important;
+  .bg-primary, .bg-dark{
+    background-color: var(--verdeOscuro) !important;
     color: var(--blanco) !important;
   }
 
@@ -55,6 +55,8 @@
   .sidebar-brand, .txt-blanco, div.sidebar-toggler span{
     color: var(--blanco) !important;
   }
+
+  
   
 
   /* Botones */
