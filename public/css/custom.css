@@ -32,6 +32,11 @@
     color: var(--blanco) !important;
   }
 
+  .bg-azul{
+    background-color: var(--azul) !important;
+    color: var(--blanco) !important;
+  }
+
   .nav-link::before{
     background-color: var(--verde) !important;
   }

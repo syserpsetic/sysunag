@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/setic/malla_validacion', [MallaValidacionController::class, 'malla_validaciones'])->name('malla_validacion');
     Route::post("setic/malla_validacion/tareas_pendientes_personas", [MallaValidacionController::class, 'malla_validaciones_tareas_pendientes_personas']); 
-    Route::post("setic/malla_validacion/cobro_repetido_estudiantes", [MallaValidacionController::class, 'malla_cobro_repetido_estudiantes']); 
+    Route::get("setic/malla_validacion/cobro_repetido_estudiantes", [MallaValidacionController::class, 'malla_cobro_repetido_estudiantes']); 
 });
 
 Route::group(['prefix' => 'email'], function(){
