@@ -159,7 +159,7 @@
                     @foreach($noticias as $row)
                     <h2 style="display: flex; align-items: center; gap: 8px;">
                         <div class="news-perfil">
-                            <img src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{$row['foto']}}" 
+                            <img src="{{ asset('/matricula/documentos/fotos/')}}/{{$row['foto']}}" 
                             alt="Foto_perfil"
                             onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
 
@@ -200,7 +200,7 @@
                                                     <a href="javascript:void(0);" onclick="detalle_tareas({{ $row['id_member'] }}, {{ $row['tareas'] }})" class="d-flex align-items-center">
                                                         <figure class="mb-0 me-2">
                                                             <img
-                                                                src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{$row['foto']}}"
+                                                                src="{{ asset('/matricula/documentos/fotos/')}}/{{$row['foto']}}"
                                                                 class="img-xs rounded-circle"
                                                                 alt="user"
                                                                 onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';"
@@ -446,7 +446,7 @@
                             var row = detalle_tareas[i];
                             $("#modal_detalle_tareas_personas_responsable").html(
                                 '<div style="display: flex; align-items: center; justify-content: center; text-align: center; gap: 10px; width: 100%;">' +
-                                    '<img width="90" height="90" class="rounded-circle" src="https://portal.unag.edu.hn/matricula/documentos/fotos/' + row.foto + '" alt="profile" onerror="this.onerror=null; this.src=\'{{ url(asset('/assets/images/user2-403d6e88.png')) }}\';">'+
+                                    '<img width="90" height="90" class="rounded-circle" src="{{ asset('/matricula/documentos/fotos/')}}/' + row.foto + '" alt="profile" onerror="this.onerror=null; this.src=\'{{ url(asset('/assets/images/user2-403d6e88.png')) }}\';">'+
                                     '<span class="h4 ms-3 text-dark">' + row.member + '</span>'+
                                 '</div>'
                             );
