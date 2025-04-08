@@ -324,7 +324,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer bg-dark">
+            <div class="modal-footer bg-info">
             <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Aceptar</button>
             </div>
           </div>
@@ -447,7 +447,7 @@
                             $("#modal_detalle_tareas_personas_responsable").html(
                                 '<div style="display: flex; align-items: center; justify-content: center; text-align: center; gap: 10px; width: 100%;">' +
                                     '<img width="90" height="90" class="rounded-circle" src="{{ asset('/matricula/documentos/fotos/')}}/' + row.foto + '" alt="profile" onerror="this.onerror=null; this.src=\'{{ url(asset('/assets/images/user2-403d6e88.png')) }}\';">'+
-                                    '<span class="h4 ms-3 text-dark">' + row.member + '</span>'+
+                                    '<h4>' + row.member + '</h4>'+
                                 '</div>'
                             );
 
