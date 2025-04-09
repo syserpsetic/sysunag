@@ -248,7 +248,7 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                 <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="alert-circle" class="icon-sm me-2"></i> <span class="">Info</span></a>
-                                                                <a class="dropdown-item d-flex align-items-center" href="{{url($row['btn_detalle_ruta'])}}"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
+                                                                <a target="_blank" class="dropdown-item d-flex align-items-center" href="{{url($row['btn_detalle_ruta'])}}"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
                                                                 @if($row['btn_accion_id'] != null)
                                                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="refresh-ccw" class="icon-sm me-2"></i> <span class="">Refrescar Vista</span></a>
                                                                 @endif
@@ -354,7 +354,7 @@
             }
         });
 
-        $('.sidebar-toggler not-active').trigger("click");
+        //$('.sidebar-toggler not-active').trigger("click");
 
         @if(in_array('malla_validacion_reproducir_narrador', $scopes) && ($narracion['narracion'] != null || $narracion['narracion'] != ''))
             var mensaje = 'SE HAN ASIGNADO NUEVAS TAREAS A: {{$narracion->narracion}}';
