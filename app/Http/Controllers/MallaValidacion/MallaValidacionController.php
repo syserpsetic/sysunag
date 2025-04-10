@@ -98,4 +98,22 @@ class MallaValidacionController extends Controller
         ->with("secciones_sin_docente", $secciones_sin_docente)
         ->with('scopes', $scopes);
     }
+
+    public function malla_migraciones_pps(Request $request){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_migraciones_pps');
+
+        if($response->status() === 403){
+            return view('pages.error-page-403')->with('scopes', $scopes = array());
+        }
+        
+        //throw new Exception($response->status());
+        $scopes = $response['scopes'];
+        $estudiantes = $response['estudiantes'];
+
+        return view("sys.mallaValidacion.mallaMigracionesPps")
+        ->with("estudiantes", $estudiantes)
+        ->with('scopes', $scopes);
+    }
 }

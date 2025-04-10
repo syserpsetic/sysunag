@@ -33,7 +33,7 @@
             display: flex;
             align-items: center;
             width: 100%;
-            background: linear-gradient(90deg, #1ba333, #000);
+            background: linear-gradient(90deg, #135423, #000);
             padding: 10px 20px;
             overflow: hidden;
             position: relative;
@@ -247,22 +247,33 @@
                                                 @else class="card-header bg-primary" 
                                                 @endif>
                                                     <div class="d-flex justify-content-between align-items-baseline">
-                                                        <h6 class="mb-0 text-white">
+                                                        <h6 class="mb-0">
                                                             @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')
-                                                                <i data-feather="alert-octagon" class="me-2"></i>
+                                                                <strong class="text-white"><i data-feather="alert-octagon" class="me-2"></i> {{$row['indicador_titulo']}}</strong>
                                                             @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes'))
                                                                 <i data-feather="alert-triangle" class="me-2"></i>
+                                                                <strong>{{$row['indicador_titulo']}}</strong>
                                                             @else
-                                                                <i data-feather="check-circle" class="me-2"></i>
+                                                                <strong class="text-white"><i data-feather="check-circle" class="me-2"></i> {{$row['indicador_titulo']}}</strong>
                                                             @endif
-                                                            <strong>{{$row['indicador_titulo']}}</strong>
                                                         </h6>
                                                         <div class="dropdown mb-2">
                                                             <button class="btn btn-link p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            @if($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_secciones_sobrevaloradas' || $row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_login_estudiantes'))    
+                                                                <i class="icon-lg pb-3px" data-feather="chevrons-down"></i>
+                                                            @else
                                                                 <i class="icon-lg pb-3px text-white" data-feather="chevrons-down"></i>
+                                                            @endif
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="alert-circle" class="icon-sm me-2"></i> <span class="">Info</span></a>
+                                                                <button class="dropdown-item d-flex align-items-center"
+                                                                    data-bs-toggle="modal" data-bs-target="#modal_informacion"
+                                                                    data-indicador_titulo_icono="{{$row['indicador_titulo_icono']}}"
+                                                                    data-indicador_titulo="{{$row['indicador_titulo']}}"
+                                                                    data-indicador_subtitulo="{{$row['indicador_subtitulo']}}"
+                                                                    data-indicador_descripcion="{{$row['indicador_descripcion']}}">
+                                                                    <i data-feather="alert-circle" class="icon-sm me-2"></i> <span class="">Info</span>
+                                                                </button>
                                                                 <a target="_blank" class="dropdown-item d-flex align-items-center" href="{{url($row['btn_detalle_ruta'])}}"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
                                                                 @if($row['btn_accion_id'] != null)
                                                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="refresh-ccw" class="icon-sm me-2"></i> <span class="">Refrescar Vista</span></a>
@@ -349,6 +360,32 @@
       </div>
       <!-- Large modal -->
 
+      <!-- Small modal -->
+        <div class="modal fade bd-example-modal-sm" id="modal_informacion" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="alert-circle"></i> Información</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                    </div>
+                    <div class="card-body">
+                        <center>
+                            <h2 class="brief" style="margin: 0;">
+                                <strong id="indicador_titulo"><i class=""></i> </strong>
+                            </h2>
+                            <br />
+                            <h4 class=""><strong id="indicador_subtitulo"></strong></h4>
+                            <br />
+                            <p class="text-justify" id="indicador_descripcion"></p>
+                        </center>
+                    </div>
+                    <div class="modal-footer bg-secondary">
+                        <button type="button" class="btn btn-primary btn-xs" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 @endsection
 
 @push('plugin-scripts')
@@ -402,6 +439,16 @@
             location.reload();
         }, 300000);
 
+        $("#modal_informacion").on("show.bs.modal", function (e) { 
+                                     var triggerLink = $(e.relatedTarget); 
+                                     var indicador_titulo_icono=triggerLink.data("indicador_titulo_icono");
+                                     var indicador_titulo=triggerLink.data("indicador_titulo");
+                                     var indicador_subtitulo=triggerLink.data("indicador_subtitulo");
+                                     var indicador_descripcion=triggerLink.data("indicador_descripcion");
+                                    $("#indicador_titulo").html('<i class="'+indicador_titulo_icono+'"></i> '+indicador_titulo+'');
+                                    $("#indicador_subtitulo").html(indicador_subtitulo);
+                                    $("#indicador_descripcion").html(indicador_descripcion);
+                                     }); 
 
     });
     $(function() {
