@@ -54,7 +54,11 @@
   }
 
   div.sidebar-header{
-    background-color: var(--verde) !important;
+    background-color: var(--verdeOscuro) !important;
+  }
+
+  div.sidebar-body{
+    background-color: var(--verdeClaro) !important;
   }
   
   .sidebar-brand, .txt-blanco, div.sidebar-toggler span{
