@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::get("setic/malla_validacion/cobro_repetido_estudiantes", [MallaValidacionController::class, 'malla_cobro_repetido_estudiantes']); 
     Route::get("setic/malla_validacion/malla_secciones_sin_docente", [MallaValidacionController::class, 'malla_secciones_sin_docente']); 
     Route::get("setic/malla_validacion/malla_migraciones_pps", [MallaValidacionController::class, 'malla_migraciones_pps']); 
+    Route::get("setic/malla_validacion/pago_minimo_estudiantes", [MallaValidacionController::class, 'malla_pago_minimo_estudiantes']); 
+    Route::get("setic/malla_validacion/pago_minimo_estudiantes/refrescar_vista_materializada", [MallaValidacionController::class, 'malla_refrescar_vista_materializada']); 
 });
 
 Route::group(['prefix' => 'email'], function(){

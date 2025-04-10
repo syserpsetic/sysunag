@@ -116,4 +116,34 @@ class MallaValidacionController extends Controller
         ->with("estudiantes", $estudiantes)
         ->with('scopes', $scopes);
     }
+
+    public function malla_pago_minimo_estudiantes(Request $request){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/pago_minimo_estudiantes');
+
+        if($response->status() === 403){
+            return view('pages.error-page-403')->with('scopes', $scopes = array());
+        }
+        
+        //throw new Exception($response->status());
+        $scopes = $response['scopes'];
+        $estudiantes = $response['estudiantes'];
+
+        return view("sys.mallaValidacion.pagoMinimoEstudiantes")
+        ->with("estudiantes", $estudiantes)
+        ->with('scopes', $scopes);
+    }
+
+    public function malla_refrescar_vista_materializada(Request $request){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/pago_minimo_estudiantes');
+
+        if($response->status() === 403){
+            return view('pages.error-page-403')->with('scopes', $scopes = array());
+        }
+        
+        return back();
+    }
 }

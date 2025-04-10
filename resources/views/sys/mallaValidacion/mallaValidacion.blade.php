@@ -276,7 +276,7 @@
                                                                 </button>
                                                                 <a target="_blank" class="dropdown-item d-flex align-items-center" href="{{url($row['btn_detalle_ruta'])}}"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
                                                                 @if($row['btn_accion_id'] != null)
-                                                                    <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="refresh-ccw" class="icon-sm me-2"></i> <span class="">Refrescar Vista</span></a>
+                                                                    <button class="dropdown-item d-flex align-items-center" id="{{$row['btn_accion_id']}}" type="button"><i data-feather="refresh-ccw" class="icon-sm me-2"></i> <span class="">{{$row['btn_accion_descripcion']}}</span></button>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -398,6 +398,7 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
   <script type="text/javascript">
+    var btn_actualizar_vista = true;
     var url_setic_malla_validacion_tareas_pendientes_personas = "{{url('setic/malla_validacion/tareas_pendientes_personas')}}"; 
     $(document).ready(function () {
         $.ajaxSetup({
@@ -449,6 +450,14 @@
                                     $("#indicador_subtitulo").html(indicador_subtitulo);
                                     $("#indicador_descripcion").html(indicador_descripcion);
                                      }); 
+
+                                     $("#btn_actualizar_vista").on("click", function () {
+        if(btn_actualizar_vista){
+            btn_actualizar_vista = false;
+            $("#btn_actualizar_vista").html('Espere...');
+            window.location.href =  "{{url('setic/malla_validacion/pago_minimo_estudiantes/refrescar_vista_materializada')}}";
+        }
+    });
 
     });
     $(function() {
