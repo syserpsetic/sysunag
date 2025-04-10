@@ -87,4 +87,8 @@
     background-color: var(--verdeOscuro) !important;
   }
 
+  .bg-danger{
+    background-color: var(--rojo) !important;
+    border: none !important;
+  }
   /* Fin Botones */
