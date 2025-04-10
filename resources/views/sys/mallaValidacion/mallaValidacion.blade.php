@@ -33,7 +33,7 @@
             display: flex;
             align-items: center;
             width: 100%;
-            background: linear-gradient(90deg, #135423, #000);
+            background: linear-gradient(90deg, #1ba333, #000);
             padding: 10px 20px;
             overflow: hidden;
             position: relative;
@@ -159,7 +159,7 @@
                     @foreach($noticias as $row)
                     <h2 style="display: flex; align-items: center; gap: 8px;">
                         <div class="news-perfil">
-                            <img src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{$row['foto']}}" 
+                            <img src="{{ asset('/matricula/documentos/fotos/')}}/{{$row['foto']}}" 
                             alt="Foto_perfil"
                             onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
 
@@ -177,15 +177,14 @@
             <div class="card-body">
                 <div class="row position-relative">
                 @if(in_array('malla_validacion_leer_lista_pendientes', $scopes))
-                    <div class="col-lg-4 chat-aside border-end-lg">
+                    <div class="col-lg-3 chat-aside border-end-lg">
                         <div class="aside-content">
                             <div class="aside-body">
                                 <ul class="nav nav-tabs nav-fill mt-3" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="chats-tab" data-bs-toggle="tab" data-bs-target="#chats" role="tab" aria-controls="chats" aria-selected="true">
+                                        <a class="nav-link active bg-primary" id="chats-tab" data-bs-toggle="tab" data-bs-target="#chats" role="tab" aria-controls="chats" aria-selected="true">
                                             <div class="d-flex flex-row flex-lg-column flex-xl-row align-items-center justify-content-center">
-                                                <i data-feather="message-square" class="icon-sm me-sm-2 me-lg-0 me-xl-2 mb-md-1 mb-xl-0"></i>
-                                                <p class="d-none d-sm-block">NEXUS</p>
+                                                <p class="d-none d-sm-block text-white"><i class="icon-lg pb-3px" data-feather="clipboard"></i> <strong>NEXUS</strong></p>
                                             </div>
                                         </a>
                                     </li>
@@ -193,14 +192,14 @@
                                 <div class="tab-content mt-3">
                                     <div class="tab-pane fade show active" id="chats" role="tabpanel" aria-labelledby="chats-tab">
                                         <div>
-                                            <p class="text-muted mb-1">Tareas Pendientes</p>
+                                            <p class="mb-1">Tareas Pendientes</p>
                                             <ul class="list-unstyled chat-list px-1">
                                                 @foreach ($personas as $row)
                                                 <li class="chat-item pe-1">
                                                     <a href="javascript:void(0);" onclick="detalle_tareas({{ $row['id_member'] }}, {{ $row['tareas'] }})" class="d-flex align-items-center">
                                                         <figure class="mb-0 me-2">
                                                             <img
-                                                                src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{$row['foto']}}"
+                                                                src="{{ asset('/matricula/documentos/fotos/')}}/{{$row['foto']}}"
                                                                 class="img-xs rounded-circle"
                                                                 alt="user"
                                                                 onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';"
@@ -209,7 +208,7 @@
                                                         </figure>
                                                         <div class="d-flex justify-content-between flex-grow-1 border-bottom">
                                                             <div>
-                                                                <p class="text-body fw-bolder">{{ $row['member'] }}</p>
+                                                               <p class="text-body"><strong>{{ $row['member'] }}</strong></p>
                                                                 <!-- <p class="text-muted tx-13">Hi, How are you?</p> -->
                                                             </div>
                                                             <div class="d-flex flex-column align-items-end">
@@ -229,7 +228,7 @@
                     </div>
                     @endif
                     @if(in_array('malla_validacion_leer_lista_pendientes', $scopes))
-                        <div class="col-lg-8 col-sm-12 chat-content">
+                        <div class="col-lg-9 col-sm-12 chat-content">
                     @else 
                         <div class="col-lg-12 col-sm-12 chat-content">
                     @endif
@@ -239,32 +238,49 @@
                                     <div class="row flex-grow-1">
                                         @foreach($indicadoresMallaValidaciones as $row)
                                         <div class="col-md-3 grid-margin stretch-card">
-                                            <div @if($row['estudiantes']!=0) class="card border-danger" @else class="card border-primary" @endif>
-                                                <div class="card-body">
+                                            <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes') class="card border-danger" 
+                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')) class="card border-warning" 
+                                                @else class="card border-primary" 
+                                                @endif>
+                                                <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes') class="card-header bg-danger" 
+                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')) class="card-header bg-warning" 
+                                                @else class="card-header bg-primary" 
+                                                @endif>
                                                     <div class="d-flex justify-content-between align-items-baseline">
-                                                        <h6 class="card-title mb-0">{{$row['indicador_titulo']}}</h6>
+                                                        <h6 class="mb-0 text-white">
+                                                            @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')
+                                                                <i data-feather="alert-octagon" class="me-2"></i>
+                                                            @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes'))
+                                                                <i data-feather="alert-triangle" class="me-2"></i>
+                                                            @else
+                                                                <i data-feather="check-circle" class="me-2"></i>
+                                                            @endif
+                                                            <strong>{{$row['indicador_titulo']}}</strong>
+                                                        </h6>
                                                         <div class="dropdown mb-2">
                                                             <button class="btn btn-link p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                                                                <i class="icon-lg pb-3px text-white" data-feather="chevrons-down"></i>
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                 <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="alert-circle" class="icon-sm me-2"></i> <span class="">Info</span></a>
-                                                                <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
+                                                                <a target="_blank" class="dropdown-item d-flex align-items-center" href="{{url($row['btn_detalle_ruta'])}}"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
                                                                 @if($row['btn_accion_id'] != null)
                                                                     <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="refresh-ccw" class="icon-sm me-2"></i> <span class="">Refrescar Vista</span></a>
                                                                 @endif
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-12 col-md-12 col-xl-12">
                                                             <h2 class="mb-2">{{$row['estudiantes']}}</h2>
-                                                            <!-- <div class="d-flex align-items-baseline">
-                                                                <p class="text-success">
-                                                                    <span>+3.3%</span>
-                                                                    <i data-feather="arrow-up" class="icon-sm mb-1"></i>
+                                                            <div class="d-flex align-items-baseline">
+                                                                <p class="text-info">
+                                                                    <i data-feather="info" class="icon-sm mb-1"></i>
+                                                                    <span>{{$row['indicador_subtitulo']}}</span>
                                                                 </p>
-                                                            </div> -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -288,7 +304,7 @@
           <div class="modal-content">
       
             <div class="modal-header bg-primary">
-              <h5 class="modal-title h4 text-white" id="myExtraLargeModalLabel"><i class="icon-lg text-muted pb-3px" data-feather="clock"></i> Detalles de tareas pendientes</h5>
+              <h5 class="modal-title h4 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="clock"></i> Detalles de tareas pendientes</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
             </div>
             <div class="modal-body">
@@ -297,14 +313,15 @@
                         <div class="card">
                             <div class="position-relative">
                                 <center>
+                                    <br>
                                     <div id="modal_detalle_tareas_personas_responsable">
                                         <img class="wd-70 rounded-circle" src="https://portal.unag.edu.hn/matricula/documentos/fotos/" alt="profile" onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
                                         <span class="h4 ms-3 text-dark">Amiah Burton</span>
                                     </div>
                                 </center>
                                 <div class="card-body">
-                                    <div class="card">
-                                        <h5 class="card-header bg-success text-white">Tareas Pendientes</h5>
+                                    <div class="card border-secondary">
+                                        <h5 class="card-header bg-azul text-white"><i class="text-white icon-lg pb-3px" data-feather="list"></i> Tareas Pendientes</h5>
                                         <div class="card-body">
                                             <div class="list-group" id="modal_detalle_tareas_personas_lista">
                                                 <a href="#" class="list-group-item list-group-item-action" aria-current="true">
@@ -324,7 +341,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer bg-dark">
+            <div class="modal-footer bg-secondary">
             <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Aceptar</button>
             </div>
           </div>
@@ -352,7 +369,7 @@
             }
         });
 
-        $('.sidebar-toggler not-active').trigger("click");
+        //$('.sidebar-toggler not-active').trigger("click");
 
         @if(in_array('malla_validacion_reproducir_narrador', $scopes) && ($narracion['narracion'] != null || $narracion['narracion'] != ''))
             var mensaje = 'SE HAN ASIGNADO NUEVAS TAREAS A: {{$narracion->narracion}}';
@@ -446,8 +463,8 @@
                             var row = detalle_tareas[i];
                             $("#modal_detalle_tareas_personas_responsable").html(
                                 '<div style="display: flex; align-items: center; justify-content: center; text-align: center; gap: 10px; width: 100%;">' +
-                                    '<img width="90" height="90" class="rounded-circle" src="https://portal.unag.edu.hn/matricula/documentos/fotos/' + row.foto + '" alt="profile" onerror="this.onerror=null; this.src=\'{{ url(asset('/assets/images/user2-403d6e88.png')) }}\';">'+
-                                    '<span class="h4 ms-3 text-dark">' + row.member + '</span>'+
+                                    '<img width="120" height="120" class="rounded-circle" src="{{ asset('/matricula/documentos/fotos/')}}/' + row.foto + '" alt="profile" onerror="this.onerror=null; this.src=\'{{ url(asset('/assets/images/user2-403d6e88.png')) }}\';">'+
+                                    '<h4><strong>' + row.member + '</strong></h4>'+
                                 '</div>'
                             );
 

@@ -46,6 +46,9 @@ class ApiAuthController extends Controller
             $user->save();
             Session::put('token', $userData['token']);
             auth()->login($user);
+            if($userData['username'] == '22A0000'){
+                return redirect("/setic/malla_validacion");
+            }
             return redirect('/');
         } elseif($response->status() === 403) {
             throw new Exception('¡Acceso al sistema denegado!');

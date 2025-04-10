@@ -27,7 +27,12 @@
     border-color: var(--verde) !important;
   }
 
-  .bg-primary{
+  .bg-primary, .bg-dark{
+    background-color: var(--verdeOscuro) !important;
+    color: var(--blanco) !important;
+  }
+
+  .bg-azul{
     background-color: var(--azul) !important;
     color: var(--blanco) !important;
   }
@@ -51,6 +56,11 @@
   div.sidebar-header{
     background-color: var(--verde) !important;
   }
+  
+  .sidebar-brand, .txt-blanco, div.sidebar-toggler span{
+    color: var(--blanco) !important;
+  }
+
   
   
 
@@ -77,4 +87,8 @@
     background-color: var(--verdeOscuro) !important;
   }
 
+  .bg-danger{
+    background-color: var(--rojo) !important;
+    border: none !important;
+  }
   /* Fin Botones */
