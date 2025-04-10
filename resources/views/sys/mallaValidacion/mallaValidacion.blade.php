@@ -177,7 +177,7 @@
             <div class="card-body">
                 <div class="row position-relative">
                 @if(in_array('malla_validacion_leer_lista_pendientes', $scopes))
-                    <div class="col-lg-4 chat-aside border-end-lg">
+                    <div class="col-lg-3 chat-aside border-end-lg">
                         <div class="aside-content">
                             <div class="aside-body">
                                 <ul class="nav nav-tabs nav-fill mt-3" role="tablist">
@@ -228,7 +228,7 @@
                     </div>
                     @endif
                     @if(in_array('malla_validacion_leer_lista_pendientes', $scopes))
-                        <div class="col-lg-8 col-sm-12 chat-content">
+                        <div class="col-lg-9 col-sm-12 chat-content">
                     @else 
                         <div class="col-lg-12 col-sm-12 chat-content">
                     @endif
