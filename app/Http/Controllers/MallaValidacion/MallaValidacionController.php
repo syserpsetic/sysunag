@@ -80,4 +80,22 @@ class MallaValidacionController extends Controller
         ->with("estudiantes", $estudiantes)
         ->with('scopes', $scopes);
     }
+
+    public function malla_secciones_sin_docente(Request $request){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_secciones_sin_docente');
+
+        if($response->status() === 403){
+            return view('pages.error-page-403')->with('scopes', $scopes = array());
+        }
+        
+        //throw new Exception($response->status());
+        $scopes = $response['scopes'];
+        $secciones_sin_docente = $response['secciones_sin_docente'];
+
+        return view("sys.mallaValidacion.seccionesSinDocente")
+        ->with("secciones_sin_docente", $secciones_sin_docente)
+        ->with('scopes', $scopes);
+    }
 }

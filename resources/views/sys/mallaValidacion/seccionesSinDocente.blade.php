@@ -12,43 +12,45 @@
             <div class="card-body">
             <div class="alert alert-dark" role="alert">
                 <h1 class="display-1 d-flex align-items-center">
-                    <i data-feather="dollar-sign" class="me-3" style="width: 90px; height: 90px;"></i>
-                    <strong>COBROS</strong>
+                    <i data-feather="book" class="me-3" style="width: 90px; height: 90px;"></i>
+                    <strong>SECCIONES</strong>
                 </h1>
-                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Estudiantes con cobros repetidos.</div></h4>
+                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Secciones que no tienen docente asignado excluyendo PPS y Trabajos de Investigacón.</div></h4>
                 <br>
                 <div class="col-md-3">
                         <a class="btn btn-info btn-sm" id="btn_volver_convenio" href="{{url('setic/malla_validacion')}}" data-toggle="tooltip" data-placement="top" title="Regresar a Malla de Validaciones">
                         <i class="btn-icon-prepend" data-feather="corner-up-left"></i> Regresar
                         </a>
                     </div>
-                    </div>
+            </div>
                 <hr />
                 <div class="col-12 col-md-12 col-xl-12">
                     <div class="card border-secondary">
-                        <h5 class="card-header bg-azul text-white"><i class="text-white icon-lg pb-3px" data-feather="users"></i> Estudiantes</h5>
+                        <h5 class="card-header bg-azul text-white"><i class="text-white icon-lg pb-3px" data-feather="list"></i> Secciones</h5>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="jambo_table table table-hover" id="tbl_malla_validaciones_estudiantes" border="1">
-                                    <thead  class="bg-primary">
+                                    <thead class="bg-primary">
                                         <tr class="headings">
-                                            <th scope="col" class="text-white">Número de Registro Asignado</th>
-                                            <th scope="col" class="text-white">Movimiento</th>
-                                            <th scope="col" class="text-white">Cobros Repetidos</th>
-                                            <th scope="col" class="text-white">Opciones</th>
+                                            <th scope="col" class="text-white">Matriculados</th>
+                                            <th scope="col" class="text-white">Asignatura</th>
+                                            <th scope="col" class="text-white">Carrera</th>
+                                            <th scope="col" class="text-white">Etiqueta Bloque</th>
+                                            <th scope="col" class="text-white">Jornada</th>
+                                            <th scope="col" class="text-white">Sede</th>
+                                            <th scope="col" class="text-white">Docente</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($estudiantes as $row)
+                                        @foreach ($secciones_sin_docente as $row)
                                         <tr style="font-size: small;">
-                                            <td scope="row">{{$row['numero_registro_asignado']}}</td>
-                                            <td scope="row">{{$row['movimiento']}}</td>
-                                            <td scope="row">{{$row[cobros_repetidos]}}</td>
-                                            <td scope="row">
-                                                <a class="btn btn-success btn-sm" target="_blank" href="{{url('/administracion-financiera/estudiante/')}}/{{$row['numero_registro_asignado']}}" data-toggle="tooltip" data-placement="top" title="Ir a cobros del estudiante">
-                                                    <i class="fa fa-eye"></i> Ver cobros
-                                                </a>
-                                            </td>
+                                            <td scope="row">{{$row['matriculados']}}</td>
+                                            <td scope="row">{{$row['id_asignatura']}} {{$row['asignatura']}}</td>
+                                            <td scope="row">{{$row['id_carrera']}}</td>
+                                            <td scope="row">{{$row['etiqueta_bloque']}}</td>
+                                            <td scope="row">{{$row['jornada']}}</td>
+                                            <td scope="row">{{$row['sede']}}</td>
+                                            <td scope="row">{{$row['nombre_completo_docente']}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
