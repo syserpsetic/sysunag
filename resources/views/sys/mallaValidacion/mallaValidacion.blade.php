@@ -232,7 +232,15 @@
                     @else 
                         <div class="col-lg-12 col-sm-12 chat-content">
                     @endif
-                        <center><p class="lead"><strong>{{$periodo_actual['periodo']}}</strong></p></center>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4 text-center">
+                                <p class="lead"><strong>{{ $periodo_actual['periodo'] }}</strong></p>
+                            </div>
+                            <div class="col-4 text-end">
+                                <p class="lead"><strong>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>
+                            </div>
+                        </div>
                         <hr>
                         <div class="chat-body">
                             <div class="row">

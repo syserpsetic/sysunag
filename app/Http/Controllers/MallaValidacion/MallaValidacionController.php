@@ -30,6 +30,7 @@ class MallaValidacionController extends Controller
         $narracion = $response['narracion'];
         $coutPendientes = $response['coutPendientes'];
         $periodo_actual = $response['periodo_actual'];
+        $porcentje_carga_academica = $response['porcentje_carga_academica'];
 
         return view("sys.mallaValidacion.mallaValidacion")
         ->with('indicadoresMallaValidaciones', $indicadoresMallaValidaciones)
@@ -38,6 +39,7 @@ class MallaValidacionController extends Controller
         ->with('narracion', $narracion)
         ->with('coutPendientes', $coutPendientes)
         ->with('periodo_actual', $periodo_actual)
+        ->with('porcentje_carga_academica', $porcentje_carga_academica)
         ->with('scopes', $scopes);
     }
 
