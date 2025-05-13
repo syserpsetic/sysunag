@@ -232,6 +232,8 @@
                     @else 
                         <div class="col-lg-12 col-sm-12 chat-content">
                     @endif
+                        <center><p class="lead"><strong>{{$periodo_actual['periodo']}}</strong></p></center>
+                        <hr>
                         <div class="chat-body">
                             <div class="row">
                                 <div class="col-12 col-xl-12 col-sm-12 stretch-card">

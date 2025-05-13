@@ -25,6 +25,12 @@
           <span class="link-title">Malla de Validación</span>
         </a>
       </li>
+      <li class="nav-item {{ active_class(['/egresados/datos_generales']) }}">
+        <a href="{{ url('/egresados/datos_generales') }}" class="nav-link">
+          <i class="link-icon" data-feather="users"></i>
+          <span class="link-title">Egresados</span>
+        </a>
+      </li>
       <!-- <li class="nav-item nav-category">web apps</li>
       <li class="nav-item {{ active_class(['email/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">

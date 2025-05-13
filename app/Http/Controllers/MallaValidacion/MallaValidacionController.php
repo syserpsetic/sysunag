@@ -19,7 +19,7 @@ class MallaValidacionController extends Controller
         ])->get(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion');
 
         if($response->status() === 403){
-            return view('pages.error-page-403')->with('scopes', $scopes = array());
+            return view('pages.error.403')->with('scopes', $scopes = array());
         }
         
         //throw new Exception($response->status());
@@ -29,6 +29,7 @@ class MallaValidacionController extends Controller
         $noticias = $response['noticias'];
         $narracion = $response['narracion'];
         $coutPendientes = $response['coutPendientes'];
+        $periodo_actual = $response['periodo_actual'];
 
         return view("sys.mallaValidacion.mallaValidacion")
         ->with('indicadoresMallaValidaciones', $indicadoresMallaValidaciones)
@@ -36,6 +37,7 @@ class MallaValidacionController extends Controller
         ->with('noticias', $noticias)
         ->with('narracion', $narracion)
         ->with('coutPendientes', $coutPendientes)
+        ->with('periodo_actual', $periodo_actual)
         ->with('scopes', $scopes);
     }
 
@@ -51,7 +53,7 @@ class MallaValidacionController extends Controller
         ]);
 
         if($response->status() === 403){
-            return view('pages.error-page-403')->with('scopes', $scopes = array());
+            return view('pages.error.403')->with('scopes', $scopes = array());
         }
 
         $msgSuccess = $response['msgSuccess'];
@@ -69,7 +71,7 @@ class MallaValidacionController extends Controller
         ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/cobro_repetido_estudiantes');
 
         if($response->status() === 403){
-            return view('pages.error-page-403')->with('scopes', $scopes = array());
+            return view('pages.error.403')->with('scopes', $scopes = array());
         }
         
         //throw new Exception($response->status());
@@ -87,7 +89,7 @@ class MallaValidacionController extends Controller
         ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_secciones_sin_docente');
 
         if($response->status() === 403){
-            return view('pages.error-page-403')->with('scopes', $scopes = array());
+            return view('pages.error.403')->with('scopes', $scopes = array());
         }
         
         //throw new Exception($response->status());
@@ -105,7 +107,7 @@ class MallaValidacionController extends Controller
         ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_migraciones_pps');
 
         if($response->status() === 403){
-            return view('pages.error-page-403')->with('scopes', $scopes = array());
+            return view('pages.error.403')->with('scopes', $scopes = array());
         }
         
         //throw new Exception($response->status());
@@ -123,7 +125,7 @@ class MallaValidacionController extends Controller
         ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/pago_minimo_estudiantes');
 
         if($response->status() === 403){
-            return view('pages.error-page-403')->with('scopes', $scopes = array());
+            return view('pages.error.403')->with('scopes', $scopes = array());
         }
         
         //throw new Exception($response->status());
@@ -141,7 +143,7 @@ class MallaValidacionController extends Controller
         ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/pago_minimo_estudiantes');
 
         if($response->status() === 403){
-            return view('pages.error-page-403')->with('scopes', $scopes = array());
+            return view('pages.error.403')->with('scopes', $scopes = array());
         }
         
         return back();
