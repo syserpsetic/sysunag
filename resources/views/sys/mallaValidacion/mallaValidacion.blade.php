@@ -239,6 +239,7 @@
                             </div>
                             <div class="col-4 text-center">
                                 <p class="lead"><strong>{{ $periodo_actual['periodo'] }}</strong></p>
+                                    <cite title="Source Title">Malla de Validación</cite>
                             </div>
                             <div class="col-4 text-end">
                                 <p class="lead"><strong>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>                         
