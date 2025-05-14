@@ -233,12 +233,16 @@
                         <div class="col-lg-12 col-sm-12 chat-content">
                     @endif
                         <div class="row">
-                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['porcentaje_matricula'] }}</strong></p>                         
+                                    <cite title="Source Title">Matrícula</cite>
+                            </div>
                             <div class="col-4 text-center">
                                 <p class="lead"><strong>{{ $periodo_actual['periodo'] }}</strong></p>
                             </div>
                             <div class="col-4 text-end">
-                                <p class="lead"><strong>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>
+                                <p class="lead"><strong>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>                         
+                                    <cite title="Source Title">Carga Académica</cite>
                             </div>
                         </div>
                         <hr>
