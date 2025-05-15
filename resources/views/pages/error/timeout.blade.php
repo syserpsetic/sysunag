@@ -47,9 +47,16 @@
       counter.textContent = seconds;
     } else {
       clearInterval(countdown);
-      message.innerHTML = '<span class="fw-bold text-success">Recargando...</span>';
+      message.innerHTML = `
+        <div class="d-flex align-items-center justify-content-center">
+          <div class="spinner-border text-success me-2" role="status" style="width: 1.5rem; height: 1.5rem;">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+          <span class="fw-bold text-success fs-4">Recargando...</span>
+        </div>`;
       location.reload();
     }
   }, 1000);
 </script>
 @endsection
+
