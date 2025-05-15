@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MallaValidacion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\View\View;
 use DB;
 Use Session;
