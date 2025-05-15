@@ -234,7 +234,7 @@
                     @endif
                         <div class="row">
                             <div class="col-4">
-                                <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['porcentaje_matricula'] }}</strong></p>                         
+                                <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }})</strong></p>                         
                                     <cite title="Source Title">Matrícula</cite>
                             </div>
                             <div class="col-4 text-center">
