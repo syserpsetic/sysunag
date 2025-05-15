@@ -34,7 +34,7 @@ class MallaValidacionController extends Controller
             $periodo_actual = $response['periodo_actual'];
             $porcentje_carga_academica = $response['porcentje_carga_academica'];
             $porcentaje_matricula = $response['porcentaje_matricula'];
-
+return view('pages.error.timeout');
             return view("sys.mallaValidacion.mallaValidacion")
             ->with('indicadoresMallaValidaciones', $indicadoresMallaValidaciones)
             ->with('personas', $personas)
