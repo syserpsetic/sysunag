@@ -14,35 +14,41 @@ class MallaValidacionController extends Controller
 {
     public function malla_validaciones(){
 
-        $response = Http::withHeaders([
-            'Authorization' => session('token'),
-        ])->get(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion');
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+            ])->timeout(30)->get(env('API_BASE_URL_ZETA') . '/api/auth/setic/malla_validacion');
 
-        if($response->status() === 403){
-            return view('pages.error.403')->with('scopes', $scopes = array());
+            if($response->status() === 403){
+                return view('pages.error.403')->with('scopes', $scopes = array());
+            }
+            
+            //throw new Exception($response->status());
+            $scopes = $response['scopes'];
+            $indicadoresMallaValidaciones = $response['indicadoresMallaValidaciones'];
+            $personas = $response['personas'];
+            $noticias = $response['noticias'];
+            $narracion = $response['narracion'];
+            $coutPendientes = $response['coutPendientes'];
+            $periodo_actual = $response['periodo_actual'];
+            $porcentje_carga_academica = $response['porcentje_carga_academica'];
+            $porcentaje_matricula = $response['porcentaje_matricula'];
+
+            return view("sys.mallaValidacion.mallaValidacion")
+            ->with('indicadoresMallaValidaciones', $indicadoresMallaValidaciones)
+            ->with('personas', $personas)
+            ->with('noticias', $noticias)
+            ->with('narracion', $narracion)
+            ->with('coutPendientes', $coutPendientes)
+            ->with('periodo_actual', $periodo_actual)
+            ->with('porcentje_carga_academica', $porcentje_carga_academica)
+            ->with('porcentaje_matricula', $porcentaje_matricula)
+            ->with('scopes', $scopes);
+
+        } catch (ConnectionException $e) {
+        // Si hay un error como cURL 28 (timeout), carga una vista amigable
+            return view('pages.error.timeout'); // Crea esta vista personalizada
         }
-        
-        //throw new Exception($response->status());
-        $scopes = $response['scopes'];
-        $indicadoresMallaValidaciones = $response['indicadoresMallaValidaciones'];
-        $personas = $response['personas'];
-        $noticias = $response['noticias'];
-        $narracion = $response['narracion'];
-        $coutPendientes = $response['coutPendientes'];
-        $periodo_actual = $response['periodo_actual'];
-        $porcentje_carga_academica = $response['porcentje_carga_academica'];
-        $porcentaje_matricula = $response['porcentaje_matricula'];
-
-        return view("sys.mallaValidacion.mallaValidacion")
-        ->with('indicadoresMallaValidaciones', $indicadoresMallaValidaciones)
-        ->with('personas', $personas)
-        ->with('noticias', $noticias)
-        ->with('narracion', $narracion)
-        ->with('coutPendientes', $coutPendientes)
-        ->with('periodo_actual', $periodo_actual)
-        ->with('porcentje_carga_academica', $porcentje_carga_academica)
-        ->with('porcentaje_matricula', $porcentaje_matricula)
-        ->with('scopes', $scopes);
     }
 
     public function malla_validaciones_tareas_pendientes_personas(Request $request){
