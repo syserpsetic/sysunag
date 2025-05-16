@@ -233,17 +233,19 @@
                         <div class="col-lg-12 col-sm-12 chat-content">
                     @endif
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }})</strong></p>                         
                                     <cite title="Source Title">Matrícula</cite>
                             </div>
-                            <div class="col-4 text-center">
+                            <div class="col-6 text-center">
                                 <p class="lead"><strong>{{ $periodo_actual['periodo'] }}</strong></p>
                                     <cite title="Source Title">Malla de Validación</cite>
                             </div>
-                            <div class="col-4 text-end">
-                                <p class="lead"><strong>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>                         
+                            <div class="col-3 text-end">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal_bloques">
+                                    <p class="lead"><strong>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>                         
                                     <cite title="Source Title">Carga Académica</cite>
+                                </a>
                             </div>
                         </div>
                         <hr>
@@ -393,6 +395,30 @@
                             <br />
                             <p class="text-justify" id="indicador_descripcion"></p>
                         </center>
+                    </div>
+                    <div class="modal-footer bg-secondary">
+                        <button type="button" class="btn btn-primary btn-xs" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade bd-example" id="modal_bloques" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="book"></i>Estados Bloques</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                    </div>
+                    <div class="card-body">
+                            <ul class="list-group">
+                                @foreach($estados_bloques as $row)
+                                <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong><i class="icon-lg pb-3px" data-feather="{{$row['icono']}}"></i> {{$row['estado']}}</strong>
+                                    <span class="badge bg-primary rounded-pill">{{$row['count']}}</span>
+                                </a>
+                                @endforeach
+                            </ul>
                     </div>
                     <div class="modal-footer bg-secondary">
                         <button type="button" class="btn btn-primary btn-xs" data-bs-dismiss="modal">Aceptar</button>
