@@ -2,6 +2,7 @@
 
 @push('plugin-styles')
   <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -404,21 +405,202 @@
         </div>
 
         <div class="modal fade bd-example" id="modal_bloques" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="book"></i>Estados Bloques</h6>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                     </div>
                     <div class="card-body">
-                            <ul class="list-group">
-                                @foreach($estados_bloques as $row)
-                                <a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong><i class="icon-lg pb-3px" data-feather="{{$row['icono']}}"></i> {{$row['estado']}}</strong>
-                                    <span class="badge bg-primary rounded-pill">{{$row['count']}}</span>
-                                </a>
-                                @endforeach
-                            </ul>
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" role="tab" aria-controls="home" aria-selected="true">
+                                            <strong><i class="icon-lg pb-3px" data-feather="check-circle"></i> Aprobados</strong> <span class="badge bg-primary"> {{$estados_bloques['aprobado']}}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                                            <strong><i class="icon-lg pb-3px" data-feather="refresh-ccw"></i> Proceso</strong> <span class="badge bg-primary"> {{$estados_bloques['proceso']}}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" role="tab" aria-controls="contact" aria-selected="false">
+                                            <strong><i class="icon-lg pb-3px" data-feather="eye"></i> Revisión</strong> <span class="badge bg-primary"> {{$estados_bloques['revision']}}</span>
+                                        </a> 
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled" role="tab" aria-controls="disabled" aria-selected="false">
+                                            <strong><i class="icon-lg pb-3px" data-feather="x-circle"></i> Rechazados</strong> <span class="badge bg-primary"> {{$estados_bloques['rechazado']}}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled" role="tab" aria-controls="disabled" aria-selected="false">
+                                            <strong>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content border border-top-0 p-3" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="col-12 col-md-12 col-xl-12">
+                                            <div class="card border-secondary">
+                                                <h5 class="card-header bg-azul text-white"><i class="text-white icon-lg pb-3px" data-feather="check-circle"></i> Bloques Aprobados</h5>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="jambo_table table table-hover" id="tbl_bloques_aprobados" border="1">
+                                                            <thead  class="bg-primary">
+                                                                <tr class="headings">
+                                                                    <th scope="col" class="text-white">ID</th>
+                                                                    <th scope="col" class="text-white">Id Carrera</th>
+                                                                    <th scope="col" class="text-white">Detalle</th>
+                                                                    <th scope="col" class="text-white">Creación</th>
+                                                                    <th scope="col" class="text-white">Sede</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($bloques as $row)
+                                                                    @if($row['id_estado_asignaturas'] === 3)
+                                                                    <tr style="font-size: small;">
+                                                                        <td scope="row">{{$row['id']}}</td>
+                                                                        <td scope="row">{{$row['id_carrera']}}</td>
+                                                                        <td scope="row"> 
+                                                                            <strong>PA:</strong> {{$row['periodo_academico']}} | 
+                                                                            <strong>ES:</strong> {{$row['etiqueta_bloque']}} | 
+                                                                            <strong>JM:</strong> {{$row['id_jornada_modular']}}
+                                                                        </td>
+                                                                        <td scope="row">{{$row['fecha_creacion']}}</td>
+                                                                        <td scope="row">{{$row['sede']}}</td>
+                                                                    </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="col-12 col-md-12 col-xl-12">
+                                            <div class="card border-secondary">
+                                                <h5 class="card-header bg-azul text-white"><i class="text-white icon-lg pb-3px" data-feather="refresh-ccw"></i> Bloques En Proceso</h5>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="jambo_table table table-hover" id="tbl_bloques_proceso" border="1">
+                                                            <thead  class="bg-primary">
+                                                                <tr class="headings">
+                                                                    <th scope="col" class="text-white">ID</th>
+                                                                    <th scope="col" class="text-white">Id Carrera</th>
+                                                                    <th scope="col" class="text-white">Detalle</th>
+                                                                    <th scope="col" class="text-white">Creación</th>
+                                                                    <th scope="col" class="text-white">Sede</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($bloques as $row)
+                                                                    @if($row['id_estado_asignaturas'] === 1)
+                                                                    <tr style="font-size: small;">
+                                                                        <td scope="row">{{$row['id']}}</td>
+                                                                        <td scope="row">{{$row['id_carrera']}}</td>
+                                                                        <td scope="row"> 
+                                                                            <strong>PA:</strong> {{$row['periodo_academico']}} | 
+                                                                            <strong>ES:</strong> {{$row['etiqueta_bloque']}} | 
+                                                                            <strong>JM:</strong> {{$row['id_jornada_modular']}}
+                                                                        </td>
+                                                                        <td scope="row">{{$row['fecha_creacion']}}</td>
+                                                                        <td scope="row">{{$row['sede']}}</td>
+                                                                    </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                        <div class="col-12 col-md-12 col-xl-12">
+                                            <div class="card border-secondary">
+                                                <h5 class="card-header bg-azul text-white"><i class="text-white icon-lg pb-3px" data-feather="eye"></i> Bloques En Revisión</h5>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="jambo_table table table-hover" id="tbl_bloques_revision" border="1">
+                                                            <thead  class="bg-primary">
+                                                                <tr class="headings">
+                                                                    <th scope="col" class="text-white">ID</th>
+                                                                    <th scope="col" class="text-white">Id Carrera</th>
+                                                                    <th scope="col" class="text-white">Detalle</th>
+                                                                    <th scope="col" class="text-white">Creación</th>
+                                                                    <th scope="col" class="text-white">Sede</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($bloques as $row)
+                                                                    @if($row['id_estado_asignaturas'] === 2)
+                                                                    <tr style="font-size: small;">
+                                                                        <td scope="row">{{$row['id']}}</td>
+                                                                        <td scope="row">{{$row['id_carrera']}}</td>
+                                                                        <td scope="row"> 
+                                                                            <strong>PA:</strong> {{$row['periodo_academico']}} | 
+                                                                            <strong>ES:</strong> {{$row['etiqueta_bloque']}} | 
+                                                                            <strong>JM:</strong> {{$row['id_jornada_modular']}}
+                                                                        </td>
+                                                                        <td scope="row">{{$row['fecha_creacion']}}</td>
+                                                                        <td scope="row">{{$row['sede']}}</td>
+                                                                    </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="disabled" role="tabpanel" aria-labelledby="disabled-tab">
+                                        <div class="col-12 col-md-12 col-xl-12">
+                                            <div class="card border-secondary">
+                                                <h5 class="card-header bg-azul text-white"><i class="text-white icon-lg pb-3px" data-feather="x-circle"></i> Bloques Rechazados</h5>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="jambo_table table table-hover" id="tbl_bloques_rechazado" border="1">
+                                                            <thead  class="bg-primary">
+                                                                <tr class="headings">
+                                                                    <th scope="col" class="text-white">ID</th>
+                                                                    <th scope="col" class="text-white">Id Carrera</th>
+                                                                    <th scope="col" class="text-white">Detalle</th>
+                                                                    <th scope="col" class="text-white">Creación</th>
+                                                                    <th scope="col" class="text-white">Sede</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($bloques as $row)
+                                                                    @if($row['id_estado_asignaturas'] === 4)
+                                                                    <tr style="font-size: small;">
+                                                                        <td scope="row">{{$row['id']}}</td>
+                                                                        <td scope="row">{{$row['id_carrera']}}</td>
+                                                                        <td scope="row"> 
+                                                                            <strong>PA:</strong> {{$row['periodo_academico']}} | 
+                                                                            <strong>ES:</strong> {{$row['etiqueta_bloque']}} | 
+                                                                            <strong>JM:</strong> {{$row['id_jornada_modular']}}
+                                                                        </td>
+                                                                        <td scope="row">{{$row['fecha_creacion']}}</td>
+                                                                        <td scope="row">{{$row['sede']}}</td>
+                                                                    </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer bg-secondary">
                         <button type="button" class="btn btn-primary btn-xs" data-bs-dismiss="modal">Aceptar</button>
@@ -432,14 +614,21 @@
 @push('plugin-scripts')
   <script src="{{ asset('assets/plugins/flatpickr/flatpickr.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
+  <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
 @endpush
 
 @push('custom-scripts')
   <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+  <script src="{{ asset('assets/js/data-table.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
   <script type="text/javascript">
     var btn_actualizar_vista = true;
+    var table = null; 
+    var table2 = null; 
+    var table3 = null; 
+    var table4 = null; 
     var url_setic_malla_validacion_tareas_pendientes_personas = "{{url('setic/malla_validacion/tareas_pendientes_personas')}}"; 
     $(document).ready(function () {
         $.ajaxSetup({
@@ -447,6 +636,167 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        table = $('#tbl_bloques_aprobados').DataTable({
+                "aLengthMenu": [
+                    [10, 30, 50, 100,-1],
+                    [10, 30, 50, 100,"Todo"]
+                ],
+                "iDisplayLength": 10,
+                language: {
+                    processing:     "Procesando...",
+                    search:         "Buscar:",
+                    lengthMenu:     "Mostrar _MENU_ registros",
+                    info:           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty:      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    infoFiltered:   "(filtrado de un total de _MAX_ registros)",
+                    infoPostFix:    "",
+                    loadingRecords: "Cargando...",
+                    zeroRecords:    "No se encontraron resultados",
+                    emptyTable:     "Ningún dato disponible en esta tabla",
+                    paginate: {
+                        first:      "Primero",
+                        previous:   "Anterior",
+                        next:       "Siguiente",
+                        last:       "Último"
+                    },
+                    aria: {
+                        sortAscending:  ": Activar para ordenar la columna de manera ascendente",
+                        sortDescending: ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+                });
+            $('#tbl_bloques_aprobados').each(function() {
+                var datatable = $(this);
+                // SEARCH - Add the placeholder for Search and Turn this into in-line form control
+                var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+                search_input.attr('placeholder', 'Buscar');
+                search_input.removeClass('form-control-sm');
+                // LENGTH - Inline-Form control
+                var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+                length_sel.removeClass('form-control-sm');
+                });
+
+            table2 = $('#tbl_bloques_proceso').DataTable({
+                "aLengthMenu": [
+                    [10, 30, 50, 100,-1],
+                    [10, 30, 50, 100,"Todo"]
+                ],
+                "iDisplayLength": 10,
+                language: {
+                    processing:     "Procesando...",
+                    search:         "Buscar:",
+                    lengthMenu:     "Mostrar _MENU_ registros",
+                    info:           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty:      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    infoFiltered:   "(filtrado de un total de _MAX_ registros)",
+                    infoPostFix:    "",
+                    loadingRecords: "Cargando...",
+                    zeroRecords:    "No se encontraron resultados",
+                    emptyTable:     "Ningún dato disponible en esta tabla",
+                    paginate: {
+                        first:      "Primero",
+                        previous:   "Anterior",
+                        next:       "Siguiente",
+                        last:       "Último"
+                    },
+                    aria: {
+                        sortAscending:  ": Activar para ordenar la columna de manera ascendente",
+                        sortDescending: ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+                });
+            $('#tbl_bloques_proceso').each(function() {
+                var datatable = $(this);
+                // SEARCH - Add the placeholder for Search and Turn this into in-line form control
+                var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+                search_input.attr('placeholder', 'Buscar');
+                search_input.removeClass('form-control-sm');
+                // LENGTH - Inline-Form control
+                var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+                length_sel.removeClass('form-control-sm');
+                });
+
+
+            table3 = $('#tbl_bloques_revision').DataTable({
+                "aLengthMenu": [
+                    [10, 30, 50, 100,-1],
+                    [10, 30, 50, 100,"Todo"]
+                ],
+                "iDisplayLength": 10,
+                language: {
+                    processing:     "Procesando...",
+                    search:         "Buscar:",
+                    lengthMenu:     "Mostrar _MENU_ registros",
+                    info:           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty:      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    infoFiltered:   "(filtrado de un total de _MAX_ registros)",
+                    infoPostFix:    "",
+                    loadingRecords: "Cargando...",
+                    zeroRecords:    "No se encontraron resultados",
+                    emptyTable:     "Ningún dato disponible en esta tabla",
+                    paginate: {
+                        first:      "Primero",
+                        previous:   "Anterior",
+                        next:       "Siguiente",
+                        last:       "Último"
+                    },
+                    aria: {
+                        sortAscending:  ": Activar para ordenar la columna de manera ascendente",
+                        sortDescending: ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+                });
+            $('#tbl_bloques_revision').each(function() {
+                var datatable = $(this);
+                // SEARCH - Add the placeholder for Search and Turn this into in-line form control
+                var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+                search_input.attr('placeholder', 'Buscar');
+                search_input.removeClass('form-control-sm');
+                // LENGTH - Inline-Form control
+                var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+                length_sel.removeClass('form-control-sm');
+                });
+
+        table4 = $('#tbl_bloques_rechazado').DataTable({
+                "aLengthMenu": [
+                    [10, 30, 50, 100,-1],
+                    [10, 30, 50, 100,"Todo"]
+                ],
+                "iDisplayLength": 10,
+                language: {
+                    processing:     "Procesando...",
+                    search:         "Buscar:",
+                    lengthMenu:     "Mostrar _MENU_ registros",
+                    info:           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    infoEmpty:      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    infoFiltered:   "(filtrado de un total de _MAX_ registros)",
+                    infoPostFix:    "",
+                    loadingRecords: "Cargando...",
+                    zeroRecords:    "No se encontraron resultados",
+                    emptyTable:     "Ningún dato disponible en esta tabla",
+                    paginate: {
+                        first:      "Primero",
+                        previous:   "Anterior",
+                        next:       "Siguiente",
+                        last:       "Último"
+                    },
+                    aria: {
+                        sortAscending:  ": Activar para ordenar la columna de manera ascendente",
+                        sortDescending: ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+                });
+            $('#tbl_bloques_rechazado').each(function() {
+                var datatable = $(this);
+                // SEARCH - Add the placeholder for Search and Turn this into in-line form control
+                var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+                search_input.attr('placeholder', 'Buscar');
+                search_input.removeClass('form-control-sm');
+                // LENGTH - Inline-Form control
+                var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+                length_sel.removeClass('form-control-sm');
+                });
 
         //$('.sidebar-toggler not-active').trigger("click");
 

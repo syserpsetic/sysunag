@@ -35,6 +35,7 @@ class MallaValidacionController extends Controller
             $porcentje_carga_academica = $response['porcentje_carga_academica'];
             $porcentaje_matricula = $response['porcentaje_matricula'];
             $estados_bloques = $response['estados_bloques'];
+            $bloques = $response['bloques'];
 
             return view("sys.mallaValidacion.mallaValidacion")
             ->with('indicadoresMallaValidaciones', $indicadoresMallaValidaciones)
@@ -46,6 +47,7 @@ class MallaValidacionController extends Controller
             ->with('porcentje_carga_academica', $porcentje_carga_academica)
             ->with('porcentaje_matricula', $porcentaje_matricula)
             ->with('estados_bloques', $estados_bloques)
+            ->with('bloques', $bloques)
             ->with('scopes', $scopes);
 
         } catch (ConnectionException $e) {
