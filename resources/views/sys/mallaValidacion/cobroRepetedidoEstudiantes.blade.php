@@ -43,7 +43,7 @@
                                         <tr style="font-size: small;">
                                             <td scope="row">{{$row['numero_registro_asignado']}}</td>
                                             <td scope="row">{{$row['movimiento']}}</td>
-                                            <td scope="row">{{$row[cobros_repetidos]}}</td>
+                                            <td scope="row">{{$row['cobros_repetidos']}}</td>
                                             <td scope="row">
                                                 <a class="btn btn-success btn-sm" target="_blank" href="{{url('/administracion-financiera/estudiante/')}}/{{$row['numero_registro_asignado']}}" data-toggle="tooltip" data-placement="top" title="Ir a cobros del estudiante">
                                                     <i class="fa fa-eye"></i> Ver cobros
