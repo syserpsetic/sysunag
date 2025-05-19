@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::get("setic/malla_validacion/malla_estudiantes_traslapes", [MallaValidacionController::class, 'malla_estudiantes_traslapes']); 
         Route::get("setic/malla_validacion/malla_secciones_sobrevaloradas", [MallaValidacionController::class, 'malla_secciones_sobrevaloradas']); 
         Route::get("setic/malla_validacion/malla_parametrizacion_estudiantes", [MallaValidacionController::class, 'malla_parametrizacion_estudiantes']); 
+        Route::get("setic/malla_validacion/malla_estudiantes_sin_matricula", [MallaValidacionController::class, 'malla_estudiantes_sin_matricula']); 
     //Finaliza Malla Validaciones
 
     //Inicia Egresados

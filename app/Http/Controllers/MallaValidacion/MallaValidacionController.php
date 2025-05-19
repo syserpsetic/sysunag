@@ -181,6 +181,10 @@ class MallaValidacionController extends Controller
         return view("pages.error.construccion");
     }
 
+    public function malla_estudiantes_sin_matricula(Request $request){
+        return view("pages.error.construccion");
+    }
+
     public function malla_refrescar_vista_materializada_pago_minimo_alto_estudiantes(Request $request){
         $response = Http::withHeaders([
             'Authorization' => session('token'),
