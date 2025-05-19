@@ -3,6 +3,7 @@
 @push('plugin-styles')
   <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -235,8 +236,10 @@
                     @endif
                         <div class="row">
                             <div class="col-3">
-                                <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }})</strong></p>                         
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal_vistas_materializadas">
+                                    <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }})</strong></p>                         
                                     <cite title="Source Title">Matrícula</cite>
+                                </a>
                             </div>
                             <div class="col-6 text-center">
                                 <p class="lead"><strong>{{ $periodo_actual['periodo'] }}</strong></p>
@@ -294,7 +297,7 @@
                                                                 </button>
                                                                 <a target="_blank" class="dropdown-item d-flex align-items-center" href="{{url($row['btn_detalle_ruta'])}}"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
                                                                 @if($row['btn_accion_id'] != null)
-                                                                    <button class="dropdown-item d-flex align-items-center" id="{{$row['btn_accion_id']}}" type="button"><i data-feather="refresh-ccw" class="icon-sm me-2"></i> <span class="">{{$row['btn_accion_descripcion']}}</span></button>
+                                                                    <button class="dropdown-item d-flex align-items-center {{$row['btn_accion_id']}}" type="button"><i data-feather="refresh-ccw" class="icon-sm me-2"></i> <span class="">{{$row['btn_accion_descripcion']}}</span></button>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -396,6 +399,26 @@
                             <br />
                             <p class="text-justify" id="indicador_descripcion"></p>
                         </center>
+                    </div>
+                    <div class="modal-footer bg-secondary">
+                        <button type="button" class="btn btn-primary btn-xs" data-bs-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade bd-example-modal-sm" id="modal_vistas_materializadas" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="refresh-cw"></i> Actualizar Vistas Materializadas</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action btn_actualizar_vista_materializada_clases_matriculadas">VM CLASES MATRICULADAS</a>
+                            <a href="#" class="list-group-item list-group-item-action btn_actualizar_vista_materializada_pago_minimo_alto_estudiantes">VM PAGO MÍNIMO ALTO ESTUDIANTES</a>
+                        </div>
                     </div>
                     <div class="modal-footer bg-secondary">
                         <button type="button" class="btn btn-primary btn-xs" data-bs-dismiss="modal">Aceptar</button>
@@ -616,6 +639,7 @@
   <script src="{{ asset('assets/plugins/apexcharts/apexcharts.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
+  <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 @endpush
 
 @push('custom-scripts')
@@ -623,8 +647,11 @@
   <script src="{{ asset('assets/js/data-table.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
+  <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
   <script type="text/javascript">
-    var btn_actualizar_vista = true;
+    var btn_actualizar_vista_materializada_pago_minimo_alto_estudiantes = true;
+    var btn_actualizar_vista_materializada_clases_matriculadas = true;
+    var html = null;
     var table = null; 
     var table2 = null; 
     var table3 = null; 
@@ -842,11 +869,22 @@
                                     $("#indicador_descripcion").html(indicador_descripcion);
                                      }); 
 
-                                     $("#btn_actualizar_vista").on("click", function () {
-        if(btn_actualizar_vista){
-            btn_actualizar_vista = false;
-            $("#btn_actualizar_vista").html('Espere...');
-            window.location.href =  "{{url('setic/malla_validacion/pago_minimo_estudiantes/refrescar_vista_materializada')}}";
+    $(".btn_actualizar_vista_materializada_pago_minimo_alto_estudiantes").on("click", function () {
+        if(btn_actualizar_vista_materializada_pago_minimo_alto_estudiantes){
+            btn_actualizar_vista_materializada_pago_minimo_alto_estudiantes = false;
+            $("#btn_actualizar_vista_materializada_pago_minimo_alto_estudiantes").html('Espere...');
+            html = 'REFRESCANDO VM PAGO MÍNIMO ALTO ESTUDIANTES...';
+            espera(html)
+            window.location.href =  "{{url('setic/malla_validacion/pago_minimo_estudiantes/refrescar_vista_materializada_pago_minimo_alto_estudiantes')}}";
+        }
+    });
+
+    $(".btn_actualizar_vista_materializada_clases_matriculadas").on("click", function () {
+        if(btn_actualizar_vista_materializada_clases_matriculadas){
+            btn_actualizar_vista_materializada_clases_matriculadas = false;
+            html = 'REFRESCANDO VM CLASES MATRICULADAS...';
+            espera(html)
+            window.location.href =  "{{url('setic/malla_validacion/pago_minimo_estudiantes/refrescar_vista_materializada_clases_matriculadas')}}";
         }
     });
 
@@ -947,5 +985,20 @@
                 },
             });
         }
+
+        function espera(html){
+        Swal.fire({
+            icon: 'warning',
+            title: '¡Espera!',
+            html: html,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: true, // puedes cambiar esto si no quieres el botón
+            didOpen: () => {
+                Swal.showLoading(); // opcional: si quieres mostrar el loader
+            }
+        });
+
+    }
   </script>
 @endpush
