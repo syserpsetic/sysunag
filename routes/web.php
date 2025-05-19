@@ -48,6 +48,14 @@ Route::middleware('auth')->group(function () {
         Route::get("setic/malla_validacion/pago_minimo_estudiantes", [MallaValidacionController::class, 'malla_pago_minimo_estudiantes']); 
         Route::get("setic/malla_validacion/pago_minimo_estudiantes/refrescar_vista_materializada_pago_minimo_alto_estudiantes", [MallaValidacionController::class, 'malla_refrescar_vista_materializada_pago_minimo_alto_estudiantes']); 
         Route::get("setic/malla_validacion/pago_minimo_estudiantes/refrescar_vista_materializada_clases_matriculadas", [MallaValidacionController::class, 'malla_refrescar_vista_materializada_clases_matriculadas']); 
+        Route::get("setic/malla_validacion/malla_cobros_incorrectos", [MallaValidacionController::class, 'malla_cobros_incorrectos']); 
+        Route::get("setic/malla_validacion/malla_migraciones_pps", [MallaValidacionController::class, 'malla_migraciones_pps']); 
+        Route::get("setic/malla_validacion/malla_parametrizacion_secciones_limite_estudiantes", [MallaValidacionController::class, 'malla_parametrizacion_secciones_limite_estudiantes']); 
+        Route::get("setic/malla_validacion/malla_login_estudiantes", [MallaValidacionController::class, 'malla_login_estudiantes']); 
+        Route::get("setic/malla_validacion/malla_estudiantes_permiso_matricula", [MallaValidacionController::class, 'malla_estudiantes_permiso_matricula']); 
+        Route::get("setic/malla_validacion/malla_estudiantes_traslapes", [MallaValidacionController::class, 'malla_estudiantes_traslapes']); 
+        Route::get("setic/malla_validacion/malla_secciones_sobrevaloradas", [MallaValidacionController::class, 'malla_secciones_sobrevaloradas']); 
+        Route::get("setic/malla_validacion/malla_parametrizacion_estudiantes", [MallaValidacionController::class, 'malla_parametrizacion_estudiantes']); 
     //Finaliza Malla Validaciones
 
     //Inicia Egresados

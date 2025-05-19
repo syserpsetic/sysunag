@@ -117,6 +117,7 @@ class MallaValidacionController extends Controller
     }
 
     public function malla_migraciones_pps(Request $request){
+        return view("pages.error.construccion");
         $response = Http::withHeaders([
             'Authorization' => session('token'),
         ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_migraciones_pps');
@@ -150,6 +151,34 @@ class MallaValidacionController extends Controller
         return view("sys.mallaValidacion.pagoMinimoEstudiantes")
         ->with("estudiantes", $estudiantes)
         ->with('scopes', $scopes);
+    }
+
+    public function malla_cobros_incorrectos(Request $request){
+        return view("pages.error.construccion");
+    }
+
+    public function malla_parametrizacion_secciones_limite_estudiantes(Request $request){
+        return view("pages.error.construccion");
+    }
+
+    public function malla_login_estudiantes(Request $request){
+        return view("pages.error.construccion");
+    }
+
+    public function malla_estudiantes_permiso_matricula(Request $request){
+        return view("pages.error.construccion");
+    }
+
+    public function malla_estudiantes_traslapes(Request $request){
+        return view("pages.error.construccion");
+    }
+
+    public function malla_secciones_sobrevaloradas(Request $request){
+        return view("pages.error.construccion");
+    }
+
+    public function malla_parametrizacion_estudiantes(Request $request){
+        return view("pages.error.construccion");
     }
 
     public function malla_refrescar_vista_materializada_pago_minimo_alto_estudiantes(Request $request){
