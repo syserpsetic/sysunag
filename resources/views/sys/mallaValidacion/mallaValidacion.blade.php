@@ -238,7 +238,7 @@
                             <div class="col-3">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal_vistas_materializadas">
                                     <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }})</strong></p>                         
-                                    <cite title="Source Title">Matrícula</cite>
+                                    <cite title="Source Title">{{ $porcentaje_matricula['datos'] }}</cite>
                                 </a>
                             </div>
                             <div class="col-6 text-center">
@@ -295,7 +295,7 @@
                                                                     data-indicador_descripcion="{{$row['indicador_descripcion']}}">
                                                                     <i data-feather="alert-circle" class="icon-sm me-2"></i> <span class="">Info</span>
                                                                 </button>
-                                                                <a target="_blank" class="dropdown-item d-flex align-items-center" href="{{url($row['btn_detalle_ruta'])}}"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
+                                                                <a class="dropdown-item d-flex align-items-center" href="{{url($row['btn_detalle_ruta'])}}"><i data-feather="align-justify" class="icon-sm me-2"></i> <span class="">Ir a detalle</span></a>
                                                                 @if($row['btn_accion_id'] != null)
                                                                     <button class="dropdown-item d-flex align-items-center {{$row['btn_accion_id']}}" type="button"><i data-feather="refresh-ccw" class="icon-sm me-2"></i> <span class="">{{$row['btn_accion_descripcion']}}</span></button>
                                                                 @endif

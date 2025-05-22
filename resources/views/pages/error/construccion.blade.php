@@ -28,7 +28,7 @@
             <br />
 
             <!-- Enlace al inicio o contacto -->
-            <a href="{{ url('/') }}" class="mt-2 d-block btn btn-primary">Volver al inicio</a>
+            <a href="javascript:history.back()" class="mt-2 d-block btn btn-primary">Regresar</a>
         </div>
     </div>
 </div>
