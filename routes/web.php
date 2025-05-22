@@ -44,12 +44,13 @@ Route::middleware('auth')->group(function () {
         Route::post("setic/malla_validacion/tareas_pendientes_personas", [MallaValidacionController::class, 'malla_validaciones_tareas_pendientes_personas']); 
         Route::get("setic/malla_validacion/cobro_repetido_estudiantes", [MallaValidacionController::class, 'malla_cobro_repetido_estudiantes']); 
         Route::get("setic/malla_validacion/malla_secciones_sin_docente", [MallaValidacionController::class, 'malla_secciones_sin_docente']); 
+        Route::get("setic/malla_validacion/malla_evidencias_pps", [MallaValidacionController::class, 'malla_evidencias_pps']); 
         Route::get("setic/malla_validacion/malla_migraciones_pps", [MallaValidacionController::class, 'malla_migraciones_pps']); 
         Route::get("setic/malla_validacion/pago_minimo_estudiantes", [MallaValidacionController::class, 'malla_pago_minimo_estudiantes']); 
         Route::get("setic/malla_validacion/pago_minimo_estudiantes/refrescar_vista_materializada_pago_minimo_alto_estudiantes", [MallaValidacionController::class, 'malla_refrescar_vista_materializada_pago_minimo_alto_estudiantes']); 
         Route::get("setic/malla_validacion/pago_minimo_estudiantes/refrescar_vista_materializada_clases_matriculadas", [MallaValidacionController::class, 'malla_refrescar_vista_materializada_clases_matriculadas']); 
         Route::get("setic/malla_validacion/malla_cobros_incorrectos", [MallaValidacionController::class, 'malla_cobros_incorrectos']); 
-        Route::get("setic/malla_validacion/malla_migraciones_pps", [MallaValidacionController::class, 'malla_migraciones_pps']); 
+        //Route::get("setic/malla_validacion/malla_migraciones_pps", [MallaValidacionController::class, 'malla_migraciones_pps']); 
         Route::get("setic/malla_validacion/malla_parametrizacion_secciones_limite_estudiantes", [MallaValidacionController::class, 'malla_parametrizacion_secciones_limite_estudiantes']); 
         Route::get("setic/malla_validacion/malla_login_estudiantes", [MallaValidacionController::class, 'malla_login_estudiantes']); 
         Route::get("setic/malla_validacion/malla_estudiantes_permiso_matricula", [MallaValidacionController::class, 'malla_estudiantes_permiso_matricula']); 

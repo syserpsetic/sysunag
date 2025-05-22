@@ -252,6 +252,17 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="row">
+                            <center>
+                                <div class="col-12">
+                                    <span class="badge bg-primary">{{$totalPrimary}}</span> |
+                                    <span class="badge bg-warning">{{$totalWarning}}</span> |
+                                    <span class="badge bg-danger text-white">{{$totalDanger}}</span> |
+                                    <span class="badge bg-light text-dark">{{$totalIndicadores}}</span>
+                                </div> 
+                            </center>
+                            
+                        </div>
                         <hr>
                         <div class="chat-body">
                             <div class="row">

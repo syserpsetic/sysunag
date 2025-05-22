@@ -36,6 +36,10 @@ class MallaValidacionController extends Controller
             $porcentaje_matricula = $response['porcentaje_matricula'];
             $estados_bloques = $response['estados_bloques'];
             $bloques = $response['bloques'];
+            $totalIndicadores = $response['totalIndicadores'];
+            $totalPrimary = $response['totalPrimary'];
+            $totalWarning = $response['totalWarning'];
+            $totalDanger = $response['totalDanger'];
 
             return view("sys.mallaValidacion.mallaValidacion")
             ->with('indicadoresMallaValidaciones', $indicadoresMallaValidaciones)
@@ -48,7 +52,11 @@ class MallaValidacionController extends Controller
             ->with('porcentaje_matricula', $porcentaje_matricula)
             ->with('estados_bloques', $estados_bloques)
             ->with('bloques', $bloques)
-            ->with('scopes', $scopes);
+            ->with('scopes', $scopes)
+            ->with('totalIndicadores', $totalIndicadores)
+            ->with('totalPrimary', $totalPrimary)
+            ->with('totalWarning', $totalWarning)
+            ->with('totalDanger', $totalDanger);
 
         } catch (ConnectionException $e) {
         // Si hay un error como cURL 28 (timeout), carga una vista amigable
@@ -116,8 +124,25 @@ class MallaValidacionController extends Controller
         ->with('scopes', $scopes);
     }
 
+    public function malla_evidencias_pps(Request $request){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_evidencias_pps');
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        
+        //throw new Exception($response->status());
+        $scopes = $response['scopes'];
+        $estudiantes = $response['estudiantes'];
+
+        return view("sys.mallaValidacion.mallaEvidenciasPps")
+        ->with("estudiantes", $estudiantes)
+        ->with('scopes', $scopes);
+    }
+
     public function malla_migraciones_pps(Request $request){
-        return view("pages.error.construccion");
         $response = Http::withHeaders([
             'Authorization' => session('token'),
         ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_migraciones_pps');

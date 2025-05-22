@@ -12,10 +12,10 @@
             <div class="card-body">
             <div class="alert alert-dark" role="alert">
                 <h1 class="display-1 d-flex align-items-center">
-                    <i data-feather="upload" class="me-3" style="width: 90px; height: 90px;"></i>
-                    <strong>MIGRACIONES PPS</strong>
+                    <i data-feather="check-circle" class="me-3" style="width: 90px; height: 90px;"></i>
+                    <strong>EVIDENCIAS PPS</strong>
                 </h1>
-                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Estudiantes que no tienen migrada la nota PPS.</div></h4>
+                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Estudiantes que no tienen evidencia completa de la PPS.</div></h4>
                 <br>
                 <div class="col-md-3">
                         <a class="btn btn-info btn-sm" id="btn_volver_convenio" href="{{url('setic/malla_validacion')}}" data-toggle="tooltip" data-placement="top" title="Regresar a Malla de Validaciones">
@@ -29,24 +29,47 @@
                         <h5 class="card-header bg-azul text-white"><i class="text-white icon-lg pb-3px" data-feather="users"></i> Estudiantes</h5>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="jambo_table table table-hover" style="width:100%" id="tbl_malla_validaciones_estudiantes" border="1">
+                                <table class="display responsive table-hover" style="width:100%" id="tbl_malla_validaciones_estudiantes" border="1">
                                     <thead  class="bg-primary">
                                         <tr class="headings" style="font-size: small;">
+                                            <th scope="col" class="text-white">Id</th>
+                                            <th scope="col" class="text-white">Tipo de Trabajo</th>
                                             <th scope="col" class="text-white">Numero Registro Asignado</th>
-                                            <th scope="col" class="text-white">Id Asignatura</th>
-                                            <th scope="col" class="text-white">Nota</th>
-                                            <th scope="col" class="text-white">Fuente Dato</th>
-                                            <th scope="col" class="text-white">Estado</th>
+                                            <th scope="col" class="text-white">Nombre Completo por Apellido</th>
+                                            <th scope="col" class="text-white">Los asesores realizaron las evaluaciones de la PPS</th>
+                                            <th scope="col" class="text-white">El asesor principal subió el informe y la presentación</th>
+                                            <th scope="col" class="text-white">El asesor principal validó y promedió la nota, en caso de anteproyecto también subió la evidencia de seguimiento</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($estudiantes as $row)
                                         <tr style="font-size: small;">
+                                            <td scope="row">{{$row['id']}}</td>
+                                            <td scope="row">{{$row['tipo_trabajo']}}</td>
                                             <td scope="row">{{$row['numero_registro_asignado']}}</td>
-                                            <td scope="row">{{$row['id_asignatura']}}</td>
-                                            <td scope="row">{{$row['nota']}}</td>
-                                            <td scope="row">{{$row['fuente_dato']}}</td>
-                                            <td scope="row">{{$row['estado']}}</td>
+                                            <td scope="row">{{$row['nombre_completo_por_apellido']}}</td>
+                                            <td scope="row">
+                                                @if($row['regla_4'] == 1)
+                                                    <span class="badge bg-success"><i data-feather="check-circle" class="icon-lg pb-3px text-white"></i></span>
+                                                @else
+                                                    <span class="badge bg-danger"><i data-feather="x" class="icon-lg pb-3px text-white"></i></span>
+                                                @endif
+                                            </td>
+                                            <td scope="row">
+                                                @if($row['regla_5'] == 1)
+                                                    <span class="badge bg-success"><i data-feather="check-circle" class="icon-lg pb-3px text-white"></i></span>
+                                                @else
+                                                    <span class="badge bg-danger"><i data-feather="x" class="icon-lg pb-3px text-white"></i></span>
+                                                @endif
+                                            </td>
+                                            <td scope="row">
+                                                @if($row['regla_6'] == 1)
+                                                    <span class="badge bg-success"><i data-feather="check-circle" class="icon-lg pb-3px text-white"></i></span>
+                                                @else
+                                                    <span class="badge bg-danger"><i data-feather="x" class="icon-lg pb-3px text-white"></i></span>
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
