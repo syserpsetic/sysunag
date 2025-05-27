@@ -270,19 +270,19 @@
                                     <div class="row flex-grow-1">
                                         @foreach($indicadoresMallaValidaciones as $row)
                                         <div class="col-md-3 grid-margin stretch-card">
-                                            <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes') class="card border-danger" 
-                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')) class="card border-warning" 
+                                            <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes') class="card border-danger" 
+                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')) class="card border-warning" 
                                                 @else class="card border-primary" 
                                                 @endif>
-                                                <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes') class="card-header bg-danger" 
-                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')) class="card-header bg-warning" 
+                                                <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes') class="card-header bg-danger" 
+                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')) class="card-header bg-warning" 
                                                 @else class="card-header bg-primary" 
                                                 @endif>
                                                     <div class="d-flex justify-content-between align-items-baseline">
                                                         <h6 class="mb-0">
-                                                            @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')
+                                                            @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')
                                                                 <strong class="text-white"><i data-feather="alert-octagon" class="me-2"></i> {{$row['indicador_titulo']}}</strong>
-                                                            @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrevaloradas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes'))
+                                                            @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes'))
                                                                 <i data-feather="alert-triangle" class="me-2"></i>
                                                                 <strong>{{$row['indicador_titulo']}}</strong>
                                                             @else
@@ -291,7 +291,7 @@
                                                         </h6>
                                                         <div class="dropdown mb-2">
                                                             <button class="btn btn-link p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            @if($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_secciones_sobrevaloradas' || $row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_login_estudiantes'))    
+                                                            @if($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_login_estudiantes'))    
                                                                 <i class="icon-lg pb-3px" data-feather="chevrons-down"></i>
                                                             @else
                                                                 <i class="icon-lg pb-3px text-white" data-feather="chevrons-down"></i>

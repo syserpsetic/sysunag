@@ -195,11 +195,39 @@ class MallaValidacionController extends Controller
     }
 
     public function malla_estudiantes_traslapes(Request $request){
-        return view("pages.error.construccion");
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_estudiantes_traslapes');
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        
+        //throw new Exception($response->status());
+        $scopes = $response['scopes'];
+        $estudiantes = $response['estudiantes'];
+
+        return view("sys.mallaValidacion.estudiantesTraslapes")
+        ->with("estudiantes", $estudiantes)
+        ->with('scopes', $scopes);
     }
 
-    public function malla_secciones_sobrevaloradas(Request $request){
-        return view("pages.error.construccion");
+    public function malla_secciones_sobrepobladas(Request $request){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_secciones_sobrepobladas');
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        
+        //throw new Exception($response->status());
+        $scopes = $response['scopes'];
+        $estudiantes = $response['estudiantes'];
+
+        return view("sys.mallaValidacion.seccionesSobrepobladas")
+        ->with("estudiantes", $estudiantes)
+        ->with('scopes', $scopes);
     }
 
     public function malla_parametrizacion_estudiantes(Request $request){
