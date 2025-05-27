@@ -29,7 +29,7 @@
                         <h5 class="card-header bg-azul text-white"><i class="text-white icon-lg pb-3px" data-feather="users"></i> Estudiantes</h5>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="jambo_table table table-hover" id="tbl_malla_validaciones_estudiantes" border="1">
+                                <table class="display responsive table-hover" style="width:100%" id="tbl_malla_validaciones_estudiantes" border="1">
                                     <thead class="bg-primary">
                                         <tr class="headings">
                                             <th scope="col" class="text-white">Carrera</th>
