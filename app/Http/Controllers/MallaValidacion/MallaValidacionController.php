@@ -20,6 +20,10 @@ class MallaValidacionController extends Controller
                 'Authorization' => session('token'),
             ])->timeout(60)->get(env('API_BASE_URL_ZETA') . '/api/auth/setic/malla_validacion');
 
+            if($response->status() === 500){
+                return view('pages.error.500')->with('scopes', $scopes = array());
+            }
+
             if($response->status() === 403){
                 return view('pages.error.403')->with('scopes', $scopes = array());
             }
