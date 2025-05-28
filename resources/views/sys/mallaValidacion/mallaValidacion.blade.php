@@ -230,14 +230,14 @@
                     </div>
                     @endif
                     @if(in_array('malla_validacion_leer_lista_pendientes', $scopes))
-                        <div class="col-lg-9 col-sm-12 chat-content">
+                        <div class="col-lg-9 col-sm-12 chat-content"  style="display: block;">
                     @else 
-                        <div class="col-lg-12 col-sm-12 chat-content">
+                        <div class="col-lg-12 col-sm-12 chat-content"  style="display: block;">
                     @endif
                         <div class="row">
                             <div class="col-3">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal_vistas_materializadas">
-                                    <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }})</strong></p>                         
+                                    <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }})@if($porcentaje_matricula['obtenido'] > $porcentaje_matricula_anterior['total']) <i data-feather="chevrons-up" class="icon me-2 text-success"></i>@elseif($porcentaje_matricula['obtenido'] < $porcentaje_matricula_anterior['total'])<i data-feather="chevrons-down" class="icon me-2 text-danger"></i>@endif</strong></p>                         
                                     <cite title="Source Title">{{ $porcentaje_matricula['datos'] }}</cite>
                                 </a>
                             </div>
@@ -247,7 +247,7 @@
                             </div>
                             <div class="col-3 text-end">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal_bloques">
-                                    <p class="lead"><strong>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>                         
+                                    <p class="lead"><strong>@if($porcentje_carga_academica['porcentaje_asignaturas_carga_academica_entero'] > $porcentje_carga_academica_anterior['total']) <i data-feather="chevrons-up" class="icon me-2 text-success"></i>@elseif($porcentje_carga_academica['porcentaje_asignaturas_carga_academica_entero'] < $porcentje_carga_academica_anterior['total'])<i data-feather="chevrons-down" class="icon me-2 text-danger"></i>@endif {{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>                         
                                     <cite title="Source Title">Carga Académica</cite>
                                 </a>
                             </div>
@@ -292,9 +292,9 @@
                                                         <div class="dropdown mb-2">
                                                             <button class="btn btn-link p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             @if($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_login_estudiantes'))    
-                                                                <i class="icon-lg pb-3px" data-feather="chevrons-down"></i>
+                                                                <i class="icon-lg pb-3px" data-feather="align-justify"></i>
                                                             @else
-                                                                <i class="icon-lg pb-3px text-white" data-feather="chevrons-down"></i>
+                                                                <i class="icon-lg pb-3px text-white" data-feather="align-justify"></i>
                                                             @endif
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -918,7 +918,7 @@
             const sidebarBodyScroll = new PerfectScrollbar('.chat-content .chat-body');
         }
 
-        $('.loaded').addClass('loaded sidebar-folded');
+        //$('.loaded').addClass('loaded sidebar-folded');
         // $('.chat-aside').toggleClass('show');
         
         $( '.chat-list .chat-item' ).each(function(index) {

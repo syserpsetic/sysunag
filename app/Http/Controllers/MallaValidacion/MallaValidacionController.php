@@ -33,7 +33,9 @@ class MallaValidacionController extends Controller
             $coutPendientes = $response['coutPendientes'];
             $periodo_actual = $response['periodo_actual'];
             $porcentje_carga_academica = $response['porcentje_carga_academica'];
+            $porcentje_carga_academica_anterior = $response['porcentje_carga_academica_anterior'];
             $porcentaje_matricula = $response['porcentaje_matricula'];
+            $porcentaje_matricula_anterior = $response['porcentaje_matricula_anterior'];
             $estados_bloques = $response['estados_bloques'];
             $bloques = $response['bloques'];
             $totalIndicadores = $response['totalIndicadores'];
@@ -49,7 +51,9 @@ class MallaValidacionController extends Controller
             ->with('coutPendientes', $coutPendientes)
             ->with('periodo_actual', $periodo_actual)
             ->with('porcentje_carga_academica', $porcentje_carga_academica)
+            ->with('porcentje_carga_academica_anterior', $porcentje_carga_academica_anterior)
             ->with('porcentaje_matricula', $porcentaje_matricula)
+            ->with('porcentaje_matricula_anterior', $porcentaje_matricula_anterior)
             ->with('estados_bloques', $estados_bloques)
             ->with('bloques', $bloques)
             ->with('scopes', $scopes)
