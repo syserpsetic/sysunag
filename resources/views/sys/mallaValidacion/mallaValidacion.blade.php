@@ -237,7 +237,7 @@
                         <div class="row">
                             <div class="col-3">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal_vistas_materializadas">
-                                    <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }})@if($porcentaje_matricula['obtenido'] > $porcentaje_matricula_anterior['total']) <i data-feather="chevrons-up" class="icon me-2 text-success"></i>@elseif($porcentaje_matricula['obtenido'] < $porcentaje_matricula_anterior['total'])<i data-feather="chevrons-down" class="icon me-2 text-danger"></i>@endif</strong></p>                         
+                                    <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }}) <i id="indicador_matricula"></i></strong></p>                         
                                     <cite title="Source Title">{{ $porcentaje_matricula['datos'] }}</cite>
                                 </a>
                             </div>
@@ -247,7 +247,7 @@
                             </div>
                             <div class="col-3 text-end">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal_bloques">
-                                    <p class="lead"><strong>@if($porcentje_carga_academica['porcentaje_asignaturas_carga_academica_entero'] > $porcentje_carga_academica_anterior['total']) <i data-feather="chevrons-up" class="icon me-2 text-success"></i>@elseif($porcentje_carga_academica['porcentaje_asignaturas_carga_academica_entero'] < $porcentje_carga_academica_anterior['total'])<i data-feather="chevrons-down" class="icon me-2 text-danger"></i>@endif {{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>                         
+                                    <p class="lead"><strong><i id="indicador_carga_academica"></i>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>                         
                                     <cite title="Source Title">Carga Académica</cite>
                                 </a>
                             </div>
@@ -674,6 +674,45 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        const datosGuardados = JSON.parse(localStorage.getItem('validaciones') || '[]');
+        const cargaAcademica = datosGuardados.find(item => item.indicador === 'Carga Academica')
+        const Matricula = datosGuardados.find(item => item.indicador === 'Matricula')
+
+        var clase_indicador_carga_academica = null;
+        var clase_indicador_matricula = null;
+        var polyline_indicador_carga_academica = null;
+        var polyline_indicador_matricula = null;
+
+        if({{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica_entero'] }} > parseInt(cargaAcademica.total)){
+            console.log('Subiendo')
+            clase_indicador_carga_academica = 'feather feather-chevrons-up icon me-2 text-success';
+            polyline_indicador_carga_academica = '<polyline points="17 11 12 6 7 11"></polyline><polyline points="17 18 12 13 7 18"></polyline>';
+        }else if({{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica_entero'] }} < parseInt(cargaAcademica.total)){
+            console.log('Bajando')
+            clase_indicador_carga_academica = 'feather feather-chevrons-down icon me-2 text-danger';
+            polyline_indicador_carga_academica = '<polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline>';
+        }
+        $("#indicador_carga_academica").html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="'+clase_indicador_carga_academica+'">'+polyline_indicador_carga_academica+'</svg>');
+
+        if({{ $porcentaje_matricula['obtenido'] }} > parseInt(Matricula.total)){
+            console.log('Subiendo')
+            clase_indicador_matricula = 'feather feather-chevrons-up icon me-2 text-success';
+            polyline_indicador_matricula = '<polyline points="17 11 12 6 7 11"></polyline><polyline points="17 18 12 13 7 18"></polyline>';
+        }else if({{ $porcentaje_matricula['obtenido'] }} < parseInt(Matricula.total)){
+            console.log('Bajando')
+            clase_indicador_matricula = 'feather feather-chevrons-down icon me-2 text-danger';
+            polyline_indicador_matricula = '<polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline>';
+        }
+        $("#indicador_matricula").html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="'+clase_indicador_carga_academica+'">'+polyline_indicador_matricula+'</svg>');
+
+
+        const indicadores = [
+            { indicador: 'Matricula', total: "{{ $porcentaje_matricula['obtenido'] }}" },
+            { indicador: 'Carga Academica', total: "{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica_entero'] }}" }
+        ];
+
+        localStorage.setItem('validaciones', JSON.stringify(indicadores));
 
         table = $('#tbl_bloques_aprobados').DataTable({
                 "aLengthMenu": [
