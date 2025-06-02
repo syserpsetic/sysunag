@@ -121,9 +121,9 @@
                                             <div class="mb-3">
                                                 <label for="departamento" class="form-label">Departamento</label>
                                                 <select class="form-select" name="departamento" id="departamento">
-                                                    <option selected disabled>Seleccione un municipio</option>
+                                                    <option selected disabled>Seleccione un departamento</option>
                                                     @foreach($departamentos as $row)
-                                                        <option @if($datos_generales['direccion_local_municipio'] == $row['id']) selected @endif value="{{$row['id']}}">{{$row['name']}}</option>
+                                                        <option @if($datos_generales['direccion_local_municipio'] == $row['id_departamento']) selected @endif value="{{$row['id_departamento']}}">{{$row['descripcion_departamento']}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -227,7 +227,7 @@
     var gender_radio = $('input[name="gender_radio"]:checked').val();
     var departamento = null;
     var municipio = null;
-    var direccion_local_barrio_colonia = $("#direccion_local_barrio_colonia").val("{{$datos_generales['direccion_local_barrio_colonia']}}");
+    var direccion_local_barrio_colonia = null;
     var url_guardar_datos_generales = "{{url('/egresados/datos_generales/guardar')}}"; 
     var url_datos_generales_municipios = "{{url('/egresados/datos_generales/municipios')}}"; 
     $(document).ready(function () {
@@ -236,6 +236,14 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        if({{$datos_generales['direccion_local_departamento']}} != null){
+            departamento = {{$datos_generales['direccion_local_departamento']}};
+            cargar_municipios();
+        }
+        
+        $("#departamento").val({{$datos_generales['direccion_local_departamento']}});
+        $("#direccion_local_barrio_colonia").val("{{$datos_generales['direccion_local_barrio_colonia']}}");
 
         $.validator.setDefaults({
             submitHandler: function() {
@@ -252,7 +260,7 @@
                 municipio = $('#municipio').val();
                 direccion_local_barrio_colonia = $("#direccion_local_barrio_colonia").val();
                 guardar_datos_generales();
-                //alert("¡Formulario enviado!");
+                //alert(departamento);
                 //$('#signupForm').submit();
         }
 });
@@ -451,11 +459,15 @@
                     $.each(data.municipios, function(index, item) {
                         $('#municipio').append(
                             $('<option>', {
-                                value: item.id,
-                                text: item.name
+                                value: item.id_municipio,
+                                text: item.descripcion_municipio
                             })
                         );
                     });
+            
+                $("#municipio").val({{$datos_generales['direccion_local_municipio']}});
+            
+
                 }
                 console.log(textMsg);
                 Toast.fire({

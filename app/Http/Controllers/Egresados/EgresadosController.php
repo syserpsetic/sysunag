@@ -30,6 +30,7 @@ class EgresadosController extends Controller
         return view("sys.egresados.datos_generales")
         ->with("datos_generales", $datos_generales)
         ->with("departamentos", $departamentos)
+        ->with("scopes", $scopes)
         ;
     }
 
@@ -81,7 +82,7 @@ class EgresadosController extends Controller
                 'gender_radio' => $request->gender_radio,
                 'departamento' => $request->departamento,
                 'municipio' => $request->municipio,
-                'direccion_local_barrio_colonia ' => $request->direccion_local_barrio_colonia,
+                'direccion_local_barrio_colonia' => $request->direccion_local_barrio_colonia,
             ]);
             //throw new Exception($response->status(), true);
             $data = $response->json();

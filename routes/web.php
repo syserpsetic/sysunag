@@ -35,9 +35,11 @@ Route::post('/login', [ApiAuthController::class, 'login']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout');
-    Route::get('/', function () {
-        return view('dashboard');
-    });
+    // Route::get('/', function () {
+    //     return view('dashboard');
+    // });
+
+    Route::get('/', [PageController::class, 'dashboardOverview1']);
 
     //Inincia Malla Validaciones
         Route::get('/setic/malla_validacion', [MallaValidacionController::class, 'malla_validaciones'])->name('malla_validacion');

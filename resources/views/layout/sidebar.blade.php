@@ -19,18 +19,22 @@
           <span class="link-title">Home</span>
         </a>
       </li>
+      @if(in_array('malla_validacion', $scopes))
       <li class="nav-item {{ active_class(['setic/malla_validacion']) }}">
         <a href="{{ url('/setic/malla_validacion') }}" class="nav-link">
           <i class="link-icon" data-feather="grid"></i>
           <span class="link-title">Malla de Validación</span>
         </a>
       </li>
+      @endif
+      @if(in_array('egresados_all', $scopes))
       <li class="nav-item {{ active_class(['/egresados/datos_generales']) }}">
         <a href="{{ url('/egresados/datos_generales') }}" class="nav-link">
           <i class="link-icon" data-feather="users"></i>
           <span class="link-title">Egresados</span>
         </a>
       </li>
+      @endif
       <!-- <li class="nav-item nav-category">web apps</li>
       <li class="nav-item {{ active_class(['email/*']) }}">
         <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
