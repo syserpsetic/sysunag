@@ -8,6 +8,7 @@ use App\User;
 use Session;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\Crypt;
 
 class ApiAuthController extends Controller
 {
@@ -36,9 +37,22 @@ class ApiAuthController extends Controller
         // } else {
         //     throw new Exception('¡Acceso al sistema denegado! Debe Permitir la Ubicación.');
         // }
+
+        $userData = $response->json();
+        //throw new Exception($encryptedId);
+        if($response->status() === 403 && $userData['changePass'] == true){
+            $encryptedId = Crypt::encryptString($userData['id_usuario']);
+            return view('pages.auth.changepassword', [
+                    'url' => '/change_password_view',
+                    'data' => [
+                        'mensaje' => $userData['mensaje'] ,
+                        'encryptedId' => $encryptedId
+                    ]
+                ]);   
+        }
+        
         
         if ($response->status() === 200) {
-            $userData = $response->json();
             $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
             $user = User::firstOrNew([$fieldType => $request->input('email')]);
             $user->name = $userData['name'];
@@ -68,6 +82,41 @@ class ApiAuthController extends Controller
             session()->flush();
             Auth::logout();
             return redirect('login');
+        }
+        
+    }
+
+    public function change_password_view()
+    {
+        return view('pages.auth.changepassword');
+        
+    }
+
+     public function change_password(Request $request)
+    {
+        $usuarioId = Crypt::decryptString($request->encryptedId);
+
+        $response = Http::post(env('API_BASE_URL_ZETA').'/api/auth/change_password', [
+                'encryptedId' => $usuarioId,
+                'password_old' => $request->input('password_old'),
+                'password_new' => $request->input('password_new'),
+                'password_verify' => $request->input('password_verify')
+            ]);
+
+        $estatus = $response['estatus'];
+        $msgSuccess = $response['msgSuccess'];
+        $msgError = $response['msgError'];
+
+        if($response->status() === 200 && $estatus == true){
+            return redirect('/');
+        }else{
+            return view('pages.auth.changepassword', [
+                    'url' => '/change_password_view',
+                    'data' => [
+                        'mensaje' => $msgError,
+                        'encryptedId' => $request->encryptedId
+                    ]
+                ]);
         }
         
     }

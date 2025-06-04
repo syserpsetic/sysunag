@@ -32,6 +32,8 @@ use App\Http\Controllers\Egresados\EgresadosController;
 
 Route::get('/login', [ApiAuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [ApiAuthController::class, 'login']);
+Route::post('/change_password_view', [ApiAuthController::class, 'change_password_view']);
+Route::post('/change_password', [ApiAuthController::class, 'change_password'])->name('change_password');
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout');

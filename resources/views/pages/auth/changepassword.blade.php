@@ -53,17 +53,17 @@
 
     <div class="content uk-padding">
 
-        <!-- <div class="uk-position-small uk-position-top-right btn-portal-container">
-            <a id="btn-portal" href="https://portal.unag.edu.hn" class="uk-text-small uk-icon-button blob white"
-                uk-icon="home" target="_blank"></a>
-        </div> -->
+        <div class="uk-position-small uk-position-top-right btn-portal-container">
+            <a id="btn-portal" href="{{ url('/') }}" class="uk-text-small uk-icon-button blob white"
+                uk-icon="home"></a>
+        </div>
 
-        <div class="uk-position-small uk-position-bottom-left uk-visible@l"">
+        <div class="uk-position-small uk-position-bottom-left uk-visible@l">
             <img id="logo_setic" class="uk-transition-scale-up uk-transition-opaque" src="{{ asset('/images/setic.svg') }}"
                 alt="">
         </div>
 
-        <div class="uk-magin-top-large uk-position-top">
+        <div tabindex="-10" class="uk-magin-top-large uk-position-top">
             <img id="logo_unag" class="uk-transition-scale-up uk-transition-opaque"
                 src="{{ asset('/assets/images/unag-oficial-blanco.png') }}" alt="">
         </div>
@@ -75,31 +75,45 @@
 
             <div class="uk-flex uk-flex-center uk-flex-middle uk-margin-medium-top">
                 <div class="icon-container">
-                    <lord-icon src="https://cdn.lordicon.com/kdduutaw.json" trigger="loop" state="hover-looking-around"
+                    <lord-icon src="https://cdn.lordicon.com/fgxwhgfp.json" trigger="loop" state="hover-looking-around"
                         colors="primary:#ffffff,secondary:#ffffff" style="width:60px;height:60px">
                     </lord-icon>
                 </div>
             </div>
 
+            <p class="txt-blanco uk-width-large"><strong></strong>{{ $data['mensaje'] }}</p>
 
-
-            <p class="txt-blanco">Ingrese sus credenciales:</p>
-            <form class="forms-sample" method="POST" action="{{ route('login') }}">
+            <p class="txt-blanco">Actualizar contraseña:</p>
+            <form class="forms-sample" method="POST" action="{{ route('change_password') }}">
             @csrf
-            <div
+            {{--<div
                 class="uk-width-large uk-padding uk-margin-remove-top uk-padding-remove-top uk-padding-remove-bottom uk-animation-slide-top-medium">
                 <div class="uk-margin">
                     <div class="uk-inline">
                         <span class="uk-form-icon" uk-icon="icon: user"></span>
                         <input id="input-usuario" class="uk-input " name="email" placeholder="Usuario" type="text" required>
                     </div>
-                </div>
-
+                </div>--}}
+                <input type="hidden" name="encryptedId" value="{{ $data['encryptedId'] }}">
                 <div class="uk-margin">
                     <div class="uk-inline">
                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                        <input id="input-password" type="password" class="uk-input " name="password"
-                            placeholder="Contraseña" required>
+                        <input id="input-password_old" type="password" class="uk-input " name="password_old"
+                            placeholder="Contraseña Actual" required>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <input id="input-password_new" type="password" class="uk-input " name="password_new"
+                            placeholder="Contraseña Nueva" required>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <input id="input-password_verify" type="password" class="uk-input " name="password_verify"
+                            placeholder="Verificar Contraseña" required>
                     </div>
                 </div>
                 {{-- <div class="uk-flex uk-flex-between">
@@ -110,8 +124,8 @@
             </div>
 
             <button
-                type="submit" class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
-                    uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
+                type="submit" class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium">{{--<span
+                    uk-icon="icon: sign-in; ratio: 1"></span>--}} &nbsp; Cambiar Contraseña</button>
 
 
             <br>
