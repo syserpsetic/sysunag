@@ -881,7 +881,7 @@
         //$('.sidebar-toggler not-active').trigger("click");
 
         @if(in_array('malla_validacion_reproducir_narrador', $scopes) && ($narracion['narracion'] != null || $narracion['narracion'] != ''))
-            var mensaje = 'SE HAN ASIGNADO NUEVAS TAREAS A: {{$narracion->narracion}}';
+            var mensaje = 'SE HAN ASIGNADO NUEVAS TAREAS A: {{$narracion["narracion"]}}';
             console.log(mensaje);
             responsiveVoice.speak(mensaje, "Spanish Latin American Female", {
                 rate: 1.2,   // Aumenta la velocidad al 180%
