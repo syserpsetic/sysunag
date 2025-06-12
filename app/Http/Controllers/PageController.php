@@ -19,6 +19,9 @@ class PageController extends Controller
     {
         $scopes = new ControladorPermisos();
         $scopes = $scopes->ver_permisos();
+        if(in_array('egresados_all', $scopes)){
+            return view('sys.egresados.dashboard_egresados')->with('scopes', $scopes);
+        }
         return view('dashboard')->with('scopes', $scopes);
     }
 
