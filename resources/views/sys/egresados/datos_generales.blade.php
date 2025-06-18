@@ -19,7 +19,7 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-5 col-md-3 pe-0">
+            <div class="col-auto col-md-2 px-1">
                 <div class="nav nav-tabs nav-tabs-vertical" id="v-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link" id="v-datos_generales-tab" data-bs-toggle="tab" href="#v-datos_generales" role="tab" aria-controls="v-datos_generales" aria-selected="true">Datos Generales</a>
                     <a class="nav-link" id="v-datos_academicos-tab" data-bs-toggle="tab" href="#v-profile" role="tab" aria-controls="v-profile" aria-selected="false">Datos Académicos</a>
@@ -27,7 +27,7 @@
                     <a class="nav-link" id="v-ofertas_empelos-tab" data-bs-toggle="tab" href="#v-settings" role="tab" aria-controls="v-settings" aria-selected="false">Ofertas de Empleo</a>
                 </div>
             </div>
-            <div class="col-7 col-md-9 ps-0">
+            <div class="col">
                 <div class="tab-content tab-content-vertical border p-3" id="v-tabContent">
                     <div class="tab-pane fade" id="v-datos_generales" role="tabpanel" aria-labelledby="v-datos_generales-tab">
                         <div class="row">
