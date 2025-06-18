@@ -26,11 +26,17 @@ class EgresadosController extends Controller
         $scopes = $response['scopes'];
         $datos_generales = $response['datos_generales'];
         $departamentos = $response['departamentos'];
+        $datos_academicos = $response['datos_academicos'];
+        $paises = $response['paises'];
+        $tipos_grados_academicos = $response['tipos_grados_academicos'];
 
         return view("sys.egresados.datos_generales")
         ->with("datos_generales", $datos_generales)
         ->with("departamentos", $departamentos)
         ->with("scopes", $scopes)
+        ->with("datos_academicos", $datos_academicos)
+        ->with("paises", $paises)
+        ->with("tipos_grados_academicos", $tipos_grados_academicos)
         ;
     }
 
@@ -106,5 +112,49 @@ class EgresadosController extends Controller
             "msgError" => $msgError
         ]);
         ;
+    }
+
+    public function guardar_datos_academicos(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        //dd($request->all());
+        try {
+            //throw new Exception($request->formacion, true);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/egresados/datos_academicos/guardar', [
+                'accion' => $request->accion,
+                'id' => $request->id,
+                'numero_registro_asignado' => $request->numero_registro_asignado,
+                'formacion' => $request->formacion,
+                'institucion' => $request->institucion,
+                'id_pais' => $request->id_pais,
+                'id_grado_cademico' => $request->id_grado_cademico,
+                'fecha_inicio' => $request->fecha_inicio,
+                'fecha_fin' => $request->fecha_fin,
+                'descripcion' => $request->descripcion
+            ]);
+            //throw new Exception($response->status(), true);
+            $data = $response->json();
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    $msgError = "Desde backend: ".$data["msgError"];
+                }
+
+                $msgSuccess = $data["msgSuccess"];
+                //$zona_list = $data["zona_list"];
+                //throw New Exception($estados_list, true);
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError
+        ]);
     }
 }

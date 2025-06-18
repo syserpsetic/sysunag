@@ -28,7 +28,7 @@
       </li>
       @endif
       @if(in_array('egresados_all', $scopes))
-      <li class="nav-item {{ active_class(['/egresados/datos_generales']) }}">
+      <li class="nav-item {{ active_class(['egresados/datos_generales']) }}">
         <a href="{{ url('/egresados/datos_generales') }}" class="nav-link">
           <i class="link-icon" data-feather="users"></i>
           <span class="link-title">Egresados</span>

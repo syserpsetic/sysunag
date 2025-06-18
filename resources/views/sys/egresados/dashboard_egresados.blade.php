@@ -21,7 +21,7 @@
             <img src="{{ url('assets/images/escudo.png') }}" class="img-fluid mb-2" alt="UNAG" />
 
             <!-- Mensaje principal -->
-            <h1 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">¡Bienvenido {{ Auth::user()->name }}!</h1>
+            <h1 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">¡Bienvenido(a) {{ Auth::user()->name }}!</h1>
             <h4 class="mb-2 text-center">Es un honor recibirte nuevamente</h4>
             <h6 class="text-muted mb-3 text-center">
                 Nos complace darte la bienvenida a esta plataforma diseñada especialmente para ti.<br />

@@ -5,23 +5,31 @@
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/jquery-tags-input/jquery.tagsinput.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/prismjs/prism.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content')
+<style>
+.scroll-container {
+    max-height: 600px; /* ajusta la altura según tu necesidad */
+    overflow-y: auto;
+    
+}
+</style>
 <div class="card">
     <div class="card-body">
         <div class="row">
             <div class="col-5 col-md-3 pe-0">
                 <div class="nav nav-tabs nav-tabs-vertical" id="v-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-datos_generales-tab" data-bs-toggle="tab" href="#v-datos_generales" role="tab" aria-controls="v-datos_generales" aria-selected="true">Datos Generales</a>
-                    <a class="nav-link" id="v-profile-tab" data-bs-toggle="tab" href="#v-profile" role="tab" aria-controls="v-profile" aria-selected="false">Datos Académicos</a>
-                    <a class="nav-link" id="v-messages-tab" data-bs-toggle="tab" href="#v-messages" role="tab" aria-controls="v-messages" aria-selected="false">Messages</a>
-                    <a class="nav-link" id="v-settings-tab" data-bs-toggle="tab" href="#v-settings" role="tab" aria-controls="v-settings" aria-selected="false">Settings</a>
+                    <a class="nav-link" id="v-datos_generales-tab" data-bs-toggle="tab" href="#v-datos_generales" role="tab" aria-controls="v-datos_generales" aria-selected="true">Datos Generales</a>
+                    <a class="nav-link" id="v-datos_academicos-tab" data-bs-toggle="tab" href="#v-profile" role="tab" aria-controls="v-profile" aria-selected="false">Datos Académicos</a>
+                    <a class="nav-link" id="v-experiencia_laboral-tab" data-bs-toggle="tab" href="#v-messages" role="tab" aria-controls="v-messages" aria-selected="false">Experiencia Laboral</a>
+                    <a class="nav-link" id="v-ofertas_empelos-tab" data-bs-toggle="tab" href="#v-settings" role="tab" aria-controls="v-settings" aria-selected="false">Ofertas de Empleo</a>
                 </div>
             </div>
             <div class="col-7 col-md-9 ps-0">
                 <div class="tab-content tab-content-vertical border p-3" id="v-tabContent">
-                    <div class="tab-pane fade show active" id="v-datos_generales" role="tabpanel" aria-labelledby="v-datos_generales-tab">
+                    <div class="tab-pane fade" id="v-datos_generales" role="tabpanel" aria-labelledby="v-datos_generales-tab">
                         <div class="row">
                             <div class="col-lg-12 grid-margin stretch-card">
                                 <form id="signupForm">
@@ -171,28 +179,258 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-profile" role="tabpanel" aria-labelledby="v-profile-tab">
-                        <h6 class="mb-1">Profile</h6>
+                    <div class="tab-pane fade" id="v-profile" role="tabpanel" aria-labelledby="v-datos_academicos-tab">
+                        <div class="row">
+                            <div class="col-lg-12 grid-margin stretch-card">
+                                <div class="row">
+                                    <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h1 class="">Datos Académicos</h1>
+                                            <p class="text-muted mb-3">Completa o actualiza tus datos académicos.</p>
+                                        </div>
+                                        <div>
+                                            <button type="button" id="btn_agregar_dato_academico" class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#modal_agregar_datos_academicos">
+                                                <i data-feather="plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="row scroll-container">
+                                        <div class="col-md-12">
+                                                    <div id="content">
+                                                        <ul class="timeline">
+                                                            @foreach($datos_academicos as $row)
+                                                            <li class="event" data-date="{{$row['fecha_inicio_formato']}} - {{$row['fecha_fin_formato']}}">
+                                                                <div class="dropdown">
+                                                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <h3 class="title">{{$row['nombre']}}</h3>
+                                                                        <p>{{$row['descripcion']}}</p>
+                                                                    </a >
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#"><i data-feather="eye" class="icon-sm me-2"></i> Ver más</a>
+                                                                        <a class="dropdown-item" href="#"><i data-feather="edit" class="icon-sm me-2"></i> Editar</a>
+                                                                        <a class="dropdown-item" href="#"
+                                                                            data-bs-toggle="modal" 
+                                                                            data-bs-target=".modal_eliminar"
+                                                                            data-id="{{$row['id']}}"
+                                                                            data-nombre="{{$row['nombre']}}"
+                                                                            data-descripcion="{{$row['descripcion']}}"
+                                                                        ><i data-feather="trash" class="icon-sm me-2"></i> Eliminar</a>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-messages" role="tabpanel" aria-labelledby="v-experiencia_laboral-tab">
                         <p>
-                            Nulla est ullamco ut irure incididunt nulla Lorem Lorem minim irure officia enim reprehenderit. Magna duis labore cillum sint adipisicing exercitation ipsum. Nostrud ut anim non exercitation velit laboris fugiat
-                            cupidatat. Commodo esse dolore fugiat sint velit ullamco magna consequat voluptate minim amet aliquip ipsum aute laboris nisi.
+                            <div class="page-content d-flex align-items-center justify-content-center">
+                                <div class="row w-100 mx-0 auth-page">
+                                    <div class="col-md-8 col-xl-6 mx-auto d-flex flex-column align-items-center">
+                                        <!-- Logo -->
+                                        <img src="{{ url('assets/images/escudo.png') }}" class="img-fluid mb-2" alt="Sitio en Construcción" />
+
+                                        <!-- Mensaje principal -->
+                                        <h1 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">¡Sitio en construcción!</h1>
+                                        <h4 class="mb-2 text-center">Estamos trabajando para mejorar</h4>
+                                        <h6 class="text-muted mb-3 text-center">
+                                            Nuestro sitio web está siendo actualizado.<br />
+                                            Pronto estará disponible nuevamente.
+                                        </h6>
+
+                                        <!-- Icono o animación opcional -->
+                                        <div class="bg-light rounded p-3 mt-3 text-center shadow-sm w-100">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="spinner-border text-warning me-2" role="status" style="width: 1.5rem; height: 1.5rem;">
+                                                    <span class="visually-hidden">Cargando...</span>
+                                                </div>
+                                                <span class="fw-bold text-warning fs-4">Trabajando en ello...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </p>
                     </div>
-                    <div class="tab-pane fade" id="v-messages" role="tabpanel" aria-labelledby="v-messages-tab">
-                        <h6 class="mb-1">Messages</h6>
+                    <div class="tab-pane fade" id="v-settings" role="tabpanel" aria-labelledby="v-ofertas_empelos-tab">
                         <p>
-                            Nulla est ullamco ut irure incididunt nulla Lorem Lorem minim irure officia enim reprehenderit. Magna duis labore cillum sint adipisicing exercitation ipsum. Nostrud ut anim non exercitation velit laboris fugiat
-                            cupidatat. Commodo esse dolore fugiat sint velit ullamco magna consequat voluptate minim amet aliquip ipsum aute laboris nisi.
-                        </p>
-                    </div>
-                    <div class="tab-pane fade" id="v-settings" role="tabpanel" aria-labelledby="v-settings-tab">
-                        <h6 class="mb-1">Settings</h6>
-                        <p>
-                            Nulla est ullamco ut irure incididunt nulla Lorem Lorem minim irure officia enim reprehenderit. Magna duis labore cillum sint adipisicing exercitation ipsum. Nostrud ut anim non exercitation velit laboris fugiat
-                            cupidatat. Commodo esse dolore fugiat sint velit ullamco magna consequat voluptate minim amet aliquip ipsum aute laboris nisi.
+                           <div class="page-content d-flex align-items-center justify-content-center">
+                                <div class="row w-100 mx-0 auth-page">
+                                    <div class="col-md-8 col-xl-6 mx-auto d-flex flex-column align-items-center">
+                                        <!-- Logo -->
+                                        <img src="{{ url('assets/images/escudo.png') }}" class="img-fluid mb-2" alt="Sitio en Construcción" />
+
+                                        <!-- Mensaje principal -->
+                                        <h1 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">¡Sitio en construcción!</h1>
+                                        <h4 class="mb-2 text-center">Estamos trabajando para mejorar</h4>
+                                        <h6 class="text-muted mb-3 text-center">
+                                            Nuestro sitio web está siendo actualizado.<br />
+                                            Pronto estará disponible nuevamente.
+                                        </h6>
+
+                                        <!-- Icono o animación opcional -->
+                                        <div class="bg-light rounded p-3 mt-3 text-center shadow-sm w-100">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="spinner-border text-warning me-2" role="status" style="width: 1.5rem; height: 1.5rem;">
+                                                    <span class="visually-hidden">Cargando...</span>
+                                                </div>
+                                                <span class="fw-bold text-warning fs-4">Trabajando en ello...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example" id="modal_agregar_datos_academicos" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="book"></i> Registrar Datos Académicos</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+            </div>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_datos_academicos_formacion" class="form-label">Formación</label>
+                                        <input id="modal_agregar_datos_academicos_formacion" class="form-control" type="text" placeholder="Escriba aqui la formación"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_datos_academicos_institucion" class="form-label">Institución</label>
+                                        <input id="modal_agregar_datos_academicos_institucion" class="form-control" type="text" placeholder="Escriba aqui la institución"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_datos_academicos_pais" class="form-label">País</label>
+                                        <select class="form-select" id="modal_agregar_datos_academicos_pais">
+                                            <option selected disabled>Seleccione un país</option>
+                                            @foreach($paises as $row)
+                                            <option value="{{$row['id_pais']}}">{{$row['nombre']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_datos_academicos_grado_academico" class="form-label">Grado Académico</label>
+                                        <select class="form-select" id="modal_agregar_datos_academicos_grado_academico">
+                                            <option selected disabled>Seleccione un grado académico</option>
+                                            @foreach($tipos_grados_academicos as $row)
+                                            <option value="{{$row['id']}}">{{$row['nombre']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_datos_academicos_fecha_inicio" class="form-label">Fecha de Inicio</label>
+                                        <input
+                                            id="modal_agregar_datos_academicos_fecha_inicio"
+                                            type="month"
+                                            class="form-control mb-4 mb-md-0"
+                                            data-inputmask="'alias': 'datetime'"
+                                            data-inputmask-inputformat="yyyy/mm/dd"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <label for="modal_agregar_datos_academicos_fecha_fin" class="form-label mb-0">
+                                                Fecha de Fin
+                                            </label>
+                                            <div class="form-check form-switch m-0">
+                                                <input type="checkbox" class="form-check-input" id="formSwitch1" />
+                                                <label class="form-check-label" for="formSwitch1">Presente</label>
+                                            </div>
+                                        </div>
+                                        <input
+                                            id="modal_agregar_datos_academicos_fecha_fin"
+                                            type="month"
+                                            class="form-control mb-4 mb-md-0"
+                                            data-inputmask="'alias': 'datetime'"
+                                            data-inputmask-inputformat="yyyy/mm/dd"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_datos_academicos_descripcion" class="form-label">Descripción</label>
+                                        <textarea
+                                            class="form-control"
+                                            id="modal_agregar_datos_academicos_descripcion"
+                                            maxlength="100"
+                                            rows="4"
+                                            placeholder="Escriba aquí..."
+                                        ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-secondary">
+                <button type="button" class="btn btn-danger btn-xs" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary btn-xs" id="btn_guardar_datos_academicos">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal_eliminar" id="modal_eliminar" tabindex="-1" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title h4 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="x"></i> Eliminar Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="row">
+                            <center>
+                                <i class="btn-icon-prepend text-warning" data-feather="alert-circle" style="width: 90px; height: 90px;"></i>
+                                <br><br>
+                                <div class="col-sm-12">
+                                    <div class="mb-3">
+                                        <h4><label class="form-label"><strong>¿Realmente deseas eliminar este registro?</strong></label></h4>
+                                        <br>
+                                        <h5><label class="form-label" id="modal_eliminar_informacion_datos_academicos"></label></h5>
+                                        <br>
+                                        <p class="fw-normal">Este proceso no se puede revertir</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                        <!-- Row -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-secondary">
+                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary btn-sm" id="btn_eliminar_dato_academico">Eliminar</button>
             </div>
         </div>
     </div>
@@ -205,6 +443,8 @@
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
   <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/prismjs/prism.js') }}"></script>
+  <script src="{{ asset('assets/plugins/clipboard/clipboard.min.js') }}"></script>
 @endpush
 @push('custom-scripts')
   <script src="{{ asset('assets/js/dashboard.js') }}"></script>
@@ -215,6 +455,10 @@
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
   <script type="text/javascript">
     var table = null; 
+    var accion = null;
+    var btn_activo = true;
+    var numero_registro_asignado = "{{$datos_generales['numero_registro_asignado']}}";
+    //inicia datos generales
     var id = "{{$datos_generales['id_ficha_estudiante']}}";
     var primer_nombre_estudiante = $("#primer_nombre_estudiante").val();
     var segundo_nombre_estudiante = $("#segundo_nombre_estudiante").val();
@@ -228,7 +472,19 @@
     var departamento = null;
     var municipio = null;
     var direccion_local_barrio_colonia = null;
+    //finaliza datos generales
+    //inicia datos academicos
+    var id_datos_academicos = null;
+    var formacion = null;
+    var institucion = null;
+    var id_pais = null;
+    var id_grado_cademico = null;
+    var fecha_inicio = null;
+    var fecha_fin = null;
+    var descripcion = null;
+    //finaliza datos academicos
     var url_guardar_datos_generales = "{{url('/egresados/datos_generales/guardar')}}"; 
+    var url_guardar_datos_academicos = "{{url('/egresados/datos_academicos/guardar')}}"; 
     var url_datos_generales_municipios = "{{url('/egresados/datos_generales/municipios')}}"; 
     $(document).ready(function () {
         $.ajaxSetup({
@@ -236,6 +492,28 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $("#v-datos_generales-tab").on("click", function () {
+           localStorage.setItem("tab","#v-datos_generales-tab");
+        });
+
+        $("#v-datos_academicos-tab").on("click", function () {
+           localStorage.setItem("tab","#v-datos_academicos-tab");
+        });
+
+        $("#v-experiencia_laboral-tab").on("click", function () {
+           localStorage.setItem("tab","#v-experiencia_laboral-tab");
+        });
+
+        $("#v-ofertas_empelos-tab").on("click", function () {
+           localStorage.setItem("tab","#v-ofertas_empelos-tab");
+        });
+
+        const tab_active = localStorage.getItem("tab");
+        var tabEl = document.querySelector(tab_active == null ? "#v-datos_generales-tab" : tab_active);
+        var tab = new bootstrap.Tab(tabEl);
+        tab.show();
+
 
         if({{$datos_generales['direccion_local_departamento']}} != null){
             departamento = {{$datos_generales['direccion_local_departamento']}};
@@ -371,7 +649,113 @@
                 }
             }
         });
+
+         $('#formSwitch1').change(function() {
+            $('#modal_agregar_datos_academicos_fecha_fin').prop('disabled', this.checked);
+            fecha_fin = null;
+            $("#modal_agregar_datos_academicos_fecha_fin").val(null);
+        });
     });
+
+    $("#btn_guardar_datos_academicos").on("click", function () {
+        accion = 1;
+    })
+
+    $("#btn_guardar_datos_academicos").on("click", function () {
+        formacion = $("#modal_agregar_datos_academicos_formacion").val();
+        institucion = $("#modal_agregar_datos_academicos_institucion").val();
+        id_pais = $("#modal_agregar_datos_academicos_pais").val();
+        id_grado_cademico = $("#modal_agregar_datos_academicos_grado_academico").val();
+        fecha_inicio = $("#modal_agregar_datos_academicos_fecha_inicio").val();
+        fecha_fin = $("#modal_agregar_datos_academicos_fecha_fin").val();
+        descripcion = $("#modal_agregar_datos_academicos_descripcion").val();
+     
+            if(formacion == null || formacion == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Formación.'
+                })
+                return true;
+            }
+
+            if(institucion == null || institucion == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Institución.'
+                })
+                return true;
+            }
+
+            if(id_pais == null || id_pais == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para País.'
+                })
+                return true;
+            }
+
+            if(id_grado_cademico == null || id_grado_cademico == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Grado Académico.'
+                })
+                return true;
+            }
+
+            if(fecha_inicio == null || fecha_inicio == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Fecha de Inicio.'
+                })
+                return true;
+            }
+
+            if (!$('#formSwitch1').is(':checked')) {
+                if(fecha_fin == null || fecha_fin == ''){
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Valor requerido para Fecha de Fin.'
+                    })
+                    return true;
+                }
+            }
+
+            if(descripcion == null || descripcion == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Descripción.'
+                })
+                return true;
+            }
+
+            // ToastLG.fire({
+            //         icon: "warning",
+            //         title: '!Funcionalidad en construcción!',
+            //         html: 'Estamos trabajando para mejorar',
+            //         timer: 3000
+            //     })
+            
+            if(btn_activo){
+                guardar_datos_academicos();
+            }
+            
+
+        });
+
+        $("#modal_eliminar").on("show.bs.modal", function (e) {
+            accion = 3;
+            var triggerLink = $(e.relatedTarget);
+            id_datos_academicos = triggerLink.data("id");
+            formacion = triggerLink.data("nombre");
+            descripcion = triggerLink.data("descripcion");
+            $("#modal_eliminar_informacion_datos_academicos").html(descripcion);
+        });
+
+        $(".modal-footer").on("click", "#btn_eliminar_dato_academico", function () { 
+            if(btn_activo){
+                guardar_datos_academicos(); 
+            }
+        }); 
 
     });
 
@@ -417,7 +801,7 @@
                     timer = 3000;
                 }
                 console.log(textMsg);
-                Toast.fire({
+                ToastLG.fire({
                     icon: typeMsg,
                     title: titleMsg,
                     html: textMsg,
@@ -430,9 +814,56 @@
         });
     }
 
+    function guardar_datos_academicos() {
+        espera('Tu información se esta guardando...');
+        btn_activo = false;
+        //console.log(hora_inicio);
+        $.ajax({
+            type: "post",
+            url: url_guardar_datos_academicos,
+            data: {
+                accion : accion,
+                id : id_datos_academicos,
+                numero_registro_asignado : numero_registro_asignado,
+                formacion : formacion,
+                institucion : institucion,
+                id_pais : id_pais,
+                id_grado_cademico : id_grado_cademico,
+                fecha_inicio : fecha_inicio,
+                fecha_fin : fecha_fin,
+                descripcion : descripcion
+            },
+            success: function (data) {
+                if (data.msgError != null) {
+                    titleMsg = "Error al Guardar";
+                    textMsg = data.msgError;
+                    typeMsg = "error";
+                    timer = null;
+                    btn_activo = true;
+                } else {
+                    titleMsg = "Datos Guardados";
+                    textMsg = data.msgSuccess;
+                    typeMsg = "success";
+                    timer = 3000;
+                }
+                console.log(textMsg);
+                ToastLG.fire({
+                    icon: typeMsg,
+                    title: titleMsg,
+                    html: textMsg,
+                    timer: timer
+                })
+
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            },
+        });
+    }
+
     function cargar_municipios() {
         espera('Cargado municipios...');
-        btn_activo = false;
         //console.log(hora_inicio);
         $.ajax({
             type: "post",
@@ -470,7 +901,7 @@
 
                 }
                 console.log(textMsg);
-                Toast.fire({
+                ToastLG.fire({
                     icon: typeMsg,
                     title: titleMsg,
                     html: textMsg,
@@ -484,10 +915,18 @@
     }
 
   
-    const Toast = Swal.mixin({
+    const ToastLG = Swal.mixin({
             //toast: true,
             //position: 'top-end',
             showConfirmButton: false,
+            timerProgressBar: true,
+        });
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
             timerProgressBar: true,
         });
 
