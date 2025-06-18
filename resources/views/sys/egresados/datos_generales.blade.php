@@ -865,6 +865,7 @@
                     textMsg = data.msgSuccess;
                     typeMsg = "success";
                     timer = 3000;
+                    location.reload();
                 }
                 console.log(textMsg);
                 ToastLG.fire({
@@ -874,7 +875,6 @@
                     timer: timer
                 })
 
-                location.reload();
             },
             error: function (xhr, status, error) {
                 alert(xhr.responseText);
