@@ -199,29 +199,49 @@
                                     <div class="row scroll-container">
                                         <div class="col-md-12">
                                                     <div id="content">
-                                                        <ul class="timeline">
-                                                            @foreach($datos_academicos as $row)
-                                                            <li class="event" data-date="{{$row['fecha_inicio_formato']}} - {{$row['fecha_fin_formato']}}">
-                                                                <div class="dropdown">
-                                                                    <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                        <h3 class="title">{{$row['nombre']}}</h3>
-                                                                        <p>{{$row['descripcion']}}</p>
-                                                                    </a >
-                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                        <a class="dropdown-item" href="#"><i data-feather="eye" class="icon-sm me-2"></i> Ver más</a>
-                                                                        <a class="dropdown-item" href="#"><i data-feather="edit" class="icon-sm me-2"></i> Editar</a>
-                                                                        <a class="dropdown-item" href="#"
-                                                                            data-bs-toggle="modal" 
-                                                                            data-bs-target=".modal_eliminar"
-                                                                            data-id="{{$row['id']}}"
-                                                                            data-nombre="{{$row['nombre']}}"
-                                                                            data-descripcion="{{$row['descripcion']}}"
-                                                                        ><i data-feather="trash" class="icon-sm me-2"></i> Eliminar</a>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            @endforeach
-                                                        </ul>
+                                                            @if(!empty($datos_academicos))
+                                                                <ul class="timeline">
+                                                                        @foreach($datos_academicos as $row)
+                                                                        <li class="event" data-date="{{$row['fecha_inicio_formato']}} - {{$row['fecha_fin_formato']}}">
+                                                                            <div class="dropdown">
+                                                                                <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                    <h3 class="title">{{$row['nombre']}}</h3>
+                                                                                    <p>{{$row['descripcion']}}</p>
+                                                                                </a >
+                                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                                    <a class="dropdown-item" href="#"><i data-feather="eye" class="icon-sm me-2"></i> Ver más</a>
+                                                                                    <a class="dropdown-item" href="#"><i data-feather="edit" class="icon-sm me-2"></i> Editar</a>
+                                                                                    <a class="dropdown-item" href="#"
+                                                                                        data-bs-toggle="modal" 
+                                                                                        data-bs-target=".modal_eliminar"
+                                                                                        data-id="{{$row['id']}}"
+                                                                                        data-nombre="{{$row['nombre']}}"
+                                                                                        data-descripcion="{{$row['descripcion']}}"
+                                                                                    ><i data-feather="trash" class="icon-sm me-2"></i> Eliminar</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        @endforeach
+                                                                </ul>
+                                                            @else
+                                                                <div class="page-content d-flex align-items-center justify-content-center">
+                                <div class="row w-100 mx-0 auth-page">
+                                    <div class="col-md-12 col-xl-12 mx-auto d-flex flex-column align-items-center">
+                                        <!-- Logo -->
+                                        <img src="{{ url('assets/images/escudo.png') }}" class="img-fluid mb-2" alt="Sitio en Construcción" />
+
+                                        <!-- Mensaje principal -->
+                                        <h2 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">Actualmente no has agregado ningún dato académico.</h2>
+                                        <h4 class="mb-2 text-center">Para completar o actualizar tu información académica:</h4>
+                                        <h6 class="text-muted mb-3 text-center">
+                                            1. Haz clic en el botón verde con el símbolo “+” ubicado en la parte superior derecha.<br />
+                                            2. Completa los campos requeridos en el formulario que aparecerá.<br />
+                                            3. Guarda los cambios para registrar tu información.
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                                                            @endif
                                                     </div>
                                                 </div>
                                     </div>
