@@ -190,7 +190,7 @@
                                         </div>
                                         <div>
                                             @if(!empty($datos_academicos))
-                                            <button type="button" id="btn_agregar_dato_academico" class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#modal_agregar_datos_academicos">
+                                            <button type="button" class="btn btn-primary btn-icon btn_agregar_dato_academico" data-bs-toggle="modal" data-bs-target="#modal_agregar_datos_academicos">
                                                 <i data-feather="plus"></i>
                                             </button>
                                             @endif
@@ -211,8 +211,30 @@
                                                                                     <p>{{$row['descripcion']}}</p>
                                                                                 </a >
                                                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                                    <a class="dropdown-item" href="#"><i data-feather="eye" class="icon-sm me-2"></i> Ver más</a>
-                                                                                    <a class="dropdown-item" href="#"><i data-feather="edit" class="icon-sm me-2"></i> Editar</a>
+                                                                                    <a class="dropdown-item" href="#"
+                                                                                        data-bs-toggle="modal" 
+                                                                                        data-bs-target=".modal_datos_academicos_ver_mas"
+                                                                                        data-id="{{$row['id']}}"
+                                                                                        data-nombre="{{$row['nombre']}}"
+                                                                                        data-institucion="{{$row['institucion']}}"
+                                                                                        data-pais="{{$row['pais']}}"
+                                                                                        data-grado_academico="{{$row['grado_academico']}}"
+                                                                                        data-fecha_inicio_formato="{{$row['fecha_inicio_formato']}}"
+                                                                                        data-fecha_fin_formato="{{$row['fecha_fin_formato']}}"
+                                                                                        data-descripcion="{{$row['descripcion']}}"
+                                                                                    ><i data-feather="eye" class="icon-sm me-2"></i> Ver más</a>
+                                                                                    <a class="dropdown-item btn_editar_datos_academicos" href="#"
+                                                                                        data-bs-toggle="modal" 
+                                                                                        data-bs-target=".modal_agregar_datos_academicos"
+                                                                                        data-id="{{$row['id']}}"
+                                                                                        data-nombre="{{$row['nombre']}}"
+                                                                                        data-institucion="{{$row['institucion']}}"
+                                                                                        data-id_pais="{{$row['id_pais']}}"
+                                                                                        data-id_tipo_grado_academico="{{$row['id_tipo_grado_academico']}}"
+                                                                                        data-fecha_inicio="{{$row['fecha_inicio']}}"
+                                                                                        data-fecha_fin="{{$row['fecha_fin']}}"
+                                                                                        data-descripcion="{{$row['descripcion']}}"
+                                                                                    ><i data-feather="edit" class="icon-sm me-2"></i> Editar</a>
                                                                                     <a class="dropdown-item" href="#"
                                                                                         data-bs-toggle="modal" 
                                                                                         data-bs-target=".modal_eliminar"
@@ -235,7 +257,7 @@
                                         <!-- Mensaje principal -->
                                         <h2 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">Actualmente no has agregado ningún dato académico.</h2>
                                         <h4 class="mb-2 text-center">Para agregar tu información académica haz clic en el siguiente botón:</h4>
-                                       <button type="button" id="btn_agregar_dato_academico" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_agregar_datos_academicos">
+                                       <button type="button" class="btn btn-primary btn_agregar_dato_academico" data-bs-toggle="modal" data-bs-target="#modal_agregar_datos_academicos">
                                                 <i data-feather="plus"></i> Agregar Dato Académico
                                             </button>
                                     </div>
@@ -315,7 +337,7 @@
     </div>
 </div>
 
-<div class="modal fade bd-example" id="modal_agregar_datos_academicos" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-example modal_agregar_datos_academicos" id="modal_agregar_datos_academicos" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-primary">
@@ -452,6 +474,50 @@
             <div class="modal-footer bg-secondary">
                 <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary btn-sm" id="btn_eliminar_dato_academico">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal_datos_academicos_ver_mas" id="modal_datos_academicos_ver_mas" tabindex="-1" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="row">
+                            <center>
+                                <div class="row">
+                                    <div class="col-md-12"> 
+                                        <div class="row">
+                                            <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                    <h4 class="text-center mt-3 mb-4" id="modal_ver_mas_grado_academico">Basic</h4>
+                                                    <i data-feather="book" class="text-primary icon-xxl d-block mx-auto my-3"></i>
+                                                    <h1 class="text-center" id="modal_ver_mas_formacion">$40</h1>
+                                                    <p class="text-muted text-center mb-4 fw-light" id="modal_ver_mas_institucion_pais">per month</p>
+                                                    <h5 class="text-primary text-center mb-4" id="modal_ver_mas_fecha_inicio_fecha_fin">Up to 25 units</h5>
+                                                    <table class="mx-auto">
+                                                        <tr>
+                                                            <td><i data-feather="chevrons-right" class="icon-md text-primary me-2"></i></td>
+                                                            <td><p id="modal_ver_mas_descripcion">Accounting dashboard</p></td>
+                                                        </tr>
+                                                    </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div
+                            </center>
+                        </div>
+                        <!-- Row -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-secondary">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>
@@ -678,9 +744,57 @@
         });
     });
 
-    $("#btn_guardar_datos_academicos").on("click", function () {
+    $(".btn_editar_datos_academicos").on("click", function () {
+        accion = 2;
+    })
+
+    $(".btn_agregar_dato_academico").on("click", function () {
         accion = 1;
     })
+
+    $("#modal_datos_academicos_ver_mas").on("show.bs.modal", function (e) {
+        $('#formSwitch1').prop('checked', false);
+        $('#modal_agregar_datos_academicos_fecha_fin').prop('disabled', false);
+        var triggerLink = $(e.relatedTarget);
+        id_datos_academicos = triggerLink.data("id");
+        formacion = triggerLink.data("nombre");
+        institucion = triggerLink.data("institucion");
+        pais = triggerLink.data("pais");
+        grado_academico = triggerLink.data("grado_academico");
+        fecha_inicio_formato = triggerLink.data("fecha_inicio_formato");
+        fecha_fin_formato = triggerLink.data("fecha_fin_formato");
+        descripcion = triggerLink.data("descripcion");
+        $("#modal_ver_mas_grado_academico").html(grado_academico);
+        $("#modal_ver_mas_formacion").html(formacion);
+        $("#modal_ver_mas_institucion_pais").html(institucion+' - '+pais);
+        $("#modal_ver_mas_fecha_inicio_fecha_fin").html(fecha_inicio_formato+' - '+fecha_fin_formato);
+        $("#modal_ver_mas_descripcion").html(descripcion);
+    });
+
+    $("#modal_agregar_datos_academicos").on("show.bs.modal", function (e) {
+        $('#formSwitch1').prop('checked', false);
+        $('#modal_agregar_datos_academicos_fecha_fin').prop('disabled', false);
+        var triggerLink = $(e.relatedTarget);
+        id_datos_academicos = triggerLink.data("id");
+        formacion = triggerLink.data("nombre");
+        institucion = triggerLink.data("institucion");
+        id_pais = triggerLink.data("id_pais");
+        id_tipo_grado_academico = triggerLink.data("id_tipo_grado_academico");
+        fecha_inicio = triggerLink.data("fecha_inicio");
+        fecha_fin = triggerLink.data("fecha_fin");
+        descripcion = triggerLink.data("descripcion");
+        $("#modal_agregar_datos_academicos_formacion").val(formacion);
+        $("#modal_agregar_datos_academicos_institucion").val(institucion);
+        $("#modal_agregar_datos_academicos_pais").val(id_pais);
+        $("#modal_agregar_datos_academicos_grado_academico").val(id_tipo_grado_academico);
+        $("#modal_agregar_datos_academicos_fecha_inicio").val(fecha_inicio);
+        $("#modal_agregar_datos_academicos_fecha_fin").val(fecha_fin);
+        $("#modal_agregar_datos_academicos_descripcion").val(descripcion);
+        if(fecha_fin == null || fecha_fin == ''){
+            $('#formSwitch1').prop('checked', true);
+            $('#modal_agregar_datos_academicos_fecha_fin').prop('disabled', true);
+        }
+    });
 
     $("#btn_guardar_datos_academicos").on("click", function () {
         formacion = $("#modal_agregar_datos_academicos_formacion").val();
@@ -769,7 +883,7 @@
             id_datos_academicos = triggerLink.data("id");
             formacion = triggerLink.data("nombre");
             descripcion = triggerLink.data("descripcion");
-            $("#modal_eliminar_informacion_datos_academicos").html(descripcion);
+            $("#modal_eliminar_informacion_datos_academicos").html(formacion);
         });
 
         $(".modal-footer").on("click", "#btn_eliminar_dato_academico", function () { 
