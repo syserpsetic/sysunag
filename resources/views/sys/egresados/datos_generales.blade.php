@@ -189,9 +189,11 @@
                                             <p class="text-muted mb-3">Completa o actualiza tus datos académicos.</p>
                                         </div>
                                         <div>
+                                            @if(!empty($datos_academicos))
                                             <button type="button" id="btn_agregar_dato_academico" class="btn btn-primary btn-icon" data-bs-toggle="modal" data-bs-target="#modal_agregar_datos_academicos">
                                                 <i data-feather="plus"></i>
                                             </button>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -232,12 +234,10 @@
 
                                         <!-- Mensaje principal -->
                                         <h2 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">Actualmente no has agregado ningún dato académico.</h2>
-                                        <h4 class="mb-2 text-center">Para completar o actualizar tu información académica:</h4>
-                                        <h6 class="text-muted mb-3 text-center">
-                                            1. Haz clic en el botón verde con el símbolo “+” ubicado en la parte superior derecha.<br />
-                                            2. Completa los campos requeridos en el formulario que aparecerá.<br />
-                                            3. Guarda los cambios para registrar tu información.
-                                        </h6>
+                                        <h4 class="mb-2 text-center">Para agregar tu información académica haz clic en el siguiente botón:</h4>
+                                       <button type="button" id="btn_agregar_dato_academico" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_agregar_datos_academicos">
+                                                <i data-feather="plus"></i> Agregar Dato Académico
+                                            </button>
                                     </div>
                                 </div>
                             </div>
@@ -327,16 +327,27 @@
                     <div class="card-body">
                         <div class="col-lg-12 grid-margin stretch-card">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_datos_academicos_grado_academico" class="form-label">Grado Académico</label>
+                                        <select class="form-select" id="modal_agregar_datos_academicos_grado_academico">
+                                            <option selected disabled>Seleccione un grado académico</option>
+                                            @foreach($tipos_grados_academicos as $row)
+                                            <option value="{{$row['id']}}">{{$row['nombre']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
                                     <div class="mb-3">
                                         <label for="modal_agregar_datos_academicos_formacion" class="form-label">Formación</label>
-                                        <input id="modal_agregar_datos_academicos_formacion" class="form-control" type="text" placeholder="Escriba aqui la formación"/>
+                                        <input id="modal_agregar_datos_academicos_formacion" class="form-control" type="text" placeholder="Escriba aquí la formación"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="modal_agregar_datos_academicos_institucion" class="form-label">Institución</label>
-                                        <input id="modal_agregar_datos_academicos_institucion" class="form-control" type="text" placeholder="Escriba aqui la institución"/>
+                                        <input id="modal_agregar_datos_academicos_institucion" class="form-control" type="text" placeholder="Escriba aquí la institución"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -350,18 +361,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="modal_agregar_datos_academicos_grado_academico" class="form-label">Grado Académico</label>
-                                        <select class="form-select" id="modal_agregar_datos_academicos_grado_academico">
-                                            <option selected disabled>Seleccione un grado académico</option>
-                                            @foreach($tipos_grados_academicos as $row)
-                                            <option value="{{$row['id']}}">{{$row['nombre']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
+                                
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="modal_agregar_datos_academicos_fecha_inicio" class="form-label">Fecha de Inicio</label>
                                         <input
@@ -373,7 +374,7 @@
                                         />
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                             <label for="modal_agregar_datos_academicos_fecha_fin" class="form-label mb-0">
