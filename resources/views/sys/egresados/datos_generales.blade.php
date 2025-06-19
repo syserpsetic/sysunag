@@ -272,34 +272,113 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="v-messages" role="tabpanel" aria-labelledby="v-experiencia_laboral-tab">
-                        <p>
-                            <div class="page-content d-flex align-items-center justify-content-center">
-                                <div class="row w-100 mx-0 auth-page">
-                                    <div class="col-md-8 col-xl-6 mx-auto d-flex flex-column align-items-center">
-                                        <!-- Logo -->
-                                        <img src="{{ url('assets/images/escudo.png') }}" class="img-fluid mb-2" alt="Sitio en Construcción" />
+                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h1 class="">Esperiencia Laboral</h1>
+                                            <p class="text-muted mb-3">Completa o actualiza tus datos académicos.</p>
+                                        </div>
+                                        <div>
+                                            <!-- <button type="button" class="btn btn-primary btn-icon btn_agregar_dato_academico" data-bs-toggle="modal" data-bs-target="#modal_agregar_datos_academicos">
+                                                <i data-feather="plus"></i>
+                                            </button> -->
+                                        </div>
+                                    </div>
 
-                                        <!-- Mensaje principal -->
-                                        <h1 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">¡Sitio en construcción!</h1>
-                                        <h4 class="mb-2 text-center">Estamos trabajando para mejorar</h4>
-                                        <h6 class="text-muted mb-3 text-center">
-                                            Nuestro sitio web está siendo actualizado.<br />
-                                            Pronto estará disponible nuevamente.
-                                        </h6>
+                                    <hr />
 
-                                        <!-- Icono o animación opcional -->
-                                        <div class="bg-light rounded p-3 mt-3 text-center shadow-sm w-100">
-                                            <div class="d-flex align-items-center justify-content-center">
-                                                <div class="spinner-border text-warning me-2" role="status" style="width: 1.5rem; height: 1.5rem;">
-                                                    <span class="visually-hidden">Cargando...</span>
+                                    <div class="row scroll-container">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                            <div class="card-body">
+                                                <div class="container-fluid d-flex justify-content-between">
+                                                    <div class="col-lg-8 ps-0">
+                                                        <a href="#" class="noble-ui-logo d-block mt-3 fw-bold">AUXILIAR ADMINISTRATIVO</a>                 
+                                                        <p class="mt-1 mb-1"><b>Universidad Nacional de Agricultura</b> – Departamento de Recursos Humanos</p>
+                                                        <p class="mb-1"><strong>Ubicación:</strong> Catacamas, Olancho, Honduras</p>
+                                                        <p class="mb-1"><strong>Funciones principales:</strong></p>
+                                                        <ul class="mb-1">
+                                                            <li>Gestión de documentación administrativa y archivos físicos/digitales</li>
+                                                            <li>Atención al personal administrativo y docente</li>
+                                                            <li>Redacción de oficios, actas y reportes</li>
+                                                            <li>Soporte en procesos de contratación y pagos</li>
+                                                        </ul>
+                                                        <p class="mb-2">Durante este período, se fortalecieron procesos internos que optimizaron la atención a los usuarios.</p>
+                                                    </div>
+                                                    <div class="col-lg-3 pe-0">
+                                                        <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2020-02</h4>
+                                                        <h6 class="text-end mb-0">Presente</h6>
+                                                        <p class="text-end"><small>Duración: 4 años 4 meses</small></p>
+                                                    </div>
                                                 </div>
-                                                <span class="fw-bold text-warning fs-4">Trabajando en ello...</span>
+                                                <hr>
+<div class="container-fluid d-flex justify-content-between">
+    <div class="col-lg-8 ps-0">
+        <a href="#" class="noble-ui-logo d-block mt-3 fw-bold">DESARROLLADOR DE SISTEMAS</a>                 
+        <p class="mt-1 mb-1"><b>Secretaría de Finanzas</b> – Departamento de Tecnología</p>
+        <p class="mb-1"><strong>Ubicación:</strong> Tegucigalpa, Honduras</p>
+        <p class="mb-1"><strong>Funciones principales:</strong></p>
+        <ul class="mb-1">
+            <li>Desarrollo y mantenimiento de sistemas internos en Laravel y .NET</li>
+            <li>Integración de servicios web y autenticación OAuth2</li>
+            <li>Automatización de reportes y gestión de base de datos PostgreSQL</li>
+            <li>Capacitación a personal sobre el uso de sistemas</li>
+        </ul>
+        <p class="mb-2">Logré reducir en un 35% el tiempo de procesamiento de solicitudes internas mediante automatización.</p>
+    </div>
+    <div class="col-lg-3 pe-0">
+        <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2018-06</h4>
+        <h6 class="text-end mb-0">2020-12</h6>
+        <p class="text-end"><small>Duración: 2 años 6 meses</small></p>
+    </div>
+</div>
+<hr>
+<div class="container-fluid d-flex justify-content-between">
+    <div class="col-lg-8 ps-0">
+        <a href="#" class="noble-ui-logo d-block mt-3 fw-bold">TÉCNICO DE SOPORTE</a>                 
+        <p class="mt-1 mb-1"><b>INFOP</b> – Unidad de Soporte Técnico</p>
+        <p class="mb-1"><strong>Ubicación:</strong> San Pedro Sula, Honduras</p>
+        <p class="mb-1"><strong>Funciones principales:</strong></p>
+        <ul class="mb-1">
+            <li>Diagnóstico y reparación de equipos de cómputo</li>
+            <li>Instalación y configuración de redes LAN</li>
+            <li>Soporte a usuarios en software institucional</li>
+            <li>Mantenimiento preventivo y correctivo</li>
+        </ul>
+        <p class="mb-2">Atendí un promedio de 50 incidentes semanales, logrando una tasa de satisfacción del 90%.</p>
+    </div>
+    <div class="col-lg-3 pe-0">
+        <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2016-01</h4>
+        <h6 class="text-end mb-0">2018-05</h6>
+        <p class="text-end"><small>Duración: 2 años 4 meses</small></p>
+    </div>
+</div>
+<hr>
+<div class="container-fluid d-flex justify-content-between">
+    <div class="col-lg-8 ps-0">
+        <a href="#" class="noble-ui-logo d-block mt-3 fw-bold">PRACTICANTE UNIVERSITARIO</a>                 
+        <p class="mt-1 mb-1"><b>Municipalidad de Catacamas</b> – Área de Modernización</p>
+        <p class="mb-1"><strong>Ubicación:</strong> Catacamas, Olancho, Honduras</p>
+        <p class="mb-1"><strong>Funciones principales:</strong></p>
+        <ul class="mb-1">
+            <li>Apoyo en la digitalización de expedientes ciudadanos</li>
+            <li>Desarrollo de formularios en línea con HTML/PHP</li>
+            <li>Asistencia en la implementación de un sistema de gestión documental</li>
+        </ul>
+        <p class="mb-2">Como proyecto final, diseñé un sistema básico para solicitudes ciudadanas, utilizado en 3 departamentos.</p>
+    </div>
+    <div class="col-lg-3 pe-0">
+        <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2015-02</h4>
+        <h6 class="text-end mb-0">2015-11</h6>
+        <p class="text-end"><small>Duración: 9 meses</small></p>
+    </div>
+</div>
+<hr>
+
+
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </p>
                     </div>
                     <div class="tab-pane fade" id="v-settings" role="tabpanel" aria-labelledby="v-ofertas_empelos-tab">
                         <p>
