@@ -46,6 +46,7 @@ class MallaValidacionController extends Controller
             $totalPrimary = $response['totalPrimary'];
             $totalWarning = $response['totalWarning'];
             $totalDanger = $response['totalDanger'];
+            $cumpleaños = $response['cumpleaños'];
 
             return view("sys.mallaValidacion.mallaValidacion")
             ->with('indicadoresMallaValidaciones', $indicadoresMallaValidaciones)
@@ -64,7 +65,8 @@ class MallaValidacionController extends Controller
             ->with('totalIndicadores', $totalIndicadores)
             ->with('totalPrimary', $totalPrimary)
             ->with('totalWarning', $totalWarning)
-            ->with('totalDanger', $totalDanger);
+            ->with('totalDanger', $totalDanger)
+            ->with('cumpleaños', $cumpleaños);
 
         } catch (ConnectionException $e) {
         // Si hay un error como cURL 28 (timeout), carga una vista amigable

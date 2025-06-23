@@ -182,6 +182,22 @@
                     <div class="col-lg-3 chat-aside border-end-lg">
                         <div class="aside-content">
                             <div class="aside-body">
+                                @if(!empty($cumpleaños))
+                                    <div class="d-flex align-items-center p-2 rounded shadow-sm" style="background-color: #d3eed7; border-left: 5px solid #135423;">
+                                        <img class="img-xs rounded-circle border border-warning" 
+                                            src="{{ asset('/matricula/documentos/fotos/') }}/{{$row['foto']}}" 
+                                            alt="Foto de {{$cumpleaños['nombre_completo']}}" 
+                                            onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
+                                        
+                                        <div class="ms-3">
+                                            <small class="d-block mb-1">
+                                                🎂 <strong>{{$cumpleaños['nombre_completo']}}</strong>
+                                            </small>
+                                            <p class="tx-11 text-muted mb-0">🎉 ¡Feliz Cumpleaños! 🎈</p>
+                                        </div>
+                                    </div>
+
+                                @endif
                                 <ul class="nav nav-tabs nav-fill mt-3" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active bg-primary" id="chats-tab" data-bs-toggle="tab" data-bs-target="#chats" role="tab" aria-controls="chats" aria-selected="true">
@@ -253,15 +269,20 @@
                             </div>
                         </div>
                         <div class="row">
-                            <center>
-                                <div class="col-12">
+                            <div class="col-4">
+                                
+                            </div>
+                            <div class="col-4">
+                                <center>
                                     <span class="badge bg-primary">{{$totalPrimary}}</span> |
                                     <span class="badge bg-warning">{{$totalWarning}}</span> |
                                     <span class="badge bg-danger text-white">{{$totalDanger}}</span> |
                                     <span class="badge bg-light text-dark">{{$totalIndicadores}}</span>
-                                </div> 
-                            </center>
-                            
+                                </center>
+                            </div> 
+                            <div class="col-4">
+
+                            </div>
                         </div>
                         <hr>
                         <div class="chat-body">
@@ -889,6 +910,18 @@
                 volume: 1    // Máximo volumen
             });
         @endif
+
+        // @if(!empty($cumpleaños))
+        //     @if(in_array('malla_validacion_reproducir_narrador', $scopes) && ($cumpleaños['mensaje'] != null || $cumpleaños['mensaje'] != ''))
+        //         var mensaje = '{{$cumpleaños["mensaje"]}}';
+        //         console.log(mensaje);
+        //         responsiveVoice.speak(mensaje, "Spanish Latin American Female", {
+        //             rate: 1.2,   // Aumenta la velocidad al 180%
+        //             pitch: 1,  // Un poco más agudo
+        //             volume: 1    // Máximo volumen
+        //         });
+        //     @endif
+        // @endif
 
         const newsContainer = document.getElementById("newsContainer");
             let position = window.innerWidth;
