@@ -350,7 +350,7 @@
 
                                         <!-- Mensaje principal -->
                                         <h2 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">Actualmente no has agregado ninguna experiencia laboral.</h2>
-                                        <h4 class="mb-2 text-center">Para agregar tu información académica haz clic en el siguiente botón:</h4>
+                                        <h4 class="mb-2 text-center">Para agregar tu información laboral haz clic en el siguiente botón:</h4>
                                        <button type="button" class="btn btn-primary btn_agregar_dato_academico" data-bs-toggle="modal" data-bs-target="#modal_agregar_experiencia_laboral">
                                                 <i data-feather="plus"></i> Agregar Experiencia Laboral
                                             </button>
