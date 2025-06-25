@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/egresados/datos_generales/guardar', [EgresadosController::class, 'guardar_datos_generales']);
         Route::post('/egresados/datos_generales/municipios', [EgresadosController::class, 'ver_municipios']);
         Route::post('/egresados/datos_academicos/guardar', [EgresadosController::class, 'guardar_datos_academicos']);
+        Route::post('/egresados/esperiencia_laboral/guardar', [EgresadosController::class, 'guardar_esperiencia_laboral']);
     //Finaliza Egresados
 });
 

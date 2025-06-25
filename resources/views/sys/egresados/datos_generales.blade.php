@@ -6,6 +6,7 @@
   <link href="{{ asset('assets/plugins/jquery-tags-input/jquery.tagsinput.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/prismjs/prism.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/easymde/easymde.min.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -278,9 +279,11 @@
                                             <p class="text-muted mb-3">Completa o actualiza tus datos académicos.</p>
                                         </div>
                                         <div>
-                                            <!-- <button type="button" class="btn btn-primary btn-icon btn_agregar_dato_academico" data-bs-toggle="modal" data-bs-target="#modal_agregar_datos_academicos">
+                                            @if(!empty($experiencia_laboral))
+                                            <button type="button" class="btn btn-primary btn-icon btn_agregar_experiencia_laboral" data-bs-toggle="modal" data-bs-target="#modal_agregar_experiencia_laboral">
                                                 <i data-feather="plus"></i>
-                                            </button> -->
+                                            </button>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -290,91 +293,51 @@
                                         <div class="col-md-12">
                                             <div class="card">
                                             <div class="card-body">
+                                                @foreach($experiencia_laboral as $row)
                                                 <div class="container-fluid d-flex justify-content-between">
                                                     <div class="col-lg-8 ps-0">
-                                                        <a href="#" class="noble-ui-logo d-block mt-3 fw-bold">AUXILIAR ADMINISTRATIVO</a>                 
-                                                        <p class="mt-1 mb-1"><b>Universidad Nacional de Agricultura</b> – Departamento de Recursos Humanos</p>
-                                                        <p class="mb-1"><strong>Ubicación:</strong> Catacamas, Olancho, Honduras</p>
+                                                        <a class="noble-ui-logo d-block mt-3 fw-bold">{{$row['puesto']}}</a>                 
+                                                        <p class="mt-1 mb-1"><b>{{$row['empleador']}}</b> – {{$row['departamento']}}</p>
+                                                        <p class="mb-1"><strong>Ubicación:</strong> {{$row['lugar']}}</p>
                                                         <p class="mb-1"><strong>Funciones principales:</strong></p>
-                                                        <ul class="mb-1">
-                                                            <li>Gestión de documentación administrativa y archivos físicos/digitales</li>
-                                                            <li>Atención al personal administrativo y docente</li>
-                                                            <li>Redacción de oficios, actas y reportes</li>
-                                                            <li>Soporte en procesos de contratación y pagos</li>
-                                                        </ul>
-                                                        <p class="mb-2">Durante este período, se fortalecieron procesos internos que optimizaron la atención a los usuarios.</p>
+                                                        <p class="mb-2">{!!$row['descripcion']!!}</p>
                                                     </div>
                                                     <div class="col-lg-3 pe-0">
-                                                        <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2020-02</h4>
-                                                        <h6 class="text-end mb-0">Presente</h6>
-                                                        <p class="text-end"><small>Duración: 4 años 4 meses</small></p>
+                                                        {{--<h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2020-02</h4>--}}
+                                                        <h6 class="text-end mb-0">{{$row['fecha_inicio_formato']}} - {{$row['fecha_fin_formato']}} </h6>
+                                                        <div class="text-end">
+                                                            <button type="button" class="btn btn-inverse-light btn-xs btn-icon btn_editar_esperiencia_laboral"
+                                                                data-bs-toggle="modal" 
+                                                                data-bs-target=".modal_agregar_experiencia_laboral"
+                                                                data-id="{{$row['id']}}"
+                                                                data-puesto="{{$row['puesto']}}"
+                                                                data-empleador="{{$row['empleador']}}"
+                                                                data-departamento="{{$row['departamento']}}"
+                                                                data-lugar="{{$row['lugar']}}"
+                                                                data-fecha_inicio="{{$row['fecha_inicio']}}"
+                                                                data-fecha_fin="{{$row['fecha_fin']}}"
+                                                                data-descripcion="{{$row['descripcion']}}">
+                                                                <i data-feather="edit"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-inverse-light btn-xs btn-icon btn_eliminar_esperiencia_laboral"
+                                                                data-bs-toggle="modal" 
+                                                                data-bs-target=".modal_eliminar_experiencia_laboral"
+                                                                data-id="{{$row['id']}}"
+                                                                data-puesto="{{$row['puesto']}}"
+                                                                data-empleador="{{$row['empleador']}}"
+                                                                data-departamento="{{$row['departamento']}}"
+                                                                data-lugar="{{$row['lugar']}}"
+                                                                data-fecha_inicio="{{$row['fecha_inicio']}}"
+                                                                data-fecha_fin="{{$row['fecha_fin']}}"
+                                                                data-descripcion="{{$row['descripcion']}}">
+                                                                <i data-feather="trash"></i>
+                                                            </button>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <hr>
-<div class="container-fluid d-flex justify-content-between">
-    <div class="col-lg-8 ps-0">
-        <a href="#" class="noble-ui-logo d-block mt-3 fw-bold">DESARROLLADOR DE SISTEMAS</a>                 
-        <p class="mt-1 mb-1"><b>Secretaría de Finanzas</b> – Departamento de Tecnología</p>
-        <p class="mb-1"><strong>Ubicación:</strong> Tegucigalpa, Honduras</p>
-        <p class="mb-1"><strong>Funciones principales:</strong></p>
-        <ul class="mb-1">
-            <li>Desarrollo y mantenimiento de sistemas internos en Laravel y .NET</li>
-            <li>Integración de servicios web y autenticación OAuth2</li>
-            <li>Automatización de reportes y gestión de base de datos PostgreSQL</li>
-            <li>Capacitación a personal sobre el uso de sistemas</li>
-        </ul>
-        <p class="mb-2">Logré reducir en un 35% el tiempo de procesamiento de solicitudes internas mediante automatización.</p>
-    </div>
-    <div class="col-lg-3 pe-0">
-        <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2018-06</h4>
-        <h6 class="text-end mb-0">2020-12</h6>
-        <p class="text-end"><small>Duración: 2 años 6 meses</small></p>
-    </div>
-</div>
-<hr>
-<div class="container-fluid d-flex justify-content-between">
-    <div class="col-lg-8 ps-0">
-        <a href="#" class="noble-ui-logo d-block mt-3 fw-bold">TÉCNICO DE SOPORTE</a>                 
-        <p class="mt-1 mb-1"><b>INFOP</b> – Unidad de Soporte Técnico</p>
-        <p class="mb-1"><strong>Ubicación:</strong> San Pedro Sula, Honduras</p>
-        <p class="mb-1"><strong>Funciones principales:</strong></p>
-        <ul class="mb-1">
-            <li>Diagnóstico y reparación de equipos de cómputo</li>
-            <li>Instalación y configuración de redes LAN</li>
-            <li>Soporte a usuarios en software institucional</li>
-            <li>Mantenimiento preventivo y correctivo</li>
-        </ul>
-        <p class="mb-2">Atendí un promedio de 50 incidentes semanales, logrando una tasa de satisfacción del 90%.</p>
-    </div>
-    <div class="col-lg-3 pe-0">
-        <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2016-01</h4>
-        <h6 class="text-end mb-0">2018-05</h6>
-        <p class="text-end"><small>Duración: 2 años 4 meses</small></p>
-    </div>
-</div>
-<hr>
-<div class="container-fluid d-flex justify-content-between">
-    <div class="col-lg-8 ps-0">
-        <a href="#" class="noble-ui-logo d-block mt-3 fw-bold">PRACTICANTE UNIVERSITARIO</a>                 
-        <p class="mt-1 mb-1"><b>Municipalidad de Catacamas</b> – Área de Modernización</p>
-        <p class="mb-1"><strong>Ubicación:</strong> Catacamas, Olancho, Honduras</p>
-        <p class="mb-1"><strong>Funciones principales:</strong></p>
-        <ul class="mb-1">
-            <li>Apoyo en la digitalización de expedientes ciudadanos</li>
-            <li>Desarrollo de formularios en línea con HTML/PHP</li>
-            <li>Asistencia en la implementación de un sistema de gestión documental</li>
-        </ul>
-        <p class="mb-2">Como proyecto final, diseñé un sistema básico para solicitudes ciudadanas, utilizado en 3 departamentos.</p>
-    </div>
-    <div class="col-lg-3 pe-0">
-        <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2015-02</h4>
-        <h6 class="text-end mb-0">2015-11</h6>
-        <p class="text-end"><small>Duración: 9 meses</small></p>
-    </div>
-</div>
-<hr>
-
-
+                                                @endforeach
                                             </div>
                                             </div>
                                         </div>
@@ -521,6 +484,106 @@
     </div>
 </div>
 
+<div class="modal fade bd-example modal_agregar_experiencia_laboral" id="modal_agregar_experiencia_laboral" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="briefcase"></i> Registrar Experiencia Laboral</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+            </div>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_experiencia_laboral_puesto" class="form-label">Puesto</label>
+                                        <input id="modal_agregar_experiencia_laboral_puesto" class="form-control" type="text" placeholder="Escriba aquí la el puesto"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_experiencia_laboral_empleador" class="form-label">Empleador</label>
+                                        <input id="modal_agregar_experiencia_laboral_empleador" class="form-control" type="text" placeholder="Escriba aquí el empleador"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_experiencia_laboral_departamento" class="form-label">Departamento</label>
+                                        <input id="modal_agregar_experiencia_laboral_departamento" class="form-control" type="text" placeholder="Escriba aquí el departamento"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_experiencia_laboral_lugar" class="form-label">Lugar</label>
+                                        <input id="modal_agregar_experiencia_laboral_lugar" class="form-control" type="text" placeholder="Escriba aquí el lugar"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_experiencia_laboral_fecha_inicio" class="form-label">Fecha de Inicio</label>
+                                        <input
+                                            id="modal_agregar_experiencia_laboral_fecha_inicio"
+                                            type="month"
+                                            class="form-control mb-4 mb-md-0"
+                                            data-inputmask="'alias': 'datetime'"
+                                            data-inputmask-inputformat="yyyy/mm/dd"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <label for="modal_agregar_experiencia_laboral_fecha_fin" class="form-label mb-0">
+                                                Fecha de Fin
+                                            </label>
+                                            <div class="form-check form-switch m-0">
+                                                <input type="checkbox" class="form-check-input" id="formSwitch1_experiencia_laboral" />
+                                                <label class="form-check-label" for="formSwitch1_experiencia_laboral">Presente</label>
+                                            </div>
+                                        </div>
+                                        <input
+                                            id="modal_agregar_experiencia_laboral_fecha_fin"
+                                            type="month"
+                                            class="form-control mb-4 mb-md-0"
+                                            data-inputmask="'alias': 'datetime'"
+                                            data-inputmask-inputformat="yyyy/mm/dd"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="modal_agregar_experiencia_laboral_descripcion" class="form-label">Descripción</label>
+                                        <textarea
+                                            class="form-control"
+                                            id="modal_agregar_experiencia_laboral_descripcion"
+                                            maxlength="100"
+                                            rows="4"
+                                            placeholder="Escriba aquí..."
+                                        ></textarea>
+                                    </div>
+                                </div> -->
+                                <div class="col-md-12">
+                                    <label for="modal_agregar_experiencia_laboral_descripcion" class="form-label">Descripción</label>
+                                    <textarea class="form-control" name="tinymce" id="modal_agregar_experiencia_laboral_descripcion" maxlength="100"
+                                            rows="4"
+                                            placeholder="Escriba aquí..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-secondary">
+                <button type="button" class="btn btn-danger btn-xs" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary btn-xs" id="btn_guardar_experiencia_laboral">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade modal_eliminar" id="modal_eliminar" tabindex="-1" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -553,6 +616,43 @@
             <div class="modal-footer bg-secondary">
                 <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary btn-sm" id="btn_eliminar_dato_academico">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal_eliminar_experiencia_laboral" id="modal_eliminar_experiencia_laboral" tabindex="-1" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title h4 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="x"></i> Eliminar Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="row">
+                            <center>
+                                <i class="btn-icon-prepend text-warning" data-feather="alert-circle" style="width: 90px; height: 90px;"></i>
+                                <br><br>
+                                <div class="col-sm-12">
+                                    <div class="mb-3">
+                                        <h4><label class="form-label"><strong>¿Realmente deseas eliminar este registro?</strong></label></h4>
+                                        <br>
+                                        <h5><label class="form-label" id="modal_eliminar_informacion_experiencia_laboral"></label></h5>
+                                        <br>
+                                        <p class="fw-normal">Este proceso no se puede revertir</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                        <!-- Row -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-secondary">
+                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary btn-sm" id="btn_eliminar_experiencia_laboral">Eliminar</button>
             </div>
         </div>
     </div>
@@ -611,12 +711,19 @@
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/prismjs/prism.js') }}"></script>
   <script src="{{ asset('assets/plugins/clipboard/clipboard.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/easymde/easymde.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/ace-builds/ace.js') }}"></script>
+  <script src="{{ asset('assets/plugins/ace-builds/theme-chaos.js') }}"></script>
 @endpush
 @push('custom-scripts')
   <script src="{{ asset('assets/js/dashboard.js') }}"></script>
   <script src="{{ asset('assets/js/data-table.js') }}"></script>
   <script src="{{ asset('assets/js/inputmask.js') }}"></script>
   <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
+  <script src="{{ asset('assets/js/tinymce.js') }}"></script>
+  <script src="{{ asset('assets/js/easymde.js') }}"></script>
+  <script src="{{ asset('assets/js/ace.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
   <script type="text/javascript">
@@ -649,8 +756,18 @@
     var fecha_fin = null;
     var descripcion = null;
     //finaliza datos academicos
+    //inicia experiencia laboral
+    var id_experiencia_laboaral = null;
+    var puesto = null;
+    var departamento = null;
+    var lugar = null;
+    var fecha_inicio_experiencia_laboaral = null;
+    var fecha_fin_experiencia_laboaral = null;
+    var descripcion_experiencia_laboaral = null;
+    //finaliza experiencia laboral
     var url_guardar_datos_generales = "{{url('/egresados/datos_generales/guardar')}}"; 
     var url_guardar_datos_academicos = "{{url('/egresados/datos_academicos/guardar')}}"; 
+    var url_guardar_esperiencia_laboral = "{{url('/egresados/esperiencia_laboral/guardar')}}"; 
     var url_datos_generales_municipios = "{{url('/egresados/datos_generales/municipios')}}"; 
     $(document).ready(function () {
         $.ajaxSetup({
@@ -821,13 +938,48 @@
             fecha_fin = null;
             $("#modal_agregar_datos_academicos_fecha_fin").val(null);
         });
+
+        $('#formSwitch1_experiencia_laboral').change(function() {
+            $('#modal_agregar_experiencia_laboral_fecha_fin').prop('disabled', this.checked);
+            fecha_fin_experiencia_laboaral = null;
+            $("#modal_agregar_experiencia_laboral_fecha_fin").val(null);
+        });
     });
 
-    $(".btn_editar_datos_academicos").on("click", function () {
+    $(function() {
+                'use strict';
+
+                //Tinymce editor
+                if ($("#modal_agregar_experiencia_laboral_descripcion").length) {
+                    tinymce.init({
+                    selector: '#modal_agregar_experiencia_laboral_descripcion',
+                    height: 250,
+                    menubar: false,
+                    default_text_color: 'red',
+                    plugins: 'advlist autolink lists link image charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen',
+                    toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+                    //toolbar2: 'forecolor backcolor emoticons',
+                    image_advtab: true,
+                    templates: [{
+                        title: 'Test template 1',
+                        content: 'Test 1'
+                        },
+                        // {
+                        // title: 'Test template 2',
+                        // content: 'Test 2'
+                        // }
+                    ],
+                    content_css: []
+                    });
+                }
+                
+            });
+
+    $(".btn_editar_datos_academicos, .btn_editar_esperiencia_laboral").on("click", function () {
         accion = 2;
     })
 
-    $(".btn_agregar_dato_academico").on("click", function () {
+    $(".btn_agregar_dato_academico, .btn_agregar_experiencia_laboral").on("click", function () {
         accion = 1;
     })
 
@@ -848,6 +1000,32 @@
         $("#modal_ver_mas_institucion_pais").html(institucion+' - '+pais);
         $("#modal_ver_mas_fecha_inicio_fecha_fin").html(fecha_inicio_formato+' - '+fecha_fin_formato);
         $("#modal_ver_mas_descripcion").html(descripcion);
+    });
+
+    $("#modal_agregar_experiencia_laboral").on("show.bs.modal", function (e) {
+        $('#formSwitch1_experiencia_laboral').prop('checked', false);
+        $('#modal_agregar_experiencia_laboral_fecha_fin').prop('disabled', false);
+        var triggerLink = $(e.relatedTarget);
+        id_experiencia_laboaral = triggerLink.data("id");
+        puesto = triggerLink.data("puesto");
+        empleador = triggerLink.data("empleador");
+        departamento = triggerLink.data("departamento");
+        lugar = triggerLink.data("lugar");
+        fecha_inicio_experiencia_laboaral = triggerLink.data("fecha_inicio");
+        fecha_fin_experiencia_laboaral = triggerLink.data("fecha_fin");
+        descripcion_experiencia_laboaral = triggerLink.data("descripcion");
+        $("#modal_agregar_experiencia_laboral_puesto").val(puesto);
+        $("#modal_agregar_experiencia_laboral_empleador").val(empleador);
+        $("#modal_agregar_experiencia_laboral_departamento").val(departamento);
+        $("#modal_agregar_experiencia_laboral_lugar").val(lugar);
+        $("#modal_agregar_experiencia_laboral_fecha_inicio").val(fecha_inicio_experiencia_laboaral);
+        $("#modal_agregar_experiencia_laboral_fecha_fin").val(fecha_fin_experiencia_laboaral);
+        //$("#modal_agregar_experiencia_laboral_descripcion").val(descripcion);
+        tinymce.get('modal_agregar_experiencia_laboral_descripcion').setContent(descripcion_experiencia_laboaral || '');
+        if(fecha_fin_experiencia_laboaral == null || fecha_fin_experiencia_laboaral == ''){
+            $('#formSwitch1_experiencia_laboral').prop('checked', true);
+            $('#modal_agregar_experiencia_laboral_fecha_fin').prop('disabled', true);
+        }
     });
 
     $("#modal_agregar_datos_academicos").on("show.bs.modal", function (e) {
@@ -954,7 +1132,81 @@
             }
             
 
-        });
+    });
+
+    $("#btn_guardar_experiencia_laboral").on("click", function () {
+        puesto = $("#modal_agregar_experiencia_laboral_puesto").val();
+        empleador = $("#modal_agregar_experiencia_laboral_empleador").val();
+        departamento = $("#modal_agregar_experiencia_laboral_departamento").val();
+        lugar = $("#modal_agregar_experiencia_laboral_lugar").val();
+        fecha_inicio_experiencia_laboaral = $("#modal_agregar_experiencia_laboral_fecha_inicio").val();
+        fecha_fin_experiencia_laboaral = $("#modal_agregar_experiencia_laboral_fecha_fin").val();
+        descripcion_experiencia_laboaral = tinymce.get('modal_agregar_experiencia_laboral_descripcion').getContent();
+     
+            if(puesto == null || puesto == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Puesto.'
+                })
+                return true;
+            }
+
+            if(empleador == null || empleador == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Empleador.'
+                })
+                return true;
+            }
+
+            if(departamento == null || departamento == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Departamento.'
+                })
+                return true;
+            }
+
+            if(lugar == null || lugar == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Lugar.'
+                })
+                return true;
+            }
+
+            if(fecha_inicio_experiencia_laboaral == null || fecha_inicio_experiencia_laboaral == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Fecha de Inicio.'
+                })
+                return true;
+            }
+
+            if (!$('#formSwitch1_experiencia_laboral').is(':checked')) {
+                if(fecha_fin_experiencia_laboaral == null || fecha_fin_experiencia_laboaral == ''){
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Valor requerido para Fecha de Fin.'
+                    })
+                    return true;
+                }
+            }
+
+            if(descripcion_experiencia_laboaral == null || descripcion_experiencia_laboaral == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Descripción.'
+                })
+                return true;
+            }
+            
+            if(btn_activo){
+                guardar_esperiencia_laboral();
+            }
+            
+
+    });
 
         $("#modal_eliminar").on("show.bs.modal", function (e) {
             accion = 3;
@@ -965,11 +1217,31 @@
             $("#modal_eliminar_informacion_datos_academicos").html(formacion);
         });
 
+        $("#modal_eliminar_experiencia_laboral").on("show.bs.modal", function (e) {
+            accion = 3;
+            var triggerLink = $(e.relatedTarget);
+            id_experiencia_laboaral = triggerLink.data("id");
+            puesto = triggerLink.data("puesto");
+            empleador = triggerLink.data("empleador");
+            departamento = triggerLink.data("departamento");
+            lugar = triggerLink.data("lugar");
+            fecha_inicio_experiencia_laboaral = triggerLink.data("fecha_inicio");
+            fecha_fin_experiencia_laboaral = triggerLink.data("fecha_fin");
+            descripcion_experiencia_laboaral = triggerLink.data("descripcion");
+            $("#modal_eliminar_informacion_experiencia_laboral").html(puesto);
+        });
+
         $(".modal-footer").on("click", "#btn_eliminar_dato_academico", function () { 
             if(btn_activo){
                 guardar_datos_academicos(); 
             }
         }); 
+
+        $(".modal-footer").on("click", "#btn_eliminar_experiencia_laboral", function () { 
+            if(btn_activo){
+                guardar_esperiencia_laboral(); 
+            }
+        });
 
     });
 
@@ -1046,6 +1318,54 @@
                 fecha_inicio : fecha_inicio,
                 fecha_fin : fecha_fin,
                 descripcion : descripcion
+            },
+            success: function (data) {
+                if (data.msgError != null) {
+                    titleMsg = "Error al Guardar";
+                    textMsg = data.msgError;
+                    typeMsg = "error";
+                    timer = null;
+                    btn_activo = true;
+                } else {
+                    titleMsg = "Datos Guardados";
+                    textMsg = data.msgSuccess;
+                    typeMsg = "success";
+                    timer = 3000;
+                    location.reload();
+                }
+                console.log(textMsg);
+                ToastLG.fire({
+                    icon: typeMsg,
+                    title: titleMsg,
+                    html: textMsg,
+                    timer: timer
+                })
+
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            },
+        });
+    }
+
+    function guardar_esperiencia_laboral() {
+        espera('Tu información se esta guardando...');
+        btn_activo = false;
+        //console.log(hora_inicio);
+        $.ajax({
+            type: "post",
+            url: url_guardar_esperiencia_laboral,
+            data: {
+                accion : accion,
+                id : id_experiencia_laboaral,
+                numero_registro_asignado : numero_registro_asignado,
+                puesto : puesto,
+                empleador : empleador,
+                departamento : departamento,
+                lugar : lugar,
+                fecha_inicio_experiencia_laboaral : fecha_inicio_experiencia_laboaral,
+                fecha_fin_experiencia_laboaral : fecha_fin_experiencia_laboaral,
+                descripcion_experiencia_laboaral : descripcion_experiencia_laboaral
             },
             success: function (data) {
                 if (data.msgError != null) {

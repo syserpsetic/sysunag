@@ -82,3 +82,23 @@ GRANT USAGE ON egresados.egre_datos_academicos TO erpunag, reports, cmatute, erp
 --
 --
 --
+--5. Crear tabla egresados.egre_experiencia_laboral
+CREATE TABLE egresados.egre_experiencia_laboral
+(
+    id serial,
+    puesto text,
+    numero_registro_asignado text,
+	empleador text,
+	departamento text,
+	lugar text,
+	fecha_inicio timestamp(0) without time zone,
+    fecha_fin timestamp(0) without time zone,
+	descripcion text,
+    created_at timestamp(0) without time zone default now(),
+    updated_at timestamp(0) without time zone,
+    deleted_at timestamp(0) without time zone,
+    CONSTRAINT egre_experiencia_laboral_pkey PRIMARY KEY (id)
+);
+GRANT UPDATE, INSERT, SELECT, DELETE ON TABLE egresados.egre_experiencia_laboral TO erpunag;
+GRANT SELECT ON TABLE egresados.egre_experiencia_laboral TO cmatute, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
+GRANT USAGE ON egresados.egre_experiencia_laboral TO erpunag, reports, cmatute, erpunag, oacosta, cgarcia, gardonf, gdominguez, nsandoval;

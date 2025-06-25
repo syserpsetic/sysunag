@@ -29,6 +29,7 @@ class EgresadosController extends Controller
         $datos_academicos = $response['datos_academicos'];
         $paises = $response['paises'];
         $tipos_grados_academicos = $response['tipos_grados_academicos'];
+        $experiencia_laboral = $response['experiencia_laboral'];
 
         return view("sys.egresados.datos_generales")
         ->with("datos_generales", $datos_generales)
@@ -37,6 +38,7 @@ class EgresadosController extends Controller
         ->with("datos_academicos", $datos_academicos)
         ->with("paises", $paises)
         ->with("tipos_grados_academicos", $tipos_grados_academicos)
+        ->with("experiencia_laboral", $experiencia_laboral)
         ;
     }
 
@@ -134,6 +136,50 @@ class EgresadosController extends Controller
                 'fecha_inicio' => $request->fecha_inicio,
                 'fecha_fin' => $request->fecha_fin,
                 'descripcion' => $request->descripcion
+            ]);
+            //throw new Exception($response->status(), true);
+            $data = $response->json();
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    $msgError = "Desde backend: ".$data["msgError"];
+                }
+
+                $msgSuccess = $data["msgSuccess"];
+                //$zona_list = $data["zona_list"];
+                //throw New Exception($estados_list, true);
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError
+        ]);
+    }
+
+    public function guardar_esperiencia_laboral(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        //dd($request->all());
+        try {
+            //throw new Exception($request->puesto, true);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/egresados/esperiencia_laboral/guardar', [
+                'accion' => $request->accion,
+                'id' => $request->id,
+                'numero_registro_asignado' => $request->numero_registro_asignado,
+                'puesto' => $request->puesto,
+                'empleador' => $request->empleador,
+                'departamento' => $request->departamento,
+                'lugar' => $request->lugar,
+                'fecha_inicio_experiencia_laboaral' => $request->fecha_inicio_experiencia_laboaral,
+                'fecha_fin_experiencia_laboaral' => $request->fecha_fin_experiencia_laboaral,
+                'descripcion_experiencia_laboaral' => $request->descripcion_experiencia_laboaral
             ]);
             //throw new Exception($response->status(), true);
             $data = $response->json();
