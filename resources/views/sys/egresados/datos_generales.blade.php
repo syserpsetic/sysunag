@@ -291,55 +291,73 @@
 
                                     <div class="row scroll-container">
                                         <div class="col-md-12">
+                                            @if(!empty($experiencia_laboral))
                                             <div class="card">
-                                            <div class="card-body">
-                                                @foreach($experiencia_laboral as $row)
-                                                <div class="container-fluid d-flex justify-content-between">
-                                                    <div class="col-lg-8 ps-0">
-                                                        <a class="noble-ui-logo d-block mt-3 fw-bold">{{$row['puesto']}}</a>                 
-                                                        <p class="mt-1 mb-1"><b>{{$row['empleador']}}</b> – {{$row['departamento']}}</p>
-                                                        <p class="mb-1"><strong>Ubicación:</strong> {{$row['lugar']}}</p>
-                                                        <p class="mb-1"><strong>Funciones principales:</strong></p>
-                                                        <p class="mb-2">{!!$row['descripcion']!!}</p>
-                                                    </div>
-                                                    <div class="col-lg-3 pe-0">
-                                                        {{--<h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2020-02</h4>--}}
-                                                        <h6 class="text-end mb-0">{{$row['fecha_inicio_formato']}} - {{$row['fecha_fin_formato']}} </h6>
-                                                        <div class="text-end">
-                                                            <button type="button" class="btn btn-inverse-light btn-xs btn-icon btn_editar_esperiencia_laboral"
-                                                                data-bs-toggle="modal" 
-                                                                data-bs-target=".modal_agregar_experiencia_laboral"
-                                                                data-id="{{$row['id']}}"
-                                                                data-puesto="{{$row['puesto']}}"
-                                                                data-empleador="{{$row['empleador']}}"
-                                                                data-departamento="{{$row['departamento']}}"
-                                                                data-lugar="{{$row['lugar']}}"
-                                                                data-fecha_inicio="{{$row['fecha_inicio']}}"
-                                                                data-fecha_fin="{{$row['fecha_fin']}}"
-                                                                data-descripcion="{{$row['descripcion']}}">
-                                                                <i data-feather="edit"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-inverse-light btn-xs btn-icon btn_eliminar_esperiencia_laboral"
-                                                                data-bs-toggle="modal" 
-                                                                data-bs-target=".modal_eliminar_experiencia_laboral"
-                                                                data-id="{{$row['id']}}"
-                                                                data-puesto="{{$row['puesto']}}"
-                                                                data-empleador="{{$row['empleador']}}"
-                                                                data-departamento="{{$row['departamento']}}"
-                                                                data-lugar="{{$row['lugar']}}"
-                                                                data-fecha_inicio="{{$row['fecha_inicio']}}"
-                                                                data-fecha_fin="{{$row['fecha_fin']}}"
-                                                                data-descripcion="{{$row['descripcion']}}">
-                                                                <i data-feather="trash"></i>
-                                                            </button>
+                                                <div class="card-body">
+                                                    @foreach($experiencia_laboral as $row)
+                                                    <div class="container-fluid d-flex justify-content-between">
+                                                        <div class="col-lg-8 ps-0">
+                                                            <a class="noble-ui-logo d-block mt-3 fw-bold">{{$row['puesto']}}</a>                 
+                                                            <p class="mt-1 mb-1"><b>{{$row['empleador']}}</b> – {{$row['departamento']}}</p>
+                                                            <p class="mb-1"><strong>Ubicación:</strong> {{$row['lugar']}}</p>
+                                                            <p class="mb-1"><strong>Funciones principales:</strong></p>
+                                                            <p class="mb-2">{!!$row['descripcion']!!}</p>
                                                         </div>
+                                                        <div class="col-lg-3 pe-0">
+                                                            {{--<h4 class="fw-bold text-uppercase text-end mt-4 mb-2">2020-02</h4>--}}
+                                                            <h6 class="text-end mb-0">{{$row['fecha_inicio_formato']}} - {{$row['fecha_fin_formato']}} </h6>
+                                                            <div class="text-end">
+                                                                <button type="button" class="btn btn-inverse-light btn-xs btn-icon btn_editar_esperiencia_laboral"
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target=".modal_agregar_experiencia_laboral"
+                                                                    data-id="{{$row['id']}}"
+                                                                    data-puesto="{{$row['puesto']}}"
+                                                                    data-empleador="{{$row['empleador']}}"
+                                                                    data-departamento="{{$row['departamento']}}"
+                                                                    data-lugar="{{$row['lugar']}}"
+                                                                    data-fecha_inicio="{{$row['fecha_inicio']}}"
+                                                                    data-fecha_fin="{{$row['fecha_fin']}}"
+                                                                    data-descripcion="{{$row['descripcion']}}">
+                                                                    <i data-feather="edit"></i>
+                                                                </button>
+                                                                <button type="button" class="btn btn-inverse-light btn-xs btn-icon btn_eliminar_esperiencia_laboral"
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target=".modal_eliminar_experiencia_laboral"
+                                                                    data-id="{{$row['id']}}"
+                                                                    data-puesto="{{$row['puesto']}}"
+                                                                    data-empleador="{{$row['empleador']}}"
+                                                                    data-departamento="{{$row['departamento']}}"
+                                                                    data-lugar="{{$row['lugar']}}"
+                                                                    data-fecha_inicio="{{$row['fecha_inicio']}}"
+                                                                    data-fecha_fin="{{$row['fecha_fin']}}"
+                                                                    data-descripcion="{{$row['descripcion']}}">
+                                                                    <i data-feather="trash"></i>
+                                                                </button>
+                                                            </div>
 
+                                                        </div>
                                                     </div>
+                                                    <hr>
+                                                    @endforeach
                                                 </div>
-                                                <hr>
-                                                @endforeach
                                             </div>
-                                            </div>
+                                            @else
+                                                                <div class="page-content d-flex align-items-center justify-content-center">
+                                <div class="row w-100 mx-0 auth-page">
+                                    <div class="col-md-12 col-xl-12 mx-auto d-flex flex-column align-items-center">
+                                        <!-- Logo -->
+                                        <img src="{{ url('assets/images/escudo.png') }}" class="img-fluid mb-2" alt="Sitio en Construcción" />
+
+                                        <!-- Mensaje principal -->
+                                        <h2 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">Actualmente no has agregado ningún dato académico.</h2>
+                                        <h4 class="mb-2 text-center">Para agregar tu información académica haz clic en el siguiente botón:</h4>
+                                       <button type="button" class="btn btn-primary btn_agregar_dato_academico" data-bs-toggle="modal" data-bs-target="#modal_agregar_experiencia_laboral">
+                                                <i data-feather="plus"></i> Agregar Experiencia Laboral
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+                                                            @endif
                                         </div>
                                     </div>
                     </div>
