@@ -99,4 +99,14 @@
   .text-amarillo{
     color: var(--amarillo) !important;
   }
+
+  .bg-verdeClaro{
+    background-color: var(--verdeClaro) !important;
+    border: none !important;
+  }
+
+  .bg-amarillo{
+    background-color: var(--amarillo) !important;
+    border: none !important;
+  }
   /* Fin Botones */

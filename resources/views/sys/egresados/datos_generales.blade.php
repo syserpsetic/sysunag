@@ -27,6 +27,9 @@
                     <a class="nav-link" id="v-experiencia_laboral-tab" data-bs-toggle="tab" href="#v-messages" role="tab" aria-controls="v-messages" aria-selected="false">Experiencia Laboral</a>
                     <a class="nav-link" id="v-ofertas_empelos-tab" data-bs-toggle="tab" href="#v-settings" role="tab" aria-controls="v-settings" aria-selected="false">Ofertas de Empleo</a>
                 </div>
+                <div class="d-grid gap-2"><br>
+                    <button type="button" id="btn_descargar_cv" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modal_descargar_cv"><i class="btn-icon-prepend" data-feather="file"></i> Descargar CV</button>
+                </div>
             </div>
             <div class="col">
                 <div class="tab-content tab-content-vertical border p-3" id="v-tabContent">
@@ -708,6 +711,51 @@
                                     </div>
                                 </div
                             </center>
+                        </div>
+                        <!-- Row -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-secondary">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal_descargar_cv" id="modal_descargar_cv" tabindex="-1" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="page-content d-flex align-items-center justify-content-center">
+                                        <div class="row w-100 mx-0 auth-page">
+                                            <div class="col-md-8 col-xl-6 mx-auto d-flex flex-column align-items-center">
+                                                <!-- Logo -->
+                                                <img src="{{ url('assets/images/escudo.png') }}" class="img-fluid mb-2" alt="Sitio en Construcción" />
+
+                                                <!-- Mensaje principal -->
+                                                <h1 class="fw-bolder mt-2 mb-3 tx-70 text-muted text-center">Funcionalidad en construcción!</h1>
+                                                <h4 class="mb-2 text-center">Estamos trabajando para mejorar</h4>
+                                                <h6 class="text-muted mb-3 text-center">
+                                                    Nuestra funcionalidad esta siendo construida.<br />
+                                                    Pronto estará disponible.
+                                                </h6>
+
+                                                <!-- Icono o animación opcional -->
+                                                <div class="bg-light rounded p-3 mt-3 text-center shadow-sm w-100">
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <div class="spinner-border text-warning me-2" role="status" style="width: 1.5rem; height: 1.5rem;">
+                                                            <span class="visually-hidden">Cargando...</span>
+                                                        </div>
+                                                        <span class="fw-bold text-warning fs-4">Trabajando en ello...</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                         </div>
                         <!-- Row -->
                     </div>

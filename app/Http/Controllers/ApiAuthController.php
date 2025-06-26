@@ -59,6 +59,8 @@ class ApiAuthController extends Controller
             $user->password = '0';
             $user->save();
             Session::put('token', $userData['token']);
+            Session::put('bienvenida', $userData['bienvenida']);
+            Session::put('mensaje_egresado', $userData['mensaje_egresado']);
             auth()->login($user);
             if($userData['username'] == '22A0000'){
                 return redirect("/setic/malla_validacion");
