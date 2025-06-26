@@ -227,6 +227,7 @@
                                                                                         data-fecha_fin_formato="{{$row['fecha_fin_formato']}}"
                                                                                         data-descripcion="{{$row['descripcion']}}"
                                                                                     ><i data-feather="eye" class="icon-sm me-2"></i> Ver más</a>
+                                                                                    @if($row['id'] != null)
                                                                                     <a class="dropdown-item btn_editar_datos_academicos" href="#"
                                                                                         data-bs-toggle="modal" 
                                                                                         data-bs-target=".modal_agregar_datos_academicos"
@@ -246,6 +247,7 @@
                                                                                         data-nombre="{{$row['nombre']}}"
                                                                                         data-descripcion="{{$row['descripcion']}}"
                                                                                     ><i data-feather="trash" class="icon-sm me-2"></i> Eliminar</a>
+                                                                                    @endif
                                                                                 </div>
                                                                             </div>
                                                                         </li>
