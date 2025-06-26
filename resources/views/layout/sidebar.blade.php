@@ -16,7 +16,7 @@
       <li class="nav-item {{ active_class(['/']) }}">
         <a href="{{ url('/') }}" class="nav-link">
           <i class="link-icon" data-feather="home"></i>
-          <span class="link-title">Home</span>
+          <span class="link-title">Página Principal</span>
         </a>
       </li>
       @if(in_array('malla_validacion', $scopes))
