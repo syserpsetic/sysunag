@@ -29,9 +29,9 @@
                         <div class="item position-relative" style="height: 250px; overflow: hidden; border-radius: 8px;">
                             <img src="https://www.maestrias.unag.edu.hn/images/slide-doctorado.jpeg" alt="Maestría 2" class="w-100 h-100" style="object-fit: cover;" />
                             <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-end p-3" style="background: rgba(0, 0, 0, 0.4);">
-                                <h5 class="text-amarillo mb-2">Doctorado en</h5>
-                                <h4 class="text-white mb-2">Ciencias Agrarias</h4>
-                                <a href="https://www.maestrias.unag.edu.hn/doctorado-en-ciencias-agrarias" target="_blank" class="btn btn-sm btn-primary">MÁS INFORMACIÓN</a>
+                                <h5 class="text-amarillo mb-2 fs-6 fs-md-5 fs-lg-4">Doctorado en</h5>
+                                <h4 class="text-white mb-2 fs-6 fs-md-5 fs-lg-4">Ciencias Agrarias</h4>
+                                <a href="https://www.maestrias.unag.edu.hn/doctorado-en-ciencias-agrarias" target="_blank" class="btn btn-primary btn-sm fs-6 fs-md-6 fs-lg-5">MÁS INFORMACIÓN</a>
                             </div>
                         </div>
 
@@ -39,27 +39,27 @@
                         <div class="item position-relative" style="height: 250px; overflow: hidden; border-radius: 8px;">
                             <img src="https://www.maestrias.unag.edu.hn/images/mca-slide1.jpg" alt="Maestría 2" class="w-100 h-100" style="object-fit: cover;" />
                             <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-end p-3" style="background: rgba(0, 0, 0, 0.4);">
-                                <h5 class="text-amarillo mb-2">Posgrado en</h5>
-                                <h4 class="text-white mb-2">Ciencias Agroalimentarias</h4>
-                                <a href="https://www.maestrias.unag.edu.hn/maestria-en-ciencias-agroalimentarias" target="_blank" class="btn btn-sm btn-primary">MÁS INFORMACIÓN</a>
+                                <h5 class="text-amarillo mb-2 fs-6 fs-md-5 fs-lg-4">Posgrado en</h5>
+                                <h4 class="text-white mb-2 fs-6 fs-md-5 fs-lg-4">Ciencias Agroalimentarias</h4>
+                                <a href="https://www.maestrias.unag.edu.hn/maestria-en-ciencias-agroalimentarias" target="_blank" class="btn btn-primary btn-sm fs-6 fs-md-6 fs-lg-5">MÁS INFORMACIÓN</a>
                             </div>
                         </div>
 
                         <div class="item position-relative" style="height: 250px; overflow: hidden; border-radius: 8px;">
                             <img src="https://www.maestrias.unag.edu.hn/images/mgpas-slide1.jpg" alt="Maestría 2" class="w-100 h-100" style="object-fit: cover;" />
                             <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-end p-3" style="background: rgba(0, 0, 0, 0.4);">
-                                <h5 class="text-amarillo mb-2">Posgrado en</h5>
-                                <h4 class="text-white mb-2">Gestión de la Producción Animal Sostenible</h4>
-                                <a href="https://www.maestrias.unag.edu.hn/maestria-en-gestion-de-la-produccion-animal-sostenible" target="_blank" class="btn btn-sm btn-primary">MÁS INFORMACIÓN</a>
+                                <h5 class="text-amarillo mb-2 fs-6 fs-md-5 fs-lg-4">Posgrado en</h5>
+                                <h4 class="text-white mb-2 fs-6 fs-md-5 fs-lg-4">Gestión de la Producción Animal Sostenible</h4>
+                                <a href="https://www.maestrias.unag.edu.hn/maestria-en-gestion-de-la-produccion-animal-sostenible" target="_blank" class="btn btn-primary btn-sm fs-6 fs-md-6 fs-lg-5">MÁS INFORMACIÓN</a>
                             </div>
                         </div>
 
                         <div class="item position-relative" style="height: 250px; overflow: hidden; border-radius: 8px;">
                             <img src="https://www.maestrias.unag.edu.hn/images/mrrnn-slide1.jpg" alt="Maestría 2" class="w-100 h-100" style="object-fit: cover;" />
                             <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-end p-3" style="background: rgba(0, 0, 0, 0.4);">
-                                <h5 class="text-amarillo mb-2">Posgrado en</h5>
-                                <h4 class="text-white mb-2">Recursos Naturales y Producción Sostenible</h4>
-                                <a href="https://www.maestrias.unag.edu.hn/maestria-en-recursos-naturales-y-produccion-sostenible" target="_blank" class="btn btn-sm btn-primary">MÁS INFORMACIÓN</a>
+                                <h5 class="text-amarillo mb-2 fs-6 fs-md-5 fs-lg-4">Posgrado en</h5>
+                                <h4 class="text-white mb-2 fs-6 fs-md-5 fs-lg-4">Recursos Naturales y Producción Sostenible</h4>
+                                <a href="https://www.maestrias.unag.edu.hn/maestria-en-recursos-naturales-y-produccion-sostenible" target="_blank" class="btn btn-primary btn-sm fs-6 fs-md-6 fs-lg-5">MÁS INFORMACIÓN</a>
                             </div>
                         </div>
 
@@ -67,9 +67,9 @@
                         <div class="item position-relative" style="height: 250px; overflow: hidden; border-radius: 8px;">
                             <img src="https://www.maestrias.unag.edu.hn/images/mba-slide1.jpg" alt="Maestría 1" class="w-100 h-100" style="object-fit: cover;" />
                             <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-end p-3" style="background: rgba(0, 0, 0, 0.4);">
-                                <h5 class="text-amarillo mb-2">Posgrado Universitario en</h5>
-                                <h4 class="text-white mb-2">Biotecnología Agroalimentaria</h4>
-                                <a href="https://www.maestrias.unag.edu.hn/master-universitario-en-biotecnologia-agroalimentaria" target="_blank" class="btn btn-sm btn-primary">MÁS INFORMACIÓN</a>
+                                <h5 class="text-amarillo mb-2 fs-6 fs-md-5 fs-lg-4">Posgrado Universitario en</h5>
+                                <h4 class="text-white mb-2 fs-6 fs-md-5 fs-lg-4">Biotecnología Agroalimentaria</h4>
+                                <a href="https://www.maestrias.unag.edu.hn/master-universitario-en-biotecnologia-agroalimentaria" target="_blank" class="btn btn-primary btn-sm fs-6 fs-md-6 fs-lg-5">MÁS INFORMACIÓN</a>
                             </div>
                         </div>
                         <!-- Más items iguales -->
@@ -101,7 +101,7 @@
     </p>
 
     <!-- Botón -->
-    <a href="{{ url('/egresados/datos_generales') }}" class="btn btn-sm btn-primary mt-2">Actualizar datos</a>
+    <a href="{{ url('/egresados/datos_generales') }}" class="btn btn-primary btn-sm fs-6 fs-md-6 fs-lg-5 mt-2">Actualizar datos</a>
 
     <!-- Mensaje destacado -->
     <div class="bg-light rounded p-2 mt-3 text-center shadow-sm w-100 bg-verdeClaro">
