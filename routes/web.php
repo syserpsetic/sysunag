@@ -18,6 +18,7 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\googleController;
 use App\Http\Controllers\MallaValidacion\MallaValidacionController;
 use App\Http\Controllers\Egresados\EgresadosController;
+use App\Http\Controllers\Setic\SeticController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +43,11 @@ Route::middleware('auth')->group(function () {
     // });
 
     Route::get('/', [PageController::class, 'dashboardOverview1']);
+
+    //Inincia SETIC
+        Route::get('/setic/usuarios', [SeticController::class, 'usuarios'])->name('setic_usuarios');
+        Route::get('/setic/usuarios/data', [SeticController::class, 'usuariosdata']);
+    //Finaliza SETIC
 
     //Inincia Malla Validaciones
         Route::get('/setic/malla_validacion', [MallaValidacionController::class, 'malla_validaciones'])->name('malla_validacion');

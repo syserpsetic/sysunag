@@ -35,27 +35,25 @@
         </a>
       </li>
       @endif
-      <!-- <li class="nav-item nav-category">web apps</li>
-      <li class="nav-item {{ active_class(['email/*']) }}">
-        <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
-          <i class="link-icon" data-feather="mail"></i>
-          <span class="link-title">Email</span>
-          <i class="link-arrow" data-feather="chevron-down"></i>
-        </a>
-        <div class="collapse {{ show_class(['email/*']) }}" id="email">
-          <ul class="nav sub-menu">
-            <li class="nav-item">
-              <a href="{{ url('/email/inbox') }}" class="nav-link {{ active_class(['email/inbox']) }}">Inbox</a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('/email/read') }}" class="nav-link {{ active_class(['email/read']) }}">Read</a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('/email/compose') }}" class="nav-link {{ active_class(['email/compose']) }}">Compose</a>
-            </li>
-          </ul>
-        </div>
-      </li> -->
+      @if(in_array('empleado_setic', $scopes))
+        <li class="nav-item nav-category">SETIC APPS</li>
+        <li class="nav-item {{ active_class(['email/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
+            <i class="link-icon" data-feather="monitor"></i>
+            <span class="link-title">SETIC</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse {{ show_class(['email/*']) }}" id="email">
+            <ul class="nav sub-menu">
+              @if(in_array('Administrar_Usuarios', $scopes))
+                <li class="nav-item">
+                  <a href="{{ url('/setic/usuarios') }}" class="nav-link {{ active_class(['setic/usuarios']) }}">Permisos Usuario</a>
+                </li>
+              @endif
+            </ul>
+          </div>
+        </li>
+      @endif
       <!-- <li class="nav-item {{ active_class(['apps/chat']) }}">
         <a href="{{ url('/apps/chat') }}" class="nav-link">
           <i class="link-icon" data-feather="message-square"></i>
