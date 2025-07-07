@@ -76,4 +76,63 @@ class SeticController extends Controller
         return json_encode($response);
 
     }
+
+    function roles(){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/setic/roles');
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        //return view('pages.error.construccion')->with('scopes', $scopes = array());
+        $scopes = $response['scopes'];
+        $roles = $response['roles'];
+
+        return view($this->ruta_base_blade_setic.'roles')
+        ->with('roles',$roles)
+        ->with('scopes',$scopes)
+        ;
+    }
+
+    function guardar_roles(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        //print_r($request->all());
+        try {
+            //throw new Exception('Epa', true);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/roles/guardar', [
+                'id' => $request->id,
+                'accion' => $request->accion,
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'estado' => $request->estado
+
+            ]);
+            //throw new Exception($response->status(), true);
+            $data = $response->json();
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    $msgError = "Desde backend: ".$data["msgError"];
+                }
+
+                $msgSuccess = $data["msgSuccess"];
+                $rol_list = $data["rol_list"];
+
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError,
+            "rol_list" => $rol_list
+        ]);
+    }
 }

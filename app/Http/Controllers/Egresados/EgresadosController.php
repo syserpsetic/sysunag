@@ -113,7 +113,6 @@ class EgresadosController extends Controller
             "msgSuccess" => $msgSuccess,
             "msgError" => $msgError
         ]);
-        ;
     }
 
     public function guardar_datos_academicos(Request $request){

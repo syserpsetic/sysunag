@@ -51,6 +51,13 @@
                 </li>
               @endif
             </ul>
+            <ul class="nav sub-menu">
+              @if(in_array('Administrar_Usuarios', $scopes))
+                <li class="nav-item">
+                  <a href="{{ url('/setic/roles') }}" class="nav-link {{ active_class(['setic/roles']) }}">Roles</a>
+                </li>
+              @endif
+            </ul>
           </div>
         </li>
       @endif

@@ -12,6 +12,7 @@
     --gris6: #666;
     --gris9: #999;
     --rojo: #e30d0d;
+    --rojoClaro: #f55050;
     --colorTexto: #303030;
   }
 
@@ -77,6 +78,16 @@
 
   .btn-primary:hover {
     background-color: var(--verdeOscuro) !important;
+    border: none !important;
+  }
+
+  .btn-danger {
+    background-color: var(--rojo) !important;
+    border: none !important;
+  }
+
+  .btn-danger:hover {
+    background-color: var(--rojoClaro) !important;
     border: none !important;
   }
 
