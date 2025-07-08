@@ -12,8 +12,8 @@
         <div class="card">
             <div class="card-body">
             <div class="alert alert-dark" role="alert">
-                <h1 class="display-1 d-flex align-items-center">
-                    <i data-feather="lock" class="me-3" style="width: 90px; height: 90px;"></i>
+                <h1 class="display-3 d-flex align-items-center">
+                    <i data-feather="lock" class="me-3" style="width: 60px; height: 60px;"></i>
                     <strong>ROL PERMISOS</strong>
                 </h1>
                 <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Pantalla de asignación de permisos al rol: <b>{{$rol['nombre']}}</b>.</div></h4>
