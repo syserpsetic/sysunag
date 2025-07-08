@@ -135,4 +135,71 @@ class SeticController extends Controller
             "rol_list" => $rol_list
         ]);
     }
+
+    public function roles_permisos($id_rol){
+        //throw New Exception($id_rol);
+        $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/roles/permisos', [
+                'id_rol' => $id_rol,
+
+            ]);
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        //return view('pages.error.construccion')->with('scopes', $scopes = array());
+        $scopes = $response['scopes'];
+        $permisos_asignados = $response['permisos_asignados'];
+        $permisos_no_asignados = $response['permisos_no_asignados'];
+        $rol = $response['rol'];
+
+        return view($this->ruta_base_blade_setic.'rolesPermisos')
+        ->with('permisos_asignados',$permisos_asignados)
+        ->with('permisos_no_asignados',$permisos_no_asignados)
+        ->with('rol',$rol)
+        ->with('scopes',$scopes)
+        ;
+    }
+
+    function guardar_roles_permisos(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        //print_r($request->all());
+        try {
+            //throw new Exception('Epa', true);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/roles/permisos/guardar', [
+                'accion' => $request->accion,
+                'id' => $request->id,
+                'estado' => $request->estado,
+                'id_rol' => $request->id_rol
+
+            ]);
+            //throw new Exception($response->status(), true);
+            $data = $response->json();
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    $msgError = "Desde backend: ".$data["msgError"];
+                }
+
+                $msgSuccess = $data["msgSuccess"];
+                $permisos_asignados_list = $data["permisos_asignados_list"];
+
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError,
+            "permisos_asignados_list" => $permisos_asignados_list
+        ]);
+    }
 }
