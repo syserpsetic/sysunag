@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
     //Inincia SETIC
         Route::get('/setic/usuarios', [SeticController::class, 'usuarios'])->name('setic_usuarios');
         Route::get('/setic/usuarios/data', [SeticController::class, 'usuariosdata']);
+        Route::get('/setic/usuarios/perfil/{username}', [SeticController::class, 'usuario_perfil']);
+        Route::post('/setic/usuarios/perfil/roles/guardar', [SeticController::class, 'guardar_perfil_roles']);
         Route::get('/setic/roles', [SeticController::class, 'roles'])->name('setic_roles');
         Route::post('/setic/roles/guardar', [SeticController::class, 'guardar_roles']);
         Route::get('/setic/roles/{id_rol}/permisos', [SeticController::class, 'roles_permisos']);

@@ -11,11 +11,11 @@
         <div class="card">
             <div class="card-body">
             <div class="alert alert-dark" role="alert">
-                <h1 class="display-1 d-flex align-items-center">
-                    <i data-feather="lock" class="me-3" style="width: 90px; height: 90px;"></i>
-                    <strong>PERMISOS USUARIOS</strong>
+                <h1 class="display-3 d-flex align-items-center">
+                    <i data-feather="users" class="me-3" style="width: 60px; height: 60px;"></i>
+                    <strong>USUARIOS</strong>
                 </h1>
-                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Pantalla de administración de permisos de usuarios.</div></h4>
+                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Pantalla de administración de usuarios.</div></h4>
                 <br>
                 <!-- <div class="col-md-3">
                         <a class="btn btn-info btn-sm" id="btn_volver_convenio" href="{{url('setic/malla_validacion')}}" data-toggle="tooltip" data-placement="top" title="Regresar a Malla de Validaciones">
@@ -140,7 +140,7 @@
                         searchable: false,
                         render: function (data, type, row) {
                             return `
-                                <button class="btn btn-sm btn-primary me-1" onclick="editarUsuario('${row.id}')"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user btn-icon-prepend"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Perfil</button>
+                                <button class="btn btn-sm btn-primary me-1" onclick="editarUsuario('${row.username}')"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user btn-icon-prepend"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Perfil</button>
                             `;
                         }
                     }
@@ -161,6 +161,11 @@
 
 
     });
+
+    function editarUsuario(username){
+        //alert(username)
+        window.location.href = "{{url('/setic/usuarios/perfil/')}}/"+username;
+    }
 
   </script>
 @endpush

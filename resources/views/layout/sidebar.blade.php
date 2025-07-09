@@ -47,7 +47,7 @@
             <ul class="nav sub-menu">
               @if(in_array('Administrar_Usuarios', $scopes))
                 <li class="nav-item">
-                  <a href="{{ url('/setic/usuarios') }}" class="nav-link {{ active_class(['setic/usuarios']) }}">Permisos Usuario</a>
+                  <a href="{{ url('/setic/usuarios') }}" class="nav-link {{ active_class(['setic/usuarios']) }}">Usuarios</a>
                 </li>
               @endif
             </ul>

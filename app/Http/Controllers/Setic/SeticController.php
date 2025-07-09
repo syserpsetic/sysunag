@@ -77,6 +77,37 @@ class SeticController extends Controller
 
     }
 
+    function usuario_perfil($username){
+        $msgSuccess = null;
+        $msgError = null;
+        
+        $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/usuarios/perfil', [
+                'username' => $username,
+
+            ]);
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        //return view('pages.error.construccion')->with('scopes', $scopes = array());
+        $scopes = $response['scopes'];
+        $user = $response['user'];
+        $roles_asignados = $response['roles_asignados'];
+        $roles_no_asignados = $response['roles_no_asignados'];
+        $roles_activos = $response['roles_activos'];
+
+        return view($this->ruta_base_blade_setic.'usuariosPerfil')
+        ->with('user',$user)
+        ->with('roles_asignados',$roles_asignados)
+        ->with('roles_no_asignados',$roles_no_asignados)
+        ->with('roles_activos',$roles_activos)
+        ->with('scopes',$scopes)
+        ;
+    }
+
     function roles(){
         $response = Http::withHeaders([
             'Authorization' => session('token'),
@@ -200,6 +231,47 @@ class SeticController extends Controller
             "msgSuccess" => $msgSuccess,
             "msgError" => $msgError,
             "permisos_asignados_list" => $permisos_asignados_list
+        ]);
+    }
+
+    function guardar_perfil_roles(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        $roles_asignados_list = null;
+        //print_r($request->all());
+        try {
+            //throw new Exception('Epa', true);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/usuarios/perfil/roles/guardar', [
+                'id' => $request->id,
+                'accion' => $request->accion,
+                'id_user' => $request->id_user,
+                'estado' => $request->estado
+
+            ]);
+            //throw new Exception($response->status(), true);
+            $data = $response->json();
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    $msgError = "Desde backend: ".$data["msgError"];
+                }
+
+                $msgSuccess = $data["msgSuccess"];
+                $roles_asignados_list = $data["roles_asignados_list"];
+
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError,
+            "roles_asignados_list" => $roles_asignados_list
         ]);
     }
 }
