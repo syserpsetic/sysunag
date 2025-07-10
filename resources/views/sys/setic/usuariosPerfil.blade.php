@@ -70,7 +70,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <h6 class="card-title mb-0">Detalle</h6>
-                    <div class="dropdown">
+                    <!-- <div class="dropdown">
                         <button class="btn btn-link p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                         </button>
@@ -79,7 +79,7 @@
                             <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="git-branch" class="icon-sm me-2"></i> <span class="">Update</span></a>
                             <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View all</span></a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <p>{{$user['name']}}.</p>
                 <div class="mt-3">
@@ -178,6 +178,7 @@
                 <div class="card rounded">
                     <div class="card-body">
                         <h6 class="card-title">ROLES ACTIVOS</h6>
+                        <div id="roles_activos">
                         @foreach($roles_activos as $row)
                             <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                                 <div class="d-flex align-items-center hover-pointer">
@@ -190,6 +191,7 @@
                                 <!-- <button class="btn btn-icon btn-link"><i data-feather="user-plus" class="text-muted"></i></button> -->
                             </div>
                         @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
@@ -454,6 +456,22 @@
                             table.row.add(nuevaFilaDT).draw();
                             table2.row(rowNumber2).remove().draw();
                         }
+
+                        $("#roles_activos").html('');
+                        //console.log(roles_activos_list.length)
+                        for(var i = 0; i < data.roles_activos_list.length; i++){
+                            //console.log(i)
+                            var roles_activos_list = data.roles_activos_list[i];
+                            $("#roles_activos").append(`<div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                                <div class="d-flex align-items-center hover-pointer">
+                                    <div class="ms-2">
+                                        <p>${roles_activos_list.nombre}</p>
+                                        <p class="tx-11 text-muted">${roles_activos_list.descripcion}</p>
+                                    </div>
+                                </div>
+                            </div>`);
+                        }
+                    
                     btn_activo = true;
                 }
                 //console.log(textMsg);

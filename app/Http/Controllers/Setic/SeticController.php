@@ -238,6 +238,7 @@ class SeticController extends Controller
         $msgSuccess = null;
         $msgError = null;
         $roles_asignados_list = null;
+        $roles_activos_list = null;
         //print_r($request->all());
         try {
             //throw new Exception('Epa', true);
@@ -260,6 +261,7 @@ class SeticController extends Controller
 
                 $msgSuccess = $data["msgSuccess"];
                 $roles_asignados_list = $data["roles_asignados_list"];
+                $roles_activos_list = $data["roles_activos_list"];
 
             }elseif($response->status() === 403){
                 $msgError = "No tiene permisos para realizar esta acción";
@@ -271,7 +273,8 @@ class SeticController extends Controller
         return response()->json([
             "msgSuccess" => $msgSuccess,
             "msgError" => $msgError,
-            "roles_asignados_list" => $roles_asignados_list
+            "roles_asignados_list" => $roles_asignados_list,
+            "roles_activos_list" => $roles_activos_list
         ]);
     }
 }
