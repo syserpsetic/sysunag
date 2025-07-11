@@ -234,6 +234,24 @@ class SeticController extends Controller
         ]);
     }
 
+    function permisos(){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/setic/permisos');
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        //return view('pages.error.construccion')->with('scopes', $scopes = array());
+        $scopes = $response['scopes'];
+        $permisos = $response['permisos'];
+
+        return view($this->ruta_base_blade_setic.'permisos')
+        ->with('permisos',$permisos)
+        ->with('scopes',$scopes)
+        ;
+    }
+
     function guardar_perfil_roles(Request $request){
         $msgSuccess = null;
         $msgError = null;

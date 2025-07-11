@@ -13,10 +13,10 @@
             <div class="card-body">
             <div class="alert alert-dark" role="alert">
                 <h1 class="display-3 d-flex align-items-center">
-                    <i data-feather="key" class="me-3" style="width: 60px; height: 60px;"></i>
-                    <strong>ROLES</strong>
+                    <i data-feather="lock" class="me-3" style="width: 60px; height: 60px;"></i>
+                    <strong>PERMISOS</strong>
                 </h1>
-                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Pantalla de adminisración de roles de usuarios.</div></h4>
+                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Pantalla de adminisración de permisos.</div></h4>
                 <br>
                 <!-- <div class="col-md-3">
                         <a class="btn btn-info btn-sm" id="btn_volver_convenio" href="{{url('setic/malla_validacion')}}" data-toggle="tooltip" data-placement="top" title="Regresar a Malla de Validaciones">
@@ -29,10 +29,10 @@
                     <div class="card border-secondary">
                         <div class="card-header bg-azul text-white d-flex justify-content-between align-items-center">
                             <h5 class="text-white mb-0">
-                                <i class="text-white icon-lg pb-3px" data-feather="list"></i> Roles
+                                <i class="text-white icon-lg pb-3px" data-feather="list"></i> Permisos
                             </h5>
-                            <button class="btn btn-primary btn-xs" id="btn_agregar_rol" data-bs-toggle="modal" data-bs-target="#modal_agregar_rol">
-                                <i class="btn-icon-prepend" data-feather="plus"></i> Agregar Rol
+                            <button class="btn btn-primary btn-xs" id="btn_agregar_rol" data-bs-toggle="modal" data-bs-target="#modal_agregar_permioso">
+                                <i class="btn-icon-prepend" data-feather="plus"></i> Agregar Permiso
                             </butotn>
                         </div>
                         <div class="card-body">
@@ -42,42 +42,39 @@
                                         <tr class="headings">
                                             <th scope="col" class="text-white">Id</th>
                                             <th scope="col" class="text-white">Nombre</th>
-                                            <th scope="col" class="text-white">descripcion</th>
-                                            <th scope="col" class="text-white">Estado</th>
+                                            <th scope="col" class="text-white">Descripcion</th>
+                                            <th scope="col" class="text-white">Página</th>
+                                            <th scope="col" class="text-white">Requisito</th>
                                             <th scope="col" class="text-white">Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($roles as $row)
+                                        @foreach ($permisos as $row)
                                         <tr style="font-size: small;">
-                                            <td scope="row">{{$row['id_rol']}}</td>
+                                            <td scope="row">{{$row['id_permiso']}}</td>
                                             <td scope="row">{{$row['nombre']}}</td>
                                             <td scope="row">{{$row['descripcion']}}</td>
-                                            <td scope="row">{{$row['estado_rol']}}</td>
+                                            <td scope="row">{{$row['pagina']}}</td>
+                                            <td scope="row">{{$row['requisito']}}</td>
                                             <td scope="row">
                                                 <button type="button" class="btn btn-warning btn-icon btn-xs btn_editar_rol"
                                                     data-bs-toggle="modal" 
-                                                    data-bs-target=".modal_agregar_rol"
-                                                    data-id="{{$row['id_rol']}}"
+                                                    data-bs-target=".modal_agregar_permioso"
+                                                    data-id="{{$row['id_permiso']}}"
                                                     data-nombre="{{$row['nombre']}}"
                                                     data-descripcion="{{$row['descripcion']}}"
-                                                    data-estado="{{$row['id_estado']}}"
                                                     >
                                                     <i data-feather="check-square"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-icon btn-xs"
                                                     data-bs-toggle="modal" 
                                                     data-bs-target=".modal_eliminar_rol"
-                                                    data-id="{{$row['id_rol']}}"
+                                                    data-id="{{$row['id_permiso']}}"
                                                     data-nombre="{{$row['nombre']}}"
                                                     data-descripcion="{{$row['descripcion']}}"
-                                                    data-estado="{{$row['id_estado']}}"
                                                     >
                                                     <i data-feather="trash-2"></i>
                                                 </button>
-                                                    <a type="button" class="btn btn-info btn-icon btn-xs" href="{{url('setic/roles/')}}/{{$row['id_rol']}}/permisos">
-                                                        <i data-feather="lock"></i>
-                                                    </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -92,11 +89,11 @@
     </div>
 </div>
 
-<div class="modal fade bd-example modal_agregar_rol" id="modal_agregar_rol" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-example modal_agregar_permioso" id="modal_agregar_permioso" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="key"></i> Registrar Nuevo Rol</h6>
+                <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="lock"></i> Registrar Nuevo Permiso</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
             </div>
             <div class="card-body">
@@ -106,20 +103,20 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label for="modal_agregar_rol_nombre" class="form-label">Nombre</label>
-                                        <input id="modal_agregar_rol_nombre" class="form-control" type="text" placeholder="Nombre del rol..."/>
+                                        <label for="modal_agregar_permioso_nombre" class="form-label">Nombre</label>
+                                        <input id="modal_agregar_permioso_nombre" class="form-control" type="text" placeholder="Nombre del permio..."/>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <label for="modal_agregar_rol_descripcion" class="form-label">Descripción</label>
+                                            <label for="modal_agregar_permioso_descripcion" class="form-label">Descripción</label>
                                             <div class="form-check form-switch m-0">
                                                 <input type="checkbox" class="form-check-input" id="formSwitch1_agregar_rol_etado" />
                                                 <label class="form-check-label" for="formSwitch1_agregar_rol_etado">Activo</label>
                                             </div>
                                         </div>
-                                        <textarea class="form-control" name="tinymce" id="modal_agregar_rol_descripcion" maxlength="100"
+                                        <textarea class="form-control" name="tinymce" id="modal_agregar_permioso_descripcion" maxlength="100"
                                             rows="4"
                                             placeholder="Escriba aquí..."></textarea>
                                     </div>
@@ -262,15 +259,15 @@
         accion = 1;
     })
 
-    $("#modal_agregar_rol").on("show.bs.modal", function (e) {
+    $("#modal_agregar_permioso").on("show.bs.modal", function (e) {
         $('#formSwitch1_agregar_rol_etado').prop('checked', false);
         var triggerLink = $(e.relatedTarget);
         id = triggerLink.data("id");
         nombre = triggerLink.data("nombre");
         descripcion = triggerLink.data("descripcion");
         estado = triggerLink.data("estado");
-        $("#modal_agregar_rol_nombre").val(nombre);
-        $("#modal_agregar_rol_descripcion").val(descripcion);
+        $("#modal_agregar_permioso_nombre").val(nombre);
+        $("#modal_agregar_permioso_descripcion").val(descripcion);
         console.log(estado)
         if(estado == 1){
             $('#formSwitch1_agregar_rol_etado').prop('checked', true);
@@ -287,8 +284,8 @@
     });
 
     $("#btn_guardar_rol").on("click", function () {
-        nombre = $("#modal_agregar_rol_nombre").val();
-        descripcion = $("#modal_agregar_rol_descripcion").val();
+        nombre = $("#modal_agregar_permioso_nombre").val();
+        descripcion = $("#modal_agregar_permioso_descripcion").val();
         if ($('#formSwitch1_agregar_rol_etado').is(':checked')) {
             estado = 1;
         } else {
@@ -357,7 +354,7 @@
                         var row = data.rol_list;
                         //console.log(row);
                         var nuevaFilaDT=[row.id_rol, row.nombre, row.descripcion, row.estado_rol,
-                            '<button type="button" class="btn btn-warning btn-icon btn-xs btn_editar_rol" data-bs-toggle="modal" data-bs-target=".modal_agregar_rol" '+
+                            '<button type="button" class="btn btn-warning btn-icon btn-xs btn_editar_rol" data-bs-toggle="modal" data-bs-target=".modal_agregar_permioso" '+
                             'data-id="'+row.id_rol+'" '+
                             'data-nombre="'+row.nombre+'" '+
                             'data-descripcion="'+row.descripcion+'" '+
@@ -385,7 +382,7 @@
                         table.row(rowNumber).remove().draw();
                         $("#modal_eliminar_rol").modal("hide");
                     }
-                    $("#modal_agregar_rol").modal("hide");
+                    $("#modal_agregar_permioso").modal("hide");
                     btn_activo = true;
                 }
                 //console.log(textMsg);

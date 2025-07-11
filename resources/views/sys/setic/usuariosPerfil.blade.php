@@ -412,7 +412,7 @@
     }); 
 
     function guardar_perfil_roles() {
-        espera('Tu información se esta guardando...');
+        espera('Ejecutando accón...');
         btn_activo = false;
         //console.log(hora_inicio);
         $.ajax({
@@ -507,7 +507,8 @@
     function espera(html){
         let timerInterval
         Swal.fire({
-            icon: 'warning',
+            imageUrl: "{{ url(asset('/assets/images/unag_loading.gif')) }}",
+            // icon: 'warning',
             title: '¡Espera!',
             html: html,
             timer: null,

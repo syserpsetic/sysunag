@@ -45,16 +45,21 @@
           </a>
           <div class="collapse {{ show_class(['email/*']) }}" id="email">
             <ul class="nav sub-menu">
-              @if(in_array('Administrar_Usuarios', $scopes))
+              @if(in_array('administrar_asuarios', $scopes))
                 <li class="nav-item">
                   <a href="{{ url('/setic/usuarios') }}" class="nav-link {{ active_class(['setic/usuarios']) }}">Usuarios</a>
                 </li>
               @endif
-            </ul>
-            <ul class="nav sub-menu">
-              @if(in_array('Administrar_Usuarios', $scopes))
+
+              @if(in_array('administrar_asuarios', $scopes))
                 <li class="nav-item">
                   <a href="{{ url('/setic/roles') }}" class="nav-link {{ active_class(['setic/roles']) }}">Roles</a>
+                </li>
+              @endif
+
+              @if(in_array('administrar_asuarios', $scopes))
+                <li class="nav-item">
+                  <a href="{{ url('/setic/permisos') }}" class="nav-link {{ active_class(['setic/permisos']) }}">Permisos</a>
                 </li>
               @endif
             </ul>

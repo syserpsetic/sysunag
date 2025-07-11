@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/setic/roles/guardar', [SeticController::class, 'guardar_roles']);
         Route::get('/setic/roles/{id_rol}/permisos', [SeticController::class, 'roles_permisos']);
         Route::post('/setic/roles/permisos/guardar', [SeticController::class, 'guardar_roles_permisos']);
+        Route::get('/setic/permisos', [SeticController::class, 'permisos'])->name('setic_permisos');
     //Finaliza SETIC
 
     //Inincia Malla Validaciones

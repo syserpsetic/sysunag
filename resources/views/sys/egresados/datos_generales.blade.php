@@ -1535,7 +1535,8 @@
     function espera(html){
         let timerInterval
         Swal.fire({
-            icon: 'warning',
+            imageUrl: "{{ url(asset('/assets/images/unag_loading.gif')) }}",
+            // icon: 'warning',
             title: '¡Espera!',
             html: html,
             timer: null,
