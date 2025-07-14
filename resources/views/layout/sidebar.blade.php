@@ -49,17 +49,14 @@
                 <li class="nav-item">
                   <a href="{{ url('/setic/usuarios') }}" class="nav-link {{ active_class(['setic/usuarios']) }}">Usuarios</a>
                 </li>
-              @endif
-
-              @if(in_array('administrar_asuarios', $scopes))
                 <li class="nav-item">
                   <a href="{{ url('/setic/roles') }}" class="nav-link {{ active_class(['setic/roles']) }}">Roles</a>
                 </li>
-              @endif
-
-              @if(in_array('administrar_asuarios', $scopes))
                 <li class="nav-item">
                   <a href="{{ url('/setic/permisos') }}" class="nav-link {{ active_class(['setic/permisos']) }}">Permisos</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ url('/setic/paginas') }}" class="nav-link {{ active_class(['setic/paginas']) }}">Páginas</a>
                 </li>
               @endif
             </ul>

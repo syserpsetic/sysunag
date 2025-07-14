@@ -245,11 +245,60 @@ class SeticController extends Controller
         //return view('pages.error.construccion')->with('scopes', $scopes = array());
         $scopes = $response['scopes'];
         $permisos = $response['permisos'];
+        $paginas = $response['paginas'];
+        $permiso_requisito = $response['permiso_requisito'];
 
         return view($this->ruta_base_blade_setic.'permisos')
         ->with('permisos',$permisos)
+        ->with('paginas',$paginas)
+        ->with('permiso_requisito',$permiso_requisito)
         ->with('scopes',$scopes)
         ;
+    }
+
+    function guardar_permisos(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        $permisos_list = null;
+        $roles_activos_list = null;
+        //print_r($request->all());
+        try {
+            //throw new Exception('Epa', true);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/permisos/guardar', [
+                'id' => $request->id,
+                'accion' => $request->accion,
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion,
+                'id_pagina' => $request->id_pagina,
+                'id_permiso_requisito' => $request->id_permiso_requisito,
+                'estado' => $request->estado
+
+            ]);
+            //throw new Exception($response->status(), true);
+            $data = $response->json();
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    $msgError = "Desde backend: ".$data["msgError"];
+                }
+
+                $msgSuccess = $data["msgSuccess"];
+                $permisos_list = $data["permisos_list"];
+
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError,
+            "permisos_list" => $permisos_list
+        ]);
     }
 
     function guardar_perfil_roles(Request $request){
@@ -293,6 +342,65 @@ class SeticController extends Controller
             "msgError" => $msgError,
             "roles_asignados_list" => $roles_asignados_list,
             "roles_activos_list" => $roles_activos_list
+        ]);
+    }
+
+    function paginas(){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/setic/paginas');
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        //return view('pages.error.construccion')->with('scopes', $scopes = array());
+        $scopes = $response['scopes'];
+        $paginas = $response['paginas'];
+
+        return view($this->ruta_base_blade_setic.'paginas')
+        ->with('paginas',$paginas)
+        ->with('scopes',$scopes)
+        ;
+    }
+
+    function guardar_paginas(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        $paginas_list = null;
+        //print_r($request->all());
+        try {
+            //throw new Exception('Epa', true);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/paginas/guardar', [
+                'id' => $request->id,
+                'accion' => $request->accion,
+                'nombre' => $request->nombre,
+                'descripcion' => $request->descripcion
+
+            ]);
+            //throw new Exception($response->status(), true);
+            $data = $response->json();
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    $msgError = "Desde backend: ".$data["msgError"];
+                }
+
+                $msgSuccess = $data["msgSuccess"];
+                $paginas_list = $data["paginas_list"];
+
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError,
+            "paginas_list" => $paginas_list
         ]);
     }
 }

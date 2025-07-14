@@ -13,10 +13,10 @@
             <div class="card-body">
             <div class="alert alert-dark" role="alert">
                 <h1 class="display-3 d-flex align-items-center">
-                    <i data-feather="lock" class="me-3" style="width: 60px; height: 60px;"></i>
-                    <strong>PERMISOS</strong>
+                    <i data-feather="layout" class="me-3" style="width: 60px; height: 60px;"></i>
+                    <strong>PÁGINAS</strong>
                 </h1>
-                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Pantalla de adminisración de permisos.</div></h4>
+                <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Pantalla de adminisración de páginas.</div></h4>
                 <br>
                 <!-- <div class="col-md-3">
                         <a class="btn btn-info btn-sm" id="btn_volver_convenio" href="{{url('setic/malla_validacion')}}" data-toggle="tooltip" data-placement="top" title="Regresar a Malla de Validaciones">
@@ -29,57 +29,45 @@
                     <div class="card border-secondary">
                         <div class="card-header bg-azul text-white d-flex justify-content-between align-items-center">
                             <h5 class="text-white mb-0">
-                                <i class="text-white icon-lg pb-3px" data-feather="list"></i> Permisos
+                                <i class="text-white icon-lg pb-3px" data-feather="list"></i> Páginas
                             </h5>
-                            <button class="btn btn-primary btn-xs" id="btn_agregar_permiso" data-bs-toggle="modal" data-bs-target="#modal_agregar_permioso">
-                                <i class="btn-icon-prepend" data-feather="plus"></i> Agregar Permiso
+                            <button class="btn btn-primary btn-xs" id="btn_agregar_pagina" data-bs-toggle="modal" data-bs-target="#modal_agregar_pagina">
+                                <i class="btn-icon-prepend" data-feather="plus"></i> Agregar Página
                             </butotn>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="jambo_table table table-hover" id="tbl_roles" border="1">
+                                <table class="jambo_table table table-hover" id="tbl_paginas" border="1">
                                     <thead class="bg-primary">
                                         <tr class="headings">
                                             <th scope="col" class="text-white">Id</th>
                                             <th scope="col" class="text-white">Nombre</th>
                                             <th scope="col" class="text-white">Descripcion</th>
-                                            <th scope="col" class="text-white">Estado</th>
-                                            <th scope="col" class="text-white">Página</th>
-                                            <th scope="col" class="text-white">Requisito</th>
                                             <th scope="col" class="text-white">Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($permisos as $row)
+                                        @foreach ($paginas as $row)
                                         <tr style="font-size: small;">
-                                            <td scope="row">{{$row['id_permiso']}}</td>
+                                            <td scope="row">{{$row['id_pagina']}}</td>
                                             <td scope="row">{{$row['nombre']}}</td>
                                             <td scope="row">{{$row['descripcion']}}</td>
-                                            <td scope="row"><span class="badge @if($row['id_estado'] == 1) bg-success @elseif($row['id_estado'] == 2) bg-danger @endif text-white">{{$row['estado_permiso']}}</span></td>
-                                            <td scope="row">{{$row['pagina']}}</td>
-                                            <td scope="row">{{$row['requisito']}}</td>
                                             <td scope="row">
-                                                <button type="button" class="btn btn-warning btn-icon btn-xs btn_editar_rol"
+                                                <button type="button" class="btn btn-warning btn-icon btn-xs btn_editar_pagina"
                                                     data-bs-toggle="modal" 
-                                                    data-bs-target=".modal_agregar_permioso"
-                                                    data-id="{{$row['id_permiso']}}"
+                                                    data-bs-target=".modal_agregar_pagina"
+                                                    data-id="{{$row['id_pagina']}}"
                                                     data-nombre="{{$row['nombre']}}"
                                                     data-descripcion="{{$row['descripcion']}}"
-                                                    data-estado="{{$row['id_estado']}}"
-                                                    data-id_pagina="{{$row['id_pagina']}}"
-                                                    data-id_requisito="{{$row['id_requisito']}}"
                                                     >
                                                     <i data-feather="check-square"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-icon btn-xs"
                                                     data-bs-toggle="modal" 
-                                                    data-bs-target=".modal_eliminar_permiso"
-                                                    data-id="{{$row['id_permiso']}}"
+                                                    data-bs-target=".modal_eliminar_pagina"
+                                                    data-id="{{$row['id_pagina']}}"
                                                     data-nombre="{{$row['nombre']}}"
                                                     data-descripcion="{{$row['descripcion']}}"
-                                                    data-estado="{{$row['id_estado']}}"
-                                                    data-id_pagina="{{$row['id_pagina']}}"
-                                                    data-id_requisito="{{$row['id_requisito']}}"
                                                     >
                                                     <i data-feather="trash-2"></i>
                                                 </button>
@@ -97,11 +85,11 @@
     </div>
 </div>
 
-<div class="modal fade bd-example modal_agregar_permioso" id="modal_agregar_permioso" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-example modal_agregar_pagina" id="modal_agregar_pagina" tabindex="-1" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="lock"></i> Registrar Nuevo Permiso</h6>
+                <h6 class="modal-title h6 text-white" id="myExtraLargeModalLabel"><i class="icon-lg pb-3px" data-feather="layout"></i> Registrar Nueva Página</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
             </div>
             <div class="card-body">
@@ -111,44 +99,22 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label for="modal_agregar_permioso_nombre" class="form-label">Nombre</label>
-                                        <input id="modal_agregar_permioso_nombre" class="form-control" type="text" placeholder="Nombre del permio..."/>
+                                        <label for="modal_agregar_pagina_nombre" class="form-label">Nombre</label>
+                                        <input id="modal_agregar_pagina_nombre" class="form-control" type="text" placeholder="Nombre de la página..."/>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <label for="modal_agregar_permioso_descripcion" class="form-label">Descripción</label>
-                                            <div class="form-check form-switch m-0">
+                                            <label for="modal_agregar_pagina_descripcion" class="form-label">Descripción</label>
+                                            <!-- <div class="form-check form-switch m-0">
                                                 <input type="checkbox" class="form-check-input" id="formSwitch1_agregar_permiso_etado" />
                                                 <label class="form-check-label" for="formSwitch1_agregar_permiso_etado">Activo</label>
-                                            </div>
+                                            </div> -->
                                         </div>
-                                        <textarea class="form-control" name="tinymce" id="modal_agregar_permioso_descripcion" maxlength="100"
+                                        <textarea class="form-control" name="tinymce" id="modal_agregar_pagina_descripcion" maxlength="100"
                                             rows="4"
                                             placeholder="Escriba aquí..."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label for="modal_agregar_permiso_pagina" class="form-label">Página</label>
-                                        <select class="form-select" id="modal_agregar_permiso_pagina">
-                                            <option selected disabled>Seleccione una página</option>
-                                            @foreach($paginas as $row)
-                                            <option value="{{$row['id_pagina']}}">{{$row['nombre']}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="mb-3">
-                                        <label for="modal_agregar_permiso_requisito" class="form-label">Requisito</label>
-                                        <select class="form-select" id="modal_agregar_permiso_requisito">
-                                            <option selected disabled>Seleccione un permiso</option>
-                                            @foreach($permiso_requisito as $row)
-                                            <option value="{{$row['id_permiso']}}">{{$row['nombre']}}</option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -158,13 +124,13 @@
             </div>
             <div class="modal-footer bg-secondary">
                 <button type="button" class="btn btn-danger btn-xs" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary btn-xs" id="btn_guardar_permiso">Guardar</button>
+                <button type="button" class="btn btn-primary btn-xs" id="btn_guardar_pagina">Guardar</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade modal_eliminar_permiso" id="modal_eliminar_permiso" tabindex="-1" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal fade modal_eliminar_pagina" id="modal_eliminar_pagina" tabindex="-1" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger">
@@ -182,7 +148,7 @@
                                     <div class="mb-3">
                                         <h4><label class="form-label"><strong>¿Realmente deseas eliminar este registro?</strong></label></h4>
                                         <br>
-                                        <h5><label class="form-label" id="modal_eliminar_permiso_informacion"></label></h5>
+                                        <h5><label class="form-label" id="modal_eliminar_pagina_informacion"></label></h5>
                                         <br>
                                         <p class="fw-normal">Este proceso no se puede revertir</p>
                                     </div>
@@ -195,7 +161,7 @@
             </div>
             <div class="modal-footer bg-secondary">
                 <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary btn-sm" id="btn_eliminar_permiso">Eliminar</button>
+                <button type="button" class="btn btn-primary btn-sm" id="btn_eliminar_pagina">Eliminar</button>
             </div>
         </div>
     </div>
@@ -221,9 +187,7 @@
     var nombre = null;
     var descripcion = null;
     var estado = null;
-    var id_pagina = null;
-    var id_permiso_requisito = null;
-    var url_guardar_permiso = "{{url('/setic/permisos/guardar')}}"; 
+    var url_guardar_pagina = "{{url('/setic/paginas/guardar')}}"; 
     var rowNumber=null;
     var id_seleccionar = localStorage.getItem("tbl_permisos_id_seleccionar");
     $(document).ready(function () {
@@ -233,7 +197,7 @@
             }
         });
 
-        table = $('#tbl_roles').DataTable({
+        table = $('#tbl_paginas').DataTable({
                 "aLengthMenu": [
                     [10, 30, 50, 100,-1],
                     [10, 30, 50, 100,"Todo"]
@@ -262,7 +226,7 @@
                     }
                 }
                 });
-            $('#tbl_roles').each(function() {
+            $('#tbl_paginas').each(function() {
                 var datatable = $(this);
                 // SEARCH - Add the placeholder for Search and Turn this into in-line form control
                 var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
@@ -273,7 +237,7 @@
                 length_sel.removeClass('form-control-sm');
                 });
 
-            $("#tbl_roles tbody").on( "click", "tr", function () { 
+            $("#tbl_paginas tbody").on( "click", "tr", function () { 
                 rowNumber=parseInt(table.row( this ).index()); 
                 accion=2; 
                 table.$('tr.selected').removeClass('selected'); 
@@ -283,54 +247,36 @@
 
     });
 
-    // $(".btn_editar_rol").on("click", function () {
+    // $(".btn_editar_pagina").on("click", function () {
     //     accion = 2;
     // })
 
-    $("#btn_agregar_permiso").on("click", function () {
+    $("#btn_agregar_pagina").on("click", function () {
         accion = 1;
     })
 
-    $("#modal_agregar_permioso").on("show.bs.modal", function (e) {
+    $("#modal_agregar_pagina").on("show.bs.modal", function (e) {
         $('#formSwitch1_agregar_permiso_etado').prop('checked', false);
         var triggerLink = $(e.relatedTarget);
         id = triggerLink.data("id");
         nombre = triggerLink.data("nombre");
         descripcion = triggerLink.data("descripcion");
-        estado = triggerLink.data("estado");
-        id_pagina = triggerLink.data("id_pagina");
-        id_permiso_requisito = triggerLink.data("id_requisito");
-        $("#modal_agregar_permioso_nombre").val(nombre);
-        $("#modal_agregar_permioso_descripcion").val(descripcion);
-        $("#modal_agregar_permiso_pagina").val(id_pagina);
-        $("#modal_agregar_permiso_requisito").val(id_permiso_requisito);
-        console.log(id_permiso_requisito)
-        if(estado == 1){
-            $('#formSwitch1_agregar_permiso_etado').prop('checked', true);
-        }
+        $("#modal_agregar_pagina_nombre").val(nombre);
+        $("#modal_agregar_pagina_descripcion").val(descripcion);
     });
 
-    $("#modal_eliminar_permiso").on("show.bs.modal", function (e) {
+    $("#modal_eliminar_pagina").on("show.bs.modal", function (e) {
             var triggerLink = $(e.relatedTarget);
             id = triggerLink.data("id");
             nombre = triggerLink.data("nombre");
             descripcion = triggerLink.data("descripcion");
-            estado = triggerLink.data("estado");
-            $("#modal_eliminar_permiso_informacion").html(nombre);
+            $("#modal_eliminar_pagina_informacion").html(nombre);
     });
 
-    $("#btn_guardar_permiso").on("click", function () {
-        nombre = $("#modal_agregar_permioso_nombre").val();
-        descripcion = $("#modal_agregar_permioso_descripcion").val();
-        id_pagina = $("#modal_agregar_permiso_pagina").val();
-        id_permiso_requisito = $("#modal_agregar_permiso_requisito").val();
-        if ($('#formSwitch1_agregar_permiso_etado').is(':checked')) {
-            estado = 1;
-        } else {
-            estado = 2;
-        }
-        
-     
+    $("#btn_guardar_pagina").on("click", function () {
+        nombre = $("#modal_agregar_pagina_nombre").val();
+        descripcion = $("#modal_agregar_pagina_descripcion").val();
+
             if(nombre == null || nombre == ''){
                 Toast.fire({
                     icon: 'error',
@@ -346,44 +292,33 @@
                 })
                 return true;
             }
-
-            if(id_pagina == null || id_pagina == ''){
-                Toast.fire({
-                    icon: 'error',
-                    title: 'Valor requerido para Página.'
-                })
-                return true;
-            }
             
             if(btn_activo){
-                guardar_permiso();
+                guardar_pagina();
             }
             
 
     });
 
-    $(".modal-footer").on("click", "#btn_eliminar_permiso", function () { 
+    $(".modal-footer").on("click", "#btn_eliminar_pagina", function () { 
             accion = 3;
             if(btn_activo){
-                guardar_permiso(); 
+                guardar_pagina(); 
             }
     }); 
 
-    function guardar_permiso() {
+    function guardar_pagina() {
         espera('Tu información se esta guardando...');
         btn_activo = false;
         //console.log(hora_inicio);
         $.ajax({
             type: "post",
-            url: url_guardar_permiso,
+            url: url_guardar_pagina,
             data: {
                 accion : accion,
                 id : id,
                 nombre : nombre,
                 descripcion : descripcion,
-                id_pagina : id_pagina,
-                id_permiso_requisito : id_permiso_requisito,
-                estado : estado,
   
             },
             success: function (data) {
@@ -399,25 +334,19 @@
                     typeMsg = "success";
                     timer = 2000;
                     if(accion==1 || accion==2){
-                        var row = data.permisos_list;
+                        var row = data.paginas_list;
                         //console.log(row);
-                        var nuevaFilaDT=[row.id_permiso, row.nombre, row.descripcion, '<span class="badge ' + (row.id_estado == 1 ? 'bg-success' : 'bg-danger') + ' text-white">' + row.estado_permiso + '</span>', row.pagina, row.requisito,
-                            '<button type="button" class="btn btn-warning btn-icon btn-xs btn_editar_rol" data-bs-toggle="modal" data-bs-target=".modal_agregar_permioso" '+
-                            'data-id="'+row.id_permiso+'" '+
+                        var nuevaFilaDT=[row.id_pagina, row.nombre, row.descripcion,
+                            '<button type="button" class="btn btn-warning btn-icon btn-xs btn_editar_pagina" data-bs-toggle="modal" data-bs-target=".modal_agregar_pagina" '+
+                            'data-id="'+row.id_pagina+'" '+
                             'data-nombre="'+row.nombre+'" '+
-                            'data-descripcion="'+row.descripcion+'" '+
-                            'data-id_pagina="'+row.id_pagina+'" '+
-                            'data-id_requisito="'+row.id_requisito+'" '+
-                            'data-estado="'+row.id_estado+'">'+
+                            'data-descripcion="'+row.descripcion+'"> '+
                                 '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>'+
                             '</button> '+
-                            '<button type="button" class="btn btn-danger btn-icon btn-xs" data-bs-toggle="modal" data-bs-target=".modal_eliminar_permiso" '+
-                            'data-id="'+row.id_permiso+'" '+
+                            '<button type="button" class="btn btn-danger btn-icon btn-xs" data-bs-toggle="modal" data-bs-target=".modal_eliminar_pagina" '+
+                            'data-id="'+row.id_pagina+'" '+
                             'data-nombre="'+row.nombre+'" '+
-                            'data-descripcion="'+row.descripcion+'" '+
-                            'data-id_pagina="'+row.id_pagina+'" '+
-                            'data-id_requisito="'+row.id_requisito+'" '+
-                            'data-estado="'+row.id_estado+'">'+
+                            'data-descripcion="'+row.descripcion+'"> '+
                                 '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>'+
                             '</button> '
                         ];
@@ -429,9 +358,9 @@
                         table.row(rowNumber).data(nuevaFilaDT);
                     }else if(accion==3){
                         table.row(rowNumber).remove().draw();
-                        $("#modal_eliminar_permiso").modal("hide");
+                        $("#modal_eliminar_pagina").modal("hide");
                     }
-                    $("#modal_agregar_permioso").modal("hide");
+                    $("#modal_agregar_pagina").modal("hide");
                     btn_activo = true;
                 }
                 //console.log(textMsg);
