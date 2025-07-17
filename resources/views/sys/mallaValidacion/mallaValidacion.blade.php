@@ -198,7 +198,7 @@
                                     </div>
 
                                 @endif
-                               
+                                @if(date('m-d') == '07-17')
                                     <div class="text-center p-3 rounded shadow-sm mt-3" style="background-color: #f1f1f1; border: 1px solid #ccc;">
                                         <img class="rounded mb-2" 
                                             src="{{ url('assets/images/FOTO_AMIGOS.png') }}" 
@@ -213,7 +213,7 @@
                                             <p class="tx-11 text-muted mb-0">Siempre los recordaremos con cariño. 🖤</p>
                                         </div>
                                     </div>
-
+                                @endif
                                                             
 
                                 <ul class="nav nav-tabs nav-fill mt-3" role="tablist">
