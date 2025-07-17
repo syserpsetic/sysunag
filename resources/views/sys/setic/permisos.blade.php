@@ -347,13 +347,13 @@
                 return true;
             }
 
-            if(id_pagina == null || id_pagina == ''){
-                Toast.fire({
-                    icon: 'error',
-                    title: 'Valor requerido para Página.'
-                })
-                return true;
-            }
+            // if(id_pagina == null || id_pagina == ''){
+            //     Toast.fire({
+            //         icon: 'error',
+            //         title: 'Valor requerido para Página.'
+            //     })
+            //     return true;
+            // }
             
             if(btn_activo){
                 guardar_permiso();

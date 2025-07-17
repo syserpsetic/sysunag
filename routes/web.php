@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     // });
 
     Route::get('/', [PageController::class, 'dashboardOverview1']);
+    Route::get('/estructura_menu', [PageController::class, 'menu']);
 
     //Inincia SETIC
         Route::get('/setic/usuarios', [SeticController::class, 'usuarios'])->name('setic_usuarios');

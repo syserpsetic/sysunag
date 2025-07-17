@@ -25,6 +25,17 @@ class PageController extends Controller
         return view('dashboard')->with('scopes', $scopes);
     }
 
+    public function menu()
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/estructura_menu');
+
+        $menu = $response['menu'];
+
+        return response()->json($menu);
+    }
+
     /**
      * Show specified view.
      *

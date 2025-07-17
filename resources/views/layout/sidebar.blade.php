@@ -63,6 +63,9 @@
           </div>
         </li>
       @endif
+      <!-- <div id="sidebar-menu"> -->
+        <!-- Aquí se cargará el menú vía AJAX -->
+      <!-- </div> -->
       <!-- <li class="nav-item {{ active_class(['apps/chat']) }}">
         <a href="{{ url('/apps/chat') }}" class="nav-link">
           <i class="link-icon" data-feather="message-square"></i>
@@ -368,3 +371,98 @@
     </div>
   </div>
 </nav> -->
+
+@push('plugin-scripts')
+  <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
+  <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
+  <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+@endpush
+@push('custom-scripts')
+  <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+  <script src="{{ asset('assets/js/data-table.js') }}"></script>
+  <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        cargarMenu();
+
+    });
+
+function cargarMenu() {
+  $.ajax({
+    url: "{{ url('/estructura_menu') }}",
+    method: 'GET',
+    success: function(menu) {
+      console.log(menu)
+      if (menu.length == 0) {
+        $('#sidebar-menu').html('<p>No hay menú disponible</p>');
+        return;
+      }
+      // Convertir arreglo plano a árbol
+      const menuArbol = construirArbol(menu);
+      // Construir HTML recursivo
+      let html = construirHtmlMenu(menuArbol);
+      $('#sidebar-menu').html(html);
+      // Opcional: inicializar Feather icons si usas
+      if (typeof feather !== 'undefined') {
+        feather.replace();
+      }
+    },
+    error: function() {
+      $('#sidebar-menu').html('<p>Error cargando menú</p>');
+    }
+  });
+}
+
+// Función para convertir arreglo plano a árbol jerárquico
+function construirArbol(menuPlano) {
+  const mapa = {};
+  const raiz = [];
+
+  menuPlano.forEach(item => {
+    mapa[item.id_permiso] = {...item, hijos: []};
+  });
+
+  menuPlano.forEach(item => {
+    if (item.requisito && mapa[item.requisito]) {
+      mapa[item.requisito].hijos.push(mapa[item.id_permiso]);
+    } else {
+      raiz.push(mapa[item.id_permiso]);
+    }
+  });
+
+  return raiz;
+}
+
+// Función recursiva para construir el HTML del menú
+function construirHtmlMenu(menu) {
+  let html = '<ul class="nav flex-column">';
+  menu.forEach(item => {
+    // Usa el texto pagina o permiso si pagina es null
+    const texto = item.pagina ?? item.permiso;
+    if (item.hijos && item.hijos.length > 0) {
+      html += `<li class="nav-item">
+        <a href="#submenu${item.id_permiso}" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="submenu${item.id_permiso}">
+          ${texto} <i class="link-arrow" data-feather="chevron-down"></i>
+        </a>
+        <div class="collapse" id="submenu${item.id_permiso}">
+          ${construirHtmlMenu(item.hijos)}
+        </div>
+      </li>`;
+    } else {
+      html += `<li class="nav-item">
+        <a href="${item.pagina ? '/' + item.pagina : '#'}" class="nav-link">${texto}</a>
+      </li>`;
+    }
+  });
+  html += '</ul>';
+  return html;
+}
+
+  </script>
+@endpush

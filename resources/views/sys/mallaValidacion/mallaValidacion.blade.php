@@ -198,6 +198,24 @@
                                     </div>
 
                                 @endif
+                               
+                                    <div class="text-center p-3 rounded shadow-sm mt-3" style="background-color: #f1f1f1; border: 1px solid #ccc;">
+                                        <img class="rounded mb-2" 
+                                            src="{{ url('assets/images/FOTO_AMIGOS.png') }}" 
+                                            alt="Amigos" 
+                                            style="width: 100%; max-width: 400px; height: auto; object-fit: cover;"
+                                            onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/memorial-default.png')) }}';">
+
+                                        <div>
+                                            <small class="d-block mb-1 text-dark">
+                                                🕊️ En memoria de <strong>Marvin, Carlos y Robin</strong>
+                                            </small>
+                                            <p class="tx-11 text-muted mb-0">Siempre los recordaremos con cariño. 🖤</p>
+                                        </div>
+                                    </div>
+
+                                                            
+
                                 <ul class="nav nav-tabs nav-fill mt-3" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active bg-primary" id="chats-tab" data-bs-toggle="tab" data-bs-target="#chats" role="tab" aria-controls="chats" aria-selected="true">
