@@ -67,7 +67,13 @@
   }
 
   
-  
+  .text-verdeOscuro{
+    color: var(--verdeOscuro) !important;
+  }
+
+  .text-verdeClaro{
+    color: var(--verdeClaro) !important;
+  }
 
   /* Botones */
 

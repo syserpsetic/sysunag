@@ -51,6 +51,7 @@ class SeticController extends Controller
         if (!empty($search)) {
             $estudiantesQuery = array_filter($estudiantesQuery, function ($row) use ($search) {
                 return stripos($row['username'], $search) !== false ||
+                    stripos($row['name'], $search) !== false ||
                     stripos($row['foto'], $search) !== false ||
                     stripos($row['tipousuario'], $search) !== false||
                     stripos($row['sancion'], $search) !== false||
