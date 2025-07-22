@@ -58,7 +58,7 @@
                 uk-icon="home" target="_blank"></a>
         </div> -->
 
-        <div class="uk-position-small uk-position-bottom-left uk-visible@l"">
+        <div class="uk-position-small uk-position-bottom-left uk-visible@l">
             <img id="logo_setic" class="uk-transition-scale-up uk-transition-opaque" src="{{ asset('/images/setic.svg') }}"
                 alt="">
         </div>
@@ -113,8 +113,11 @@
                 type="submit" class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
                     uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
 
+            <div class="uk-margin-large-top uk-text-center">
+                <img id="logo_unag" class="uk-transition-scale-up uk-transition-opaque"
+                    src="{{ asset('/assets/images/logo_setic_blanco.png') }}" alt="">
+            </div>
 
-            <br>
 
             {{-- <div>
             <p class="uk-text-small uk-animation-slide-top-medium uk-margin-remove-top">- O Ingresar con -</p>

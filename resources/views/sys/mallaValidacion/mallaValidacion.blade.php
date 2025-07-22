@@ -154,7 +154,7 @@
         @if(in_array('malla_validacion_leer_cinta_noticias', $scopes))
         <div class="news-ticker">
             <div class="news-logo">
-                <img src="{{asset('/assets/images/logo_setic.png')}}" alt="Logo">
+                <img src="{{asset('assets/images/logo_setic_new.png')}}" alt="Logo">
             </div>
             <div class="news-content">
                 <div class="news-container" id="newsContainer">
