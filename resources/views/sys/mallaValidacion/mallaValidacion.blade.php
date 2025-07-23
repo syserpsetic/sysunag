@@ -147,6 +147,15 @@
         width: 90%; /* Ajusta el ancho del modal */
         max-width: 1200px; /* Máximo ancho */
     }
+
+    .blink {
+        animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+        0%, 50% { opacity: 1; }
+        50.01%, 100% { opacity: 0; }
+    }
 </style>
 
 <div class="row chat-wrapper">
@@ -182,13 +191,11 @@
                     <div class="col-lg-3 chat-aside border-end-lg">
                         <div class="aside-content">
                             <div class="aside-body">
-                                <div class="text-center p-3 rounded shadow-sm mt-3" style="background-color: #d3eed7; border: 1px solid #135423;">
-                                    <div id="clock" style="
-                                        font-size: 2rem;
-                                        font-weight: bold;
-                                        color: #135423;
-                                        padding: 10px;
-                                    ">--:--:-- --</div>
+                                <div id="clock-container" class="text-center p-3 rounded shadow-sm mt-3"
+                                        style="background-color: #d3eed7; border: 1px solid #135423; width: 100%; font-size: 2rem; font-family: 'Segoe UI', sans-serif;">
+                                    <strong><div id="time" style="color: #135423;"></div></strong>
+                                    <div id="date" style="font-size: 1rem; color: #1ba333;"></div>
+                                    <div id="weather" style="font-size: 1rem; color: #1ba333;"></div>
                                 </div>
                                 @if(!empty($cumpleaños))
                                     <div class="text-center p-3 rounded shadow-sm mt-3" style="background-color: #d3eed7; border: 1px solid #135423;">
@@ -937,17 +944,38 @@
             });
         @endif
 
-        // @if(!empty($cumpleaños))
-        //     @if(in_array('malla_validacion_reproducir_narrador', $scopes) && ($cumpleaños['mensaje'] != null || $cumpleaños['mensaje'] != ''))
-        //         var mensaje = '{{$cumpleaños["mensaje"]}}';
-        //         console.log(mensaje);
-        //         responsiveVoice.speak(mensaje, "Spanish Latin American Female", {
-        //             rate: 1.2,   // Aumenta la velocidad al 180%
-        //             pitch: 1,  // Un poco más agudo
-        //             volume: 1    // Máximo volumen
-        //         });
-        //     @endif
-        // @endif
+        @if(!empty($cumpleaños))
+            @if(in_array('malla_validacion_reproducir_narrador', $scopes) && !empty($cumpleaños['mensaje']))
+              
+                    (function() {
+                        const mensaje = @json($cumpleaños['mensaje']);
+                        const ahora = new Date();
+                        const horaActual = ahora.getHours();
+                        const diaHoy = ahora.toISOString().slice(0, 10); // yyyy-mm-dd
+
+                        // Horas permitidas para ejecutar el mensaje
+                        const horasPermitidas = [10, 15]; // 10 AM y 3 PM
+
+                        // Solo ejecutar si estamos en una hora permitida
+                        if (horasPermitidas.includes(horaActual)) {
+                            const claveStorage = 'narracion_' + diaHoy + '_' + horaActual;
+
+                            // Solo si NO se ha ejecutado ya esta hora hoy
+                            if (!localStorage.getItem(claveStorage)) {
+                                responsiveVoice.speak(mensaje, "Spanish Latin American Female", {
+                                    rate: 1.2,
+                                    pitch: 1,
+                                    volume: 1
+                                });
+
+                                // Guardar que ya se ejecutó en esta hora hoy
+                                localStorage.setItem(claveStorage, '1');
+                            }
+                        }
+                    })();
+            @endif
+        @endif
+
 
         const newsContainer = document.getElementById("newsContainer");
             let position = window.innerWidth;
@@ -1098,22 +1126,72 @@
             });
         }
 
+    //Inicia reloj y clima
         function updateClock() {
         const now = new Date();
-        let hours = now.getHours();
-        const minutes = now.getMinutes();
-        const seconds = now.getSeconds();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const hours = now.getHours() % 12 || 12;
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
 
-        hours = hours % 12;
-        hours = hours ? hours : 12;
+        // Alterna entre ':' y ' ' cada segundo
+        const separator = now.getSeconds() % 2 === 0 ? ':' : ' ';
 
-        const time = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} ${ampm}`;
-        document.getElementById('clock').textContent = time;
+        const timeString = `${hours}${separator}${minutes} ${ampm}`;
+        document.getElementById('time').innerText = timeString;
+
+        // Fecha en formato largo
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('date').innerText = now.toLocaleDateString('es-ES', options);
     }
 
+    async function updateWeather() {
+        const lat = 14.8277168;
+        const lon = -85.8462942;
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode&timezone=auto`;
+
+        try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const temp = data.current.temperature_2m;
+        const code = data.current.weathercode;
+
+        const weatherText = interpretWeatherCode(code);
+        document.getElementById('weather').innerText = `🌤 ${weatherText}, ${temp}°C`;
+        } catch (error) {
+        document.getElementById('weather').innerText = 'Error al obtener clima';
+        }
+    }
+
+    function interpretWeatherCode(code) {
+        const weatherCodes = {
+        0: "Despejado",
+        1: "Mayormente despejado",
+        2: "Parcialmente nublado",
+        3: "Nublado",
+        45: "Niebla",
+        48: "Niebla con escarcha",
+        51: "Llovizna ligera",
+        53: "Llovizna moderada",
+        55: "Llovizna densa",
+        61: "Lluvia ligera",
+        63: "Lluvia moderada",
+        65: "Lluvia intensa",
+        71: "Nieve ligera",
+        73: "Nieve moderada",
+        75: "Nieve intensa",
+        80: "Chubascos ligeros",
+        81: "Chubascos moderados",
+        82: "Chubascos intensos"
+        };
+        return weatherCodes[code] || "Clima desconocido";
+    }
+
+    // Actualizar todo cada segundo
     setInterval(updateClock, 1000);
     updateClock();
+    updateWeather();
+
+    //Finanila reloj y clima
 
         function espera(html){
         Swal.fire({
