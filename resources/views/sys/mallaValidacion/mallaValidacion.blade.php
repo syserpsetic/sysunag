@@ -182,21 +182,29 @@
                     <div class="col-lg-3 chat-aside border-end-lg">
                         <div class="aside-content">
                             <div class="aside-body">
+                                <div class="text-center p-3 rounded shadow-sm mt-3" style="background-color: #d3eed7; border: 1px solid #135423;">
+                                    <div id="clock" style="
+                                        font-size: 2rem;
+                                        font-weight: bold;
+                                        color: #135423;
+                                        padding: 10px;
+                                    ">--:--:-- --</div>
+                                </div>
                                 @if(!empty($cumpleaños))
-                                    <div class="d-flex align-items-center p-2 rounded shadow-sm" style="background-color: #d3eed7; border-left: 5px solid #135423;">
-                                        <img class="img-xs rounded-circle border border-warning" 
-                                            src="{{ asset('/matricula/documentos/fotos/') }}/{{$row['foto']}}" 
-                                            alt="Foto de {{$cumpleaños['nombre_completo']}}" 
+                                    <div class="text-center p-3 rounded shadow-sm mt-3" style="background-color: #d3eed7; border: 1px solid #135423;">
+                                        <img class="rounded mb-2" 
+                                            src="{{ url('assets/images/') }}/{{$cumpleaños['numero_empleado']}}.jpg" 
+                                            alt="Cumpleaños" 
+                                            style="width: 100%; max-width: 400px; height: auto; object-fit: cover;"
                                             onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
-                                        
-                                        <div class="ms-3">
-                                            <small class="d-block mb-1">
-                                                🎂 <strong>{{$cumpleaños['nombre_completo']}}</strong>
+
+                                        <div>
+                                            <small class="d-block mb-1" style="color: #135423;">
+                                                🎉 ¡FELIZ CUMPLEAÑOS, <strong>{{$cumpleaños['nombre_completo']}}</strong>! 🎂
                                             </small>
-                                            <p class="tx-11 text-muted mb-0">🎉 ¡Feliz Cumpleaños! 🎈</p>
+                                            <p class="tx-11 mb-0" style="color: #1ba333;">Te deseamos un día lleno de alegría, amor y muchas sorpresas. 🎈🎁</p>
                                         </div>
                                     </div>
-
                                 @endif
                                 @if(date('m-d') == '07-17')
                                     <div class="text-center p-3 rounded shadow-sm mt-3" style="background-color: #f1f1f1; border: 1px solid #ccc;">
@@ -204,7 +212,7 @@
                                             src="{{ url('assets/images/FOTO_AMIGOS.png') }}" 
                                             alt="Amigos" 
                                             style="width: 100%; max-width: 400px; height: auto; object-fit: cover;"
-                                            onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/memorial-default.png')) }}';">
+                                            onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
 
                                         <div>
                                             <small class="d-block mb-1 text-dark">
@@ -1089,6 +1097,23 @@
                 },
             });
         }
+
+        function updateClock() {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+
+        const time = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} ${ampm}`;
+        document.getElementById('clock').textContent = time;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
 
         function espera(html){
         Swal.fire({
