@@ -1127,70 +1127,90 @@
         }
 
     //Inicia reloj y clima
-        function updateClock() {
-        const now = new Date();
-        const hours = now.getHours() % 12 || 12;
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-
-        // Alterna entre ':' y ' ' cada segundo
-        const separator = now.getSeconds() % 2 === 0 ? ':' : ' ';
-
-        const timeString = `${hours}${separator}${minutes} ${ampm}`;
-        document.getElementById('time').innerText = timeString;
-
-        // Fecha en formato largo
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('date').innerText = now.toLocaleDateString('es-ES', options);
+    function actualizarHora() {
+        const ahora = new Date();
+        let horas = ahora.getHours();
+        const minutos = ahora.getMinutes().toString().padStart(2, '0');
+        const ampm = horas >= 12 ? 'PM' : 'AM';
+        horas = horas % 12 || 12;
+        const segundos = ahora.getSeconds();
+        const parpadeo = segundos % 2 === 0 ? ':' : ' ';
+        document.getElementById('time').innerHTML = `<strong>${horas}${parpadeo}${minutos} ${ampm}</strong>`;
     }
 
-    async function updateWeather() {
-        const lat = 14.8277168;
-        const lon = -85.8462942;
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode&timezone=auto`;
+    function actualizarFecha() {
+        const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        const hoy = new Date();
+        const textoFecha = `${dias[hoy.getDay()]}, ${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()}`;
+        document.getElementById('date').textContent = textoFecha;
+    }
 
-        try {
-        const res = await fetch(url);
-        const data = await res.json();
-        const temp = data.current.temperature_2m;
-        const code = data.current.weathercode;
-
-        const weatherText = interpretWeatherCode(code);
-        document.getElementById('weather').innerText = `🌤 ${weatherText}, ${temp}°C`;
-        } catch (error) {
-        document.getElementById('weather').innerText = 'Error al obtener clima';
+    async function obtenerClimaPorUbicacion() {
+        if (!navigator.geolocation) {
+            document.getElementById("weather").textContent = "Geolocalización no soportada.";
+            return;
         }
+
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            try {
+                const response = await fetch(`https://wttr.in/${lat},${lon}?format=j1`);
+                const data = await response.json();
+                const weatherDescEn = data.current_condition[0].weatherDesc[0].value;
+                const temp = data.current_condition[0].temp_C;
+
+                const traducciones = {
+                    "Sunny": "Soleado",
+                    "Clear": "Despejado",
+                    "Partly cloudy": "Parcialmente nublado",
+                    "Cloudy": "Nublado",
+                    "Overcast": "Cubierto",
+                    "Mist": "Niebla",
+                    "Patchy rain possible": "Posible lluvia intermitente",
+                    "Light rain": "Lluvia ligera",
+                    "Heavy rain": "Lluvia fuerte",
+                    "Moderate rain": "Lluvia moderada",
+                    "Thunderstorm": "Tormenta eléctrica",
+                    "Snow": "Nieve",
+                    "Fog": "Niebla"
+                };
+
+                const iconos = {
+                    "Soleado": "☀️",
+                    "Despejado": "🌕",
+                    "Parcialmente nublado": "⛅",
+                    "Nublado": "☁️",
+                    "Cubierto": "☁️",
+                    "Niebla": "🌫️",
+                    "Posible lluvia intermitente": "🌦️",
+                    "Lluvia ligera": "🌧️",
+                    "Lluvia moderada": "🌧️",
+                    "Lluvia fuerte": "🌧️",
+                    "Tormenta eléctrica": "⛈️",
+                    "Nieve": "❄️"
+                };
+
+                const weatherDescEs = traducciones[weatherDescEn] || weatherDescEn;
+                const icono = iconos[weatherDescEs] || "🌡️";
+
+                document.getElementById("weather").textContent = `${icono} ${weatherDescEs} - ${temp}°C`;
+            } catch (error) {
+                document.getElementById("weather").textContent = "No se pudo cargar el clima.";
+                console.error(error);
+            }
+        }, (error) => {
+            document.getElementById("weather").textContent = "Permiso de ubicación denegado.";
+        });
     }
 
-    function interpretWeatherCode(code) {
-        const weatherCodes = {
-        0: "Despejado",
-        1: "Mayormente despejado",
-        2: "Parcialmente nublado",
-        3: "Nublado",
-        45: "Niebla",
-        48: "Niebla con escarcha",
-        51: "Llovizna ligera",
-        53: "Llovizna moderada",
-        55: "Llovizna densa",
-        61: "Lluvia ligera",
-        63: "Lluvia moderada",
-        65: "Lluvia intensa",
-        71: "Nieve ligera",
-        73: "Nieve moderada",
-        75: "Nieve intensa",
-        80: "Chubascos ligeros",
-        81: "Chubascos moderados",
-        82: "Chubascos intensos"
-        };
-        return weatherCodes[code] || "Clima desconocido";
-    }
-
-    // Actualizar todo cada segundo
-    setInterval(updateClock, 1000);
-    updateClock();
-    updateWeather();
-
+    actualizarHora();
+    actualizarFecha();
+    obtenerClimaPorUbicacion();
+    setInterval(actualizarHora, 1000);
+    setInterval(obtenerClimaPorUbicacion, 1800000); // cada 30 minutos
     //Finanila reloj y clima
 
         function espera(html){
