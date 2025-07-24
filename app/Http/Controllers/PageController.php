@@ -20,7 +20,13 @@ class PageController extends Controller
         $scopes = new ControladorPermisos();
         $scopes = $scopes->ver_permisos();
         if(in_array('egresados_all', $scopes)){
-            return view('sys.egresados.dashboard_egresados')->with('scopes', $scopes);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+            ])->get(env('API_BASE_URL_ZETA').'/api/auth/egresados/sed_unag');
+
+            $sed_unag_oferta = $response['sed_unag_oferta'];
+
+            return view('sys.egresados.dashboard_egresados')->with('scopes', $scopes)->with('sed_unag_oferta', $sed_unag_oferta);
         }
         return view('dashboard')->with('scopes', $scopes);
     }
