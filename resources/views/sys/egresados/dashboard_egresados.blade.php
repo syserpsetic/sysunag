@@ -88,5 +88,41 @@
 
 @push('custom-scripts')
   <script src="{{ asset('assets/js/dashboard.js') }}"></script>
-  <script src="{{ asset('assets/js/carousel.js') }}"></script>
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(".owl-auto-play").owlCarousel({
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed: 1000,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                768: {
+                    items: 2
+                },
+                992: {
+                    items: 3
+                },
+                1200: {
+                    items: 4
+                }
+            }
+        });
+
+    });
+
+       
+
+  </script>
 @endpush
