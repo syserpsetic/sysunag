@@ -977,29 +977,31 @@
         @endif
 
         (function () {
-            const ahora = new Date();
-            const hora = ahora.getHours();
-            const minutos = ahora.getMinutes();
-            const diaHoy = ahora.toISOString().slice(0, 10); // yyyy-mm-dd
-            const claveStorage = 'voz_1630_' + diaHoy;
+            const claveStorage = 'voz_1630_' + new Date().toISOString().slice(0, 10); // Solo una vez por día
 
-            // Validar que sea 4:30 PM o después
-            const esHoraValida = (hora > 16) || (hora === 16 && minutos >= 30);
+            // Evitar repetir la reproducción
+            if (localStorage.getItem(claveStorage)) return;
 
-            if (esHoraValida && !localStorage.getItem(claveStorage)) {
-                // Texto que se reproducirá
-                const mensaje = "El horario laboral ha finalizado. Gracias por su esfuerzo del día. Puede retirarse a su casa y descansar. ¡Hasta mañana!"
+            // Verificar la hora cada 30 segundos
+            const intervalo = setInterval(() => {
+                const ahora = new Date();
+                const hora = ahora.getHours();
+                const minutos = ahora.getMinutes();
 
-                // Reproducir mensaje con voz
-                responsiveVoice.speak(mensaje, "Spanish Latin American Female", {
-                    rate: 1.1,
-                    pitch: 1,
-                    volume: 1
-                });
+                // Condición: 4:30 PM o después
+                if ((hora > 16 || (hora === 16 && minutos >= 30)) && !localStorage.getItem(claveStorage)) {
+                    const mensaje = "El horario laboral ha finalizado. Gracias por su esfuerzo del día. Puede retirarse a su casa y descansar. ¡Hasta mañana!";
 
-                // Marcar que ya se ejecutó hoy
-                localStorage.setItem(claveStorage, '1');
-            }
+                    responsiveVoice.speak(mensaje, "Spanish Latin American Female", {
+                        rate: 1.1,
+                        pitch: 1,
+                        volume: 1
+                    });
+
+                    localStorage.setItem(claveStorage, '1');
+                    clearInterval(intervalo); // Detener verificación después de reproducir
+                }
+            }, 30000); // Verifica cada 30 segundos
         })();
 
         const newsContainer = document.getElementById("newsContainer");
