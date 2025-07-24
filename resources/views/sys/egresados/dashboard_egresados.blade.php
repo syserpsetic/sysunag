@@ -23,7 +23,11 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">OFERTA ACADÉMICA DEL SED-UNAG</h6>
+                    <h6 class="card-title d-flex justify-content-between align-items-center">
+                        <span>OFERTA ACADÉMICA DEL SED-UNAG</span>
+                        <a href="https://sed.unag.edu.hn" target="_blank" class="btn btn-primary btn-xs">Ir al sitio oficial <i class="btn-icon-append" data-feather="arrow-up-right"  width="15" height="15"></i></a>
+                    </h6>
+
                     <div class="owl-carousel owl-theme owl-auto-play">
                         <!-- Otro slide -->
                          @foreach($sed_unag_oferta as $row)
