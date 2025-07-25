@@ -36,7 +36,7 @@
                                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-end p-3" style="background: rgba(0, 0, 0, 0.4);">
                                     <h5 class="text-amarillo mb-2 fs-6 fs-md-5 fs-lg-4">{{$row['nombre']}}</h5>
                                     <h4 class="text-white mb-2 fs-6 fs-md-5 fs-lg-4">{{$row['titulo']}}</h4>
-                                    <a href="https://sed.unag.edu.hn/vista-detalle/{{$row['id']}}" target="_blank" class="btn btn-primary btn-sm fs-6 fs-md-6 fs-lg-5">MÁS INFORMACIÓN</a>
+                                    <a href="https://sed.unag.edu.hn/prog/{{$row['id']}}" target="_blank" class="btn btn-primary btn-sm fs-6 fs-md-6 fs-lg-5">MÁS INFORMACIÓN</a>
                                 </div>
                             </div>
                         @endforeach
