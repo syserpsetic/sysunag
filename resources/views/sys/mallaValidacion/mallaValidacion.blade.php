@@ -1004,33 +1004,33 @@
             }, 10000); // Verifica cada 10 segundos
         })();
 
-        (function () {
-            const claveStorage = 'llamado_' + new Date().toISOString().slice(0, 10); // Solo una vez por día
+        // (function () {
+        //     const claveStorage = 'llamado_' + new Date().toISOString().slice(0, 10); // Solo una vez por día
 
-            // Evitar repetir la reproducción
-            if (localStorage.getItem(claveStorage)) return;
+        //     // Evitar repetir la reproducción
+        //     if (localStorage.getItem(claveStorage)) return;
 
-            // Verificar la hora cada 30 segundos
-            const intervalo = setInterval(() => {
-                const ahora = new Date();
-                const hora = ahora.getHours();
-                const minutos = ahora.getMinutes();
+        //     // Verificar la hora cada 30 segundos
+        //     const intervalo = setInterval(() => {
+        //         const ahora = new Date();
+        //         const hora = ahora.getHours();
+        //         const minutos = ahora.getMinutes();
 
-                // Condición: 4:30 PM o después
-                if ((hora > 13 || (hora === 13 && minutos >= 00)) && !localStorage.getItem(claveStorage)) {
-                    const mensaje = "Se hace un llamado a todos los compañeros y practicantes: el tiempo de descanso ha concluido. Por favor, retomemos nuestras labores con el mismo compromiso y responsabilidad. ¡Gracias!";
+        //         // Condición: 4:30 PM o después
+        //         if ((hora > 13 || (hora === 13 && minutos >= 00)) && !localStorage.getItem(claveStorage)) {
+        //             const mensaje = "Se hace un llamado a todos los compañeros y practicantes: el tiempo de descanso ha concluido. Por favor, retomemos nuestras labores con el mismo compromiso y responsabilidad. ¡Gracias!";
 
-                    responsiveVoice.speak(mensaje, "Spanish Latin American Female", {
-                        rate: 1.1,
-                        pitch: 1,
-                        volume: 1
-                    });
+        //             responsiveVoice.speak(mensaje, "Spanish Latin American Female", {
+        //                 rate: 1.1,
+        //                 pitch: 1,
+        //                 volume: 1
+        //             });
 
-                    localStorage.setItem(claveStorage, '1');
-                    clearInterval(intervalo); // Detener verificación después de reproducir
-                }
-            }, 30000); // Verifica cada 30 segundos
-        })();
+        //             localStorage.setItem(claveStorage, '1');
+        //             clearInterval(intervalo); // Detener verificación después de reproducir
+        //         }
+        //     }, 30000); // Verifica cada 30 segundos
+        // })();
 
         const newsContainer = document.getElementById("newsContainer");
             let position = window.innerWidth;
