@@ -1001,7 +1001,7 @@
                     localStorage.setItem(claveStorage, '1');
                     clearInterval(intervalo); // Detener verificación después de reproducir
                 }
-            }, 30000); // Verifica cada 30 segundos
+            }, 10000); // Verifica cada 10 segundos
         })();
 
         (function () {
