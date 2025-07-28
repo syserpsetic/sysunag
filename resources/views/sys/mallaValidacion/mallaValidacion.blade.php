@@ -976,7 +976,7 @@
             @endif
         @endif
 
-        (function () {
+        /*(function () {
             const claveStorage = 'voz_1630_' + new Date().toISOString().slice(0, 10); // Solo una vez por día
 
             // Evitar repetir la reproducción
@@ -1002,7 +1002,7 @@
                     clearInterval(intervalo); // Detener verificación después de reproducir
                 }
             }, 10000); // Verifica cada 10 segundos
-        })();
+        })();*/
 
         // (function () {
         //     const claveStorage = 'llamado_' + new Date().toISOString().slice(0, 10); // Solo una vez por día

@@ -70,7 +70,7 @@ class ApiAuthController extends Controller
         } elseif($response->status() === 403) {
             throw new Exception('¡Acceso al sistema denegado!');
         } else {
-            return redirect('/login')->withErrors(['error' => 'Usuario no encontrado']);
+            return redirect('/login')->withErrors(['error' => 'Usuario o contraseña incorrectos']);
         }
     }
 
