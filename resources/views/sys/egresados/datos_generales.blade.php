@@ -416,9 +416,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="modal_agregar_datos_academicos_grado_academico" class="form-label">Grado Académico</label>
+                                        <label for="modal_agregar_datos_academicos_grado_academico" class="form-label">Tipo de Formación</label>
                                         <select class="form-select" id="modal_agregar_datos_academicos_grado_academico">
-                                            <option selected disabled>Seleccione un grado académico</option>
+                                            <option selected disabled>Seleccione un tipo de formación</option>
                                             @foreach($tipos_grados_academicos as $row)
                                             <option value="{{$row['id']}}">{{$row['nombre']}}</option>
                                             @endforeach
@@ -427,7 +427,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="mb-3">
-                                        <label for="modal_agregar_datos_academicos_formacion" class="form-label">Formación</label>
+                                        <label for="modal_agregar_datos_academicos_formacion" class="form-label">Nombre de la Formación</label>
                                         <input id="modal_agregar_datos_academicos_formacion" class="form-control" type="text" placeholder="Escriba aquí la formación"/>
                                     </div>
                                 </div>
