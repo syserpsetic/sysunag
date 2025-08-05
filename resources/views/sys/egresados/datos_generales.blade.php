@@ -1,6 +1,7 @@
 @extends('layout.master')
 
 @push('plugin-styles')
+  <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/jquery-tags-input/jquery.tagsinput.min.css') }}" rel="stylesheet" />
@@ -25,7 +26,8 @@
                     <a class="nav-link" id="v-datos_generales-tab" data-bs-toggle="tab" href="#v-datos_generales" role="tab" aria-controls="v-datos_generales" aria-selected="true">Datos Generales</a>
                     <a class="nav-link" id="v-datos_academicos-tab" data-bs-toggle="tab" href="#v-profile" role="tab" aria-controls="v-profile" aria-selected="false">Datos Académicos</a>
                     <a class="nav-link" id="v-experiencia_laboral-tab" data-bs-toggle="tab" href="#v-messages" role="tab" aria-controls="v-messages" aria-selected="false">Experiencia Laboral</a>
-                    <a class="nav-link" id="v-ofertas_empelos-tab" data-bs-toggle="tab" href="#v-settings" role="tab" aria-controls="v-settings" aria-selected="false">Ofertas de Empleo</a>
+                    <a class="nav-link" id="v-habilidades_tecnicas-tab" data-bs-toggle="tab" href="#v-habilidades_tecnicas" role="tab" aria-controls="v-habilidades_tecnicas" aria-selected="false">Habilidades Técnicas</a>
+                    <a class="nav-link" id="v-ofertas_empelos-tab" data-bs-toggle="tab" href="#v-settings" role="tab" aria-controls="v-settings" aria-selected="false">Ofertas de Empleo</a>                    
                 </div>
                 <div class="d-grid gap-2"><br>
                     <button type="button" id="btn_descargar_cv" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modal_descargar_cv"><i class="btn-icon-prepend" data-feather="file"></i> Descargar CV</button>
@@ -364,6 +366,58 @@
                             </div>
                                                             @endif
                                         </div>
+                                    </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-habilidades_tecnicas" role="habilidades_tecnicas" aria-labelledby="v-habilidades_tecnicas-tab">
+                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h1 class="">Habilidades Técnicas</h1>
+                                            <p class="text-muted mb-3">Completa o actualiza tus habilidades técnicas.</p>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+
+                                    <div class="row scroll-container">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-12 grid-margin stretch-card">
+                                                    <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="mb-3">
+                                                        <label class="form-label">Seleccione las habilidades que usted tiene: </label>
+                                                        <select class="js-example-basic-multiple form-select" id="habilidades_tecnicas" multiple="multiple" data-width="100%">
+                                                            @php
+                                                                // Agrupar las habilidades por categoría
+                                                                $habilidadesPorCategoria = collect($catalogo_habilidades_tecnicas)
+                                                                    ->groupBy('categoria');
+                                                            @endphp
+
+                                                            @foreach($habilidadesPorCategoria as $categoria => $habilidades)
+                                                                <optgroup label="{{ $categoria }}">
+                                                                    @foreach($habilidades as $habilidad)
+                                                                        <option {{ $habilidad['selected'] }} value="{{ $habilidad['id_habilidad'] }}">{{ $habilidad['habilidades'] }}</option>
+                                                                    @endforeach
+                                                                </optgroup>
+                                                            @endforeach
+                                                        </select>
+                                                        </div>
+                                                         <div style="display: flex; align-items: center; gap: 8px;">
+                                                            <button type="button" class="btn btn-primary" id="btn_guardar_habilidades_tecnicas">Guardar</button>
+                                                            <div id="recordar_guardar" style="display: none;"> 
+                                                                <div class="spinner-grow" style="background-color: transparent; width: 1.5rem; height: 1.5rem; margin-right: 8px;">
+                                                                    <i data-feather="arrow-left" class="text-dark"></i>
+                                                                </div>
+                                                                <p class="mb-0">Recuerda guardar tus cambios...</p>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
                     </div>
                     <div class="tab-pane fade" id="v-settings" role="tabpanel" aria-labelledby="v-ofertas_empelos-tab">
@@ -772,7 +826,8 @@
 
 @endsection
 @push('plugin-scripts')
-<script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/select2/select2.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
   <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
@@ -785,6 +840,7 @@
   <script src="{{ asset('assets/plugins/ace-builds/theme-chaos.js') }}"></script>
 @endpush
 @push('custom-scripts')
+  <script src="{{ asset('assets/js/select2.js') }}"></script>
   <script src="{{ asset('assets/js/dashboard.js') }}"></script>
   <script src="{{ asset('assets/js/data-table.js') }}"></script>
   <script src="{{ asset('assets/js/inputmask.js') }}"></script>
@@ -833,9 +889,13 @@
     var fecha_fin_experiencia_laboaral = null;
     var descripcion_experiencia_laboaral = null;
     //finaliza experiencia laboral
+    //inicia habilidades tecnicas
+    var id_habilidades_tecnicas = null;
+    //finaliza habilidades tecnicas
     var url_guardar_datos_generales = "{{url('/egresados/datos_generales/guardar')}}"; 
     var url_guardar_datos_academicos = "{{url('/egresados/datos_academicos/guardar')}}"; 
     var url_guardar_esperiencia_laboral = "{{url('/egresados/esperiencia_laboral/guardar')}}"; 
+    var url_guardar_habilidades_tecnicas = "{{url('/egresados/habilidades_tecnicas/guardar')}}"; 
     var url_datos_generales_municipios = "{{url('/egresados/datos_generales/municipios')}}"; 
     $(document).ready(function () {
         $.ajaxSetup({
@@ -854,6 +914,10 @@
 
         $("#v-experiencia_laboral-tab").on("click", function () {
            localStorage.setItem("tab","#v-experiencia_laboral-tab");
+        });
+
+        $("#v-habilidades_tecnicas-tab").on("click", function () {
+           localStorage.setItem("tab","#v-habilidades_tecnicas-tab");
         });
 
         $("#v-ofertas_empelos-tab").on("click", function () {
@@ -1311,6 +1375,29 @@
             }
         });
 
+        $('#habilidades_tecnicas').on('change', function() {
+            $('#recordar_guardar').css({
+                'display': 'flex',
+                'align-items': 'center'
+            });
+        });
+
+        $("#btn_guardar_habilidades_tecnicas").on("click", function () { 
+            id_habilidades_tecnicas = $("#habilidades_tecnicas").val();
+
+            if(id_habilidades_tecnicas == null || id_habilidades_tecnicas == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Valor requerido para Habilidades Técnicas.'
+                })
+                return true;
+            }
+            //alert(id_habilidades_tecnicas)
+            if(btn_activo){
+                guardar_habilidades_tecnicas(); 
+            }
+        });
+
     });
 
         $('#departamento').change(function() {
@@ -1353,6 +1440,7 @@
                     textMsg = data.msgSuccess;
                     typeMsg = "success";
                     timer = 3000;
+                    btn_activo = true;
                 }
                 console.log(textMsg);
                 ToastLG.fire({
@@ -1434,6 +1522,47 @@
                 fecha_inicio_experiencia_laboaral : fecha_inicio_experiencia_laboaral,
                 fecha_fin_experiencia_laboaral : fecha_fin_experiencia_laboaral,
                 descripcion_experiencia_laboaral : descripcion_experiencia_laboaral
+            },
+            success: function (data) {
+                if (data.msgError != null) {
+                    titleMsg = "Error al Guardar";
+                    textMsg = data.msgError;
+                    typeMsg = "error";
+                    timer = null;
+                    btn_activo = true;
+                } else {
+                    titleMsg = "Datos Guardados";
+                    textMsg = data.msgSuccess;
+                    typeMsg = "success";
+                    timer = 3000;
+                    location.reload();
+                }
+                console.log(textMsg);
+                ToastLG.fire({
+                    icon: typeMsg,
+                    title: titleMsg,
+                    html: textMsg,
+                    timer: timer
+                })
+
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            },
+        });
+    }
+
+    function guardar_habilidades_tecnicas() {
+        espera('Tu información se esta guardando...');
+        btn_activo = false;
+        //console.log(hora_inicio);
+        $.ajax({
+            type: "post",
+            url: url_guardar_habilidades_tecnicas,
+            data: {
+                accion : accion,
+                numero_registro_asignado : numero_registro_asignado,
+                id_habilidades_tecnicas : id_habilidades_tecnicas
             },
             success: function (data) {
                 if (data.msgError != null) {

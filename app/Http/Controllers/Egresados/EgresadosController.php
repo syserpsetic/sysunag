@@ -30,6 +30,7 @@ class EgresadosController extends Controller
         $paises = $response['paises'];
         $tipos_grados_academicos = $response['tipos_grados_academicos'];
         $experiencia_laboral = $response['experiencia_laboral'];
+        $catalogo_habilidades_tecnicas = $response['catalogo_habilidades_tecnicas'];
 
         return view("sys.egresados.datos_generales")
         ->with("datos_generales", $datos_generales)
@@ -39,6 +40,7 @@ class EgresadosController extends Controller
         ->with("paises", $paises)
         ->with("tipos_grados_academicos", $tipos_grados_academicos)
         ->with("experiencia_laboral", $experiencia_laboral)
+        ->with("catalogo_habilidades_tecnicas", $catalogo_habilidades_tecnicas)
         ;
     }
 
@@ -182,6 +184,44 @@ class EgresadosController extends Controller
             ]);
             //throw new Exception($response->status(), true);
             $data = $response->json();
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    $msgError = "Desde backend: ".$data["msgError"];
+                }
+
+                $msgSuccess = $data["msgSuccess"];
+                //$zona_list = $data["zona_list"];
+                //throw New Exception($estados_list, true);
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError
+        ]);
+    }
+
+    public function guardar_habilidades_tecnicas(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        //dd($request->all());
+        try {
+            //throw new Exception($request->puesto, true);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/egresados/habilidades_tecnicas/guardar', [
+                'accion' => $request->accion,
+                'numero_registro_asignado' => $request->numero_registro_asignado,
+                'id_habilidades_tecnicas' => $request->id_habilidades_tecnicas,
+            ]);
+            
+            $data = $response->json();
+            //throw new Exception($data["estatus"], true);
             if($response->status() === 200){
                 if(!$data["estatus"]){
                     $msgError = "Desde backend: ".$data["msgError"];
