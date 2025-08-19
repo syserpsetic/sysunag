@@ -1051,7 +1051,7 @@
             
         setTimeout(function () {
             location.reload();
-        }, 300000);
+        }, 900000);
 
         $("#modal_informacion").on("show.bs.modal", function (e) { 
                                      var triggerLink = $(e.relatedTarget); 

@@ -18,7 +18,7 @@ class MallaValidacionController extends Controller
         try {
             $response = Http::withHeaders([
                 'Authorization' => session('token'),
-            ])->timeout(60)->get(env('API_BASE_URL_ZETA') . '/api/auth/setic/malla_validacion');
+            ])->timeout(360)->get(env('API_BASE_URL_ZETA') . '/api/auth/setic/malla_validacion');
 
             if($response->status() === 500){
                 return view('pages.error.500')->with('scopes', $scopes = array());

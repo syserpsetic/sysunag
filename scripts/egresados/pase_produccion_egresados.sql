@@ -223,7 +223,7 @@ INSERT INTO egresados.egre_cat_habilidades_tecnicas (nombre, descripcion, id_cat
 CREATE TABLE egresados.egre_habilidades_tecnicas
 (
     id serial,
-    numnero_registro_asignado text,
+    numero_registro_asignado text,
     id_habilidad_tecnica bigint,
     created_at timestamp(0) without time zone default now(),
     updated_at timestamp(0) without time zone,

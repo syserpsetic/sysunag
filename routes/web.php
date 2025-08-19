@@ -18,6 +18,7 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\googleController;
 use App\Http\Controllers\MallaValidacion\MallaValidacionController;
 use App\Http\Controllers\Egresados\EgresadosController;
+use App\Http\Controllers\Egresados\ReportsEgresadosController;
 use App\Http\Controllers\Setic\SeticController;
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', [PageController::class, 'dashboardOverview1']);
     Route::get('/estructura_menu', [PageController::class, 'menu']);
+    Route::get('/reporte-prueba', [ReportsEgresadosController::class, 'prueba']);
 
     //Inincia SETIC
         Route::get('/setic/usuarios', [SeticController::class, 'usuarios'])->name('setic_usuarios');
