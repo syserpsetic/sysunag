@@ -192,7 +192,7 @@
                         <div class="aside-content">
                             <div class="aside-body">
                                 <div id="clock-container" class="text-center p-3 rounded shadow-sm mt-3"
-                                        style="background-color: #d3eed7; border: 1px solid #135423; width: 100%; font-size: 2rem; font-family: 'Segoe UI', sans-serif;">
+                                        style="background-color: #eed3d3ff; border: 1px solid #135423; width: 100%; font-size: 2rem; font-family: 'Segoe UI', sans-serif;">
                                     <strong><div id="time" style="color: #135423;"></div></strong>
                                     <div id="date" style="font-size: 1rem; color: #1ba333;"></div>
                                     <div id="weather" style="font-size: 1rem; color: #1ba333;"></div>

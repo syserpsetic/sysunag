@@ -63,6 +63,30 @@
           </div>
         </li>
       @endif
+      @if(in_array('clinica_psicologica_menu', $scopes))
+        <li class="nav-item nav-category">CLÍNICA PSICOLÓGICA APPS</li>
+        <li class="nav-item {{ active_class(['psicologia/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#psicologia" role="button" aria-expanded="{{ is_active_route(['psicologia/*']) }}" aria-controls="email">
+            <i class="link-icon" data-feather="activity"></i>
+            <span class="link-title">CLÍNICA PSICOLÓGICA</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse {{ show_class(['psicologia/*']) }}" id="psicologia">
+            <ul class="nav sub-menu">
+                @if(in_array('clinica_psicologica_leer_calendario_citas', $scopes))
+                  <li class="nav-item">
+                    <a href="{{ url('/psicologia/calendario') }}" class="nav-link {{ active_class(['psicologia/calendario']) }}">Calendario de Citas</a>
+                  </li>
+                @endif
+                @if(in_array('clinica_psicologica_leer_historial_clinico', $scopes))
+                <li class="nav-item">
+                  <a href="{{ url('/psicologia/historialClinico') }}" class="nav-link {{ active_class(['psicologia/historialClinico']) }}">Historial Clinico</a>
+                </li>
+                @endif
+            </ul>
+          </div>
+        </li>
+      @endif
       <!-- <div id="sidebar-menu"> -->
         <!-- Aquí se cargará el menú vía AJAX -->
       <!-- </div> -->

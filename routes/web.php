@@ -20,6 +20,7 @@ use App\Http\Controllers\MallaValidacion\MallaValidacionController;
 use App\Http\Controllers\Egresados\EgresadosController;
 use App\Http\Controllers\Egresados\ReportsEgresadosController;
 use App\Http\Controllers\Setic\SeticController;
+use App\Http\Controllers\Psicologia\PsicologiaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -91,6 +92,33 @@ Route::middleware('auth')->group(function () {
         Route::post('/egresados/esperiencia_laboral/guardar', [EgresadosController::class, 'guardar_esperiencia_laboral']);
         Route::post('/egresados/habilidades_tecnicas/guardar', [EgresadosController::class, 'guardar_habilidades_tecnicas']);
     //Finaliza Egresados
+
+     //Inicia Psicologia
+        //Rutas de calendario
+            Route::get('/psicologia/calendario', [PsicologiaController::class, 'calendario_citas'])->name('calendario_citas');
+            Route::post('/psicologia/citas', [PsicologiaController::class, 'guardar_cita'])->name('guardar_cita');
+            Route::get('/psicologia/citas', [PsicologiaController::class, 'obtener_citas'])->name('obtener_citas');
+            Route::get('/psicologia/estadisticas', [PsicologiaController::class, 'estadisticas_citas'])->name('estadisticas_citas');
+            Route::post('/psicologia/citas/{id_cita}/estado', [PsicologiaController::class, 'actualizar_estado_cita'])->name('actualizar_estado_cita');
+            Route::get('/psicologia/catalogos-intervencion', [PsicologiaController::class, 'obtener_catalogos_intervencion'])->name('obtener_catalogos_intervencion');
+            Route::post('/psicologia/citas/{id_cita}/cancelar', [PsicologiaController::class, 'cancelar_cita'])->name('cancelar_cita');
+		//Rutas de Evaluacion
+            Route::get('/psicologia/intervencion/{id_cita}', [PageController::class, 'evaluacionPaciente'])->name('evaluacion_paciente');
+            Route::get('/psicologia/cita/{id_cita}/datos', [PsicologiaController::class, 'obtener_datos_cita'])->name('obtener_datos_cita');
+            Route::get('/psicologia/catalogos-motivo', [PsicologiaController::class, 'obtener_catalogos_motivo_consulta'])->name('obtener_catalogos_motivo_consulta');
+            Route::get('/psicologia/catalogos-antecedentes', [PsicologiaController::class, 'obtener_catalogos_historial_clinico_antecedentes'])->name('obtener_catalogos_historial_clinico_antecedentes');
+            Route::get('/psicologia/catalogos-evaluacion', [PsicologiaController::class, 'obtener_catalogos_evaluacion'])->name('obtener_catalogos_evaluacion');
+            Route::get('/psicologia/catalogos-profesional', [PsicologiaController::class, 'obtener_catalogos_profesional'])->name('obtener_catalogos_profesional');
+            Route::post('/psicologia/citas/{id_cita}/evaluacion', [PsicologiaController::class, 'guardar_evaluacion_psicologia'])->name('guardar_evaluacion_psicologia');
+        //Rutas de Historial
+            Route::get('/psicologia/historial/{numeroRegistro}', [PsicologiaController::class, 'obtener_historial'])->name('obtener_historial');
+            Route::get('/psicologia/evaluacion/datos', [PsicologiaController::class, 'obtener_datos_evaluacion'])->name('obtener_datos_evaluacion');
+            //abrir la vista historial
+            Route::get('/psicologia/estudiante-historial/{id_cita}/{id_origen}', [PageController::class, 'verHistorial'])->name('ver_historial')->where('id_cita', '[0-9]+');
+            //Vista Historial clinico
+            Route::get('/psicologia/historialClinico', [PsicologiaController::class, 'historial_clinico'])->name('historial_clinico');
+            Route::get('/psicologia/catalogos-clinica', [PsicologiaController::class, 'obtener_catalogos_clinica'])->name('obtener_catalogos_clinica');
+    //Finaliza Psicologia
 });
 
 Route::group(['prefix' => 'email'], function(){

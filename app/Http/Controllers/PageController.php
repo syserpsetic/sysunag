@@ -15,6 +15,68 @@ class PageController extends Controller
      * Show specified view.
      *
      */
+        /** funcion para dirigirme a la vista calendarioCita.blade. **/
+    public function calendarioCita(): View
+    {
+        $scopes = new ControladorPermisos();
+        $scopes = $scopes->ver_permisos();
+        return view('psicologia/calendarioCita')->with('scopes', $scopes);
+    }
+// Funcion para dirigirme a la vista evaluacionPaciente.blade.php
+   public function evaluacionPaciente($id_cita): View
+    {
+        // Validar que la cita esté especificada y sea numérica
+        if (!is_numeric($id_cita)) {
+            abort(404, 'Cita no especificada o inválida');
+        }
+
+        // Obtener permisos del usuario
+        $scopes = new ControladorPermisos();
+        $scopes = $scopes->ver_permisos();
+
+        return view('sys/psicologia/evaluacionPaciente', [
+            'scopes' => $scopes,
+            'id_cita' => $id_cita,
+            'page_title' => 'Evaluación del Paciente',
+            'breadcrumb' => [
+                'Psicología' => route('calendario_citas'),
+                'Evaluación del Paciente' => ''
+            ]
+        ]);
+    }
+
+ public function verHistorial($id_cita, $id_origen): View
+    {
+        // Validar que la cita esté especificada y sea numérica
+        if (!is_numeric($id_cita)) {
+            abort(404, 'Cita no especificada o inválida');
+        }
+
+        // Obtener permisos del usuario
+        $scopes = new ControladorPermisos();
+        $scopes = $scopes->ver_permisos();
+
+        return view('sys/psicologia/verHistorial', [
+            'scopes' => $scopes,
+            'id_cita' => $id_cita,
+            'id_origen' => $id_origen,
+            'page_title' => 'Historial Clínico del Paciente',
+            'breadcrumb' => [
+                'Psicología' => route('calendario_citas'),
+                'Evaluación del Paciente' => route('evaluacion_paciente', ['id_cita' => $id_cita]),
+                'Historial Clínico' => ''
+            ]
+        ]);
+    }
+
+   public function historialClinico(): View
+    {
+        $scopes = new ControladorPermisos();
+        $scopes = $scopes->ver_permisos();
+        // Cambiar a la ruta correcta
+        return view('sys.psicologia.historialClinico')->with('scopes', $scopes);
+    }
+    
     public function dashboardOverview1(): View
     {
         $scopes = new ControladorPermisos();
