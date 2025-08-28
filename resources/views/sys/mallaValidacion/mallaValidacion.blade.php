@@ -209,7 +209,7 @@
                                             <small class="d-block mb-1" style="color: #135423;">
                                                 🎉 ¡FELIZ CUMPLEAÑOS, <strong>{{$cumpleaños['nombre_completo']}}</strong>! 🎂
                                             </small>
-                                            <p class="tx-11 mb-0" style="color: #1ba333;">Te deseamos un día lleno de alegría, amor y muchas sorpresas. 🎈🎁</p>
+                                            <p class="tx-11 mb-0" style="color: #1ba333;">{{$cumpleaños['mensaje']}} 🎈🎁</p>
                                         </div>
                                     </div>
                                 @endif
@@ -286,7 +286,7 @@
                         <div class="row">
                             <div class="col-3">
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal_vistas_materializadas">
-                                    <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} ({{ $porcentaje_matricula['porcentaje_matricula'] }}) <i id="indicador_matricula"></i></strong></p>                         
+                                    <p class="lead"><strong> <i data-feather="users" class="me-2"></i>{{ $porcentaje_matricula['obtenido'] }} {{--({{ $porcentaje_matricula['porcentaje_matricula'] }})--}} <small>Estudiantes</small> <i id="indicador_matricula"></i></strong></p>                         
                                     <cite title="Source Title">{{ $porcentaje_matricula['datos'] }}</cite>
                                 </a>
                             </div>
@@ -324,19 +324,19 @@
                                     <div class="row flex-grow-1">
                                         @foreach($indicadoresMallaValidaciones as $row)
                                         <div class="col-md-3 grid-margin stretch-card">
-                                            <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes') class="card border-danger" 
-                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')) class="card border-warning" 
+                                            <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_parametrizacion_secciones_limite_estudiantes' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_estudiantes_sin_matricula' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_cobros_incorrectos') class="card border-danger" 
+                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_parametrizacion_secciones_limite_estudiantes' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_estudiantes_sin_matricula' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_cobros_incorrectos')) class="card border-warning" 
                                                 @else class="card border-primary" 
                                                 @endif>
-                                                <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes') class="card-header bg-danger" 
-                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')) class="card-header bg-warning" 
+                                                <div @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_parametrizacion_secciones_limite_estudiantes' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_estudiantes_sin_matricula' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_cobros_incorrectos') class="card-header bg-danger" 
+                                                @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_parametrizacion_secciones_limite_estudiantes' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_estudiantes_sin_matricula' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_cobros_incorrectos')) class="card-header bg-warning" 
                                                 @else class="card-header bg-primary" 
                                                 @endif>
                                                     <div class="d-flex justify-content-between align-items-baseline">
                                                         <h6 class="mb-0">
-                                                            @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes')
+                                                            @if($row['estudiantes']!=0 and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_parametrizacion_secciones_limite_estudiantes' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_estudiantes_sin_matricula' and $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_cobros_incorrectos')
                                                                 <strong class="text-white"><i data-feather="alert-octagon" class="me-2"></i> {{$row['indicador_titulo']}}</strong>
-                                                            @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes'))
+                                                            @elseif($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_login_estudiantes' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_parametrizacion_secciones_limite_estudiantes' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_estudiantes_sin_matricula' || $row['btn_detalle_ruta'] != 'setic/malla_validacion/malla_cobros_incorrectos'))
                                                                 <i data-feather="alert-triangle" class="me-2"></i>
                                                                 <strong>{{$row['indicador_titulo']}}</strong>
                                                             @else
@@ -345,7 +345,7 @@
                                                         </h6>
                                                         <div class="dropdown mb-2">
                                                             <button class="btn btn-link p-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            @if($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_login_estudiantes'))    
+                                                            @if($row['estudiantes']!=0 and ($row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_secciones_sobrepobladas' || $row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_login_estudiantes' || $row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_parametrizacion_secciones_limite_estudiantes' || $row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_estudiantes_sin_matricula' || $row['btn_detalle_ruta'] == 'setic/malla_validacion/malla_cobros_incorrectos'))    
                                                                 <i class="icon-lg pb-3px" data-feather="align-justify"></i>
                                                             @else
                                                                 <i class="icon-lg pb-3px text-white" data-feather="align-justify"></i>
