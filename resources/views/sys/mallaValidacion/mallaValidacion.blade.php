@@ -1143,7 +1143,7 @@
                             var row = detalle_tareas[i];
                             $("#modal_detalle_tareas_personas_responsable").html(
                                 '<div style="display: flex; align-items: center; justify-content: center; text-align: center; gap: 10px; width: 100%;">' +
-                                    '<img width="120" height="120" class="rounded-circle" src="{{ asset('/matricula/documentos/fotos/')}}/' + row.foto + '" alt="profile" onerror="this.onerror=null; this.src=\'{{ url(asset('/assets/images/user2-403d6e88.png')) }}\';">'+
+                                    '<img width="120" height="120" class="rounded-circle" src="https://portal.unag.edu.hn/matricula/documentos/fotos/' + row.foto + '" alt="profile" onerror="this.onerror=null; this.src=\'{{ url(asset('/assets/images/user2-403d6e88.png')) }}\';">'+
                                     '<h4><strong>' + row.member + '</strong></h4>'+
                                 '</div>'
                             );
