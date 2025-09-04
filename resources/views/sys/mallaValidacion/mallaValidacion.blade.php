@@ -170,7 +170,7 @@
                     @foreach($noticias as $row)
                     <h2 style="display: flex; align-items: center; gap: 8px;">
                         <div class="news-perfil">
-                            <img src="{{ asset('/matricula/documentos/fotos/')}}/{{$row['foto']}}" 
+                            <img src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{$row['foto']}}" 
                             alt="Foto_perfil"
                             onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
 
@@ -250,7 +250,7 @@
                                                     <a href="javascript:void(0);" onclick="detalle_tareas({{ $row['id_member'] }}, {{ $row['tareas'] }})" class="d-flex align-items-center">
                                                         <figure class="mb-0 me-2">
                                                             <img
-                                                                src="{{ asset('/matricula/documentos/fotos/')}}/{{$row['foto']}}"
+                                                                src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{$row['foto']}}"
                                                                 class="img-xs rounded-circle"
                                                                 alt="user"
                                                                 onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';"
