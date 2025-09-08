@@ -81,8 +81,10 @@
                 </div>
             </div>
 
-
-
+@if(!env('APP_DEBUG'))
+                            <p class="txt-blanco">Debes iniciar sesión con tu correo institucional para ingresar a SYS UNAG.</p>
+                            @endif
+@if(env('APP_DEBUG'))
             <p class="txt-blanco">Ingrese sus credenciales:</p>
             <form class="forms-sample" method="POST" action="{{ route('login') }}">
             @csrf
@@ -118,6 +120,11 @@
             <button
                 type="submit" class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
                     uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
+@endif
+                    <a
+                href="{{ url('/auth/google') }}" class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"
+                style="background:white; border:1px solid #dadce0; color:#3c4043; font-weight:500;">
+                 &nbsp;<img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20" height="20"> Google</a>
 
             <div class="uk-margin-large-top uk-text-center">
                 <img id="logo_unag" class="uk-transition-scale-up uk-transition-opaque"

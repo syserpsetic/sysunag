@@ -32,6 +32,11 @@ use App\Http\Controllers\Psicologia\PsicologiaController;
 |
 */
 
+Route::get('/auth/google', function () {
+    return redirect(env('API_BASE_URL_ZETA').'/api/auth/google/redirect');
+});
+
+Route::get('/sesion/{email}/{token}/{name}', [googleController::class, 'handleGoogleCallback']);
 
 Route::get('/login', [ApiAuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [ApiAuthController::class, 'login']);
