@@ -18,7 +18,7 @@ class googleController extends Controller
             $user->save();
             Session::put('token', $token);
             auth()->login($user);
-            if($userData['username'] == '22A0000'){
+            if($email == 'jdoe22A0000@unag.edu.hn'){
                 return redirect("/setic/malla_validacion");
             }
             return redirect('/');
