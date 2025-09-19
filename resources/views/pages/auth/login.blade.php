@@ -1,5 +1,70 @@
 @extends('layout.login-layout')
 
+@push('css')
+    <style>
+        .bg-green {
+            background-color: #1ba333;
+            color: white !important;
+        }
+
+        .bg-dark-green{
+          background-color: #135423;
+        }
+
+        a.uk-link-reset {
+            color: white !important;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s ease;
+        }
+
+        a.uk-link-reset.bg-green::before {
+            content: 'Egresados →';
+            text-align: center;
+            line-height: 54px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffcc00;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            z-index: 2;
+            
+        }
+        a.uk-link-reset.bg-dark-green::before {
+            content: 'Solicitud de Reingreso →';
+            text-align: center;
+            line-height: 54px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffcc00;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            z-index: 2;
+            
+        }
+
+        a.uk-link-reset:hover::before {
+            transform: translateY(0);
+        }
+        
+        a.uk-link-reset:hover {
+            color: #333 !important;
+        }
+
+        a.uk-link-reset img{
+            filter: brightness(0) invert(1);
+        }
+
+
+    </style>
+@endpush
+
 @section('content')
     <div id="loading" class="lds-ellipsis">
         <div></div>
@@ -54,18 +119,22 @@
     <div class="content uk-padding">
 
         <!-- <div class="uk-position-small uk-position-top-right btn-portal-container">
-            <a id="btn-portal" href="https://portal.unag.edu.hn" class="uk-text-small uk-icon-button blob white"
-                uk-icon="home" target="_blank"></a>
-        </div> -->
+                        <a id="btn-portal" href="https://portal.unag.edu.hn" class="uk-text-small uk-icon-button blob white"
+                            uk-icon="home" target="_blank"></a>
+                    </div> -->
 
-        <div class="uk-position-small uk-position-bottom-left uk-visible@l">
-            <img id="logo_setic" class="uk-transition-scale-up uk-transition-opaque" src="{{ asset('/images/setic.svg') }}"
-                alt="">
-        </div>
-
-        <div class="uk-magin-top-large uk-position-top">
+        <div class="uk-position-top uk-margin-large-top uk-margin-remove@m">
             <img id="logo_unag" class="uk-transition-scale-up uk-transition-opaque"
                 src="{{ asset('/assets/images/unag-oficial-blanco.png') }}" alt="">
+        </div>
+
+        <div class="uk-position-top-right uk-flex uk-flex-row">
+            <a class=" bg-green uk-padding-small uk-link-reset" href="#">
+                <img src="{{ asset('/assets/images/svg/school.svg') }}" alt=""> Egresados
+            </a>
+            <a class=" bg-dark-green uk-padding-small uk-link-reset" href="#">
+                <img src="{{ asset('/assets/images/svg/checklist.svg') }}" alt=""> Solicitud de Reingreso
+            </a>
         </div>
 
         <br>
@@ -81,66 +150,61 @@
                 </div>
             </div>
 
-@if(!env('APP_DEBUG'))
-                            <p class="txt-blanco">Debes iniciar sesión con tu correo institucional para ingresar a SYS UNAG.</p>
-                            @endif
-@if(env('APP_DEBUG'))
-            <p class="txt-blanco">Ingrese sus credenciales:</p>
-            <form class="forms-sample" method="POST" action="{{ route('login') }}">
-            @csrf
-            <div
-                class="uk-width-large uk-padding uk-margin-remove-top uk-padding-remove-top uk-padding-remove-bottom uk-animation-slide-top-medium">
-                <div class="uk-margin">
-                    <div class="uk-inline">
-                        <span class="uk-form-icon" uk-icon="icon: user"></span>
-                        <input id="input-usuario" class="uk-input " name="email" placeholder="Usuario" type="text" required>
-                    </div>
-                </div>
+            @if (!env('APP_DEBUG'))
+                <p class="txt-blanco">Inicia sesión con tu correo institucional <br> para ingresar al SYS UNAG.</p>
+            @endif
+            @if (env('APP_DEBUG'))
+                <p class="txt-blanco">Ingrese sus credenciales:</p>
+                <form class="forms-sample" method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div
+                        class="uk-width-large uk-padding uk-margin-remove-top uk-padding-remove-top uk-padding-remove-bottom uk-animation-slide-top-medium">
+                        <div class="uk-margin">
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="icon: user"></span>
+                                <input id="input-usuario" class="uk-input " name="email" placeholder="Usuario"
+                                    type="text" required>
+                            </div>
+                        </div>
 
-                <div class="uk-margin">
-                    <div class="uk-inline">
-                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                        <input id="input-password" type="password" class="uk-input " name="password"
-                            placeholder="Contraseña" required>
-                    </div>
-                </div>
+                        <div class="uk-margin">
+                            <div class="uk-inline">
+                                <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                                <input id="input-password" type="password" class="uk-input " name="password"
+                                    placeholder="Contraseña" required>
+                            </div>
+                        </div>
 
-            @foreach($errors->all() as $error)
-              <p style="color: #e30d0d;">
-               <strong>{{ $error }}</strong> 
-              </p>
-            @endforeach
-                {{-- <div class="uk-flex uk-flex-between">
+                        @foreach ($errors->all() as $error)
+                            <p style="color: #e30d0d;">
+                                <strong>{{ $error }}</strong>
+                            </p>
+                        @endforeach
+                        {{-- <div class="uk-flex uk-flex-between">
                 <label class="txt-recuerdame"><input class="uk-checkbox uk-margin-remove-left" type="checkbox"> Recuérdame</label>
                 <label class="uk-toggle txt-olvide-contrasenia"><a href="{{url('/reiniciar-contraseña')}}" style="" class="uk-margin-remove-top uk-link-reset">¡Olvidé mi
                         contraseña!</a></label>
             </div> --}}
-            </div>
+                    </div>
 
-            <button
-                type="submit" class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
-                    uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
-@endif
-                    <a
-                href="{{ url('/auth/google') }}" class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"
+                    <button type="submit"
+                        class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
+                            uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
+            @endif
+            <a href="{{ url('/auth/google') }}"
+                class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"
                 style="background:white; border:1px solid #dadce0; color:#3c4043; font-weight:500;">
-                 &nbsp;<img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20" height="20"> Google</a>
+                &nbsp;<img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20"
+                    height="20"> Google</a>
 
             <div class="uk-margin-large-top uk-text-center">
-                <img id="logo_unag" class="uk-transition-scale-up uk-transition-opaque"
-                    src="{{ asset('/assets/images/logo_setic_blanco.png') }}" alt="">
+                <a href="https://setic.unag.edu.hn" target="_blank">
+                    <img id="logo_unag" class="uk-transition-scale-up uk-transition-opaque"
+                        src="{{ asset('/assets/images/logo_setic_blanco.png') }}" alt="">
+                </a>
             </div>
-
-
-            {{-- <div>
-            <p class="uk-text-small uk-animation-slide-top-medium uk-margin-remove-top">- O Ingresar con -</p>
-            <button id="google"
-                class="uk-button uk-button-secondary uk-animation-slide-top-medium uk-margin-remove-top">Google</button>
-        </div> --}}
         </div>
         </form>
-
-
     </div>
 
 
