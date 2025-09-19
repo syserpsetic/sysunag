@@ -105,11 +105,11 @@
                     </div>
                 </div>
 
-            @error('error')
+            @foreach($errors->all() as $error)
               <p style="color: #e30d0d;">
-               <strong>{{ $message }}</strong> 
+               <strong>{{ $error }}</strong> 
               </p>
-            @enderror
+            @endforeach
                 {{-- <div class="uk-flex uk-flex-between">
                 <label class="txt-recuerdame"><input class="uk-checkbox uk-margin-remove-left" type="checkbox"> Recuérdame</label>
                 <label class="uk-toggle txt-olvide-contrasenia"><a href="{{url('/reiniciar-contraseña')}}" style="" class="uk-margin-remove-top uk-link-reset">¡Olvidé mi
