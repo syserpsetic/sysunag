@@ -77,6 +77,11 @@
 
   /* Botones */
 
+  .list-group-item-primary {
+    background-color: var(--amarillo) !important;
+    border: 1 !important;
+  }
+
   .btn-primary {
     background-color: var(--verde) !important;
     border: none !important;

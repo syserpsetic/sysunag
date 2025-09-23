@@ -21,6 +21,7 @@ use App\Http\Controllers\Egresados\EgresadosController;
 use App\Http\Controllers\Egresados\ReportsEgresadosController;
 use App\Http\Controllers\Setic\SeticController;
 use App\Http\Controllers\Psicologia\PsicologiaController;
+use App\Http\Controllers\GestionSolicitudes\GestionSolicitudesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -97,6 +98,16 @@ Route::middleware('auth')->group(function () {
         Route::post('/egresados/esperiencia_laboral/guardar', [EgresadosController::class, 'guardar_esperiencia_laboral']);
         Route::post('/egresados/habilidades_tecnicas/guardar', [EgresadosController::class, 'guardar_habilidades_tecnicas']);
     //Finaliza Egresados
+
+    //Inicia Solicitudes
+        Route::get('/solicitudes/recibidas', [GestionSolicitudesController::class, 'ver_solicitudes_recibidas']);
+        Route::get('/solicitudes/leer', [GestionSolicitudesController::class, 'ver_solicitudes_leer']);
+        Route::get('/solicitudes/nueva', [GestionSolicitudesController::class, 'ver_solicitudes_nueva']);
+        Route::get('/solicitudes/enviadas', [GestionSolicitudesController::class, 'ver_solicitudes_enviadas']);
+        Route::get('/solicitudes/proceso', [GestionSolicitudesController::class, 'ver_solicitudes_proceso']);
+        Route::get('/solicitudes/terminadas', [GestionSolicitudesController::class, 'ver_solicitudes_terminadas']);
+        Route::get('/solicitudes/trazabilidad', [GestionSolicitudesController::class, 'ver_solicitudes_trazabilidad']);
+    //Finaliza Solicitudes
 
      //Inicia Psicologia
         //Rutas de calendario
