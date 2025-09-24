@@ -1035,7 +1035,7 @@
         //         }
         //     }, 30000); // Verifica cada 30 segundos
         // })();
-
+        @if(in_array('malla_validacion_leer_lista_pendientes', $scopes))
         const newsContainer = document.getElementById("newsContainer");
             let position = window.innerWidth;
 
@@ -1052,7 +1052,8 @@
             }
 
             scrollNews(); // Iniciar animación
-            
+        @endif
+
         setTimeout(function () {
             location.reload();
         }, 900000);
@@ -1186,6 +1187,7 @@
         }
 
     //Inicia reloj y clima
+    @if(in_array('malla_validacion_leer_lista_pendientes', $scopes))
     function actualizarHora() {
         const ahora = new Date();
         let horas = ahora.getHours();
@@ -1264,14 +1266,14 @@
             document.getElementById("weather").textContent = "Permiso de ubicación denegado.";
         });
     }
-
-    actualizarHora();
-    actualizarFecha();
-    obtenerClimaPorUbicacion();
-    setInterval(actualizarHora, 1000);
-    setInterval(obtenerClimaPorUbicacion, 1800000); // cada 30 minutos
-    //Finanila reloj y clima
-
+   
+        actualizarHora();
+        actualizarFecha();
+        obtenerClimaPorUbicacion();
+        setInterval(actualizarHora, 1000);
+        setInterval(obtenerClimaPorUbicacion, 1800000); // cada 30 minutos
+        //Finanila reloj y clima
+    @endif
         function espera(html){
         Swal.fire({
             imageUrl: "{{ url(asset('/assets/images/unag_loading.gif')) }}",
