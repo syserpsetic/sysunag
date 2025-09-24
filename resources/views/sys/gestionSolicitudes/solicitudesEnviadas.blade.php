@@ -47,6 +47,12 @@
                     Terminadas
                   </a>
                 </li>
+                <li class="nav-item {{ active_class(['solicitudes/vencidas']) }}">
+                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/vencidas') }}">
+                    <i data-feather="alert-triangle" class="icon-lg me-2"></i>
+                    Vencidas
+                  </a>
+                </li>
                 <!-- <li class="nav-item">
                   <a class="nav-link d-flex align-items-center" href="#">
                     <i data-feather="star" class="icon-lg me-2"></i>

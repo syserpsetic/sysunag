@@ -40,4 +40,8 @@ class GestionSolicitudesController extends Controller
     public function ver_solicitudes_trazabilidad(){
         return view('sys/gestionSolicitudes/solicitudesTrazabilidad')->with('scopes', array());
     }
+
+    public function ver_solicitudes_vencidas(){
+        return view('sys/gestionSolicitudes/solicitudesVencidas')->with('scopes', array());
+    }
 }

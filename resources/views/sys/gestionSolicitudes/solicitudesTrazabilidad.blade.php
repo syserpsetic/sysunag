@@ -47,6 +47,12 @@
                     Terminadas
                   </a>
                 </li>
+                <li class="nav-item {{ active_class(['solicitudes/vencidas']) }}">
+                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/vencidas') }}">
+                    <i data-feather="alert-triangle" class="icon-lg me-2"></i>
+                    Vencidas
+                  </a>
+                </li>
                 <!-- <li class="nav-item">
                   <a class="nav-link d-flex align-items-center" href="#">
                     <i data-feather="star" class="icon-lg me-2"></i>
@@ -89,7 +95,7 @@
                 <div class="col-lg-6">
                   <div class="d-flex align-items-end mb-2 mb-md-0">
                     <i data-feather="git-commit" class="text-muted me-2"></i>
-                    <h4 class="me-1">Trazabilida</h4>
+                    <h4 class="me-1">Trazabilidad</h4>
                   </div>
                 </div>
                 <hr>

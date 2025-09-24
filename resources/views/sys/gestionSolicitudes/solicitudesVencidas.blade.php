@@ -94,8 +94,8 @@
               <div class="row align-items-center">
                 <div class="col-lg-6">
                   <div class="d-flex align-items-end mb-2 mb-md-0">
-                    <i data-feather="refresh-ccw" class="text-muted me-2"></i>
-                    <h4 class="me-1">Solicitudes En Proceso</h4>
+                    <i data-feather="alert-triangle" class="text-muted me-2"></i>
+                    <h4 class="me-1">Solicitudes Vencidas</h4>
                     <!-- <span class="text-muted">(2 solitudes nuevas)</span> -->
                   </div>
                 </div>
@@ -154,7 +154,7 @@
                 </div>
                 <a class="favorite" href="javascript:;"><span><i data-feather="star"></i></span></a>
             </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
+            <a href="{{ url('/solicitudes/trazabilidad') }}" class="email-list-detail">
                 <div class="content">
                 <span class="from">Recursos Humanos</span>
                 <p class="msg">Estimados, les recordamos que el plazo para la actualización de expedientes del personal administrativo vence el 20 de marzo. Por favor, entregue la documentación requerida en la plataforma de gestión de talento humano.</p>
@@ -174,7 +174,7 @@
                 </div>
                 <a class="favorite" href="#"><span><i data-feather="star" class="text-warning"></i></span></a>
             </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
+            <a href="{{ url('/solicitudes/trazabilidad') }}" class="email-list-detail">
                 <div class="content">
                 <span class="from">Dirección Académica de Autoevaluación y Acreditación para la Calidad Educativa</span>
                 <p class="msg">Se comunica a los coordinadores de carrera que la próxima reunión de seguimiento a los procesos de acreditación se realizará el día 25 de marzo. Favor preparar los informes de avance.</p>
@@ -194,7 +194,7 @@
                 </div>
                 <a class="favorite" href="javascript:;"><span><i data-feather="star"></i></span></a>
             </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
+            <a href="{{ url('/solicitudes/trazabilidad') }}" class="email-list-detail">
                 <div class="content">
                 <span class="from">Dirección Académica del Sistema de Educación a Distancia</span>
                 <p class="msg">Estimados docentes, se informa que la plataforma de clases virtuales tendrá mantenimiento el próximo fin de semana. Por favor, tomen las previsiones necesarias con sus actividades académicas.</p>
@@ -213,7 +213,7 @@
                 </div>
                 <a class="favorite" href="javascript:;"><span><i data-feather="star"></i></span></a>
             </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
+            <a href="{{ url('/solicitudes/trazabilidad') }}" class="email-list-detail">
                 <div class="content">
                 <span class="from">Asesoría Legal</span>
                 <p class="msg">Se recuerda a todas las unidades académicas que cualquier convenio interinstitucional debe ser revisado y validado previamente por esta oficina. Favor remitir los documentos con anticipación.</p>

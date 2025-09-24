@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/solicitudes/proceso', [GestionSolicitudesController::class, 'ver_solicitudes_proceso']);
         Route::get('/solicitudes/terminadas', [GestionSolicitudesController::class, 'ver_solicitudes_terminadas']);
         Route::get('/solicitudes/trazabilidad', [GestionSolicitudesController::class, 'ver_solicitudes_trazabilidad']);
+        Route::get('/solicitudes/vencidas', [GestionSolicitudesController::class, 'ver_solicitudes_vencidas']);
     //Finaliza Solicitudes
 
      //Inicia Psicologia

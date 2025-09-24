@@ -3,6 +3,7 @@
 @push('plugin-styles')
   <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/easymde/easymde.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content')
@@ -50,6 +51,12 @@
                   <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/terminadas') }}">
                     <i data-feather="check-circle" class="icon-lg me-2"></i>
                     Terminadas
+                  </a>
+                </li>
+                <li class="nav-item {{ active_class(['solicitudes/vencidas']) }}">
+                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/vencidas') }}">
+                    <i data-feather="alert-triangle" class="icon-lg me-2"></i>
+                    Vencidas
                   </a>
                 </li>
                 <!-- <li class="nav-item">
@@ -140,6 +147,16 @@
                   <textarea class="form-control" name="easymde" id="easyMdeEditor" rows="5"></textarea>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
+           
+                    <div class="card-body">
+                      <h6 class="card-title">Adjuntar Archivos</h6>
+                      <p class="text-muted mb-3">Arrastra y suelta tus archivos aquí, o haz clic para seleccionarlos y cargarlos.</p>
+                      <form action="/file-upload" class="dropzone" id="exampleDropzone"></form>
+                    </div>
+                </div>
+
               <div>
                 <div class="col-md-12">
                   <button class="btn btn-primary me-1 mb-1" type="submit"> Enviar</button>
@@ -158,8 +175,10 @@
 @push('plugin-scripts')
   <script src="{{ asset('assets/plugins/select2/select2.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/easymde/easymde.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/dropzone/dropzone.min.js') }}"></script>
 @endpush
 
 @push('custom-scripts')
   <script src="{{ asset('assets/js/email.js') }}"></script>
+  <script src="{{ asset('assets/js/dropzone.js') }}"></script>
 @endpush
