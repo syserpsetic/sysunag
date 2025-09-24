@@ -295,15 +295,19 @@
                                     <cite title="Source Title">Malla de Validación</cite>
                             </div>
                             <div class="col-3 text-end">
+                                @if(in_array('malla_validacion_leer_carga_academica', $scopes))
                                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modal_bloques">
                                     <p class="lead"><strong><i id="indicador_carga_academica"></i>{{ $porcentje_carga_academica['porcentaje_asignaturas_carga_academica'] }} <i data-feather="book" class="me-2"></i></strong></p>                         
                                     <cite title="Source Title">Carga Académica</cite>
                                 </a>
+                                @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-4">
+                                @if(in_array('malla_validacion_leer_recaudación', $scopes))
                                 <strong>Recaudación {{$recaudacion['anio']}}: </strong> {{$recaudacion['money']}}
+                                @endif
                             </div>
                             <div class="col-4">
                                 <center>

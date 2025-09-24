@@ -35,12 +35,14 @@
         </a>
       </li>
       @endif
+      @if(in_array('gestion_solicitudes_menu', $scopes))
       <li class="nav-item {{ active_class(['solicitudes/recibidas']) }}">
         <a href="{{ url('/solicitudes/recibidas') }}" class="nav-link">
           <i class="link-icon" data-feather="file"></i>
           <span class="link-title">Gestión de Solicitudes</span>
         </a>
       </li>
+      @endif
       @if(in_array('empleado_setic', $scopes))
         <li class="nav-item nav-category">SETIC APPS</li>
         <li class="nav-item {{ active_class(['email/*']) }}">
