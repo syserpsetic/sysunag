@@ -150,10 +150,8 @@
                 </div>
             </div>
 
-            <!-- @if (!env('APP_DEBUG'))
-                <p class="txt-blanco">Inicia sesión con tu correo institucional <br> para ingresar al SYS UNAG.</p>
-            @endif -->
-            <!--@if (env('APP_DEBUG'))-->
+         
+           
                 <p class="txt-blanco">Ingrese sus credenciales:</p>
                 <form class="forms-sample" method="POST" action="{{ route('login') }}">
                     @csrf
@@ -190,7 +188,7 @@
                     <button type="submit"
                         class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
                             uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
-            <!--@endif-->
+           
 
 
             <div class="uk-margin-large-top uk-text-center">
