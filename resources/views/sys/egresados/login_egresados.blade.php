@@ -118,7 +118,7 @@
 
     <div class="content uk-padding">
 
-        <div class="uk-position-small uk-position-top-left btn-portal-container">
+         <div class="uk-position-small uk-position-top-left btn-portal-container">
                         <a id="btn-portal" href="{{ route('login') }}" class="uk-text-small uk-icon-button blob white"
                             uk-icon="home"></a>
                     </div>
@@ -150,10 +150,10 @@
                 </div>
             </div>
 
-            @if (!env('APP_DEBUG'))
+            <!-- @if (!env('APP_DEBUG'))
                 <p class="txt-blanco">Inicia sesión con tu correo institucional <br> para ingresar al SYS UNAG.</p>
-            @endif
-            @if (env('APP_DEBUG'))
+            @endif -->
+            <!--@if (env('APP_DEBUG'))-->
                 <p class="txt-blanco">Ingrese sus credenciales:</p>
                 <form class="forms-sample" method="POST" action="{{ route('login') }}">
                     @csrf
@@ -190,12 +190,8 @@
                     <button type="submit"
                         class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
                             uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
-            @endif
-            <a href="{{ url('/auth/google') }}"
-                class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"
-                style="background:white; border:1px solid #dadce0; color:#3c4043; font-weight:500;">
-                &nbsp;<img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20"
-                    height="20"> Google</a>
+            <!--@endif-->
+
 
             <div class="uk-margin-large-top uk-text-center">
                 <a href="https://setic.unag.edu.hn" target="_blank">

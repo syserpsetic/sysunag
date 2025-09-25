@@ -20,6 +20,17 @@ class ApiAuthController extends Controller
         //return view('auth.login');
     }
 
+    public function showLoginFormEgresados()
+    {
+        // return view('pages.auth.login', [
+        //     'layout' => 'base'
+        // ]);
+        return view('sys.egresados.login_egresados', [
+            'layout' => 'base'
+        ]);
+        //return view('auth.login');
+    }
+
     public function login(Request $request)
     {
         $request->validate([
