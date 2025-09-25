@@ -46,6 +46,12 @@ Route::post('/change_password', [ApiAuthController::class, 'change_password'])->
 Route::get('/login_egresados', [ApiAuthController::class, 'showLoginFormEgresados'])->name('login_egresados');
 Route::post('/login_egresados', [ApiAuthController::class, 'login']);
 
+Route::get('/error', function () {
+    // alguna lógica rápida
+    return view('pages.error.construccion');
+})->name('error');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout');
     // Route::get('/', function () {

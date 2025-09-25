@@ -132,7 +132,7 @@
             <a class=" bg-green uk-padding-small uk-link-reset" href="{{ route('login_egresados') }}">
                 <img src="{{ asset('/assets/images/svg/school.svg') }}" alt=""> Egresados
             </a>
-            <a class=" bg-dark-green uk-padding-small uk-link-reset" href="#">
+            <a class=" bg-dark-green uk-padding-small uk-link-reset" href="{{ route('error') }}">
                 <img src="{{ asset('/assets/images/svg/checklist.svg') }}" alt=""> Solicitud de Reingreso
             </a>
         </div>
