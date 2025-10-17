@@ -17,6 +17,7 @@ class googleController extends Controller
         $token = $request->input('token');
         $response_code = $request->input('response_code');
         $msg = $request->input('msg');
+        $foto = $request->input('foto');
         //throw new Exception($email);
         if($response_code == 200){
             $user = User::firstOrNew(['email' => $email]);
@@ -24,6 +25,7 @@ class googleController extends Controller
             $user->password = '0';
             $user->save();
             Session::put('token', $token);
+            Session::put('foto', $foto);
             auth()->login($user);
             if($email == 'jdoe22A0000@unag.edu.hn'){
                 return redirect("/setic/malla_validacion");

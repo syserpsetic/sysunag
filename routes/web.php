@@ -108,14 +108,15 @@ Route::middleware('auth')->group(function () {
     //Finaliza Egresados
 
     //Inicia Solicitudes
-        Route::get('/solicitudes/recibidas', [GestionSolicitudesController::class, 'ver_solicitudes_recibidas']);
-        Route::get('/solicitudes/leer', [GestionSolicitudesController::class, 'ver_solicitudes_leer']);
-        Route::get('/solicitudes/nueva', [GestionSolicitudesController::class, 'ver_solicitudes_nueva']);
-        Route::get('/solicitudes/enviadas', [GestionSolicitudesController::class, 'ver_solicitudes_enviadas']);
-        Route::get('/solicitudes/proceso', [GestionSolicitudesController::class, 'ver_solicitudes_proceso']);
-        Route::get('/solicitudes/terminadas', [GestionSolicitudesController::class, 'ver_solicitudes_terminadas']);
-        Route::get('/solicitudes/trazabilidad', [GestionSolicitudesController::class, 'ver_solicitudes_trazabilidad']);
-        Route::get('/solicitudes/vencidas', [GestionSolicitudesController::class, 'ver_solicitudes_vencidas']);
+        Route::get('/gestion_solicitudes/recibidas', [GestionSolicitudesController::class, 'ver_solicitudes_recibidas']);
+        Route::get('/gestion_solicitudes/leer', [GestionSolicitudesController::class, 'ver_solicitudes_leer']);
+        Route::get('/gestion_solicitudes/nueva', [GestionSolicitudesController::class, 'ver_solicitudes_nueva']);
+        Route::post('/gestion_solicitudes/nueva/guardar', [GestionSolicitudesController::class, 'guardar_solicitudes_nueva']);
+        Route::get('/gestion_solicitudes/enviadas', [GestionSolicitudesController::class, 'ver_solicitudes_enviadas']);
+        Route::get('/gestion_solicitudes/proceso', [GestionSolicitudesController::class, 'ver_solicitudes_proceso']);
+        Route::get('/gestion_solicitudes/terminadas', [GestionSolicitudesController::class, 'ver_solicitudes_terminadas']);
+        Route::get('/gestion_solicitudes/trazabilidad', [GestionSolicitudesController::class, 'ver_solicitudes_trazabilidad']);
+        Route::get('/gestion_solicitudes/vencidas', [GestionSolicitudesController::class, 'ver_solicitudes_vencidas']);
     //Finaliza Solicitudes
 
      //Inicia Psicologia

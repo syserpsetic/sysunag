@@ -36,8 +36,8 @@
       </li>
       @endif
       @if(in_array('gestion_solicitudes_menu', $scopes))
-      <li class="nav-item {{ active_class(['solicitudes/recibidas']) }}">
-        <a href="{{ url('/solicitudes/recibidas') }}" class="nav-link">
+      <li class="nav-item {{ active_class(['gestion_solicitudes/recibidas']) }}">
+        <a href="{{ url('/gestion_solicitudes/recibidas') }}" class="nav-link">
           <i class="link-icon" data-feather="file"></i>
           <span class="link-title">Gestión de Solicitudes</span>
         </a>

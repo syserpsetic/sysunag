@@ -124,7 +124,7 @@
                                                 <label class="form-check-label" for="formSwitch1_agregar_permiso_etado">Activo</label>
                                             </div>
                                         </div>
-                                        <textarea class="form-control" name="tinymce" id="modal_agregar_permioso_descripcion" maxlength="100"
+                                        <textarea class="form-control" name="tinymce" id="modal_agregar_permioso_descripcion"
                                             rows="4"
                                             placeholder="Escriba aquí..."></textarea>
                                     </div>

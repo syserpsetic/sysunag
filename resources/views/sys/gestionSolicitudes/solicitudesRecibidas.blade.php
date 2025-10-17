@@ -1,102 +1,16 @@
-@extends('layout.master')
+@extends('sys.gestionSolicitudes.solicitudes')
 
-@section('content')
-<div class="row inbox-wrapper">
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-3 border-end-lg">
-            <div class="d-flex align-items-center justify-content-between">
-              <button class="navbar-toggle btn btn-icon border d-block d-lg-none" data-bs-target=".email-aside-nav" data-bs-toggle="collapse" type="button">
-                <span class="icon"><i data-feather="chevron-down"></i></span>
-              </button>
-              <div class="order-first">
-                <h4>Gestión de Solicitudes</h4>
-                <p class="text-muted">UNAG</p>
-              </div>
-            </div>
-            <div class="d-grid my-3">
-              <a class="btn btn-primary" href="{{ url('/solicitudes/nueva') }}">Nueva Solicitud</a>
-            </div>
-            <div class="email-aside-nav collapse">
-              <ul class="nav flex-column">
-                <li class="nav-item {{ active_class(['solicitudes/recibidas']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/recibidas') }}">
-                    <i data-feather="inbox" class="icon-lg me-2"></i>
-                    Recibidas
-                    <span class="badge bg-danger fw-bolder ms-auto text-white">2
-                  </a>
-                </li>
-                <li class="nav-item {{ active_class(['solicitudes/enviadas']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/enviadas') }}">
-                    <i data-feather="share" class="icon-lg me-2"></i>
-                    Enviadas
-                  </a>
-                </li>
-                <li class="nav-item {{ active_class(['solicitudes/proceso']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/proceso') }}">
-                    <i data-feather="refresh-ccw" class="icon-lg me-2"></i>
-                    En Proceso
-                    <span class="badge bg-secondary fw-bolder ms-auto text-white">4
-                  </a>
-                </li>
-                <li class="nav-item {{ active_class(['solicitudes/terminadas']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/terminadas') }}">
-                    <i data-feather="check-circle" class="icon-lg me-2"></i>
-                    Terminadas
-                  </a>
-                </li>
-                <li class="nav-item {{ active_class(['solicitudes/vencidas']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/vencidas') }}">
-                    <i data-feather="alert-triangle" class="icon-lg me-2"></i>
-                    Vencidas
-                  </a>
-                </li>
-                <!-- <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                    <i data-feather="star" class="icon-lg me-2"></i>
-                    Tags
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                    <i data-feather="trash" class="icon-lg me-2"></i>
-                    Trash
-                  </a>
-                </li>
-              </ul>
-              <p class="text-muted tx-12 fw-bolder text-uppercase mb-2 mt-4">Labels</p>
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                    <i data-feather="tag" class="text-warning icon-lg me-2"></i>
-                    Important
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                  <i data-feather="tag" class="text-primary icon-lg me-2"></i> 
-                  Business 
-                </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                    <i data-feather="tag" class="text-info icon-lg me-2"></i> 
-                    Inspiration 
-                  </a>
-                </li> -->
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-9">
+@section('content_gs')
+         
             <div class="p-3 border-bottom">
               <div class="row align-items-center">
                 <div class="col-lg-6">
                   <div class="d-flex align-items-end mb-2 mb-md-0">
                     <i data-feather="inbox" class="text-muted me-2"></i>
                     <h4 class="me-1">Solicitudes Recibidas</h4>
-                    <span class="text-muted">(2 solitudes nuevas)</span>
+                    @if($conteo_solicitudes_nuevas > 0)
+                      <span class="text-muted">({{$conteo_solicitudes_nuevas}} solitudes nuevas)</span>
+                    @endif
                   </div>
                 </div>
                 <div class="col-lg-6">
@@ -146,174 +60,27 @@
             </div>
             <div class="email-list">
 
-              <!-- email list item -->
-            <div class="email-list-item email-list-item--unread">
-                <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
+            @foreach($solicitudes_recibidas as $row)
+            <div @if($row['solicitud_vista']) class="email-list-item" @else class="email-list-item email-list-item--unread" @endif>
+                <a href="{{ url('/gestion_solicitudes/solicitud/') }}/{{$row['id_solicitud']}}/leer" class="email-list-detail">
                     <div class="content">
-                    <span class="from">Secretaría General</span>
-                    <p class="msg">
-                        A la SETIC:  
-                        Por este medio solicitamos muy respetuosamente realizar el cambio de carrera del estudiante Juan Pérez, con número de cuenta 202312345, de la carrera de Ingeniería en Sistemas Computacionales a la carrera de Ingeniería en Informática.  
-                        Agradecemos su pronta gestión y confirmación de este trámite.
+                    <strong class="from">{{$row['departamento']}} | GS{{$row['id_solicitud']}}</strong>
+                    <p>
+                        <font class="msg">{!!$row['descripcion']!!}</font>
                     </p>
                     </div>
                     <span class="date">
-                    08 Ene
+                      @if($row['adjuntos'] > 0)
+                        <span class="icon"><i data-feather="paperclip"></i> </span>
+                      @endif
+                    {{$row['fecha']}}
                     </span>
                 </a>
             </div>
-
-
-              <!-- email list item -->
-           <div class="email-list-item email-list-item--unread">
-                <!-- <div class="email-list-actions">
-                    <div class="form-check">
-                    <input type="checkbox" class="form-check-input">
-                    </div>
-                    <a class="favorite" href="javascript:;"><span><i data-feather="star"></i></span></a>
-                </div>-->
-                <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
-                    <div class="content">
-                    <span class="from">Vicerrectoría Académica</span>
-                    <p class="msg">
-                        Estimados,  
-                        Por este medio solicitamos a la SETIC la modificación de las fechas establecidas para la subida de calificaciones en el sistema académico.  
-                        La nueva propuesta es extender el plazo hasta el 20 de enero, con el fin de brindar a los docentes el tiempo necesario para completar el proceso.  
-                        Agradecemos su atención y pronta confirmación.
-                    </p>
-                    </div>
-                    <span class="date">
-                    <span class="icon"><i data-feather="paperclip"></i> </span>
-                    12 Ene
-                    </span>
-                </a>
-            </div>
-
-              
-             <!-- email list item -->
-            <div class="email-list-item">
-            <!--<div class="email-list-actions">
-                <div class="form-check">
-                <input type="checkbox" class="form-check-input">
-                </div>
-                <a class="favorite" href="javascript:;"><span><i data-feather="star"></i></span></a>
-            </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
-                <div class="content">
-                <span class="from">Recursos Humanos</span>
-                <p class="msg">Estimados, les recordamos que el plazo para la actualización de expedientes del personal administrativo vence el 20 de marzo. Por favor, entregue la documentación requerida en la plataforma de gestión de talento humano.</p>
-                </div>
-                <span class="date">
-                <span class="icon"><i data-feather="paperclip"></i> </span>
-                14 Mar
-                </span>
-            </a>
-            </div>
-
-            <!-- email list item -->
-            <div class="email-list-item">
-            <!--<div class="email-list-actions">
-                <div class="form-check">
-                <input type="checkbox" class="form-check-input">
-                </div>
-                <a class="favorite" href="#"><span><i data-feather="star" class="text-warning"></i></span></a>
-            </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
-                <div class="content">
-                <span class="from">Dirección Académica de Autoevaluación y Acreditación para la Calidad Educativa</span>
-                <p class="msg">Se comunica a los coordinadores de carrera que la próxima reunión de seguimiento a los procesos de acreditación se realizará el día 25 de marzo. Favor preparar los informes de avance.</p>
-                </div>
-                <span class="date">
-                <span class="icon"><i data-feather="paperclip"></i> </span>
-                18 Mar
-                </span>
-            </a>
-            </div>
-
-            <!-- email list item -->
-            <div class="email-list-item">
-            <!--<div class="email-list-actions">
-                <div class="form-check">
-                <input type="checkbox" class="form-check-input">
-                </div>
-                <a class="favorite" href="javascript:;"><span><i data-feather="star"></i></span></a>
-            </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
-                <div class="content">
-                <span class="from">Dirección Académica del Sistema de Educación a Distancia</span>
-                <p class="msg">Estimados docentes, se informa que la plataforma de clases virtuales tendrá mantenimiento el próximo fin de semana. Por favor, tomen las previsiones necesarias con sus actividades académicas.</p>
-                </div>
-                <span class="date">
-                22 Mar
-                </span>
-            </a>
-            </div>
-
-            <!-- email list item -->
-            <div class="email-list-item">
-            <!--<div class="email-list-actions">
-                <div class="form-check">
-                <input type="checkbox" class="form-check-input">
-                </div>
-                <a class="favorite" href="javascript:;"><span><i data-feather="star"></i></span></a>
-            </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
-                <div class="content">
-                <span class="from">Asesoría Legal</span>
-                <p class="msg">Se recuerda a todas las unidades académicas que cualquier convenio interinstitucional debe ser revisado y validado previamente por esta oficina. Favor remitir los documentos con anticipación.</p>
-                </div>
-                <span class="date">
-                25 Mar
-                </span>
-            </a>
-            </div>
-
-            <!-- email list item -->
-            <div class="email-list-item">
-            <!--<div class="email-list-actions">
-                <div class="form-check">
-                <input type="checkbox" class="form-check-input">
-                </div>
-                <a class="favorite" href="#"><span><i data-feather="star" class="text-warning"></i></span></a>
-            </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
-                <div class="content">
-                <span class="from">Gestión de la Producción Animal</span>
-                <p class="msg">Informamos que el próximo 30 de marzo se llevará a cabo la feria académica de innovación en producción animal. Invitamos a docentes y estudiantes a participar con proyectos e investigaciones.</p>
-                </div>
-                <span class="date">
-                <span class="icon"><i data-feather="paperclip"></i> </span>
-                30 Mar
-                </span>
-            </a>
-            </div>
-
-            <!-- email list item -->
-            <div class="email-list-item">
-            <!--<div class="email-list-actions">
-                <div class="form-check">
-                <input type="checkbox" class="form-check-input">
-                </div>
-                <a class="favorite" href="#"><span><i data-feather="star" class="text-warning"></i></span></a>
-            </div>-->
-            <a href="{{ url('/solicitudes/leer') }}" class="email-list-detail">
-                <div class="content">
-                <span class="from">Dirección del Sistema de Carrera Docente</span>
-                <p class="msg">Se notifica a los docentes que el proceso de actualización de escalafón iniciará el 05 de abril. Favor ingresar la información en el portal de carrera docente antes de la fecha indicada.</p>
-                </div>
-                <span class="date">
-                05 Abr
-                </span>
-            </a>
-            </div>
+            @endforeach
 
 
             </div>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-</div>
+      
+       
 @endsection

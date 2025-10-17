@@ -1,184 +1,356 @@
-@extends('layout.master')
+@extends('sys.gestionSolicitudes.solicitudes')
 
 @push('plugin-styles')
   <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/easymde/easymde.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
 @endpush
 
-@section('content')
-<div class="row inbox-wrapper">
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-3 border-end-lg">
-            <div class="d-flex align-items-center justify-content-between">
-              <button class="navbar-toggle btn btn-icon border d-block d-lg-none" data-bs-target=".email-aside-nav" data-bs-toggle="collapse" type="button">
-                <span class="icon"><i data-feather="chevron-down"></i></span>
-              </button>
-              <div class="order-first">
-                <h4>Gestión de Solicitudes</h4>
-                <p class="text-muted">UNAG</p>
-              </div>
+@section('content_gs')
+<style>
+   .file-upload {
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .file-upload:hover {
+      background-color: #f9f9f9;
+    }
+    .file-list {
+      margin-top: 15px;
+    }
+    .file-item {
+      background: #f2f2f2;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+    .file-item button {
+      background: none;
+      border: none;
+      color: #d33;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+</style>
+<div>
+    <div class="d-flex align-items-center p-3 border-bottom tx-16">
+        <span data-feather="edit" class="icon-md me-2"></span>
+        Nueva Solicitud
+    </div>
+</div>
+<div class="p-3 pb-0">
+    <div class="to">
+        <div class="row mb-3">
+            <label class="col-md-2 col-form-label">Para:</label>
+            <div class="col-md-10">
+                <select class="compose-multiple-select form-select" id="departamento">
+                    @foreach($departamentos as $row)
+                    <option value="{{$row['id_departamento']}}">{{$row['descripcion']}}</option>
+                    @endforeach
+                </select>
             </div>
-            <div class="d-grid my-3">
-              <a class="btn btn-primary" href="{{ url('/solicitudes/nueva') }}">Nueva Solicitud</a>
-            </div>
-            <div class="email-aside-nav collapse">
-              <ul class="nav flex-column">
-                <li class="nav-item {{ active_class(['solicitudes/recibidas']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/recibidas') }}">
-                    <i data-feather="inbox" class="icon-lg me-2"></i>
-                    Recibidas
-                    <span class="badge bg-danger fw-bolder ms-auto text-white">2
-                  </a>
-                </li>
-                <li class="nav-item {{ active_class(['solicitudes/enviadas']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/enviadas') }}">
-                    <i data-feather="share" class="icon-lg me-2"></i>
-                    Enviadas
-                  </a>
-                </li>
-                <li class="nav-item {{ active_class(['solicitudes/proceso']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/proceso') }}">
-                    <i data-feather="refresh-ccw" class="icon-lg me-2"></i>
-                    En Proceso
-                    <span class="badge bg-secondary fw-bolder ms-auto text-white">4
-                  </a>
-                </li>
-                <li class="nav-item {{ active_class(['solicitudes/terminadas']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/terminadas') }}">
-                    <i data-feather="check-circle" class="icon-lg me-2"></i>
-                    Terminadas
-                  </a>
-                </li>
-                <li class="nav-item {{ active_class(['solicitudes/vencidas']) }}">
-                  <a class="nav-link d-flex align-items-center" href="{{ url('/solicitudes/vencidas') }}">
-                    <i data-feather="alert-triangle" class="icon-lg me-2"></i>
-                    Vencidas
-                  </a>
-                </li>
-                <!-- <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                    <i data-feather="star" class="icon-lg me-2"></i>
-                    Tags
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                    <i data-feather="trash" class="icon-lg me-2"></i>
-                    Trash
-                  </a>
-                </li>
-              </ul>
-              <p class="text-muted tx-12 fw-bolder text-uppercase mb-2 mt-4">Labels</p>
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                    <i data-feather="tag" class="text-warning icon-lg me-2"></i>
-                    Important
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                  <i data-feather="tag" class="text-primary icon-lg me-2"></i> 
-                  Business 
-                </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center" href="#">
-                    <i data-feather="tag" class="text-info icon-lg me-2"></i> 
-                    Inspiration 
-                  </a>
-                </li> -->
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-9">
-            <div>
-              <div class="d-flex align-items-center p-3 border-bottom tx-16">
-                <span data-feather="edit" class="icon-md me-2"></span>
-                Nueva Solicitud
-              </div>
-            </div>
-            <div class="p-3 pb-0">
-              <div class="to">
-                <div class="row mb-3">
-                  <label class="col-md-2 col-form-label">Para:</label>
-                  <div class="col-md-10">
-                    <select class="compose-multiple-select form-select">
-                      <option value="AL">ANALISIS SOCIOECONOMICO</option>
-                      <option value="WY">ASESORIA LEGAL</option>
-                      <option value="AM">COORDINACION DE LA CARRERA DE INGENIERIA EN ZOOTECNIA</option>
-                      <option value="CA">DIRECCION DE DOCENCIA</option>
-                      <option value="RU">SECRETARIA GENERAL</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="to cc">
-                <div class="row mb-3">
-                  <label class="col-md-2 col-form-label">Cc</label>
-                  <div class="col-md-10">
-                    <select class="compose-multiple-select form-select" multiple="multiple">
-                      <option value="Alabama">Alabama</option>
-                      <option value="Alaska" selected="selected">Alaska</option>
-                      <option value="Melbourne">Melbourne</option>
-                      <option value="Victoria" selected="selected">Victoria</option>
-                      <option value="Newyork">Newyork</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="subject">
-                <div class="row mb-3">
-                  <label class="col-md-2 col-form-label">Subject</label>
-                  <div class="col-md-10">
-                    <input class="form-control" type="text">
-                  </div>
-                </div>
-              </div> -->
-            </div>
-            <div class="px-3">
-              <div class="col-md-12">
-                <div class="mb-3">
-                  <label class="form-label visually-hidden" for="easyMdeEditor">Descriptions </label>
-                  <textarea class="form-control" name="easymde" id="easyMdeEditor" rows="5"></textarea>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
-           
-                    <div class="card-body">
-                      <h6 class="card-title">Adjuntar Archivos</h6>
-                      <p class="text-muted mb-3">Arrastra y suelta tus archivos aquí, o haz clic para seleccionarlos y cargarlos.</p>
-                      <form action="/file-upload" class="dropzone" id="exampleDropzone"></form>
-                    </div>
+        </div>
+    </div>
+</div>
+<div class="px-3">
+    <div class="col-md-12">
+        <div class="mb-3">
+            <label class="form-label visually-hidden" for="descripcion_solicitud">Descriptions </label>
+            <textarea class="form-control" name="easymde" id="descripcion_solicitud" rows="5" placeholder="Escriba aquí..."></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
+            <div class="card-body">
+                <h6 class="card-title">Adjuntar Archivos</h6>
+                <!-- <p class="text-muted mb-3">Arrastra y suelta tus archivos aquí, o haz clic para seleccionarlos y cargarlos.</p>
+                <form action="#" class="dropzone" id="adjuntos_solicitud"></form> -->
+
+
+                <div class="file-upload" id="fileUpload">
+                  <p>Arrastra o haz clic para seleccionar archivos</p>
+                  <input type="file" id="inputArchivos" multiple hidden>
                 </div>
 
-              <div>
-                <div class="col-md-12">
-                  <button class="btn btn-primary me-1 mb-1" type="submit"> Enviar</button>
-                  <!-- <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button> -->
-                </div>
-              </div>
+                <div id="fileList" class="file-list"></div>
             </div>
-          </div>
         </div>
-      </div>
+
+        <div>
+            <div class="col-md-12">
+                <button class="btn btn-primary me-1 mb-1" type="button" id="enviar_solicitud">Enviar</button>
+                <!-- <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button> -->
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
 @endsection
 
 @push('plugin-scripts')
   <script src="{{ asset('assets/plugins/select2/select2.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/tinymce/tinymce.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/easymde/easymde.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/dropzone/dropzone.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 @endpush
 
 @push('custom-scripts')
   <script src="{{ asset('assets/js/email.js') }}"></script>
   <script src="{{ asset('assets/js/dropzone.js') }}"></script>
+  <script src="{{ asset('assets/js/tinymce.js') }}"></script>
+  <script src="{{ asset('assets/js/easymde.js') }}"></script>
+  <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
+  <script type="text/javascript">
+    var accion = null;
+    var btn_activo = true;
+    var departamento = null;
+    var descripcion = null;
+    var adjuntos = null;
+    var url_guardar_solicitud = "{{url('/gestion_solicitudes/nueva/guardar')}}"; 
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+    $(function() {
+                'use strict';
+
+                //Tinymce editor
+                if ($("#descripcion_solicitud").length) {
+                    tinymce.init({
+                    selector: '#descripcion_solicitud',
+                    height: 250,
+                    menubar: false,
+                    default_text_color: 'red',
+                    plugins: 'advlist autolink lists link image charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen',
+                    toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+                    //toolbar2: 'forecolor backcolor emoticons',
+                    image_advtab: true,
+                    templates: [{
+                        title: 'Test template 1',
+                        content: 'Test 1'
+                        },
+                        // {
+                        // title: 'Test template 2',
+                        // content: 'Test 2'
+                        // }
+                    ],
+                    content_css: []
+                    });
+                }
+                
+            });
+
+      // $(function() {
+      //   'use strict';
+
+      //   $("adjuntos_solicitud").dropzone({
+      //     autoProcessQueue: false,   // No subir automáticamente
+      //     addRemoveLinks: true,      // Muestra el enlace “Eliminar archivo”
+      //     dictRemoveFile: "Eliminar",// Texto del botón
+          
+      //   });
+      // });
+
+      
+    $("#enviar_solicitud").on("click", function () {
+        departamento = $("#departamento").val();
+        descripcion = tinymce.get('descripcion_solicitud').getContent();
+        
+            if(descripcion == null || descripcion == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Por favor, describe tu solicitud antes de enviarla.'
+                })
+                return true;
+            }
+            
+            if(btn_activo){
+                guardar_solicitud();
+            }
+            
+
+    });
+
+    });
+
+     const inputArchivos = document.getElementById('inputArchivos');
+        const fileUpload = document.getElementById('fileUpload');
+        const fileList = document.getElementById('fileList');
+        let archivosSeleccionados = [];
+
+        // Abrir selector al hacer clic en el área
+        fileUpload.addEventListener('click', () => inputArchivos.click());
+
+        // Arrastrar y soltar
+        fileUpload.addEventListener('dragover', e => {
+          e.preventDefault();
+          fileUpload.style.backgroundColor = '#eef';
+        });
+        fileUpload.addEventListener('dragleave', () => {
+          fileUpload.style.backgroundColor = '';
+        });
+        fileUpload.addEventListener('drop', e => {
+          e.preventDefault();
+          fileUpload.style.backgroundColor = '';
+          agregarArchivos(e.dataTransfer.files);
+        });
+
+        // Al seleccionar archivos manualmente
+        inputArchivos.addEventListener('change', e => agregarArchivos(e.target.files));
+
+        // Función para agregar archivos
+        function agregarArchivos(files) {
+          for (const file of files) {
+            // Evitar duplicados por nombre
+            if (!archivosSeleccionados.some(f => f.name === file.name)) {
+              archivosSeleccionados.push(file);
+            }
+          }
+          mostrarListaArchivos();
+        }
+
+        // Mostrar lista de archivos
+        function mostrarListaArchivos() {
+          fileList.innerHTML = '';
+          archivosSeleccionados.forEach((file, index) => {
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.innerHTML = `
+              <span>${file.name} (${(file.size/1024).toFixed(1)} KB)</span>
+              <button onclick="eliminarArchivo(${index})">&times;</button>
+            `;
+            fileList.appendChild(item);
+          });
+        }
+
+        // Eliminar archivo de la lista
+        function eliminarArchivo(index) {
+          archivosSeleccionados.splice(index, 1);
+          mostrarListaArchivos();
+        }
+
+
+
+
+    function guardar_solicitud() {
+        espera('Enviando tu solicitud...');
+        const formData = new FormData();
+        // Agregar archivos
+        archivosSeleccionados.forEach((file, i) => {
+            formData.append('archivos[]', file, file.name);
+        });
+
+        // Agregar otros campos
+        formData.append('departamento', departamento);
+        formData.append('descripcion', descripcion);
+
+        btn_activo = false;
+
+        $.ajax({
+            type: "post",
+            url: url_guardar_solicitud,
+            data: formData,
+            processData: false, // IMPORTANTE: evita que jQuery convierta los datos a string
+            contentType: false, // IMPORTANTE: permite enviar multipart/form-data
+            success: function (data) {
+                if (data.msgError != null) {
+                    titleMsg = "Error al Guardar";
+                    textMsg = data.msgError;
+                    typeMsg = "error";
+                    timer = null;
+                    btn_activo = true;
+                } else {
+                    titleMsg = "Solicitud Enviada";
+                    textMsg = data.msgSuccess;
+                    typeMsg = "success";
+                    timer = null;
+       
+                    //btn_activo = true;
+                }
+                //console.log(textMsg);
+                ToastLG({
+                    icon: typeMsg,
+                    title: titleMsg,
+                    html: textMsg,
+                    timer: timer
+                })
+
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            },
+        });
+    }
+
+    const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+
+    const ToastLG = (options) => {
+        Swal.fire({
+            showConfirmButton: (typeMsg == 'error') ? false : true,
+            timerProgressBar: true,
+            confirmButtonText: 'Aceptar',
+            ...options, // permite pasar icon, title, text, etc.
+        }).then((result) => {
+            if (result.isConfirmed) {
+                espera('Recargadno...');
+                location.reload(); // 🔁 recarga al confirmar
+            }
+        });
+    };
+
+    function espera(html){
+        let timerInterval
+        Swal.fire({
+            imageUrl: "{{ url(asset('/assets/images/unag_loading.gif')) }}",
+            // icon: 'warning',
+            title: '¡Espera!',
+            html: html,
+            timer: null,
+            timerProgressBar: true,
+            didOpen: () => {
+            Swal.showLoading()
+            timerInterval = setInterval(() => {
+                const content = Swal.getHtmlContainer()
+                if (content) {
+                const b = content.querySelector('b')
+                if (b) {
+                    b.textContent = Swal.getTimerLeft()
+                }
+                }
+            }, 100)
+            },
+            willClose: () => {
+            clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer')
+            }
+        })
+    }
+
+  </script>
 @endpush
