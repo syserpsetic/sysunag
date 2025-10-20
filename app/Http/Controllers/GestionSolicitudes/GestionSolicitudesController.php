@@ -38,8 +38,47 @@ class GestionSolicitudesController extends Controller
         ;
     }
 
-    public function ver_solicitudes_leer(){
-        return view('sys/gestionSolicitudes/solicitudesLeer')->with('scopes', array());
+    public function ver_solicitudes_leer($id_solicitud){
+        $msgSuccess = null;
+        $msgError = null;
+        
+        $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/gestion_solicitudes/solicitud/leer', [
+                'id_solicitud' => $id_solicitud,
+
+            ]);
+
+        if($response->status() === 500){
+                return view('pages.error.500')->with('scopes', $scopes = array());
+        }
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        //return view('pages.error.construccion')->with('scopes', $scopes = array());
+        $scopes = $response['scopes'];
+        $conteo_solicitudes_nuevas = $response['conteo_solicitudes_nuevas'];
+        $detalle_solicitud = $response['detalle_solicitud'];
+        $adjuntos = $response['adjuntos'];
+        $cantidad_adjuntos = $response['cantidad_adjuntos'];
+        $empleados = $response['empleados'];
+        $departamentos = $response['departamentos'];
+        $id_solicitud = $response['id_solicitud'];
+        //$detalle_trazabilidad = $response['detalle_trazabilidad'];
+
+        return view('sys.gestionSolicitudes.solicitudesLeer')
+        ->with("scopes", $scopes)
+        ->with("conteo_solicitudes_nuevas", $conteo_solicitudes_nuevas)
+        ->with("detalle_solicitud", $detalle_solicitud)
+        ->with("adjuntos", $adjuntos)
+        ->with("cantidad_adjuntos", $cantidad_adjuntos)
+        ->with("empleados", $empleados)
+        ->with("departamentos", $departamentos)
+        ->with("id_solicitud", $id_solicitud)
+        //->with("detalle_trazabilidad", $detalle_trazabilidad)
+        ;
     }
 
     public function ver_solicitudes_nueva(){
@@ -94,6 +133,74 @@ class GestionSolicitudesController extends Controller
             // Envía la solicitud POST con los demás datos
             $response = $http->post(env('API_BASE_URL_ZETA').'/api/auth/gestion_solicitudes/nueva/guardar', [
                 'departamento' => $request->departamento,
+                'descripcion'  => $request->descripcion,
+            ]);
+
+
+            //throw new Exception($response->status(), true);
+            $data = $response->json();
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    throw new Exception("Desde backend: ".$data["msgError"]);
+                }
+                $id_solicitud = $data["id_solicitud"];
+                $trazabilidad = $data["id_trazabilidad"];
+                //Verificar si hay archivos
+                if($request->hasFile('archivos')) {
+                    $archivos = $request->file('archivos'); // Esto es un array de UploadedFile
+
+                    foreach($archivos as $archivo) {
+                        // Guardar cada archivo en storage/app/public/solicitudes
+                        $nombre = $archivo->getClientOriginalName();
+                        $archivo->storeAs('public/adjuntos_gestion_solicitudes/solicitud_'.$id_solicitud.'/trazabilidad_'.$trazabilidad, $nombre);
+                    }
+                }
+                $msgSuccess = $data["msgSuccess"];
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }elseif($response->status() === 500){
+                throw new Exception("Desde backend: ".$data["msgError"]);
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError
+        ]);
+    }
+
+    public function guardar_solicitudes_remitir(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        $archivos = array();
+        $archivos = $request->file('archivos');
+
+        try {
+            //throw new Exception($request->empleado);
+            // Prepara la solicitud HTTP
+            $http = Http::withHeaders([
+                'Authorization' => session('token'),
+            ])->asMultipart();
+
+            // Adjunta todos los archivos
+            if($request->hasFile('archivos')) {
+                foreach ($archivos as $archivo) {
+                    $http = $http->attach(
+                        'adjuntos[]',                              // nombre del campo esperado por la API
+                        fopen($archivo->getPathname(), 'r'),       // contenido del archivo
+                        $archivo->getClientOriginalName()          // nombre original
+                    );
+                }
+            }
+
+            // Envía la solicitud POST con los demás datos
+            $response = $http->post(env('API_BASE_URL_ZETA').'/api/auth/gestion_solicitudes/solicitud/remitir/guardar', [
+                'id_solicitud' => $request->id_solicitud,
+                'departamento' => $request->departamento,
+                'empleado' => $request->empleado,
+                'accion' => $request->accion,
                 'descripcion'  => $request->descripcion,
             ]);
 

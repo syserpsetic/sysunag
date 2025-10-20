@@ -27,7 +27,7 @@ CREATE TABLE gs_trazabilidad
     usuario_remitente text,
     id_departamento_destinatario bigint,
     usuario_destinatario text,
-	solicitud_vista boolean,
+	solicitud_vista timestamp(0) without time zone,
     created_at timestamp(0) without time zone default now(),
     updated_at timestamp(0) without time zone,
     deleted_at timestamp(0) without time zone,

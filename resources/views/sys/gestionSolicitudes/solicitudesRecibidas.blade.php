@@ -21,8 +21,8 @@
                 </div>
               </div>
             </div>
-            <div class="p-3 border-bottom d-flex align-items-center justify-content-between flex-wrap">
-              <!-- <div class="d-none d-md-flex align-items-center flex-wrap">
+            <!-- <div class="p-3 border-bottom d-flex align-items-center justify-content-between flex-wrap">
+              <div class="d-none d-md-flex align-items-center flex-wrap">
                 <div class="form-check me-3">
                   <input type="checkbox" class="form-check-input" id="inboxCheckAll">
                 </div>
@@ -56,10 +56,25 @@
                   <button class="btn btn-outline-secondary btn-icon" type="button"><i data-feather="chevron-left"></i></button>
                   <button class="btn btn-outline-secondary btn-icon" type="button"><i data-feather="chevron-right"></i></button>
                 </div>
-              </div> -->
-            </div>
+              </div> 
+            </div>-->
+            @if(empty($solicitudes_recibidas))
             <div class="email-list">
+              <div class="page-content d-flex align-items-center justify-content-center">
 
+                <div class="row w-100 mx-0 auth-page">
+                  <div class="col-md-8 col-xl-6 mx-auto d-flex flex-column align-items-center text-center">
+                    
+                    <!-- Ícono Feather -->
+                    <i data-feather="inbox" class="text-muted mb-3" style="width: 100px; height: 100px; stroke-width: 1.5;"></i>
+                    
+                    <h3 class="fw-bold mb-2 text-muted">Sin solicitudes recibidas</h3>
+                    <h6 class="text-muted mb-3">Por el momento no tienes solicitudes nuevas en tu bandeja.</h6>
+                  </div>
+                </div>
+
+              </div>
+            @endif
             @foreach($solicitudes_recibidas as $row)
             <div @if($row['solicitud_vista']) class="email-list-item" @else class="email-list-item email-list-item--unread" @endif>
                 <a href="{{ url('/gestion_solicitudes/solicitud/') }}/{{$row['id_solicitud']}}/leer" class="email-list-detail">

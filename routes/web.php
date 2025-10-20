@@ -109,7 +109,8 @@ Route::middleware('auth')->group(function () {
 
     //Inicia Solicitudes
         Route::get('/gestion_solicitudes/recibidas', [GestionSolicitudesController::class, 'ver_solicitudes_recibidas']);
-        Route::get('/gestion_solicitudes/leer', [GestionSolicitudesController::class, 'ver_solicitudes_leer']);
+        Route::get('/gestion_solicitudes/solicitud/{id_solicitud}/leer', [GestionSolicitudesController::class, 'ver_solicitudes_leer']);
+        Route::post('/gestion_solicitudes/solicitud/remitir/guardar', [GestionSolicitudesController::class, 'guardar_solicitudes_remitir']);
         Route::get('/gestion_solicitudes/nueva', [GestionSolicitudesController::class, 'ver_solicitudes_nueva']);
         Route::post('/gestion_solicitudes/nueva/guardar', [GestionSolicitudesController::class, 'guardar_solicitudes_nueva']);
         Route::get('/gestion_solicitudes/enviadas', [GestionSolicitudesController::class, 'ver_solicitudes_enviadas']);
