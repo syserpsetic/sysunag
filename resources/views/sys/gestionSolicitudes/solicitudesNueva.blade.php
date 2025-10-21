@@ -5,6 +5,7 @@
   <link href="{{ asset('assets/plugins/easymde/easymde.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/jquery-tags-input/jquery.tagsinput.min.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content_gs')
@@ -60,6 +61,12 @@
                 </select>
             </div>
         </div>
+        <div class="row mb-3">
+            <label class="col-md-2 col-form-label">Fecha y hora de vencimiento:</label>
+            <div class="col-md-10">
+                <input class="form-control mb-4 mb-md-0" data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="30/12/2025 13:15:00" />
+            </div>
+        </div>
     </div>
 </div>
 <div class="px-3">
@@ -103,6 +110,7 @@
   <script src="{{ asset('assets/plugins/easymde/easymde.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/dropzone/dropzone.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 @endpush
 
 @push('custom-scripts')
@@ -111,6 +119,7 @@
   <script src="{{ asset('assets/js/tinymce.js') }}"></script>
   <script src="{{ asset('assets/js/easymde.js') }}"></script>
   <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
+  <script src="{{ asset('assets/js/inputmask.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
   <script type="text/javascript">

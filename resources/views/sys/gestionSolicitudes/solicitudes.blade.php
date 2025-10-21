@@ -39,7 +39,7 @@
                     @endif
                   </a>
                 </li>
-                <li class="nav-item {{ active_class(['gestion_solicitudes/proceso']) }}">
+                <!-- <li class="nav-item {{ active_class(['gestion_solicitudes/proceso']) }}">
                   <a class="nav-link d-flex align-items-center" href="{{ url('/gestion_solicitudes/proceso') }}">
                     <i data-feather="refresh-ccw" class="icon-lg me-2"></i>
                     En Proceso
@@ -58,7 +58,7 @@
                     Vencidas
                   </a>
                 </li>
-                <!-- <li class="nav-item">
+                <li class="nav-item">
                   <a class="nav-link d-flex align-items-center" href="#">
                     <i data-feather="star" class="icon-lg me-2"></i>
                     Tags
