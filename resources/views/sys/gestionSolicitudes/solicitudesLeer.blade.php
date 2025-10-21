@@ -80,12 +80,14 @@
 <div class="d-flex align-items-center justify-content-between p-3 border-bottom tx-16">
     <div class="d-flex align-items-center">
         <!--<i data-feather="star" class="text-primary icon-lg me-2"></i>-->
-        <span>{{$row['departamento_remitente']}} | GS{{$row['id_solicitud']}}</span>
+        <span>{{$row['departamento_remitente']}} | GS-{{$row['id_solicitud']}}</span>
     </div>
     <div>
         <!-- <span>Remisiones</span> -->
-        <a class="me-2" type="button" data-bs-toggle="modal" data-bs-target="#modal_remision"><i data-feather="share" class="text-muted icon-lg"></i></a>
-       <!--  <div class="actions dropdown">
+         @if($remitir)
+          <a class="me-2" type="button" data-bs-toggle="modal" data-bs-target="#modal_remision"><i data-feather="share" class="text-muted icon-lg"></i></a>
+          @endif
+        <!--  <div class="actions dropdown">
                     <a href="#" data-bs-toggle="dropdown"><i data-feather="share" class="icon-lg text-muted"></i></a>
                     <div class="dropdown-menu" role="menu">
                       <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal_remision">Remisión Interna</a>
@@ -95,7 +97,7 @@
                       <a class="dropdown-item text-danger" href="#">Delete</a> 
                     </div>
                   </div>-->
-                <!-- <a class="me-2" type="button" data-bs-toggle="tooltip" data-bs-title="Print"><i data-feather="printer" class="text-muted icon-lg"></i></a>
+        <!-- <a class="me-2" type="button" data-bs-toggle="tooltip" data-bs-title="Print"><i data-feather="printer" class="text-muted icon-lg"></i></a>
                 <a type="button" data-bs-toggle="tooltip" data-bs-title="Delete"><i data-feather="trash" class="text-muted icon-lg"></i></a> -->
         <!-- <button type="button" class="btn btn-success btn-xs">Externa</button>
         <button type="button" class="btn btn-info btn-xs">Interna</button> -->
@@ -127,19 +129,18 @@
 <div class="p-4 border-bottom">
     {!!$row['descripcion']!!}
     <hr />
-    @foreach($adjuntos as $row2)
-      @if($loop->first)
-        <div class="mb-3"><span>@if($row2['id_trazabilidad'] == $row['id_trazabilidad'])Adjuntos ({{@count($adjuntos)}} archivos)@endif </span></div>
-      @endif
+    @php $conteoAdjuntos = 0; @endphp @foreach($adjuntos as $row2) @php if($row2['id_trazabilidad'] == $row['id_trazabilidad']){ $conteoAdjuntos++; } @endphp @endforeach @foreach($adjuntos as $row2) @if($loop->first)
+    <div class="mb-3"><span>Adjuntos ({{$conteoAdjuntos}} archivos) </span></div>
+    @endif
     <ul class="nav flex-column">
         @if($row2['id_trazabilidad'] == $row['id_trazabilidad'])
         <li class="nav-item">
-            <a href="javascript:;" class="nav-link text-body">
+            <a href="{{ url('/gestion_solicitudes/solicitud/') }}/{{$row['id_solicitud']}}/leer/trazabilidad/{{$row['id_trazabilidad']}}/adjuntos/{{$row2['archivo']}}/descargar" class="nav-link text-body">
                 <span data-feather="file" class="icon-lg text-muted"></span> {{$row2['archivo']}}
                 <!-- <span class="text-muted tx-11">(250 KB)</span> -->
             </a>
         </li>
-        @endif 
+        @endif
     </ul>
     @endforeach
 </div>
@@ -164,21 +165,20 @@
     <div class="p-4 border-bottom">
         {!!$row['descripcion']!!}
         <hr />
-    @foreach($adjuntos as $row2)
-      @if($loop->first)
-        <div class="mb-3"><span>@if($row2['id_trazabilidad'] == $row['id_trazabilidad'])Adjuntos ({{@count($adjuntos)}} archivos)@endif </span></div>
-      @endif
-    <ul class="nav flex-column">
-        @if($row2['id_trazabilidad'] == $row['id_trazabilidad'])
-        <li class="nav-item">
-            <a href="javascript:;" class="nav-link text-body">
-                <span data-feather="file" class="icon-lg text-muted"></span> {{$row2['archivo']}}
-                <!-- <span class="text-muted tx-11">(250 KB)</span> -->
-            </a>
-        </li>
-        @endif 
-    </ul>
-    @endforeach
+        @php $conteoAdjuntos = 0; @endphp @foreach($adjuntos as $row2) @php if($row2['id_trazabilidad'] == $row['id_trazabilidad']){ $conteoAdjuntos++; } @endphp @endforeach @foreach($adjuntos as $row2) @if($loop->first)
+        <div class="mb-3"><span>Adjuntos ({{$conteoAdjuntos}} archivos)</span></div>
+        @endif
+        <ul class="nav flex-column">
+            @if($row2['id_trazabilidad'] == $row['id_trazabilidad'])
+            <li class="nav-item">
+                <a href="{{ url('/gestion_solicitudes/solicitud/') }}/{{$row['id_solicitud']}}/leer/trazabilidad/{{$row2['id_trazabilidad']}}/adjuntos/{{$row2['archivo']}}/descargar" class="nav-link text-body">
+                    <span data-feather="file" class="icon-lg text-muted"></span> {{$row2['archivo']}}
+                    <!-- <span class="text-muted tx-11">(250 KB)</span> -->
+                </a>
+            </li>
+            @endif
+        </ul>
+        @endforeach
     </div>
     <hr />
     @endif @endforeach
@@ -224,77 +224,74 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
             </div>
             <div class="card-body">
-                <div>
+                <div></div>
+                <div class="p-3 pb-0">
+                    <div class="to">
+                        <div class="row mb-3">
+                            <label class="col-md-2 col-lg-2 col-form-label">Para:</label>
+                            <div class="col-md-5">
+                                <div class="mb-2 d-flex align-items-center">
+                                    <div class="form-check me-2">
+                                        <input type="radio" class="form-check-input" name="remision" id="remisionInterna" checked />
+                                        <label class="form-check-label mb-0" for="remisionInterna">Remisión Interna</label>
+                                    </div>
+                                </div>
 
-</div>
-<div class="p-3 pb-0">
-    <div class="to">
-        <div class="row mb-3">
-            <label class="col-md-2 col-lg-2 col-form-label">Para:</label>
-            <div class="col-md-5">
-              <div class="mb-2 d-flex align-items-center">
-                <div class="form-check me-2">
-                  <input type="radio" class="form-check-input" name="remision" id="remisionInterna" checked>
-                  <label class="form-check-label mb-0" for="remisionInterna">Remisión Interna</label>
+                                <select class="js-example-basic-single form-select" id="empleado">
+                                    @foreach($empleados as $row)
+                                    <option value="{{$row['id']}}">{{$row['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-5">
+                                <div class="mb-2 d-flex align-items-center">
+                                    <div class="form-check me-2">
+                                        <input type="radio" class="form-check-input" name="remision" id="remisionExterna" />
+                                        <label class="form-check-label mb-0" for="remisionExterna">Remisión Externa</label>
+                                    </div>
+                                </div>
+
+                                <select class="js-example-basic-single form-select" id="departamento" disabled>
+                                    @foreach($departamentos as $row)
+                                    <option value="{{$row['id_departamento']}}">{{$row['descripcion']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              <select class="js-example-basic-single form-select" id="empleado">
-                @foreach($empleados as $row)
-                  <option value="{{$row['id']}}">{{$row['name']}}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="col-md-5">
-              <div class="mb-2 d-flex align-items-center">
-                <div class="form-check me-2">
-                  <input type="radio" class="form-check-input" name="remision" id="remisionExterna">
-                  <label class="form-check-label mb-0" for="remisionExterna">Remisión Externa</label>
-                </div>
-              </div>
-
-              <select class="js-example-basic-single form-select" id="departamento" disabled>
-                @foreach($departamentos as $row)
-                  <option value="{{$row['id_departamento']}}">{{$row['descripcion']}}</option>
-                @endforeach
-              </select>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="px-3">
-    <div class="col-md-12">
-        <div class="mb-3">
-            <label class="form-label visually-hidden" for="descripcion_solicitud">Descriptions </label>
-            <textarea class="form-control" name="easymde" id="descripcion_solicitud" rows="5" placeholder="Escriba aquí..."></textarea>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
-            <div class="card-body">
-                <h6 class="card-title">Adjuntar Archivos</h6>
-                <!-- <p class="text-muted mb-3">Arrastra y suelta tus archivos aquí, o haz clic para seleccionarlos y cargarlos.</p>
+                <div class="px-3">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label visually-hidden" for="descripcion_solicitud">Descriptions </label>
+                            <textarea class="form-control" name="easymde" id="descripcion_solicitud" rows="5" placeholder="Escriba aquí..."></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 stretch-card grid-margin grid-margin-md-0">
+                            <div class="card-body">
+                                <h6 class="card-title">Adjuntar Archivos</h6>
+                                <!-- <p class="text-muted mb-3">Arrastra y suelta tus archivos aquí, o haz clic para seleccionarlos y cargarlos.</p>
                 <form action="#" class="dropzone" id="adjuntos_solicitud"></form> -->
 
+                                <div class="file-upload" id="fileUpload">
+                                    <p>Arrastra o haz clic para seleccionar archivos</p>
+                                    <input type="file" id="inputArchivos" multiple hidden />
+                                </div>
 
-                <div class="file-upload" id="fileUpload">
-                  <p>Arrastra o haz clic para seleccionar archivos</p>
-                  <input type="file" id="inputArchivos" multiple hidden>
+                                <div id="fileList" class="file-list"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="col-md-12">
+                                <button class="btn btn-primary me-1 mb-1" type="button" id="enviar_remision">Enviar</button>
+                                <!-- <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button> -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div id="fileList" class="file-list"></div>
-            </div>
-        </div>
-
-        <div>
-            <div class="col-md-12">
-                <button class="btn btn-primary me-1 mb-1" type="button" id="enviar_remision">Enviar</button>
-                <!-- <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button> -->
-            </div>
-        </div>
-    </div>
-</div>
             </div>
             <!-- <div class="modal-footer bg-secondary">
                 <button type="button" class="btn btn-danger btn-xs" data-bs-dismiss="modal">Cerrar</button>

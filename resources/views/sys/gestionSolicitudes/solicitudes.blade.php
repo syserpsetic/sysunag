@@ -25,15 +25,18 @@
                   <a class="nav-link d-flex align-items-center" href="{{ url('/gestion_solicitudes/recibidas') }}">
                     <i data-feather="inbox" class="icon-lg me-2"></i>
                     Recibidas
-                    @if($conteo_solicitudes_nuevas > 0)
-                        <span class="badge bg-danger fw-bolder ms-auto text-white">{{$conteo_solicitudes_nuevas}}
+                    @if($conteo_solicitudes['nuevas'] > 0)
+                        <span class="badge bg-danger fw-bolder ms-auto text-white">{{$conteo_solicitudes['nuevas']}}
                     @endif
                   </a>
                 </li>
                 <li class="nav-item {{ active_class(['gestion_solicitudes/enviadas']) }}">
                   <a class="nav-link d-flex align-items-center" href="{{ url('/gestion_solicitudes/enviadas') }}">
-                    <i data-feather="share" class="icon-lg me-2"></i>
+                    <i data-feather="send" class="icon-lg me-2"></i>
                     Enviadas
+                    @if($conteo_solicitudes['enviadas_sin_leer'] > 0)
+                        <span class="badge bg-warning fw-bolder ms-auto text-dark">{{$conteo_solicitudes['enviadas_sin_leer']}}
+                    @endif
                   </a>
                 </li>
                 <li class="nav-item {{ active_class(['gestion_solicitudes/proceso']) }}">

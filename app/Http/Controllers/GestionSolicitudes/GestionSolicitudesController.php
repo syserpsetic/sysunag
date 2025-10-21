@@ -10,11 +10,12 @@ use Illuminate\View\View;
 use DB;
 Use Session;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class GestionSolicitudesController extends Controller
 {
     public function ver_solicitudes_recibidas(){
-         $response = Http::withHeaders([
+        $response = Http::withHeaders([
             'Authorization' => session('token'),
         ])->get(env('API_BASE_URL_ZETA').'/api/auth/gestion_solicitudes/recibidas');
 
@@ -29,12 +30,12 @@ class GestionSolicitudesController extends Controller
         //throw new Exception($response->status());
         $scopes = $response['scopes'];
         $solicitudes_recibidas = $response['solicitudes_recibidas'];
-        $conteo_solicitudes_nuevas = $response['conteo_solicitudes_nuevas'];
+        $conteo_solicitudes = $response['conteo_solicitudes'];
 
         return view("sys.gestionSolicitudes.solicitudesRecibidas")
         ->with("scopes", $scopes)
         ->with("solicitudes_recibidas", $solicitudes_recibidas)
-        ->with("conteo_solicitudes_nuevas", $conteo_solicitudes_nuevas)
+        ->with("conteo_solicitudes", $conteo_solicitudes)
         ;
     }
 
@@ -59,24 +60,26 @@ class GestionSolicitudesController extends Controller
         }
         //return view('pages.error.construccion')->with('scopes', $scopes = array());
         $scopes = $response['scopes'];
-        $conteo_solicitudes_nuevas = $response['conteo_solicitudes_nuevas'];
+        $conteo_solicitudes = $response['conteo_solicitudes'];
         $detalle_solicitud = $response['detalle_solicitud'];
         $adjuntos = $response['adjuntos'];
         $cantidad_adjuntos = $response['cantidad_adjuntos'];
         $empleados = $response['empleados'];
         $departamentos = $response['departamentos'];
         $id_solicitud = $response['id_solicitud'];
+        $remitir = $response['remitir'];
         //$detalle_trazabilidad = $response['detalle_trazabilidad'];
 
         return view('sys.gestionSolicitudes.solicitudesLeer')
         ->with("scopes", $scopes)
-        ->with("conteo_solicitudes_nuevas", $conteo_solicitudes_nuevas)
+        ->with("conteo_solicitudes", $conteo_solicitudes)
         ->with("detalle_solicitud", $detalle_solicitud)
         ->with("adjuntos", $adjuntos)
         ->with("cantidad_adjuntos", $cantidad_adjuntos)
         ->with("empleados", $empleados)
         ->with("departamentos", $departamentos)
         ->with("id_solicitud", $id_solicitud)
+        ->with("remitir", $remitir)
         //->with("detalle_trazabilidad", $detalle_trazabilidad)
         ;
     }
@@ -98,12 +101,12 @@ class GestionSolicitudesController extends Controller
         
         $scopes = $response['scopes'];
         $departamentos = $response['departamentos'];
-        $conteo_solicitudes_nuevas = $response['conteo_solicitudes_nuevas'];
+        $conteo_solicitudes = $response['conteo_solicitudes'];
 
         return view("sys.gestionSolicitudes.solicitudesNueva")
         ->with("scopes", $scopes)
         ->with("departamentos", $departamentos)
-        ->with("conteo_solicitudes_nuevas", $conteo_solicitudes_nuevas)
+        ->with("conteo_solicitudes", $conteo_solicitudes)
         ;
     }
 
@@ -239,8 +242,39 @@ class GestionSolicitudesController extends Controller
         ]);
     }
 
+    public function descargar_solicitudes_leer_adjuntos($id_solicitud, $id_trazabilidad, $archivo){
+        $ruta = '/adjuntos_gestion_solicitudes/solicitud_' . $id_solicitud.'/trazabilidad_'.$id_trazabilidad.'/';
+
+        if (!Storage::disk('public')->exists($ruta . $archivo)) {
+            throw new Exception('El archivo no existe');
+        }
+
+        return Storage::disk('public')->download($ruta . $archivo);
+    }
+
     public function ver_solicitudes_enviadas(){
-        return view('sys/gestionSolicitudes/solicitudesEnviadas')->with('scopes', array());
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/gestion_solicitudes/enviadas');
+
+        if($response->status() === 500){
+                return view('pages.error.500')->with('scopes', $scopes = array());
+        }
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        
+        //throw new Exception($response->status());
+        $scopes = $response['scopes'];
+        $solicitudes_enviadas = $response['solicitudes_enviadas'];
+        $conteo_solicitudes = $response['conteo_solicitudes'];
+
+        return view("sys.gestionSolicitudes.solicitudesEnviadas")
+        ->with("scopes", $scopes)
+        ->with("solicitudes_enviadas", $solicitudes_enviadas)
+        ->with("conteo_solicitudes", $conteo_solicitudes)
+        ;
     }
 
     public function ver_solicitudes_proceso(){

@@ -8,8 +8,8 @@
                   <div class="d-flex align-items-end mb-2 mb-md-0">
                     <i data-feather="inbox" class="text-muted me-2"></i>
                     <h4 class="me-1">Solicitudes Recibidas</h4>
-                    @if($conteo_solicitudes_nuevas > 0)
-                      <span class="text-muted">({{$conteo_solicitudes_nuevas}} solitudes nuevas)</span>
+                    @if($conteo_solicitudes['nuevas']> 0)
+                      <span class="text-muted">({{$conteo_solicitudes['nuevas']}} solicitudes nuevas)</span>
                     @endif
                   </div>
                 </div>
@@ -79,7 +79,10 @@
             <div @if($row['solicitud_vista']) class="email-list-item" @else class="email-list-item email-list-item--unread" @endif>
                 <a href="{{ url('/gestion_solicitudes/solicitud/') }}/{{$row['id_solicitud']}}/leer" class="email-list-detail">
                     <div class="content">
-                    <strong class="from">{{$row['departamento']}} | GS{{$row['id_solicitud']}}</strong>
+                    <span class="from">
+                      @if(!$row['solicitud_vista'])<small><span class="badge rounded-pill translate-middle p-2 bg-danger border border-light rounded-circle">  &nbsp; </span></small>@endif
+                     <strong>{{$row['departamento']}} | GS-{{$row['id_solicitud']}}</strong> 
+                    </span>
                     <p>
                         <font class="msg">{!!$row['descripcion']!!}</font>
                     </p>
@@ -93,9 +96,6 @@
                 </a>
             </div>
             @endforeach
-
-
-            </div>
       
        
 @endsection
