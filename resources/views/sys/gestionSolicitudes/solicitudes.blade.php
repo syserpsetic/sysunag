@@ -17,7 +17,7 @@
               </div>
             </div>
             <div class="d-grid my-3">
-              <a class="btn btn-primary" href="{{ url('/gestion_solicitudes/nueva') }}">Nueva Solicitud</a>
+              <a class="btn btn-primary" href="{{ url('/gestion_solicitudes/nueva') }}"><i data-feather="edit" class="icon-lg me-2"></i> Nueva Solicitud</a>
             </div>
             <div class="email-aside-nav collapse">
               <ul class="nav flex-column">

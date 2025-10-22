@@ -5,6 +5,7 @@
   <link href="{{ asset('assets/plugins/easymde/easymde.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content_gs')
@@ -127,6 +128,9 @@
     <div class="tx-13 text-muted mt-2 mt-sm-0">{{$row['fecha_hora']}} @if($row['solicitud_vista'])<i data-feather="check" class="icon-xs text-success"></i>@endif</div>
 </div>
 <div class="p-4 border-bottom">
+    <div class="d-flex justify-content-end">
+        <p class="ms-3 tx-13">@if($row['solicitud_vencida']) <span class="badge bg-danger text-white"> {{$row['fecha_hora_vencimiento']}}</span>@else ◉ Vence: {{$row['fecha_hora_vencimiento']}} @endif</p><P></P>
+    </div>
     {!!$row['descripcion']!!}
     <hr />
     @php $conteoAdjuntos = 0; @endphp @foreach($adjuntos as $row2) @php if($row2['id_trazabilidad'] == $row['id_trazabilidad']){ $conteoAdjuntos++; } @endphp @endforeach @foreach($adjuntos as $row2) @if($loop->first)
@@ -163,6 +167,9 @@
         <div class="tx-13 text-muted mt-2 mt-sm-0">{{$row['fecha_hora']}} @if($row['solicitud_vista'])<i data-feather="check" class="icon-xs text-success"></i>@endif</div>
     </div>
     <div class="p-4 border-bottom">
+        <div class="d-flex justify-content-end">
+            <p class="ms-3 tx-13">@if($row['solicitud_vencida']) <span class="badge bg-danger text-white"> {{$row['fecha_hora_vencimiento']}}</span>@else ◉ Vence: {{$row['fecha_hora_vencimiento']}} @endif</p><P></P>
+        </div>
         {!!$row['descripcion']!!}
         <hr />
         @php $conteoAdjuntos = 0; @endphp @foreach($adjuntos as $row2) @php if($row2['id_trazabilidad'] == $row['id_trazabilidad']){ $conteoAdjuntos++; } @endphp @endforeach @foreach($adjuntos as $row2) @if($loop->first)
@@ -259,6 +266,21 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label class="col-md-2 col-form-label">Fecha y hora de vencimiento:</label>
+                            <div class="col-md-5">
+                                <div class="input-group flatpickr" id="flatpickr-date">
+                                    <input type="text" class="form-control" placeholder="Selecciona una fecha" data-input id="fecha_vencimiento">
+                                    <span class="input-group-text input-group-addon" data-toggle><i data-feather="calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="input-group flatpickr" id="flatpickr-time">
+                                    <input type="text" class="form-control" placeholder="Selecciona una hora" data-input id="hora_vencimiento">
+                                    <span class="input-group-text input-group-addon" data-toggle><i data-feather="clock"></i></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="px-3">
@@ -286,7 +308,9 @@
 
                         <div>
                             <div class="col-md-12">
-                                <button class="btn btn-primary me-1 mb-1" type="button" id="enviar_remision">Enviar</button>
+                                <div class="d-grid gap-2">
+                                <button class="btn btn-primary me-1 mb-1" type="button" id="enviar_remision"><i data-feather="send" class="icon-lg me-2"></i> Enviar</button>
+                                </div>
                                 <!-- <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button> -->
                             </div>
                         </div>
@@ -308,6 +332,7 @@
   <script src="{{ asset('assets/plugins/easymde/easymde.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/dropzone/dropzone.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/flatpickr/flatpickr.min.js') }}"></script>
 @endpush
 
 @push('custom-scripts')
@@ -316,6 +341,7 @@
   <script src="{{ asset('assets/js/tinymce.js') }}"></script>
   <script src="{{ asset('assets/js/easymde.js') }}"></script>
   <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
+  <script src="{{ asset('assets/js/flatpickr/dist/110n/es.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
   <script type="text/javascript">
@@ -324,6 +350,8 @@
     var btn_activo = true;
     var empleado = null;
     var departamento = null;
+    var fecha_vencimiento = null;
+    var hora_vencimiento = null;
     var descripcion = null;
     var adjuntos = null;
     var url_guardar_remision = "{{url('/gestion_solicitudes/solicitud/remitir/guardar')}}"; 
@@ -362,16 +390,59 @@
                 }
                 
             });
+
+    $(function() {
+        'use strict';
+
+        // date picker 
+        if($('#flatpickr-date').length) {
+            flatpickr("#flatpickr-date", {
+            wrap: true,
+            dateFormat: "Y-m-d",
+            locale: "es",
+            });
+        }
+
+
+        // time picker
+        if($('#flatpickr-time').length) {
+            flatpickr("#flatpickr-time", {
+            wrap: true,
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            });
+        }
+
+    });
       
     $("#enviar_remision").on("click", function () {
         departamento = $("#departamento").val();
         empleado = $("#empleado").val();
+        fecha_vencimiento = $("#fecha_vencimiento").val();
+        hora_vencimiento = $("#hora_vencimiento").val();
         descripcion = tinymce.get('descripcion_solicitud').getContent();
         
+            if(fecha_vencimiento == null || fecha_vencimiento == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Por favor, asigne una fecha de vencimiento.'
+                })
+                return true;
+            }
+
+            if(hora_vencimiento == null || hora_vencimiento == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Por favor, asigne una hora de vencimiento.'
+                })
+                return true;
+            }
+            
             if(descripcion == null || descripcion == ''){
                 Toast.fire({
                     icon: 'error',
-                    title: 'Por favor, describe tu remisión antes de enviarla.'
+                    title: 'Por favor, describe tu solicitud antes de enviarla.'
                 })
                 return true;
             }
@@ -484,6 +555,8 @@
         formData.append('id_solicitud', id_solicitud);
         formData.append('empleado', empleado);
         formData.append('departamento', departamento);
+        formData.append('fecha_vencimiento', fecha_vencimiento);
+        formData.append('hora_vencimiento', hora_vencimiento);
         formData.append('descripcion', descripcion);
 
         btn_activo = false;

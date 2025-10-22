@@ -136,6 +136,8 @@ class GestionSolicitudesController extends Controller
             // Envía la solicitud POST con los demás datos
             $response = $http->post(env('API_BASE_URL_ZETA').'/api/auth/gestion_solicitudes/nueva/guardar', [
                 'departamento' => $request->departamento,
+                'fecha_vencimiento' => $request->fecha_vencimiento,
+                'hora_vencimiento' => $request->hora_vencimiento,
                 'descripcion'  => $request->descripcion,
             ]);
 
@@ -202,6 +204,8 @@ class GestionSolicitudesController extends Controller
             $response = $http->post(env('API_BASE_URL_ZETA').'/api/auth/gestion_solicitudes/solicitud/remitir/guardar', [
                 'id_solicitud' => $request->id_solicitud,
                 'departamento' => $request->departamento,
+                'fecha_vencimiento' => $request->fecha_vencimiento,
+                'hora_vencimiento' => $request->hora_vencimiento,
                 'empleado' => $request->empleado,
                 'accion' => $request->accion,
                 'descripcion'  => $request->descripcion,

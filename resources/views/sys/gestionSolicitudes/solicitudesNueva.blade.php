@@ -5,7 +5,7 @@
   <link href="{{ asset('assets/plugins/easymde/easymde.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
-  <link href="{{ asset('assets/plugins/jquery-tags-input/jquery.tagsinput.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
 @endpush
 
 @section('content_gs')
@@ -63,8 +63,17 @@
         </div>
         <div class="row mb-3">
             <label class="col-md-2 col-form-label">Fecha y hora de vencimiento:</label>
-            <div class="col-md-10">
-                <input class="form-control mb-4 mb-md-0" data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="30/12/2025 13:15:00" />
+            <div class="col-md-5">
+                <div class="input-group flatpickr" id="flatpickr-date">
+                    <input type="text" class="form-control" placeholder="Selecciona una fecha" data-input id="fecha_vencimiento">
+                    <span class="input-group-text input-group-addon" data-toggle><i data-feather="calendar"></i></span>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="input-group flatpickr" id="flatpickr-time">
+                    <input type="text" class="form-control" placeholder="Selecciona una hora" data-input id="hora_vencimiento">
+                    <span class="input-group-text input-group-addon" data-toggle><i data-feather="clock"></i></span>
+                </div>
             </div>
         </div>
     </div>
@@ -95,7 +104,9 @@
 
         <div>
             <div class="col-md-12">
-                <button class="btn btn-primary me-1 mb-1" type="button" id="enviar_solicitud">Enviar</button>
+                <div class="d-grid gap-2">
+                <button class="btn btn-primary me-1 mb-1" type="button" id="enviar_solicitud"><i data-feather="send" class="icon-lg me-2"></i> Enviar</button>
+                </div>
                 <!-- <button class="btn btn-secondary me-1 mb-1" type="button"> Cancel</button> -->
             </div>
         </div>
@@ -110,7 +121,7 @@
   <script src="{{ asset('assets/plugins/easymde/easymde.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/dropzone/dropzone.min.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-  <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/flatpickr/flatpickr.min.js') }}"></script>
 @endpush
 
 @push('custom-scripts')
@@ -119,13 +130,16 @@
   <script src="{{ asset('assets/js/tinymce.js') }}"></script>
   <script src="{{ asset('assets/js/easymde.js') }}"></script>
   <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
-  <script src="{{ asset('assets/js/inputmask.js') }}"></script>
+  <!-- <script src="{{ asset('assets/js/flatpickr.js') }}"></script> -->
+  <script src="{{ asset('assets/js/flatpickr/dist/110n/es.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
   <script type="text/javascript">
     var accion = null;
     var btn_activo = true;
     var departamento = null;
+    var fecha_vencimiento = null;
+    var hora_vencimiento = null;
     var descripcion = null;
     var adjuntos = null;
     var url_guardar_solicitud = "{{url('/gestion_solicitudes/nueva/guardar')}}"; 
@@ -176,11 +190,53 @@
       //   });
       // });
 
+    $(function() {
+        'use strict';
+
+        // date picker 
+        if($('#flatpickr-date').length) {
+            flatpickr("#flatpickr-date", {
+            wrap: true,
+            dateFormat: "Y-m-d",
+            locale: "es",
+            });
+        }
+
+
+        // time picker
+        if($('#flatpickr-time').length) {
+            flatpickr("#flatpickr-time", {
+            wrap: true,
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            });
+        }
+
+    });
       
     $("#enviar_solicitud").on("click", function () {
         departamento = $("#departamento").val();
+        fecha_vencimiento = $("#fecha_vencimiento").val();
+        hora_vencimiento = $("#hora_vencimiento").val();
         descripcion = tinymce.get('descripcion_solicitud').getContent();
         
+            if(fecha_vencimiento == null || fecha_vencimiento == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Por favor, asigne una fecha de vencimiento.'
+                })
+                return true;
+            }
+
+            if(hora_vencimiento == null || hora_vencimiento == ''){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Por favor, asigne una hora de vencimiento.'
+                })
+                return true;
+            }
+            
             if(descripcion == null || descripcion == ''){
                 Toast.fire({
                     icon: 'error',
@@ -188,7 +244,7 @@
                 })
                 return true;
             }
-            
+
             if(btn_activo){
                 guardar_solicitud();
             }
@@ -267,6 +323,8 @@
 
         // Agregar otros campos
         formData.append('departamento', departamento);
+        formData.append('fecha_vencimiento', fecha_vencimiento);
+        formData.append('hora_vencimiento', hora_vencimiento);
         formData.append('descripcion', descripcion);
 
         btn_activo = false;
