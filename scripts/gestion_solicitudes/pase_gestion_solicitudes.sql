@@ -38,11 +38,11 @@ CREATE TABLE gs_trazabilidad
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT id_departamento_remitente_foreign FOREIGN KEY (id_departamento_remitente)
-        REFERENCES per_departamento (id_departamento) MATCH SIMPLE
+        REFERENCES tbl_utic_departamentos (id_departamento) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT id_departamento_destinatario_foreign FOREIGN KEY (id_departamento_destinatario)
-        REFERENCES per_departamento (id_departamento) MATCH SIMPLE
+        REFERENCES tbl_utic_departamentos (id_departamento) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT usuario_remitente_foreign FOREIGN KEY (usuario_remitente)
