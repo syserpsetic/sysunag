@@ -42,8 +42,9 @@
             border-radius: 10px;
         }
 
+        /*Css de la foto del logo sin diseño*/
         /* Estilo del círculo */
-        .news-logo {
+        /*.news-logo {
             width: 80px;
             height: 80px;
             background: radial-gradient(circle, #ffffff, #c6f7ff);
@@ -58,7 +59,81 @@
         .news-logo img {
             width: 70px;
             height: auto;
+        }*/
+
+       /* Contenedor del logo */
+        .news-logo {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ffffff, #c6f7ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: visible;
         }
+
+        /* Imagen del logo */
+        .news-logo img {
+            width: 70px;
+            height: auto;
+            z-index: 2;
+        }
+
+        /* Aro LED navideño con 9 luces */
+        .news-logo::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 50% 0%, red 6px, transparent 7px),
+                radial-gradient(circle at 85% 20%, green 6px, transparent 7px),
+                radial-gradient(circle at 100% 50%, gold 6px, transparent 7px),
+                radial-gradient(circle at 85% 80%, red 6px, transparent 7px),
+                radial-gradient(circle at 50% 100%, green 6px, transparent 7px),
+                radial-gradient(circle at 15% 80%, gold 6px, transparent 7px),
+                radial-gradient(circle at 0% 50%, red 6px, transparent 7px),
+                radial-gradient(circle at 15% 20%, green 6px, transparent 7px),
+                radial-gradient(circle at 50% 15%, gold 6px, transparent 7px);
+            mask: radial-gradient(circle, transparent 63%, black 66%, black 68%, transparent 71%);
+            -webkit-mask: radial-gradient(circle, transparent 63%, black 66%, black 68%, transparent 71%);
+            z-index: 1;
+            pointer-events: none;
+            filter: brightness(1.4);
+            animation: parpadeo-ritmo-navidad 6s infinite;
+        }
+
+        /* Ritmo navideño alegre: encendido alternado y dinámico */
+        @keyframes parpadeo-ritmo-navidad {
+            0%   { filter: brightness(1.4); }
+            10%  { filter: brightness(0.3); }  /* LED 1 apaga */
+            20%  { filter: brightness(1.4); }  /* LED 2 enciende */
+            28%  { filter: brightness(0.3); }  /* LED 2 apaga */
+            35%  { filter: brightness(1.4); }  /* LED 3 enciende */
+            45%  { filter: brightness(0.3); }  /* LED 3 apaga */
+            50%  { filter: brightness(1.4); }  /* LED 4 enciende */
+            60%  { filter: brightness(0.3); }  /* LED 4 apaga */
+            65%  { filter: brightness(1.4); }  /* LED 5 enciende */
+            75%  { filter: brightness(0.3); }  /* LED 5 apaga */
+            80%  { filter: brightness(1.4); }  /* LED 6 enciende */
+            85%  { filter: brightness(0.3); }  /* LED 6 apaga */
+            90%  { filter: brightness(1.4); }  /* LED 7 enciende */
+            92%  { filter: brightness(0.3); }  /* LED 7 apaga */
+            94%  { filter: brightness(1.4); }  /* LED 8 enciende */
+            96%  { filter: brightness(0.3); }  /* LED 8 apaga */
+            98%  { filter: brightness(1.4); }  /* LED 9 enciende */
+            100% { filter: brightness(0.3); }  /* LED 9 apaga y reinicia ciclo */
+        }
+
+        
+
 
         /* Estilo del círculo */
         .news-perfil {
