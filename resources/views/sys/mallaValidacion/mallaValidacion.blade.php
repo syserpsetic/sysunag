@@ -266,12 +266,26 @@
                     <div class="col-lg-3 chat-aside border-end-lg">
                         <div class="aside-content">
                             <div class="aside-body">
-                                <div id="clock-container" class="text-center p-3 rounded shadow-sm mt-3"
+                                <div style="display: flex; align-items: center; justify-content: center;">
+    
+                                    <!-- Imagen vertical a la izquierda -->
+                                    
+
+                                    <!-- Reloj -->
+                                    <div id="clock-container" class="text-center p-3 rounded shadow-sm mt-3"
                                         style="background-color: #d3eed7; border: 1px solid #135423; width: 100%; font-size: 2rem; font-family: 'Segoe UI', sans-serif;">
-                                    <strong><div id="time" style="color: #135423;"></div></strong>
-                                    <div id="date" style="font-size: 1rem; color: #1ba333;"></div>
-                                    <div id="weather" style="font-size: 1rem; color: #1ba333;"></div>
+                                        <div id="clock-image" style="margin-right: 15px;">
+                                        <img src="{{ url('assets/images/arbol2.png') }}" 
+                                            alt="Decoración navideña" 
+                                            style="height: 130px; width: auto;">
+                                    </div>
+                                        <strong><div id="time" style="color: #135423;"></div></strong>
+                                        <div id="date" style="font-size: 1rem; color: #1ba333;"></div>
+                                        <div id="weather" style="font-size: 1rem; color: #1ba333;"></div>
+                                    </div>
+
                                 </div>
+
                                 @if(!empty($cumpleaños))
                                     <div class="text-center p-3 rounded shadow-sm mt-3" style="background-color: #d3eed7; border: 1px solid #135423;">
                                         <img class="rounded mb-2" 
