@@ -168,7 +168,7 @@
     </div>
     <div class="p-4 border-bottom">
         <div class="d-flex justify-content-end">
-            <p class="ms-3 tx-13">@if($row['solicitud_vencida']) <span class="badge bg-danger text-white"> {{$row['fecha_hora_vencimiento']}}</span>@else ◉ Vence: {{$row['fecha_hora_vencimiento']}} @endif</p><P></P>
+            @if($row['fecha_hora_vencimiento'] != null)<p class="ms-3 tx-13">@if($row['solicitud_vencida']) <span class="badge bg-danger text-white"> {{$row['fecha_hora_vencimiento']}}</span>@else ◉ Vence: {{$row['fecha_hora_vencimiento']}} @endif</p><P></P>@endif
         </div>
         {!!$row['descripcion']!!}
         <hr />
@@ -250,7 +250,7 @@
                                     @endforeach
                                 </select>
                             </div>
-
+                            @if($yo_help_desk)
                             <div class="col-md-5">
                                 <div class="mb-2 d-flex align-items-center">
                                     <div class="form-check me-2">
@@ -265,7 +265,15 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @else
+                            <div class="col-md-5">
+                                <div class="alert alert-fill-light" role="alert">
+                                    <strong>La presente remisión está dirigida al Help Desk de su departamento.</strong>
+                                </div>
+                            </div>
+                            @endif
                         </div>
+                        @if($yo_help_desk)
                         <div class="row mb-3">
                             <label class="col-md-2 col-form-label">Fecha y hora de vencimiento:</label>
                             <div class="col-md-5">
@@ -281,6 +289,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="px-3">
@@ -419,10 +428,10 @@
     $("#enviar_remision").on("click", function () {
         departamento = $("#departamento").val();
         empleado = $("#empleado").val();
+        descripcion = tinymce.get('descripcion_solicitud').getContent();
+        @if($yo_help_desk)
         fecha_vencimiento = $("#fecha_vencimiento").val();
         hora_vencimiento = $("#hora_vencimiento").val();
-        descripcion = tinymce.get('descripcion_solicitud').getContent();
-        
             if(fecha_vencimiento == null || fecha_vencimiento == ''){
                 Toast.fire({
                     icon: 'error',
@@ -438,7 +447,7 @@
                 })
                 return true;
             }
-            
+        @endif
             if(descripcion == null || descripcion == ''){
                 Toast.fire({
                     icon: 'error',

@@ -68,6 +68,7 @@ class GestionSolicitudesController extends Controller
         $departamentos = $response['departamentos'];
         $id_solicitud = $response['id_solicitud'];
         $remitir = $response['remitir'];
+        $yo_help_desk = $response['yo_help_desk'];
         //$detalle_trazabilidad = $response['detalle_trazabilidad'];
 
         return view('sys.gestionSolicitudes.solicitudesLeer')
@@ -80,6 +81,7 @@ class GestionSolicitudesController extends Controller
         ->with("departamentos", $departamentos)
         ->with("id_solicitud", $id_solicitud)
         ->with("remitir", $remitir)
+        ->with("yo_help_desk", $yo_help_desk)
         //->with("detalle_trazabilidad", $detalle_trazabilidad)
         ;
     }

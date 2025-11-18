@@ -26,7 +26,7 @@
                     <i data-feather="inbox" class="icon-lg me-2"></i>
                     Recibidas
                     @if($conteo_solicitudes['nuevas'] > 0)
-                        <span class="badge bg-danger fw-bolder ms-auto text-white">{{$conteo_solicitudes['nuevas']}}
+                        <span class="badge bg-danger fw-bolder ms-auto text-white">{{$conteo_solicitudes['nuevas']}}</span>
                     @endif
                   </a>
                 </li>
@@ -35,7 +35,7 @@
                     <i data-feather="send" class="icon-lg me-2"></i>
                     Enviadas
                     @if($conteo_solicitudes['enviadas_sin_leer'] > 0)
-                        <span class="badge bg-warning fw-bolder ms-auto text-dark">{{$conteo_solicitudes['enviadas_sin_leer']}}
+                        <span class="badge bg-warning fw-bolder ms-auto text-dark">{{$conteo_solicitudes['enviadas_sin_leer']}}</span>
                     @endif
                   </a>
                 </li>
