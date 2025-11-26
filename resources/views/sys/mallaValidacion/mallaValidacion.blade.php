@@ -288,11 +288,19 @@
 
                                 @if(!empty($cumpleaños))
                                     <div class="text-center p-3 rounded shadow-sm mt-3" style="background-color: #d3eed7; border: 1px solid #135423;">
+                                        @if($cumpleaños['numero_empleado'] == 1001 || $cumpleaños['numero_empleado'] == 1002)
+                                        <img class="rounded mb-2" 
+                                            src="https://setic.unag.edu.hn/img/memorial/david.webp" 
+                                            alt="Cumpleaños" 
+                                            style="width: 100%; max-width: 400px; height: auto; object-fit: cover;"
+                                            onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
+                                        @else
                                         <img class="rounded mb-2" 
                                             src="{{ url('assets/images/') }}/{{$cumpleaños['numero_empleado']}}.jpg" 
                                             alt="Cumpleaños" 
                                             style="width: 100%; max-width: 400px; height: auto; object-fit: cover;"
                                             onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
+                                        @endif
 
                                         <div>
                                             <small class="d-block mb-1" style="color: #135423;">
