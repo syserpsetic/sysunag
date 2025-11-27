@@ -27,6 +27,14 @@
         </a>
       </li>
       @endif
+      @if(in_array('malla_validacion', $scopes))
+      <li class="nav-item {{ active_class(['setic/indicadores']) }}">
+        <a href="{{ url('/setic/indicadores') }}" class="nav-link">
+          <i class="link-icon" data-feather="pie-chart"></i>
+          <span class="link-title">Indicadores</span>
+        </a>
+      </li>
+      @endif
       @if(in_array('egresados_all', $scopes))
       <li class="nav-item {{ active_class(['egresados/datos_generales']) }}">
         <a href="{{ url('/egresados/datos_generales') }}" class="nav-link">

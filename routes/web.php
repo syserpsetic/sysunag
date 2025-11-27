@@ -22,6 +22,7 @@ use App\Http\Controllers\Egresados\ReportsEgresadosController;
 use App\Http\Controllers\Setic\SeticController;
 use App\Http\Controllers\Psicologia\PsicologiaController;
 use App\Http\Controllers\GestionSolicitudes\GestionSolicitudesController;
+use App\Http\Controllers\Indicadores\IndicadoresController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -97,6 +98,10 @@ Route::middleware('auth')->group(function () {
         Route::get("setic/malla_validacion/malla_parametrizacion_estudiantes", [MallaValidacionController::class, 'malla_parametrizacion_estudiantes']); 
         Route::get("setic/malla_validacion/malla_estudiantes_sin_matricula", [MallaValidacionController::class, 'malla_estudiantes_sin_matricula']); 
     //Finaliza Malla Validaciones
+
+    //Inicia Indicadores
+        Route::get('/setic/indicadores', [IndicadoresController::class, 'indicadores'])->name('indicadores');
+    //Finaliza Indicadores
 
     //Inicia Egresados
         Route::get('/egresados/datos_generales', [EgresadosController::class, 'ver_datos_generales'])->name('egresados');
