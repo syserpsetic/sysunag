@@ -336,7 +336,7 @@
     if (!root.totalLabel) {
         root.totalLabel = root.container.children.push(
             am5.Label.new(root, {
-                text: "Total: " + total,
+                text: "TOTAL: " + total,
                 x: 20,       // píxeles desde la izquierda
                 y: 20,       // píxeles desde arriba
                 fontSize: 12,
