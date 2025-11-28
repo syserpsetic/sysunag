@@ -29,11 +29,15 @@ class IndicadoresController extends Controller
         
         //throw new Exception($response->status());
         $scopes = $response['scopes'];
-        $conteo_empleados = $response['conteo_empleados'];
+        $anio_actual = $response['anio_actual'];
+        $conteo_empleados_anio_actual = $response['conteo_empleados_anio_actual'];
+        $conteo_empleados_general = $response['conteo_empleados_general'];
 
         return view("sys.indicadores.indicadores")
         ->with("scopes", $scopes)
-        ->with("conteo_empleados", $conteo_empleados)
+        ->with("anio_actual", $anio_actual)
+        ->with("conteo_empleados_anio_actual", $conteo_empleados_anio_actual)
+        ->with("conteo_empleados_general", $conteo_empleados_general)
         ;
     }
 }
