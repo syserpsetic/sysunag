@@ -339,7 +339,8 @@
                 text: "Total: " + total,
                 x: 20,       // píxeles desde la izquierda
                 y: 20,       // píxeles desde arriba
-                fontSize: 16,
+                fontSize: 12,
+                fontWeight: 'bold',
                 fill: am5.color(0x000000)
             })
         );
