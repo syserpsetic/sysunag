@@ -345,7 +345,7 @@
             })
         );
     } else {
-        root.totalLabel.set("text", "Total: " + total);
+        root.totalLabel.set("text", "TOTAL: " + total);
     }
 
         });
