@@ -6,6 +6,16 @@
 @endpush
 
 @section('content')
+<div class="row">
+  <div class="col-md-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title"><i data-feather="pie-chart" style="width: 20px; height: 20px;"></i> <strong>Indicadores</strong> </h6>
+        <p>Pantalla que muestra los indicadores clave del sistema mediante gráficos y conteos resumidos para una rápida visualización del estado general.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-xl-6 stretch-card">
@@ -26,6 +36,17 @@
     </div>
   </div>
 </div>
+<br>
+<div class="row">
+  <div class="col-xl-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Matriculados Por Departamentos</h6>
+        <div id="chartdiv" style="width:100%; height:500px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 @push('plugin-scripts')
@@ -39,12 +60,18 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=mzutkZDE"></script>
   
-   <!--  <script src="{{ asset('assets/js/amcharts/lib/5/index.js') }}"></script>
-    <script src="{{ asset('assets/js/amcharts/lib/5/xy.js') }}"></script>
+    <script src="{{ asset('assets/js/amcharts/lib/5/index.js') }}"></script>
+   <!--  <script src="{{ asset('assets/js/amcharts/lib/5/xy.js') }}"></script>
     <script src="{{ asset('assets/js/amcharts/lib/5/themes/Animated.js') }}"></script>
     <script src="{{ asset('assets/js/amcharts/lib/5/geodata/germanyLow.js') }}"></script>
     <script src="{{ asset('assets/js/amcharts/lib/5/fonts/notosans-sc.js') }}"></script>
     <script src="{{ asset('assets/js/amcharts/lib/5/locales/es_ES.js') }}"></script> -->
+
+    <!-- <script src="https://cdn.amcharts.com/lib/5/index.js"></script> -->
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/hondurasHigh.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
   <script type="text/javascript">
     var table = null; 
 
@@ -219,8 +246,110 @@
         }
         // Apex Bar chart end
         //Finaliza conteo_empleados_general
-    });
+        // Create root
+        var root = am5.Root.new("chartdiv");
+
+        // Set themes
+        root.setThemes([
+        am5themes_Animated.new(root)
+        ]);
+
+        // Create chart
+        var chart = root.container.children.push(
+        am5map.MapChart.new(root, {
+            panX: "rotateX",
+            panY: "none",
+            projection: am5map.geoMercator(), // Mejor proyección para Honduras
+            layout: root.horizontalLayout
+        })
+        );
+
+        // Create polygon series
+        var polygonSeries = chart.series.push(
+        am5map.MapPolygonSeries.new(root, {
+            geoJSON: am5geodata_hondurasHigh,  // ← Mapa de Honduras
+            valueField: "value",
+            calculateAggregates: true
+        })
+        );
+
+        // Tooltip
+        polygonSeries.mapPolygons.template.setAll({
+        tooltipText: "{name}: {value}"
+        });
+
+        // Color por valor
+        polygonSeries.set("heatRules", [{
+        target: polygonSeries.mapPolygons.template,
+        dataField: "value",
+        min: am5.color(0x1ba333),   // #1ba333 
+        max: am5.color(0x135423),   // #135423
+        key: "fill"
+        }]);
+
+        // Mostrar valor al pasar el mouse
+        polygonSeries.mapPolygons.template.events.on("pointerover", function(ev) {
+        heatLegend.showValue(ev.target.dataItem.get("value"));
+        });
+
+        // Datos por departamento
+        var matriculados_zonas = "{{$matriculados_zonas['mapa']}}";
+        var matriculados_zonasLimpio = matriculados_zonas.replace(/&quot;/g, '"');
+        var matriculados_zonas = JSON.parse("[" + matriculados_zonasLimpio + "]");
+        polygonSeries.data.setAll(matriculados_zonas[0]);
+
+        // Heat legend
+        var heatLegend = chart.children.push(
+        am5.HeatLegend.new(root, {
+            orientation: "vertical",
+            startColor: am5.color(0x1ba333),
+            endColor: am5.color(0x135423),
+            startText: "Menor",
+            endText: "Mayor",
+            stepCount: 5
+        })
+        );
+
+        // Labels de la leyenda
+        heatLegend.startLabel.setAll({
+        fontSize: 12,
+        fill: heatLegend.get("startColor")
+        });
+
+        heatLegend.endLabel.setAll({
+        fontSize: 12,
+        fill: heatLegend.get("endColor")
+        });
+
+        // Actualizar valores de leyenda
+        polygonSeries.events.on("datavalidated", function () {
+        heatLegend.set("startValue", polygonSeries.getPrivate("valueLow"));
+        heatLegend.set("endValue", polygonSeries.getPrivate("valueHigh"));
 
 
+    // Calcular total
+    var total = polygonSeries.dataItems.reduce(function(sum, di) {
+        return sum + (di.get("value") || 0);
+    }, 0);
+
+    // Label del total usando un container flotante
+    if (!root.totalLabel) {
+        root.totalLabel = root.container.children.push(
+            am5.Label.new(root, {
+                text: "Total: " + total,
+                x: 20,       // píxeles desde la izquierda
+                y: 20,       // píxeles desde arriba
+                fontSize: 16,
+                fill: am5.color(0x000000)
+            })
+        );
+    } else {
+        root.totalLabel.set("text", "Total: " + total);
+    }
+
+        });
+   
+}); 
+    
   </script>
 @endpush

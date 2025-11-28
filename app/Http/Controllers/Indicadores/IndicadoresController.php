@@ -32,12 +32,14 @@ class IndicadoresController extends Controller
         $anio_actual = $response['anio_actual'];
         $conteo_empleados_anio_actual = $response['conteo_empleados_anio_actual'];
         $conteo_empleados_general = $response['conteo_empleados_general'];
+        $matriculados_zonas = $response['matriculados_zonas'];
 
         return view("sys.indicadores.indicadores")
         ->with("scopes", $scopes)
         ->with("anio_actual", $anio_actual)
         ->with("conteo_empleados_anio_actual", $conteo_empleados_anio_actual)
         ->with("conteo_empleados_general", $conteo_empleados_general)
+        ->with("matriculados_zonas", $matriculados_zonas)
         ;
     }
 }
