@@ -294,6 +294,12 @@
                                             alt="Cumpleaños" 
                                             style="width: 100%; max-width: 400px; height: auto; object-fit: cover;"
                                             onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
+                                        @elseif($cumpleaños['numero_empleado'] == 672)
+                                        <img class="rounded mb-2" 
+                                            src="https://setic.unag.edu.hn/img/memorial/robin.webp" 
+                                            alt="Cumpleaños" 
+                                            style="width: 100%; max-width: 400px; height: auto; object-fit: cover;"
+                                            onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
                                         @else
                                         <img class="rounded mb-2" 
                                             src="{{ url('assets/images/') }}/{{$cumpleaños['numero_empleado']}}.jpg" 
