@@ -52,6 +52,11 @@ Route::get('/error', function () {
     return view('pages.error.construccion');
 })->name('error');
 
+Route::get('/estadistica', function () {
+    // alguna lógica rápida
+    return view('sys.estadistica.estadistica');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout');
