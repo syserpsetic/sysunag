@@ -68,7 +68,7 @@ $(function () {
         heatLegend.showValue(ev.target.dataItem.get("value"));
     });
 
-    polygonSeries.data.setAll([{"id" : "EXTR", "value" : 4}, {"id" : "HN-AT", "value" : 129}, {"id" : "HN-CH", "value" : 327}, {"id" : "HN-CL", "value" : 150}, {"id" : "HN-CM", "value" : 570}, {"id" : "HN-CP", "value" : 198}, {"id" : "HN-CR", "value" : 223}, {"id" : "HN-EP", "value" : 751}, {"id" : "HN-FM", "value" : 1021}, {"id" : "HN-GD", "value" : 127}, {"id" : "HN-IB", "value" : 9}, {"id" : "HN-IN", "value" : 405}, {"id" : "HN-LM", "value" : 415}, {"id" : "HN-LP", "value" : 307}, {"id" : "HN-OC", "value" : 134}, {"id" : "HN-OL", "value" : 1217}, {"id" : "HN-SB", "value" : 109}, {"id" : "HN-VA", "value" : 71}, {"id" : "HN-YO", "value" : 375}]);
+    polygonSeries.data.setAll([{"id" : "EXTR", "value" : 2}, {"id" : "HN-AT", "value" : 96}, {"id" : "HN-CH", "value" : 112}, {"id" : "HN-CL", "value" : 61}, {"id" : "HN-CM", "value" : 214}, {"id" : "HN-CP", "value" : 71}, {"id" : "HN-CR", "value" : 77}, {"id" : "HN-EP", "value" : 277}, {"id" : "HN-FM", "value" : 355}, {"id" : "HN-GD", "value" : 44}, {"id" : "HN-IB", "value" : 3}, {"id" : "HN-IN", "value" : 147}, {"id" : "HN-LM", "value" : 140}, {"id" : "HN-LP", "value" : 109}, {"id" : "HN-OC", "value" : 50}, {"id" : "HN-OL", "value" : 526}, {"id" : "HN-SB", "value" : 42}, {"id" : "HN-VA", "value" : 24}, {"id" : "HN-YO", "value" : 128}]);
 
     // Heat legend
     var heatLegend = chart.children.push(
