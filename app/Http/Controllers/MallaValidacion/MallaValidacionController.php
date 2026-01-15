@@ -273,4 +273,22 @@ class MallaValidacionController extends Controller
         
         return back();
     }
+
+    public function malla_estudiantes_id_matricula(Request $request){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA').'/api/auth/setic/malla_validacion/malla_estudiantes_id_matricula');
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        
+        //throw new Exception($response->status());
+        $scopes = $response['scopes'];
+        $estudiantes = $response['estudiantes'];
+
+        return view("sys.mallaValidacion.estudiantesSinIdMatricula")
+        ->with("estudiantes", $estudiantes)
+        ->with('scopes', $scopes);
+    }
 }

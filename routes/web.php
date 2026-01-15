@@ -102,6 +102,7 @@ Route::middleware('auth')->group(function () {
         Route::get("setic/malla_validacion/malla_secciones_sobrepobladas", [MallaValidacionController::class, 'malla_secciones_sobrepobladas']); 
         Route::get("setic/malla_validacion/malla_parametrizacion_estudiantes", [MallaValidacionController::class, 'malla_parametrizacion_estudiantes']); 
         Route::get("setic/malla_validacion/malla_estudiantes_sin_matricula", [MallaValidacionController::class, 'malla_estudiantes_sin_matricula']); 
+        Route::get("setic/malla_validacion/malla_estudiantes_id_matricula", [MallaValidacionController::class, 'malla_estudiantes_id_matricula']); 
     //Finaliza Malla Validaciones
 
     //Inicia Indicadores
