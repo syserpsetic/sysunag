@@ -66,6 +66,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', [PageController::class, 'dashboardOverview1']);
     Route::get('/estructura_menu', [PageController::class, 'menu']);
+    Route::get('/alerta_solicitudes', [PageController::class, 'alerta_solicitudes']);
     Route::get('/reporte-prueba', [ReportsEgresadosController::class, 'prueba']);
 
     //Inincia SETIC

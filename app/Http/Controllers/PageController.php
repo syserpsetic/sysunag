@@ -104,6 +104,17 @@ class PageController extends Controller
         return response()->json($menu);
     }
 
+    public function alerta_solicitudes()
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/gestion_solicitudes/alerta_solicitudes');
+
+        $solicitudes_nuevas = $response['solicitudes_nuevas'];
+
+        return response()->json($solicitudes_nuevas);
+    }
+
     /**
      * Show specified view.
      *
