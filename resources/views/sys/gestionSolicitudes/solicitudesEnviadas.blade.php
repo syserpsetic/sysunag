@@ -15,7 +15,7 @@
                   <div class="d-flex align-items-end mb-2 mb-md-0">
                     <i data-feather="send" class="text-muted me-2"></i>
                     <h4 class="me-1">Solicitudes Enviadas</h4>
-                     <span class="text-muted">(2 solitudes nuevas)</span> 
+                     <!-- <span class="text-muted">(2 solitudes nuevas)</span>  -->
                   </div>
                 </div>
                 <div class="col-lg-6">
