@@ -76,3 +76,22 @@ CREATE TABLE gs_adjuntos
 GRANT UPDATE, INSERT, SELECT, DELETE ON TABLE gs_adjuntos TO erpunag;
 GRANT SELECT ON TABLE gs_adjuntos TO cmatute, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
 GRANT USAGE ON gs_adjuntos_id_seq TO erpunag, reports, cmatute, erpunag, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
+
+--4. Crear tabla gs_estados
+CREATE TABLE gs_estados
+(
+    id serial,
+    nombre text,
+	descripcion text,
+    created_at timestamp(0) without time zone default now(),
+    updated_at timestamp(0) without time zone,
+    deleted_at timestamp(0) without time zone,
+    CONSTRAINT gs_estados_pkey PRIMARY KEY (id)
+);
+GRANT UPDATE, INSERT, SELECT, DELETE ON TABLE gs_estados TO erpunag;
+GRANT SELECT ON TABLE gs_estados TO cmatute, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
+GRANT USAGE ON gs_estados_id_seq TO erpunag, reports, cmatute, erpunag, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
+
+insert into gs_estados (nombre, descripcion) values ('Terminado', 'Este estado indica que la solicitud ha sido terminada departe del help desk, este estado deja el proceso en reposo.');
+insert into gs_estados (nombre, descripcion) values ('Confirmado', 'Este estado indica que la solicitud ha sido terminada departe del help desk y confirmada departe del solicitande de origen, este estado termina definitivamente el proceoso.');
+insert into gs_estados (nombre, descripcion) values ('Retornado', 'Este estado indica que la solicitud ha sido retornada departe del solicitande hacia el help dek, este estado reactiva el proceso.');

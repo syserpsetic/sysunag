@@ -62,12 +62,12 @@ class ApiAuthController extends Controller
                 ]);   
         }
         
-        
         if ($response->status() === 200) {
             $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
             $user = User::firstOrNew([$fieldType => $request->input('email')]);
             $user->name = $userData['name'];
             $user->password = '0';
+            $user->email = $userData['email'];
             $user->save();
             Session::put('token', $userData['token']);
             Session::put('bienvenida', $userData['bienvenida']);
