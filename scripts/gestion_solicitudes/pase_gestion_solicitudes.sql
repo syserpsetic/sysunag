@@ -92,6 +92,6 @@ GRANT UPDATE, INSERT, SELECT, DELETE ON TABLE gs_estados TO erpunag;
 GRANT SELECT ON TABLE gs_estados TO cmatute, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
 GRANT USAGE ON gs_estados_id_seq TO erpunag, reports, cmatute, erpunag, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
 
-insert into gs_estados (nombre, descripcion) values ('Terminado', 'Este estado indica que la solicitud ha sido terminada departe del help desk, este estado deja el proceso en reposo.');
-insert into gs_estados (nombre, descripcion) values ('Confirmado', 'Este estado indica que la solicitud ha sido terminada departe del help desk y confirmada departe del solicitande de origen, este estado termina definitivamente el proceoso.');
-insert into gs_estados (nombre, descripcion) values ('Retornado', 'Este estado indica que la solicitud ha sido retornada departe del solicitande hacia el help dek, este estado reactiva el proceso.');
+insert into gs_estados (nombre, descripcion) values ('En Proceso', 'Este estado indica que la solicitud esta siendo procesada.');
+insert into gs_estados (nombre, descripcion) values ('En Revisión', 'Este estado indica que la solicitud ha sido terminada y enviada a revisar departe del help desk esperando que el solicitante revise y confirme terminar el proceso.');
+insert into gs_estados (nombre, descripcion) values ('Terminado', 'Este estado indica que la solicitud ha sido terminada departe del solicitante, este estado cierra el proceso de la soliciud.');

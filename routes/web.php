@@ -48,15 +48,18 @@ Route::get('/login_egresados', [ApiAuthController::class, 'showLoginFormEgresado
 Route::post('/login_egresados', [ApiAuthController::class, 'login']);
 
 Route::get('/error', function () {
-    // alguna lógica rápida
     return view('pages.error.construccion');
 })->name('error');
 
 Route::get('/estadistica', function () {
-    // alguna lógica rápida
     return view('sys.estadistica.estadistica');
 });
 
+Route::get('/egresados_activacion_cuenta', function () {
+    return view('sys.egresados.activacion_cuenta');
+});
+
+Route::post('/egresados_activacion_cuenta/enviar', [EgresadosController::class, 'activacion_cuenta_enviar'])->name('activacion_cuenta_enviar');
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout');

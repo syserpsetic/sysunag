@@ -242,4 +242,21 @@ class EgresadosController extends Controller
             "msgError" => $msgError
         ]);
     }
+
+    public function activacion_cuenta_enviar(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        //dd($request->all());
+        $response = Http::post(
+            env('API_BASE_URL_ZETA') . '/api/auth/egresados/correo_activacion_cuenta',
+            $request->all()
+        );
+
+        if ($response->successful()) {
+            // return redirect('/login_egresados');
+            return redirect('/egresados_activacion_cuenta')->with(['success' => 'Hemos recibido su solicitud correctamente. La notificación correspondiente será enviada a su correo electrónico personal.']);
+        }
+
+        return back()->withErrors(['error' => 'Error al enviar']);
+    }
 }

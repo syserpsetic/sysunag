@@ -52,6 +52,7 @@
           </div>
         </div>
       </li> -->
+      @if(in_array('gestion_solicitudes_recibidas', $scopes))
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i data-feather="mail"></i>
@@ -61,7 +62,7 @@
         </a>
         <div class="dropdown-menu p-0" aria-labelledby="messageDropdown">
           <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
-            <p id="conteo_solicitudes">9 Solicitudes nuevas</p>
+            <p id="conteo_solicitudes">0 Solicitudes nuevas</p>
             <!-- <a href="javascript:;" class="text-muted">Clear all</a> -->
           </div>
           <div class="p-1" id="detalle_solicitudes">
@@ -84,6 +85,7 @@
           </div>
         </div>
       </li>
+      @endif
       <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i data-feather="bell"></i>
@@ -223,7 +225,7 @@ function alertaSolicitudes() {
         var row = solicitudes_nuevas[i];
         $("#detalle_solicitudes").append(`<a href="{{ url('/gestion_solicitudes/solicitud/`+row.id_solicitud+`/leer') }}" class="dropdown-item d-flex align-items-center py-2">
               <div class="me-3">
-                <img class="wd-30 ht-30 rounded-circle" src="{{ url('https://portal.unag.edu.hn/matricula/documentos/fotos/`+row.foto+`') }}" alt="userr">
+                <img class="wd-30 ht-30 rounded-circle" src="{{ url('https://portal.unag.edu.hn/matricula/documentos/fotos/`+row.foto+`') }}" alt="" onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
               </div>
               <div class="d-flex justify-content-between flex-grow-1">
                 <div class="me-4">
