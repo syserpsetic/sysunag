@@ -329,6 +329,14 @@
                 @endif
             </small>
 
+            <small class="txt-blanco">
+                @if(session('error'))
+                    <p style="color: #e30d0d;">
+                                <strong>{{ session('error') }}</strong>
+                            </p>
+                @endif
+            </small>
+
             <div class="uk-margin-large-top uk-text-center">
                 <a href="https://setic.unag.edu.hn" target="_blank">
                     <img
