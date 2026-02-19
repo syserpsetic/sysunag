@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Crypt;
 
 class ApiAuthController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
+
     public function showLoginForm()
     {
         return view('pages.auth.login', [
