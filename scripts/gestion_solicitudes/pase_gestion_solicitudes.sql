@@ -26,7 +26,7 @@ CREATE TABLE gs_trazabilidad
     id_departamento_remitente bigint,
     usuario_remitente text,
     id_departamento_destinatario bigint,
-    usuario_destinatario text,
+    --usuario_destinatario text,
     fecha_hora_vencimiento timestamp(0) without time zone,
 	solicitud_vista timestamp(0) without time zone,
     created_at timestamp(0) without time zone default now(),
@@ -48,15 +48,39 @@ CREATE TABLE gs_trazabilidad
     CONSTRAINT usuario_remitente_foreign FOREIGN KEY (usuario_remitente)
         REFERENCES users (username) MATCH SIMPLE
         ON UPDATE NO ACTION
+        ON DELETE NO ACTION/*,
+    CONSTRAINT usuario_destinatario_foreign FOREIGN KEY (usuario_destinatario)
+        REFERENCES users (username) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION*/
+);
+GRANT UPDATE, INSERT, SELECT, DELETE ON TABLE gs_trazabilidad TO erpunag;
+GRANT SELECT ON TABLE gs_trazabilidad TO cmatute, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
+GRANT USAGE ON gs_trazabilidad_id_seq TO erpunag, reports, cmatute, erpunag, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
+
+
+CREATE TABLE gs_trazabilidad_ususarios_destinatarios
+(
+    id serial,
+    id_trazabilidad bigint,
+    usuario_destinatario text,
+	solicitud_vista timestamp(0) without time zone,
+    created_at timestamp(0) without time zone default now(),
+    updated_at timestamp(0) without time zone,
+    deleted_at timestamp(0) without time zone,
+    CONSTRAINT gs_trazabilidad_ususarios_destinatarios_pkey PRIMARY KEY (id),
+    CONSTRAINT id_trazabilidad_foreign FOREIGN KEY (id_trazabilidad)
+        REFERENCES gs_trazabilidad (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT usuario_destinatario_foreign FOREIGN KEY (usuario_destinatario)
         REFERENCES users (username) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
-GRANT UPDATE, INSERT, SELECT, DELETE ON TABLE gs_trazabilidad TO erpunag;
-GRANT SELECT ON TABLE gs_trazabilidad TO cmatute, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
-GRANT USAGE ON gs_trazabilidad_id_seq TO erpunag, reports, cmatute, erpunag, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
+GRANT UPDATE, INSERT, SELECT, DELETE ON TABLE gs_trazabilidad_ususarios_destinatarios TO erpunag;
+GRANT SELECT ON TABLE gs_trazabilidad_ususarios_destinatarios TO cmatute, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
+GRANT USAGE ON gs_trazabilidad_ususarios_destinatarios_id_seq TO erpunag, reports, cmatute, erpunag, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
 
 --3. Crear tabla gs_adjuntos
 CREATE TABLE gs_adjuntos

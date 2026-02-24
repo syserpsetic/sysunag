@@ -81,7 +81,7 @@
 <div class="d-flex align-items-center justify-content-between p-3 border-bottom tx-16">
     <div class="d-flex align-items-center">
         <!--<i data-feather="star" class="text-primary icon-lg me-2"></i>-->
-        <span>{{$row['departamento_remitente']}} | GS-{{$row['id_solicitud']}}</span>
+        <span><b>{{$row['departamento_remitente']}} | GS-{{$row['id_solicitud']}}</b></span>
     </div>
     <div>
         <!-- <span>Remisiones</span> -->
@@ -112,7 +112,7 @@
         <div class="d-flex align-items-center">
             <a href="#" class="text-body">{{$row['name_remitente']}}</a>
             <span class="mx-2 text-muted">para</span>
-            <a href="#" class="text-body me-2">{{$row['departamento_destinatario']}}<small class="mx-2 text-muted">{{$row['name_destinatario']}}</small></a>
+            <a href="#" class="text-body me-2">{{$row['departamento_destinatario']}}<small class="mx-2 text-muted">{!!$row['name_destinatario']!!}</small></a>
             <!-- <div class="actions dropdown">
                     <a href="#" data-bs-toggle="dropdown"><i data-feather="chevron-down" class="icon-lg text-muted"></i></a>
                     <div class="dropdown-menu" role="menu">
@@ -125,7 +125,7 @@
                   </div> -->
         </div>
     </div>
-    <div class="tx-13 text-muted mt-2 mt-sm-0">{{$row['fecha_hora']}} @if($row['solicitud_vista'])<i data-feather="check" class="icon-xs text-success"></i>@endif</div>
+    <div class="tx-13 text-muted mt-2 mt-sm-0">{{$row['fecha_hora']}} {{--@if($row['solicitud_vista'])<i data-feather="check" class="icon-xs text-success"></i>@endif--}}</div>
 </div>
 <div class="p-4 border-bottom">
     <div class="d-flex justify-content-end">
@@ -161,10 +161,10 @@
             <div class="d-flex align-items-center">
                 <a href="#" class="text-body">{{$row['name_remitente']}}</a>
                 <span class="mx-2 text-muted">para</span>
-                <a href="#" class="text-body me-2">{{$row['departamento_destinatario']}}<small class="mx-2 text-muted">{{$row['name_destinatario']}}</small></a>
+                <a href="#" class="text-body me-2">{{$row['departamento_destinatario']}}<small class="mx-2 text-muted">{!!$row['name_destinatario']!!}</small></a>
             </div>
         </div>
-        <div class="tx-13 text-muted mt-2 mt-sm-0">{{$row['fecha_hora']}} @if($row['solicitud_vista'])<i data-feather="check" class="icon-xs text-success"></i>@endif</div>
+        <div class="tx-13 text-muted mt-2 mt-sm-0">{{$row['fecha_hora']}} {{--@if($row['solicitud_vista'])<i data-feather="check" class="icon-xs text-success"></i>@endif--}}</div>
     </div>
     <div class="p-4 border-bottom">
         <div class="d-flex justify-content-end">
