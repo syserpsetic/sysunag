@@ -36,7 +36,7 @@
         </a>
       </li>
       @endif
-      @if(in_array('malla_validacion', $scopes))
+      @if(in_array('empleado_setic', $scopes))
       <li class="nav-item {{ active_class(['setic/indicadores']) }}">
         <a href="{{ url('/setic/indicadores') }}" class="nav-link">
           <i class="link-icon" data-feather="pie-chart"></i>
