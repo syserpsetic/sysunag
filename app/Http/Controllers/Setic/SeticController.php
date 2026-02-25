@@ -26,7 +26,6 @@ class SeticController extends Controller
         $scopes = $response['scopes'];
         $resumen = $response['resumen'];
 
-        $scopes = array();
 
         return view($this->ruta_base_blade_setic.'usuarios')
         ->with('resumen',$resumen)
