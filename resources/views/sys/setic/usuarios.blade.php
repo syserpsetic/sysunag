@@ -119,7 +119,7 @@
                         data: 'foto',
                         render: function (data, type, row) {
                             return `<img
-                                                                src="{{ asset('/matricula/documentos/fotos/')}}/${data}"
+                                                                src="https://portal.unag.edu.hn/matricula/documentos/fotos/${data}"
                                                                 class="img-xs rounded-circle"
                                                                 alt="user"
                                                                 onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';"

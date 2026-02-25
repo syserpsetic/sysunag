@@ -11,6 +11,15 @@
     </div>
   </div>
   <div class="sidebar-body">
+    <!-- <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+      <div class="mb-3">
+        <img class="wd-80 ht-80 rounded-circle" src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{@session('foto')}}" alt="" onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';">
+      </div>
+      <div class="text-center">
+        <p class="tx-4 fw-bolder">{{ Auth::user()->name }}</p>
+          {{--<p class="tx-12 text-muted">{{ Auth::user()->username }}</p>--}}
+      </div>
+    </div> -->
     <ul class="nav">
       <li class="nav-item nav-category">Todo</li>
       <li class="nav-item {{ active_class(['/']) }}">

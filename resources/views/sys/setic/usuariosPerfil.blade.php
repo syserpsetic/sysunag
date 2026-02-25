@@ -18,7 +18,7 @@
                     <div>
                         <img
                             class="wd-70 rounded-circle"
-                            src="{{ asset('/matricula/documentos/fotos/')}}/{{$user['foto']}}"
+                            src="https://portal.unag.edu.hn/matricula/documentos/fotos/{{$user['foto']}}"
                             alt="profile"
                             alt="user"
                             onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/user2-403d6e88.png')) }}';"
