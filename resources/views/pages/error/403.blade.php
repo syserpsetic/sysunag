@@ -9,7 +9,9 @@
       <h1 class="fw-bolder mb-22 mt-2 tx-80 text-muted">403</h1>
       <h4 class="mb-2">Acceso denegado</h4>
       <h6 class="text-muted mb-3 text-center">Lo sentimos, no tienes permiso para acceder a esta página.</h6>
-      <a href="{{ url('/') }}">Volver al inicio</a>
+      <a onclick="history.back()" class="btn btn-primary">
+        Regresar
+      </a>
     </div>
   </div>
 

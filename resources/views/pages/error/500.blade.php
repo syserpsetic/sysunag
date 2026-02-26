@@ -9,7 +9,9 @@
       <h1 class="fw-bolder mb-22 mt-2 tx-80 text-muted">500</h1>
       <h4 class="mb-2">Error interno del servidor</h4>
       <h6 class="text-muted mb-3 text-center">Lo sentimos, ha ocurrido un problema inesperado en el servidor.</h6>
-      <a href="{{ url('/') }}">Volver al inicio</a>
+      <a onclick="history.back()" class="btn btn-primary">
+        Regresar
+      </a>
     </div>
   </div>
 
