@@ -12,8 +12,8 @@
                 <span class="icon"><i data-feather="chevron-down"></i></span>
               </button>
               <div class="order-first">
-                <h4>Gestión de Solicitudes</h4>
-                <p class="text-muted">UNAG</p>
+                <h4><b>Gestión de Solicitudes</b></h4>
+                <img src="{{ url(asset('/assets/images/UNAG_COLOR.png')) }}" alt="Logo" style="height: 40px; width: auto; margin-right: 5px;">
               </div>
             </div>
             <div class="d-grid my-3">
