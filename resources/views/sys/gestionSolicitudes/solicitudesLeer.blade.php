@@ -76,6 +76,44 @@
       cursor: pointer;
       font-size: 16px;
     }
+    #btnRemitir {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-fixed-top {
+        position: fixed;
+        top: 80px; /* más abajo, no tan arriba */
+        right: 30px;
+        z-index: 1050;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        transform: translateY(0);
+        animation: fadeSlide 0.3s ease-in-out;
+    }
+
+    @keyframes fadeSlide {
+        from {
+            opacity: 0;
+            transform: translateY(-15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .tooltip .tooltip-inner {
+    background-color: #000000 !important; /* fondo blanco */
+    color: #ffffff !important;            /* texto negro */
+    border: 1px solid #000000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .tooltip.bs-tooltip-bottom .tooltip-arrow::before,
+    .tooltip.bs-tooltip-top .tooltip-arrow::before,
+    .tooltip.bs-tooltip-start .tooltip-arrow::before,
+    .tooltip.bs-tooltip-end .tooltip-arrow::before {
+        border-color: #fff !important; /* flecha blanca */
+    }
 </style>
 @foreach($detalle_solicitud as $row) @if($loop->first)
 <div class="d-flex align-items-center justify-content-between p-3 border-bottom tx-16">
@@ -86,7 +124,14 @@
     <div>
         <!-- <span>Remisiones</span> -->
          @if($remitir)
-          <a class="me-2" type="button" data-bs-toggle="modal" data-bs-target="#modal_remision"><i data-feather="share" class="text-muted icon-lg"></i></a>
+          <a id="btnRemitir"
+            class="btn btn-primary btn-xs"
+            data-bs-toggle="modal"
+            data-bs-target="#modal_remision"
+            title="Haz clic aquí para remitir la solicitud al finalizar.">
+            <i data-feather="share" class="text-white icon-lg pb-3px"></i> 
+            Remitir
+            </a>
           @endif
         <!--  <div class="actions dropdown">
                     <a href="#" data-bs-toggle="dropdown"><i data-feather="share" class="icon-lg text-muted"></i></a>
@@ -368,6 +413,32 @@
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        const btn = document.getElementById("btnRemitir");
+        const offset = btn.offsetTop;
+
+        // Inicializar tooltip manual
+        const tooltip = new bootstrap.Tooltip(btn, {
+            placement: 'bottom',
+            trigger: 'manual'
+        });
+
+        // Mostrar tooltip automáticamente
+        tooltip.show();
+
+        // Ocultar después de 5 segundos
+        setTimeout(function () {
+            tooltip.hide();
+        }, 10000);
+
+        // Scroll flotante
+        window.addEventListener("scroll", function() {
+            if (window.scrollY > offset) {
+                btn.classList.add("btn-fixed-top");
+            } else {
+                btn.classList.remove("btn-fixed-top");
             }
         });
 
