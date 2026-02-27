@@ -131,7 +131,7 @@
 
             </tr>
 
-            <!-- <div @if($row['solicitud_vista']) class="email-list-item" @else class="email-list-item email-list-item--unread" @endif>
+            {{-- <div @if($row['solicitud_vista']) class="email-list-item" @else class="email-list-item email-list-item--unread" @endif>
                 <a href="{{ url('/gestion_solicitudes/solicitud/') }}/{{$row['id_solicitud']}}/leer" class="email-list-detail">
                     <div class="content">
                     <span class="from">
@@ -149,7 +149,7 @@
                     {{$row['fecha']}}
                     </span>
                 </a>
-            </div> -->
+            </div> --}}
         @endforeach
 
         </tbody>
@@ -185,6 +185,7 @@
                     [10, 30, 50, 100,"Todo"]
                 ],
                 "iDisplayLength": 10,
+                order: [],
                 language: {
                     processing:     "Procesando...",
                     search:         "Buscar:",
