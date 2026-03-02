@@ -481,6 +481,7 @@
             wrap: true,
             dateFormat: "Y-m-d",
             locale: "es",
+            minDate: "today",
             });
         }
 
@@ -492,6 +493,7 @@
             enableTime: true,
             noCalendar: true,
             dateFormat: "H:i",
+            minTime: "today"
             });
         }
 
@@ -504,6 +506,12 @@
         @if($yo_help_desk)
         fecha_vencimiento = $("#fecha_vencimiento").val();
         hora_vencimiento = $("#hora_vencimiento").val();
+
+        const ahora = new Date();
+        const horas = String(ahora.getHours()).padStart(2, '0');
+        const minutos = String(ahora.getMinutes()).padStart(2, '0');
+        const horaActual = horas + ":" + minutos;
+        //console.log(horaActual); // Ejemplo: 14:35
             if(fecha_vencimiento == null || fecha_vencimiento == ''){
                 Toast.fire({
                     icon: 'error',
@@ -516,6 +524,14 @@
                 Toast.fire({
                     icon: 'error',
                     title: 'Por favor, asigne una hora de vencimiento.'
+                })
+                return true;
+            }
+
+            if(hora_vencimiento <= horaActual){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'No puede seleccionar una hora anterior a la actual.'
                 })
                 return true;
             }
