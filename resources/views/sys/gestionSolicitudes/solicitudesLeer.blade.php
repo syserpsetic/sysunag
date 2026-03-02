@@ -320,18 +320,23 @@
                         </div>
                         @if($yo_help_desk)
                         <div class="row mb-3">
-                            <label class="col-md-2 col-form-label">Fecha y hora de vencimiento:</label>
-                            <div class="col-md-5">
+                            <label class="col-md-4 col-form-label">Fecha y hora de vencimiento:</label>
+                            <div class="col-md-4">
                                 <div class="input-group flatpickr" id="flatpickr-date">
                                     <input type="text" class="form-control" placeholder="Selecciona una fecha" data-input id="fecha_vencimiento">
                                     <span class="input-group-text input-group-addon" data-toggle><i data-feather="calendar"></i></span>
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-3">
                                 <div class="input-group flatpickr" id="flatpickr-time">
                                     <input type="text" class="form-control" placeholder="Selecciona una hora" data-input id="hora_vencimiento">
                                     <span class="input-group-text input-group-addon" data-toggle><i data-feather="clock"></i></span>
                                 </div>
+                            </div>
+                            <div class="col-md-1 d-flex justify-content-end">
+                                <button type="button" class="btn btn-info btn-icon" id="btn_info_fechas">
+                                    <i data-feather="info"></i>
+                                </button>
                             </div>
                         </div>
                         @endif
@@ -415,7 +420,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
+        const fechaHoraValida = obtenerFechaHoraValida();
         const btn = document.getElementById("btnRemitir");
         const offset = btn.offsetTop;
 
@@ -482,6 +487,12 @@
             dateFormat: "Y-m-d",
             locale: "es",
             minDate: "today",
+            disable: [
+                    function(date) {
+                        // 0 = domingo, 6 = sábado
+                        return (date.getDay() === 0 || date.getDay() === 6);
+                    }
+                ],
             });
         }
 
@@ -493,10 +504,16 @@
             enableTime: true,
             noCalendar: true,
             dateFormat: "H:i",
-            minTime: "today"
+            minTime: "today",
+            minTime: "08:00",
+            maxTime: "16:30"
             });
         }
 
+    });
+
+    $("#btn_info_fechas").on("click", function () {
+        recomendacion_fecha(fechaHoraValida);
     });
       
     $("#enviar_remision").on("click", function () {
@@ -504,14 +521,14 @@
         empleado = $("#empleado").val();
         descripcion = tinymce.get('descripcion_solicitud').getContent();
         @if($yo_help_desk)
-        fecha_vencimiento = $("#fecha_vencimiento").val();
-        hora_vencimiento = $("#hora_vencimiento").val();
+            fecha_vencimiento = $("#fecha_vencimiento").val();
+            hora_vencimiento = $("#hora_vencimiento").val();
 
-        const ahora = new Date();
-        const horas = String(ahora.getHours()).padStart(2, '0');
-        const minutos = String(ahora.getMinutes()).padStart(2, '0');
-        const horaActual = horas + ":" + minutos;
-        //console.log(horaActual); // Ejemplo: 14:35
+            const ahora = new Date();
+            const horas = String(ahora.getHours()).padStart(2, '0');
+            const minutos = String(ahora.getMinutes()).padStart(2, '0');
+            const horaActual = horas + ":" + minutos;
+            //console.log(horaActual); // Ejemplo: 14:35
             if(fecha_vencimiento == null || fecha_vencimiento == ''){
                 Toast.fire({
                     icon: 'error',
@@ -528,11 +545,16 @@
                 return true;
             }
 
-            if(hora_vencimiento <= horaActual){
+            /*if(hora_vencimiento <= horaActual){
                 Toast.fire({
                     icon: 'error',
                     title: 'No puede seleccionar una hora anterior a la actual.'
                 })
+                return true;
+            }*/
+
+            if((fecha_vencimiento+' '+hora_vencimiento) <= fechaHoraValida){
+                recomendacion_fecha(fechaHoraValida);
                 return true;
             }
         @endif
@@ -747,6 +769,78 @@
             }
         })
     }
+
+    
+    function recomendacion_fecha(fechaHoraValida){
+        Swal.fire({
+            title: 'Recomendación',
+            icon: 'info',
+            confirmButtonText: 'Aceptar',
+            html: `
+                <div style="text-align: justify; line-height: 1.5;">
+                    La fecha y hora de vencimiento de la solicitud deben establecerse de manera que sean al menos <b>seis (6) horas</b> posteriores a la hora actual,
+                    respetando únicamente los días laborales de <b>lunes a viernes</b>,
+                    dentro del horario comprendido entre <b>08:00 y 16:30</b>.<br><br>
+                    Esto garantiza que las solicitudes se gestionen dentro de los períodos hábiles y evita la programación de vencimientos fuera del horario laboral.<br><br>
+                    <center>Fecha y hora sugerida a partir de este momento:<br> <strong>${fechaHoraValida}</strong></center>
+                </div>
+            `
+        });
+    }
+
+    function obtenerFechaHoraValida() {
+        let ahora = new Date();
+
+        // Definir horario laboral
+        const horaInicio = 8;
+        const horaFin = 16;
+        const minutoFin = 30;
+
+        // Sumar 6 horas
+        let horasSumar = 6;
+        let minutosSumar = 0;
+
+        while (horasSumar > 0) {
+            let horaActual = ahora.getHours();
+            let minutoActual = ahora.getMinutes();
+
+            // Si estamos antes de la jornada laboral, mover al inicio
+            if (horaActual < horaInicio || (horaActual === horaInicio && minutoActual === 0)) {
+                ahora.setHours(horaInicio, 0, 0, 0);
+                horaActual = horaInicio;
+                minutoActual = 0;
+            }
+
+            // Calcular minutos disponibles hasta el fin de jornada
+            let minutosDisponibles = (horaFin * 60 + minutoFin) - (horaActual * 60 + minutoActual);
+
+            if (horasSumar * 60 <= minutosDisponibles) {
+                // Cabe en el día actual
+                ahora.setMinutes(minutoActual + horasSumar * 60);
+                horasSumar = 0;
+            } else {
+                // No cabe, usar lo que queda y pasar al siguiente día hábil
+                horasSumar -= minutosDisponibles / 60;
+                // Pasar al siguiente día
+                ahora.setDate(ahora.getDate() + 1);
+                ahora.setHours(horaInicio, 0, 0, 0);
+
+                // Evitar sábados y domingos
+                while (ahora.getDay() === 0 || ahora.getDay() === 6) {
+                    ahora.setDate(ahora.getDate() + 1);
+                }
+            }
+        }
+
+        // Retornar en formato YYYY-MM-DD HH:MM
+        const yyyy = ahora.getFullYear();
+        const mm = String(ahora.getMonth() + 1).padStart(2, '0');
+        const dd = String(ahora.getDate()).padStart(2, '0');
+        const hh = String(ahora.getHours()).padStart(2, '0');
+        const min = String(ahora.getMinutes()).padStart(2, '0');
+
+        return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+        }
 
   </script>
 @endpush
