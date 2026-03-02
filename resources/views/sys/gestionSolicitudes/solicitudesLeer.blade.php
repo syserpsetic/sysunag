@@ -455,7 +455,8 @@
                     plugins: 'advlist autolink lists link image charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen',
                     toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
                     //toolbar2: 'forecolor backcolor emoticons',
-                    image_advtab: true,
+                    image_advtab: false,
+                    paste_data_images: false,
                     templates: [{
                         title: 'Test template 1',
                         content: 'Test 1'
