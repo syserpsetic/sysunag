@@ -55,6 +55,11 @@ Route::get('/estadistica', function () {
     return view('sys.estadistica.estadistica');
 });
 
+Route::get('/titulacion', function () {
+    // alguna lógica rápida
+    return view('sys.estadistica.tiempo-titulacion');
+});
+
 Route::get('/egresados_activacion_cuenta', function () {
     return view('sys.egresados.activacion_cuenta');
 });
