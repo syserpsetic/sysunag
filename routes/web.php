@@ -55,6 +55,10 @@ Route::get('/estadistica', function () {
     return view('sys.estadistica.estadistica');
 });
 
+Route::get('/menu', function () {
+    return view('sys.estadistica.menu');
+});
+
 Route::get('/titulacion', function () {
     // alguna lógica rápida
     return view('sys.estadistica.tiempo-titulacion');

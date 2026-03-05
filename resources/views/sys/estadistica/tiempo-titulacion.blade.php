@@ -1,5 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard de Titulación</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+ <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
 <style>
   :root {
     --bg: #0b0f1a;
@@ -337,7 +346,7 @@
   <!-- KPIs -->
   <div class="kpis">
     <div class="kpi">
-      <div class="kpi-label">Graduados totales</div>
+      <div class="kpi-label">Muestra Graduados</div>
       <div class="kpi-value cyan" id="kpi-total">2,151</div>
       <div class="kpi-sub">Registros en dataset</div>
     </div>
@@ -901,7 +910,8 @@ Chart.defaults.color = '#94a3b8';
 Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
 Chart.defaults.font.family = 'DM Mono';
 </script>
-
+</body>
+</html>
 
 
 
