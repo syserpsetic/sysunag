@@ -129,7 +129,7 @@
         </div>
 
         <div class="uk-position-top-right uk-flex uk-flex-row">
-            <!-- <a class=" bg-green uk-padding-small uk-link-reset" href="{{ route('login_egresados') }}">
+            <!-- <a class=" bg-green uk-padding-small uk-link-reset" href="{{ route('login_graduados') }}">
                 <img src="{{ asset('/assets/images/svg/school.svg') }}" alt=""> Egresados
             </a> -->
             <a class=" bg-dark-green uk-padding-small uk-link-reset" href="{{ route('error') }}">
@@ -151,7 +151,7 @@
             </div>
 
          
-                <h2 class="txt-blanco">EGRESADOS</h2>
+                <h2 class="txt-blanco">GRADUADOS</h2>
                 <p class="txt-blanco">Ingrese sus credenciales:</p>
                 <form class="forms-sample" method="POST" action="{{ route('login') }}">
                     @csrf
@@ -189,7 +189,7 @@
                         class="uk-button uk-button-primary uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"><span
                             uk-icon="icon: sign-in; ratio: 1"></span> &nbsp; Ingresar</button>
 <br><br>
-                            <a href="{{ url('/egresados_activacion_cuenta') }}"
+                            <a href="{{ url('/graduados_activacion_cuenta') }}"
                                 class="uk-button uk-button-text uk-text-capitalize uk-margin-top uk-animation-slide-top-medium"
                                 style="color: white;">
                                 <span uk-icon="icon: unlock; ratio: 1"></span> &nbsp; Solicitar Activación de Cuenta

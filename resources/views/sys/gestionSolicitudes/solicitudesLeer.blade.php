@@ -693,11 +693,13 @@
                     typeMsg = "error";
                     timer = null;
                     btn_activo = true;
+                    timeout = data.timeout;
                 } else {
                     titleMsg = "Remisión Enviada";
                     textMsg = data.msgSuccess;
                     typeMsg = "success";
                     timer = null;
+                    timeout = false;
        
                     //btn_activo = true;
                 }
@@ -706,7 +708,8 @@
                     icon: typeMsg,
                     title: titleMsg,
                     html: textMsg,
-                    timer: timer
+                    timer: timer,
+                    timeout: timeout
                 })
 
             },
@@ -727,14 +730,29 @@
     const ToastLG = (options) => {
         Swal.fire({
             showConfirmButton: (typeMsg == 'error') ? false : true,
-            timerProgressBar: true,
+            showDenyButton: timeout,
+            showCancelButton: (typeMsg == 'success') ? false : true,
             confirmButtonText: 'Aceptar',
-            ...options, // permite pasar icon, title, text, etc.
+            denyButtonText: 'Reintentar',
+            cancelButtonText: 'Cancelar',
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            ...options
         }).then((result) => {
+
             if (result.isConfirmed) {
-                espera('Recargadno...');
-                location.reload(); // 🔁 recarga al confirmar
+                espera('Recargando...');
+                location.reload(); // opción 1
             }
+
+            else if (result.isDenied) {
+                guardar_remision()
+            }
+
+            else if (result.isDismissed) {
+                console.log('El usuario canceló'); // opción 3
+            }
+
         });
     };
 
@@ -747,6 +765,7 @@
             html: html,
             timer: null,
             timerProgressBar: true,
+            allowOutsideClick: false,
             didOpen: () => {
             Swal.showLoading()
             timerInterval = setInterval(() => {

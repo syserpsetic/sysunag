@@ -44,8 +44,8 @@ Route::get('/login', [ApiAuthController::class, 'showLoginForm'])->name('login')
 Route::post('/login', [ApiAuthController::class, 'login']);
 Route::post('/change_password_view', [ApiAuthController::class, 'change_password_view']);
 Route::post('/change_password', [ApiAuthController::class, 'change_password'])->name('change_password');
-Route::get('/login_egresados', [ApiAuthController::class, 'showLoginFormEgresados'])->name('login_egresados');
-Route::post('/login_egresados', [ApiAuthController::class, 'login']);
+Route::get('/login_graduados', [ApiAuthController::class, 'showLoginFormEgresados'])->name('login_graduados');
+Route::post('/login_graduados', [ApiAuthController::class, 'login']);
 
 Route::get('/error', function () {
     return view('pages.error.construccion');
@@ -55,11 +55,11 @@ Route::get('/estadistica', function () {
     return view('sys.estadistica.estadistica');
 });
 
-Route::get('/egresados_activacion_cuenta', function () {
+Route::get('/graduados_activacion_cuenta', function () {
     return view('sys.egresados.activacion_cuenta');
 });
 
-Route::post('/egresados_activacion_cuenta/enviar', [EgresadosController::class, 'activacion_cuenta_enviar'])->name('activacion_cuenta_enviar');
+Route::post('/graduados_activacion_cuenta/enviar', [EgresadosController::class, 'activacion_cuenta_enviar'])->name('activacion_cuenta_enviar');
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [ApiAuthController::class, 'logout'])->name('logout');

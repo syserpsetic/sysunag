@@ -19,7 +19,7 @@
         }
 
         a.uk-link-reset.bg-green::before {
-            content: 'Egresados →';
+            content: 'Graduados →';
             text-align: center;
             line-height: 54px;
             position: absolute;
@@ -129,8 +129,8 @@
         </div>
 
         <div class="uk-position-top-right uk-flex uk-flex-row">
-            <a class=" bg-green uk-padding-small uk-link-reset" href="{{ route('login_egresados') }}">
-                <img src="{{ asset('/assets/images/svg/school.svg') }}" alt=""> Egresados
+            <a class=" bg-green uk-padding-small uk-link-reset" href="{{ route('login_graduados') }}">
+                <img src="{{ asset('/assets/images/svg/school.svg') }}" alt=""> Graduados
             </a>
             <a class=" bg-dark-green uk-padding-small uk-link-reset" href="{{ route('error') }}">
                 <img src="{{ asset('/assets/images/svg/checklist.svg') }}" alt=""> Solicitud de Reingreso

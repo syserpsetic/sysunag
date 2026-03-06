@@ -117,12 +117,13 @@ class GestionSolicitudesController extends Controller
         $msgError = null;
         $archivos = array();
         $archivos = $request->file('archivos');
+        $timeout = false;
 
         try {
             // Prepara la solicitud HTTP
             $http = Http::withHeaders([
                 'Authorization' => session('token'),
-            ])->asMultipart();
+            ])->timeout(10)->asMultipart();
 
             // Adjunta todos los archivos
             if($request->hasFile('archivos')) {
@@ -168,13 +169,18 @@ class GestionSolicitudesController extends Controller
             }elseif($response->status() === 500){
                 throw new Exception("Desde backend: ".$data["msgError"]);
             }
+        } catch (ConnectionException $e) {
+            $msgError = 'No pudimos conectar con el servidor en este momento.<br />
+                Esto puede deberse a un problema temporal de red o mantenimiento.';
+            $timeout = true;
         } catch (Exception $e) {
             $msgError = $e->getMessage();
         }
 
         return response()->json([
             "msgSuccess" => $msgSuccess,
-            "msgError" => $msgError
+            "msgError" => $msgError,
+            "timeout" => $timeout
         ]);
     }
 
@@ -183,13 +189,14 @@ class GestionSolicitudesController extends Controller
         $msgError = null;
         $archivos = array();
         $archivos = $request->file('archivos');
+        $timeout = false;
 
         try {
             //throw new Exception($request->empleado);
             // Prepara la solicitud HTTP
             $http = Http::withHeaders([
                 'Authorization' => session('token'),
-            ])->asMultipart();
+            ])->timeout(10)->asMultipart();
 
             // Adjunta todos los archivos
             if($request->hasFile('archivos')) {
@@ -238,13 +245,18 @@ class GestionSolicitudesController extends Controller
             }elseif($response->status() === 500){
                 throw new Exception("Desde backend: ".$data["msgError"]);
             }
+        } catch (ConnectionException $e) {
+            $msgError = 'No pudimos conectar con el servidor en este momento.<br />
+                Esto puede deberse a un problema temporal de red o mantenimiento.';
+            $timeout = true;
         } catch (Exception $e) {
             $msgError = $e->getMessage();
         }
 
         return response()->json([
             "msgSuccess" => $msgSuccess,
-            "msgError" => $msgError
+            "msgError" => $msgError,
+            "timeout" => $timeout
         ]);
     }
 
