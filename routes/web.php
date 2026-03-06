@@ -64,6 +64,16 @@ Route::get('/titulacion', function () {
     return view('sys.estadistica.tiempo-titulacion');
 });
 
+Route::get('/eficiencia', function () {
+    // alguna lógica rápida
+    return view('sys.estadistica.titulacion-oportuna');
+});
+
+Route::get('/retencion', function () {
+    // alguna lógica rápida
+    return view('sys.estadistica.retencion');
+});
+
 Route::get('/graduados_activacion_cuenta', function () {
     return view('sys.egresados.activacion_cuenta');
 });
