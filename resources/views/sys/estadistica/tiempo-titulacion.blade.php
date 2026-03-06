@@ -6,8 +6,7 @@
 <title>Dashboard de Titulación</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
  <link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
 <style>
   :root {
@@ -30,7 +29,7 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'DM Mono', monospace;
+    font-family: sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
@@ -47,13 +46,21 @@
     z-index: 0;
   }
 
-  .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px 32px;  }
 
   /* HEADER */
   header {
-    padding: 32px 0 24px;
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
-    margin-bottom: 32px;
+    padding: 0px 32px;
+    display: flex;
+    align-items: center;
+   
+    gap: 16px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
   .header-inner {
     display: flex;
@@ -64,26 +71,25 @@
   }
   .header-title { display: flex; flex-direction: column; gap: 4px; }
   .eyebrow {
-    font-family: 'DM Mono', monospace;
+    font-family: sans-serif;
     font-size: 11px;
     letter-spacing: 0.2em;
-    color: var(--accent);
+    color: #f0b429;
     text-transform: uppercase;
   }
+
+  .logo { font-family:sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.5px; }
+  .badge { background:rgba(240,180,41,0.12); color:#f0b429; border:1px solid rgba(240,180,41,0.3); padding:3px 10px; border-radius:20px; font-size:11px; font-weight:500; }
+
   h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: sans-serif;
     font-size: clamp(22px, 3vw, 36px);
     font-weight: 800;
     color: #fff;
     line-height: 1.1;
   }
-  .header-meta {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-    text-align: right;
-  }
-  .header-meta span { color: var(--accent); }
+ .header-meta { font-size:12px; color:var(--muted); dgap:24px;margin-left: auto;}
+
 
   /* KPI CARDS */
   .kpis {
@@ -318,30 +324,41 @@
   .highlight-name { font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
   .highlight-val  { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #fff; }
   .highlight-desc { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+  .logo span { color:#f0b429; }
+  .descarga { background:rgba(240,180,41,0.12); color:#f0b429; border:1px solid rgba(240,180,41,0.3); padding:3px 10px; border-radius:20px; font-size:11px; font-weight:500; }
+  .title-block p { font-size:13px; color:#64748b; margin-top:4px; }
+  .animate-in { animation:fadeUp .4s ease both; }
+  .title-block span { color:#f0b429; }
+  .registros { font-size:12px; float:right }
 </style>
 
+<header>
+   <div class="logo">
+        <img src="https://sys.unag.edu.hn/assets/images/escudo.png" style="width: 40px;" alt="unag">
+    </div>
+    <div class="logo">
+        TITULACIÓN <span>POR CARRERA</span>  
+    </div>
+    <div class="header-meta">
+        <a style="text-decoration: none;" href="https://drive.google.com/file/d/1QzpB6Pb-ZrkdLN6CzJHtqHHV8l1tkryV/view?usp=sharing" target="_blank" rel="titulacion"><span class="descarga">Descargar Muestra en EXCEL</span></a>     
+        <a style="text-decoration: none;" href="https://drive.google.com/file/d/1qwu-0t1HoLaxfgPcarvgmC0tfT9zIMvs/view?usp=sharing" target="_blank" rel="titulacion"><span class="descarga"> Descargar Analisis en PDF</span></a>   
+    </div>
+  </header>
 
 <div class="container">
 
-  <header>
-    <div class="header-inner">
-        <img src="https://sys.unag.edu.hn/assets/images/escudo.png" style="width: 100px;" alt="unag">
-      <div class="header-title">
-        <div class="eyebrow">Análisis Académico · Universidad Nacional de Agricultura (UNAG)</div>        
-        <h1>Tiempo Real de Titulación<br>por Carrera</h1>
+     <div  class="title-block animate-in">     
+        <div class="eyebrow">Análisis Académico · Universidad Nacional de Agricultura (UNAG)</div> 
+        <h1>Dashboard — Tiempo de Titulación</h1>
         <div class="eyebrow">Unidad de Análisis · Secretaria de Tecnología de la Información y Comunicaciones (SETIC)</div>
-      </div>
-      <div class="header-meta">        
-        <div><a style="color:white" href="https://drive.google.com/file/d/1qwu-0t1HoLaxfgPcarvgmC0tfT9zIMvs/view?usp=sharing" target="_blank" rel="titulacion">Descargar Analisis en PDF</a></div>
-        <div><a style="color:white" href="https://drive.google.com/file/d/1QzpB6Pb-ZrkdLN6CzJHtqHHV8l1tkryV/view?usp=sharing" target="_blank" rel="titulacion">Descargar Muestra en EXCEL</a></div>
-        <div>Registros analizados: <span id="total-count">—</span></div>
-        <div>Cohortes: <span>2016 – 2022</span></div>
-        <div>Última actualización: <span>2025</span></div>
-         <div>Fuente: <span>SETIC - UNAG</span></div>
-      </div>
-     
+        <p>Tiempo real de titulación por carrera</p>         
+           
+        <div class="registros">Registros analizados: <span id="total-count">—</span></div><br>
+        <div class="registros">Cohortes: <span>2016 – 2022</span></div><br>
+        <div class="registros">Última actualización: <span>2025</span></div><br>
+        <div class="registros">Fuente: <span>SETIC - UNAG</span></div><br>
     </div>
-  </header>
+
 
   <!-- KPIs -->
   <div class="kpis">

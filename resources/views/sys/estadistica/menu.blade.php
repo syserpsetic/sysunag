@@ -21,7 +21,7 @@
   <div class="text-center bg-white bg-opacity-75 p-4 p-md-5 rounded shadow" style="max-width: 600px; width: 100%;">
     
     <!-- Logo -->
-    <img src="{{ asset('assets/images/escudo.png') }}" class="mb-3" alt="Logo UNAG" style="width: 100px;">
+   <a href="{{url('/')}}"> <img src="{{ asset('assets/images/escudo.png') }}" class="mb-3" alt="Logo UNAG" style="width: 100px;"> </a>
 
     <!-- Título principal -->
     <h2 class="fw-bold text-primary mb-3" style="font-size: 1.8rem;">
@@ -49,8 +49,7 @@
                                                     <div class="d-flex justify-content-between align-items-baseline">
                                                         <h6 class="mb-0">                                                           
                                                                 <strong class="text-white"><i data-feather="activity" class="me-2"></i> Matricula y Atención de Salud</strong>                                                           
-                                                        </h6>
-                                                       
+                                                        </h6>                                                       
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
@@ -77,8 +76,7 @@
                                                     <div class="d-flex justify-content-between align-items-baseline">
                                                         <h6 class="mb-0">                                                           
                                                                 <strong class="text-white"><i data-feather="activity" class="me-2"></i> Titulación por Carrera</strong>                                                           
-                                                        </h6>
-                                                       
+                                                        </h6>                                                       
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
@@ -91,6 +89,60 @@
                                                                 <p class="text-info">
                                                                     <i data-feather="arrow-right-circle" class="icon-sm mb-1"></i>
                                                                     <a target="_blank" href="{{url('/titulacion')}}">Ver detalle</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 grid-margin stretch-card">
+                                            <div class="card border-info">
+                                                <div class="card-header bg-primary">
+                                                    <div class="d-flex justify-content-between align-items-baseline">
+                                                        <h6 class="mb-0">                                                           
+                                                                <strong class="text-white"><i data-feather="activity" class="me-2"></i> Titulación Oportuna</strong>                                                           
+                                                        </h6>                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-12 col-xl-12">
+                                                            <p class="text-muted mb-0" style="font-size: 0.95rem; line-height: 1.5;">
+                                                                Análisis y eficiencia de titulacion
+                                                            </p>
+                                                            <div class="d-flex align-items-baseline">
+                                                                <p class="text-info">
+                                                                    <i data-feather="arrow-right-circle" class="icon-sm mb-1"></i>
+                                                                    <a target="_blank" href="{{url('/eficiencia')}}">Ver detalle</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 grid-margin stretch-card">
+                                            <div class="card border-info">
+                                                <div class="card-header bg-primary">
+                                                    <div class="d-flex justify-content-between align-items-baseline">
+                                                        <h6 class="mb-0">                                                           
+                                                                <strong class="text-white"><i data-feather="activity" class="me-2"></i> Retención</strong>                                                           
+                                                        </h6>                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-12 col-xl-12">
+                                                            <p class="text-muted mb-0" style="font-size: 0.95rem; line-height: 1.5;">
+                                                                Impacto del internado vs externado en la retención estudiantil
+                                                            </p>
+                                                            <div class="d-flex align-items-baseline">
+                                                                <p class="text-info">
+                                                                    <i data-feather="arrow-right-circle" class="icon-sm mb-1"></i>
+                                                                    <a target="_blank" href="{{url('/retencion')}}">Ver detalle</a>
                                                                 </p>
                                                             </div>
                                                         </div>
