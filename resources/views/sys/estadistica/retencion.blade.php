@@ -81,10 +81,7 @@
     letter-spacing: 0.12em;
   }
   .badge-row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-left: auto;
+    font-size:12px; color:var(--muted); dgap:24px;margin-left: auto;
   }
   .badge {
     display: flex;
@@ -167,8 +164,9 @@
     margin-bottom: 8px;
   }
   .card-value {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2.2rem;
+    font-family: 'Syne',sans-serif;
+    font-size: 30px; 
+    font-weight: 800;
     color: var(--highlight);
     line-height: 1;
   }

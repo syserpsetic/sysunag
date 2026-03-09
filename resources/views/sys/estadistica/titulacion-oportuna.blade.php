@@ -81,7 +81,7 @@
   .kpi-card.orange::before { background:var(--extra2); }
   .kpi-card.blue::before { background:var(--accent4); }
   .kpi-label { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); font-weight:500; margin-bottom:10px; }
-  .kpi-value { font-family:'Syne',sans-serif; font-size:36px; font-weight:800; line-height:1; margin-bottom:6px; }
+  .kpi-value { font-family:'Syne',sans-serif; font-size:32px; font-weight:800; line-height:1; margin-bottom:6px; }
   .kpi-sub { font-size:12px; color:var(--muted); }
   .kpi-card.green .kpi-value { color:var(--ontime); }
   .kpi-card.yellow .kpi-value { color:var(--accent); }

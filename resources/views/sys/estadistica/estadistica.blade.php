@@ -6,6 +6,65 @@
 
 @section('content')
 
+<style>
+ 
+      header {
+    background:white;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 0px 32px;
+    display: flex;
+    align-items: center;   
+    gap: 16px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;    
+  }
+   .container { max-width:1440px; margin:0 auto; padding:24px 32px; }
+  .logo { font-family:sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.5px;}
+  .logo span { color:#f0b429 !important; }
+   .badge-row {
+    font-size:12px; color:var(--muted); dgap:24px;margin-left: auto;
+  }
+      footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 0;
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+}
+   .eyebrow {
+    font-family: sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: #f0b429 !important;
+    text-transform: uppercase;
+    font-weight:700;
+  }
+  .title-block { margin-bottom:20px; }
+  .title-block h2 { font-family:sans-serif; ont-size: clamp(22px, 3vw, 36px); font-weight:800; letter-spacing:-0.5px; }
+</style>
+
+<header>
+  <div class="logo">
+    <img src="https://sys.unag.edu.hn/assets/images/escudo.png" style="width: 40px;" alt="unag">
+  </div>
+  <div  class="logo">
+    MATRÍCULA <span>Y ATENCIÓN</span>  
+  </div>
+ 
+</header>
+<div class="container">
+     <div class="title-block animate-in">     
+        <div class="eyebrow">Análisis Académico · Universidad Nacional de Agricultura (UNAG)</div> 
+        <h2>Dashboard — Análisis Estadístico</h2>
+        <div class="eyebrow">Unidad de Análisis · Secretaria de Tecnología de la Información y Comunicaciones (SETIC)</div>
+        
+    </div>
 <div class="row">
   <div class="col-xl-12 stretch-card">
     <div class="card">
@@ -86,6 +145,11 @@
         </div>
         </div>
     </div>
+    <footer>
+    <div>Dashboard Analítico · Matrícula y Atención</div>
+    <div> <img src="https://sys.unag.edu.hn/assets/images/logo_setic_new.png" style="width: 200px;" alt="setic"> </div>
+  </div>
+  </footer>
 </div>
 @endsection
 @push('plugin-scripts')
