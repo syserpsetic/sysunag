@@ -27,7 +27,7 @@
                     <a class="nav-link" id="v-datos_academicos-tab" data-bs-toggle="tab" href="#v-profile" role="tab" aria-controls="v-profile" aria-selected="false">Datos Académicos</a>
                     <a class="nav-link" id="v-experiencia_laboral-tab" data-bs-toggle="tab" href="#v-messages" role="tab" aria-controls="v-messages" aria-selected="false">Experiencia Laboral</a>
                     <a class="nav-link" id="v-habilidades_tecnicas-tab" data-bs-toggle="tab" href="#v-habilidades_tecnicas" role="tab" aria-controls="v-habilidades_tecnicas" aria-selected="false">Habilidades Técnicas</a>
-                    <a class="nav-link" id="v-ofertas_empelos-tab" data-bs-toggle="tab" href="#v-settings" role="tab" aria-controls="v-settings" aria-selected="false">Ofertas de Empleo</a>                    
+                    <a class="nav-link" id="v-ofertas_empelos-tab" data-bs-toggle="tab" href="#v-ofertas_empelos" role="tab" aria-controls="v-ofertas_empelos" aria-selected="false">Ofertas de Empleo</a>                    
                 </div>
                 <div class="d-grid gap-2"><br>
                     <button type="button" id="btn_descargar_cv" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modal_descargar_cv"><i class="btn-icon-prepend" data-feather="file"></i> Descargar CV</button>
@@ -419,8 +419,9 @@
                                                 </div>
                                             </div>
                                     </div>
+                                    </div>
                     </div>
-                    <div class="tab-pane fade" id="v-settings" role="tabpanel" aria-labelledby="v-ofertas_empelos-tab">
+                    <div class="tab-pane fade" id="v-ofertas_empelos" role="tabpanel" aria-labelledby="v-ofertas_empelos-tab">
                         <p>
                            <div class="page-content d-flex align-items-center justify-content-center">
                                 <div class="row w-100 mx-0 auth-page">
@@ -765,7 +766,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div
+                                </div>
                             </center>
                         </div>
                         <!-- Row -->

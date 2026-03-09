@@ -32,7 +32,7 @@
                         <!-- Otro slide -->
                          @foreach($sed_unag_oferta as $row)
                             <div class="item position-relative" style="height: 250px; overflow: hidden; border-radius: 8px;">
-                                <img src="https://sed.unag.edu.hn/{{$row['imagen']}}" alt="Maestría 2" class="w-100 h-100" style="object-fit: cover;" />
+                                <img src="https://sed.unag.edu.hn/{{$row['imagen']}}" alt="Maestría 2" class="w-100 h-100" style="object-fit: cover;" onerror="this.onerror=null; this.src='{{ url(asset('/assets/images/hojas.jpg')) }}';"/>
                                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-end p-3" style="background: rgba(0, 0, 0, 0.4);">
                                     <h5 class="text-amarillo mb-2 fs-6 fs-md-5 fs-lg-4">{{$row['nombre']}}</h5>
                                     <h4 class="text-white mb-2 fs-6 fs-md-5 fs-lg-4">{{$row['titulo']}}</h4>
