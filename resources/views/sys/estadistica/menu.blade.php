@@ -18,7 +18,7 @@
     background-blend-mode: multiply;
     padding: 2rem;"
 >
-  <div class="text-center bg-white bg-opacity-75 p-4 p-md-5 rounded shadow" style=" width: 60%;">
+  <div class="text-center bg-white bg-opacity-75 p-4 p-md-5 rounded shadow" style=" width: 80%;">
     
     <!-- Logo -->
    <a href="{{url('/')}}"> <img src="{{ asset('assets/images/escudo.png') }}" class="mb-3" alt="Logo UNAG" style="width: 100px;"> </a>
