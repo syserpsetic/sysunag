@@ -74,6 +74,11 @@ Route::get('/retencion', function () {
     return view('sys.estadistica.retencion');
 });
 
+Route::get('/historial', function () {
+    // alguna lógica rápida
+    return view('sys.estadistica.historial');
+});
+
 Route::get('/graduados_activacion_cuenta', function () {
     return view('sys.egresados.activacion_cuenta');
 });

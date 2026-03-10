@@ -18,7 +18,7 @@
     background-blend-mode: multiply;
     padding: 2rem;"
 >
-  <div class="text-center bg-white bg-opacity-75 p-4 p-md-5 rounded shadow" style="max-width: 600px; width: 100%;">
+  <div class="text-center bg-white bg-opacity-75 p-4 p-md-5 rounded shadow" style=" width: 60%;">
     
     <!-- Logo -->
    <a href="{{url('/')}}"> <img src="{{ asset('assets/images/escudo.png') }}" class="mb-3" alt="Logo UNAG" style="width: 100px;"> </a>
@@ -43,7 +43,7 @@
                                     <div class="row flex-grow-1">
 
                                        
-                                        <div class="col-md-6 grid-margin stretch-card">
+                                        <div class="col-md-4 grid-margin stretch-card">
                                             <div class="card border-info">
                                                 <div class="card-header bg-primary">
                                                     <div class="d-flex justify-content-between align-items-baseline">
@@ -70,7 +70,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 grid-margin stretch-card">
+                                        <div class="col-md-4 grid-margin stretch-card">
                                             <div class="card border-info">
                                                 <div class="card-header bg-primary">
                                                     <div class="d-flex justify-content-between align-items-baseline">
@@ -97,7 +97,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 grid-margin stretch-card">
+                                        <div class="col-md-4 grid-margin stretch-card">
                                             <div class="card border-info">
                                                 <div class="card-header bg-primary">
                                                     <div class="d-flex justify-content-between align-items-baseline">
@@ -124,7 +124,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 grid-margin stretch-card">
+                                        <div class="col-md-4 grid-margin stretch-card">
                                             <div class="card border-info">
                                                 <div class="card-header bg-primary">
                                                     <div class="d-flex justify-content-between align-items-baseline">
@@ -143,6 +143,33 @@
                                                                 <p class="text-info">
                                                                     <i data-feather="arrow-right-circle" class="icon-sm mb-1"></i>
                                                                     <a target="_blank" href="{{url('/retencion')}}">Ver detalle</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 grid-margin stretch-card">
+                                            <div class="card border-info">
+                                                <div class="card-header bg-primary">
+                                                    <div class="d-flex justify-content-between align-items-baseline">
+                                                        <h6 class="mb-0">                                                           
+                                                                <strong class="text-white"><i data-feather="activity" class="me-2"></i> Historial</strong>                                                           
+                                                        </h6>                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-12 col-xl-12">
+                                                            <p class="text-muted mb-0" style="font-size: 0.95rem; line-height: 1.5;">
+                                                                Indicadores sobre historial academico de estudiantes
+                                                            </p>
+                                                            <div class="d-flex align-items-baseline">
+                                                                <p class="text-info">
+                                                                    <i data-feather="arrow-right-circle" class="icon-sm mb-1"></i>
+                                                                    <a target="_blank" href="{{url('/historial')}}">Ver detalle</a>
                                                                 </p>
                                                             </div>
                                                         </div>

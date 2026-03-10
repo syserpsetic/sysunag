@@ -333,7 +333,6 @@
   <div class="badge-row">
      <a style="text-decoration: none;" href="https://drive.google.com/file/d/1OwE0PhI7elSmGg4An5gLfieRWj2OXWaN/view?usp=sharing" target="_blank" rel="titulacion"><span class="descarga">Descargar Muestra en EXCEL</span></a>     
      <a style="text-decoration: none;" href="https://drive.google.com/file/d/1_T3aF9UMMueamFTu8hfX-2wLGiqKpwfm/view?usp=sharing" target="_blank" rel="titulacion"><span class="descarga"> Descargar Analisis en PDF</span></a>   
-
   </div>
 </header>
 
