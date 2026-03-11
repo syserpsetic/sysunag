@@ -259,4 +259,107 @@ class EgresadosController extends Controller
 
         return back()->withErrors(['error' => 'Error al enviar']);
     }
+
+    function ver_gestion_graduados(){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/egresados/gestion_graduados');
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        //return view('pages.error.construccion')->with('scopes', $scopes = array());
+        $scopes = $response['scopes'];
+        //$resumen = $response['resumen'];
+
+
+        return view('sys.egresados.gestion_graduados')
+        //->with('resumen',$resumen)
+        ->with('scopes',$scopes)
+        ;
+    }
+
+    function graduadosdata(Request $request){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/egresados/gestion_graduados/data');
+
+        $draw = intval($request->input('draw'));
+        $start = intval($request->input('start'));
+        $length = intval($request->input('length'));
+        $search = $request->input('search.value');
+
+        $graduadosQuery = $response['graduadosQuery'];
+
+        // Total sin filtro
+        $recordsTotal = count($graduadosQuery);
+
+        // Aplicar filtro si hay búsqueda
+        if (!empty($search)) {
+            $graduadosQuery = array_filter($graduadosQuery, function ($row) use ($search) {
+                return stripos($row['numero_registro_asignado'], $search) !== false ||
+                    stripos($row['nombre_completo'], $search) !== false ||
+                    stripos($row['grado_academico_obtenido'], $search) !== false ||
+                    stripos($row['nombre_carrera'], $search) !== false||
+                    stripos($row['mes_anio_graduacion'], $search) !== false||
+                    stripos($row['contrasena_modificada'], $search) !== false||
+                    stripos($row['forzar_cambio_contrasenia'], $search) !== false;
+            });
+        }
+
+        $recordsFiltered = count($graduadosQuery);
+
+        // Cortar para paginación
+        $data = array_slice($graduadosQuery, $start, $length);
+
+        // Respuesta
+        $response = [
+            "draw" => $draw,
+            "recordsTotal" => $recordsTotal,
+            "recordsFiltered" => $recordsFiltered,
+            "data" => array_values($data)
+        ];
+
+
+        return json_encode($response);
+
+    }
+
+    public function restablecer_contrasena(Request $request){
+        $msgSuccess = null;
+        $msgError = null;
+        //dd($request->all());
+        try {
+            //throw new Exception($id);
+            $response = Http::withHeaders([
+                'Authorization' => session('token'),
+                'Content-Type' => 'application/json',
+            ])->post(env('API_BASE_URL_ZETA').'/api/auth/egresados/gestion_graduados/restablecer_contrasena', [
+                'id' => $request->id
+            ]);
+            
+            $data = $response->json();
+            //throw new Exception($data["estatus"], true);
+            if($response->status() === 200){
+                if(!$data["estatus"]){
+                    $msgError = "Desde backend: ".$data["msgError"];
+                }
+
+                $msgSuccess = $data["msgSuccess"];
+                $contrasena = $data["contrasena"];
+                //$zona_list = $data["zona_list"];
+                //throw New Exception($estados_list, true);
+            }elseif($response->status() === 403){
+                $msgError = "No tiene permisos para realizar esta acción";
+            }
+        } catch (Exception $e) {
+            $msgError = $e->getMessage();
+        }
+
+        return response()->json([
+            "msgSuccess" => $msgSuccess,
+            "msgError" => $msgError,
+            "contrasena" => $contrasena
+        ]);
+    }
 }

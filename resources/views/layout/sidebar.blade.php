@@ -60,6 +60,14 @@
         </a>
       </li>
       @endif
+      @if(in_array('gestion_graduados', $scopes))
+      <li class="nav-item {{ active_class(['egresados/gestion_graduados']) }}">
+        <a href="{{ url('/egresados/gestion_graduados') }}" class="nav-link">
+          <i class="link-icon" data-feather="bookmark"></i>
+          <span class="link-title">Gestión de Graduados</span>
+        </a>
+      </li>
+      @endif
       @if(in_array('empleado_setic', $scopes))
         <li class="nav-item nav-category">SETIC APPS</li>
         <li class="nav-item {{ active_class(['email/*']) }}">

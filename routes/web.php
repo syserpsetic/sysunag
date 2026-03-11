@@ -139,6 +139,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/egresados/datos_academicos/guardar', [EgresadosController::class, 'guardar_datos_academicos']);
         Route::post('/egresados/esperiencia_laboral/guardar', [EgresadosController::class, 'guardar_esperiencia_laboral']);
         Route::post('/egresados/habilidades_tecnicas/guardar', [EgresadosController::class, 'guardar_habilidades_tecnicas']);
+        Route::get('/egresados/gestion_graduados', [EgresadosController::class, 'ver_gestion_graduados'])->name('gestion_graduados');
+        Route::get('/egresados/gestion_graduados/data', [EgresadosController::class, 'graduadosdata']);
+        Route::post('/egresados/gestion_graduados/restablecer_contrasena', [EgresadosController::class, 'restablecer_contrasena']);
     //Finaliza Egresados
 
     //Inicia Solicitudes

@@ -281,6 +281,7 @@
                     <div class="to">
                         <div class="row mb-3">
                             <label class="col-md-2 col-lg-2 col-form-label">Para:</label>
+                            @if($yo_help_desk)
                             <div class="col-md-5">
                                 <div class="mb-2 d-flex align-items-center">
                                     <div class="form-check me-2">
@@ -295,7 +296,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @if($yo_help_desk)
                             <div class="col-md-5">
                                 <div class="mb-2 d-flex align-items-center">
                                     <div class="form-check me-2">
@@ -311,9 +311,9 @@
                                 </select>
                             </div>
                             @else
-                            <div class="col-md-5">
+                            <div class="col-md-10">
                                 <div class="alert alert-fill-light" role="alert">
-                                    <strong>La presente remisión está dirigida al Help Desk de su departamento.</strong>
+                                    <strong>La presente remisión está dirigida a los Help Desk de su departamento.</strong>
                                 </div>
                             </div>
                             @endif
