@@ -116,6 +116,14 @@ GRANT UPDATE, INSERT, SELECT, DELETE ON TABLE gs_estados TO erpunag;
 GRANT SELECT ON TABLE gs_estados TO cmatute, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
 GRANT USAGE ON gs_estados_id_seq TO erpunag, reports, cmatute, erpunag, oacosta, cgarcia, gardonf, gdominguez, nsandoval;
 
-insert into gs_estados (nombre, descripcion) values ('En Proceso', 'Este estado indica que la solicitud esta siendo procesada.');
-insert into gs_estados (nombre, descripcion) values ('En Revisión', 'Este estado indica que la solicitud ha sido terminada y enviada a revisar departe del help desk esperando que el solicitante revise y confirme terminar el proceso.');
+insert into gs_estados (nombre, descripcion) values ('Pendiente', 'Este estado indica que la solicitud esta pendiente a ser procesada.');
+insert into gs_estados (nombre, descripcion) values ('Proceso', 'Este estado indica que la solicitud esta siendo procesada.');
+insert into gs_estados (nombre, descripcion) values ('Revisión', 'Este estado indica que la solicitud ha sido terminada y enviada a revisar departe del help desk esperando que el solicitante revise y confirme terminar el proceso.');
 insert into gs_estados (nombre, descripcion) values ('Terminado', 'Este estado indica que la solicitud ha sido terminada departe del solicitante, este estado cierra el proceso de la soliciud.');
+
+ALTER TABLE gs_trazabilidad
+ADD id_estado bigint;
+ALTER TABLE gs_trazabilidad
+ADD CONSTRAINT id_estado_fk
+FOREIGN KEY (id_estado)
+REFERENCES gs_estados(id);

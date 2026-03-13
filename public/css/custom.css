@@ -9,13 +9,14 @@
     --cafe: #5b3700;
     --azulClaro: #0094e9;
     --blanco: #fff;
+    --grisClaro: #e6e6e6;
     --gris6: #666;
     --gris9: #999;
     --rojo: #e30d0d;
     --rojoClaro: #f55050;
     --colorTexto: #303030;
   }
-
+/*Hubo un hubo por que trajo un trajo*/
   body {
     font-family: "Montserrat" !important;
   }
@@ -124,6 +125,11 @@
 
   .bg-verdeClaro{
     background-color: var(--verdeClaro) !important;
+    border: none !important;
+  }
+
+    .bg-grisClaro{
+    background-color: var(--grisClaro) !important;
     border: none !important;
   }
 

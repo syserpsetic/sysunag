@@ -8,14 +8,14 @@
 
 @section('content_gs')
          
-            <div class="p-3 border-bottom">
+            <div class="p-3 border-bottom bg-primary">
               <div class="row align-items-center">
                 <div class="col-lg-6">
                   <div class="d-flex align-items-end mb-2 mb-md-0">
-                    <i data-feather="inbox" class="text-muted me-2"></i>
-                    <h4 class="me-1">Solicitudes Recibidas</h4>
+                    <i data-feather="inbox" class=" me-2 text-white"></i>
+                    <h4 class="me-1 text-white">Solicitudes Recibidas</h4>
                     @if($conteo_solicitudes['nuevas']> 0)
-                      <span class="text-muted">({{$conteo_solicitudes['nuevas']}} solicitudes nuevas)</span>
+                      <span class="text-white">({{$conteo_solicitudes['nuevas']}} solicitudes nuevas)</span>
                     @endif
                   </div>
                 </div>

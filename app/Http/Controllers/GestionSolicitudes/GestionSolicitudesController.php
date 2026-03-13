@@ -66,6 +66,8 @@ class GestionSolicitudesController extends Controller
         $cantidad_adjuntos = $response['cantidad_adjuntos'];
         $empleados = $response['empleados'];
         $departamentos = $response['departamentos'];
+        $estado_actual = $response['estado_actual'];
+        $yo_solicitante = $response['yo_solicitante'];
         $id_solicitud = $response['id_solicitud'];
         $remitir = $response['remitir'];
         $yo_help_desk = $response['yo_help_desk'];
@@ -79,6 +81,8 @@ class GestionSolicitudesController extends Controller
         ->with("cantidad_adjuntos", $cantidad_adjuntos)
         ->with("empleados", $empleados)
         ->with("departamentos", $departamentos)
+        ->with("estado_actual", $estado_actual)
+        ->with("yo_solicitante", $yo_solicitante)
         ->with("id_solicitud", $id_solicitud)
         ->with("remitir", $remitir)
         ->with("yo_help_desk", $yo_help_desk)
@@ -218,6 +222,7 @@ class GestionSolicitudesController extends Controller
                 'empleado' => $request->empleado,
                 'accion' => $request->accion,
                 'descripcion'  => $request->descripcion,
+                'id_estado'  => $request->id_estado,
             ]);
 
 
