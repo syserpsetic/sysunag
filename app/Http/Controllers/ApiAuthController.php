@@ -40,24 +40,30 @@ class ApiAuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        try {
-            $request->validate([
-                'email' => 'required',
-                'password' => 'required',
-            ]);
+{
+    try {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $response = Http::timeout(10)->post(env('API_BASE_URL_ZETA').'/api/auth/login', [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'coordenadas' => $request->coordenadas
+        ]);
 
         $userData = $response->json();
-        //throw new Exception($encryptedId);
+
         if($response->status() === 403 && $userData['changePass'] == true){
             $encryptedId = Crypt::encryptString($userData['id_usuario']);
             return view('pages.auth.changepassword', [
-                    'url' => '/change_password_view',
-                    'data' => [
-                        'mensaje' => $userData['mensaje'] ,
-                        'encryptedId' => $encryptedId
-                    ]
-                ]);   
+                'url' => '/change_password_view',
+                'data' => [
+                    'mensaje' => $userData['mensaje'],
+                    'encryptedId' => $encryptedId
+                ]
+            ]);
         }
         
         if ($response->status() === 200) {
@@ -76,34 +82,16 @@ class ApiAuthController extends Controller
             if($userData['username'] == '22A0000'){
                 return redirect("/setic/malla_validacion");
             }
-            
-            if ($response->status() === 200) {
-                $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-                $user = User::firstOrNew([$fieldType => $request->input('email')]);
-                $user->name = $userData['name'];
-                $user->password = '0';
-                $user->email = $userData['email'];
-                $user->save();
-                Session::put('token', $userData['token']);
-                Session::put('id_usuario', $userData['id_usuario']);
-                Session::put('bienvenida', $userData['bienvenida']);
-                Session::put('mensaje_egresado', $userData['mensaje_egresado']);
-                Session::put('foto', $userData['foto']);
-                auth()->login($user);
-                if($userData['username'] == '22A0000'){
-                    return redirect("/setic/malla_validacion");
-                }
-                return redirect('/');
-            } elseif($response->status() === 403) {
-                throw new Exception('¡Acceso al sistema denegado!');
-            } else {
-                return redirect('/login')->withErrors(['error' => 'Usuario o contraseña incorrectos']);
-            }
-        } catch (ConnectionException $e) {
-        // Si hay un error como cURL 28 (timeout), carga una vista amigable
-            return view('pages.error.timeout'); // Crea esta vista personalizada
+            return redirect('/');
+        } elseif($response->status() === 403) {
+            throw new Exception('¡Acceso al sistema denegado!');
+        } else {
+            return redirect('/login')->withErrors(['error' => 'Usuario o contraseña incorrectos']);
         }
+    } catch (ConnectionException $e) {
+        return view('pages.error.timeout');
     }
+}
 
     public function logout()
     {
