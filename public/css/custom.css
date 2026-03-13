@@ -191,3 +191,25 @@
 /*SWEET ALERT*/
 /* ── SWEETALERT2 - Colores institucionales ── */
 /*TERMINA*/
+
+
+/* Accordion - colores institucionales */
+.accordion-button {
+    color: var(--verde) !important;
+    font-weight: 600;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--verde) !important;
+    background-color: var(--verdeClaro) !important;
+    box-shadow: inset 0 -1px 0 rgba(19, 84, 35, 0.15) !important;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(19, 84, 35, 0.2) !important;
+    border-color: var(--verde) !important;
+}
+
+.accordion-button::after {
+    filter: hue-rotate(200deg) saturate(2) brightness(0.4);
+}

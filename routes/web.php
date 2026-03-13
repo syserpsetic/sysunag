@@ -199,6 +199,9 @@ Route::middleware('auth')->group(function () {
         Route::match(['get', 'post'], '/docentes/obtener-matriculados-seccion', [DocentesController::class, 'nuevaModalidadMatriculadosSeccion']);
         Route::match(['get', 'post'], '/docentes/guardarCalificaciones', [DocentesController::class, 'guardarCalificaciones']);
         Route::get('/docentes/{docenteId}/secciones/{seccionId}/calificaciones/{idAsignatura}/cuadro-calificaciones', [ReportsController::class, 'cuadroCalificacionesSeccion']);
+        Route::post('docentes/secciones/{seccionId}/guardarObservaciones', [DocentesController::class, 'guardarObservacionesSeccion']);
+        Route::post('/docentes/secciones/obs-comentarios/guardar',[DocentesController::class, 'guardar_aca_seccion_comentario']);
+
     //Finaliza Docentes
 });
 

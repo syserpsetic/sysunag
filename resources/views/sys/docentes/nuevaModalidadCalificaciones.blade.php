@@ -119,48 +119,48 @@
 
 
         /* ============================================================
-                       HANDSONTABLE
-                       ============================================================ */
+                           HANDSONTABLE
+                           ============================================================ */
 
         /* ── CONTENEDOR ── */
         /* ── CONTENEDOR ── */
-#hot {
-    width: 100%;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 24px rgba(19, 84, 35, 0.12);
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    animation: hotFadeIn 0.4s ease forwards;
-}
+        #hot {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(19, 84, 35, 0.12);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            animation: hotFadeIn 0.4s ease forwards;
+        }
 
-@media (max-width: 768px) {
-    #hot {
-        overflow: visible !important;
-        border-radius: 4px !important;
-    }
+        @media (max-width: 768px) {
+            #hot {
+                overflow: visible !important;
+                border-radius: 4px !important;
+            }
 
-    .ht_clone_left,
-    .ht_clone_top_left_corner {
-        display: none !important;
-    }
+            .ht_clone_left,
+            .ht_clone_top_left_corner {
+                display: none !important;
+            }
 
-    .wtHolder {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-    }
+            .wtHolder {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
 
-    .ht_clone_top .wtHolder {
-        overflow-x: auto !important;
-    }
+            .ht_clone_top .wtHolder {
+                overflow-x: auto !important;
+            }
 
-    .acciones-toolbar {
-        justify-content: flex-start;
-    }
+            .acciones-toolbar {
+                justify-content: flex-start;
+            }
 
-    .stat-value {
-        font-size: 20px;
-    }
-}
+            .stat-value {
+                font-size: 20px;
+            }
+        }
 
         /* ── SCROLL ── */
         .wtHolder {
@@ -382,9 +382,6 @@
                 transform: translateY(0);
             }
         }
-
-
-
     </style>
 @endpush
 
@@ -407,14 +404,12 @@
                                 </h2>
                                 <div class="mt-1 text-white"
                                     style="color:#ffffff;font-size:13px;font-weight:600;letter-spacing:0.5px;">
-                                    <i data-feather="book-open"
-                                        style="width:13px;height:13px;stroke:#ffffff;"></i>
+                                    <i data-feather="book-open" style="width:13px;height:13px;stroke:#ffffff;"></i>
                                     {{ strtoupper($row['carrera']) }}
                                 </div>
                             </div>
                         </div>
-                         <img src="{{ url(asset('/assets/images/UNAG_BLANCO.png')) }}"
-                            class="d-none d-md-block"
+                        <img src="{{ url(asset('/assets/images/UNAG_BLANCO.png')) }}" class="d-none d-md-block"
                             style="position:absolute; right:20px; top:50%; transform:translateY(-50%); height:60px; opacity:0.9;">
                     </div>
                 </div>
@@ -792,8 +787,8 @@
             var idEstadoNoSePresento = 3;
             var idEstadoReprobado = 1;
 
-            var urlguardarObservaciones = "/secciones/{{ $seccionId }}/guardarObservaciones";
-            var url_guardar_aca_seccion_comentario = "{{ url('secciones/obs-comentarios') }}/guardar";
+            var urlguardarObservaciones = "{{ url('docentes/secciones/' . $seccionId . '/guardarObservaciones') }}";
+            var url_guardar_aca_seccion_comentario = "{{ url('docentes/secciones/obs-comentarios') }}/guardar";
 
             var accion = null;
             var id = null;
@@ -901,10 +896,13 @@
                     }
                 });
 
-                // table = $("#tbl_aca_seccion_comentario").DataTable({
-                //     language: dtLangConfig ?? {},
-                //     destroy: true
-                // });
+                $('#modal_aca_seccion_comentario').on('shown.bs.modal', function() {
+                    if (table == null) {
+                        table = $("#tbl_aca_seccion_comentario").DataTable({
+                            destroy: true
+                        });
+                    }
+                });
 
                 // ----- Observaciones generales (frmAcaSeccion) -----
                 $('#btnGuardarFrmAcaSeccion').on('click', function() {
@@ -947,9 +945,6 @@
                     type: 'post',
                     data: form_data,
                     success: function(data) {
-
-                        console.log('DATA COMPLETA:', data);
-                        console.log('MATRICULADOS:', data.matriculados);
 
                         @if ($tieneAsignaturasLaboratorioGrupo == 1)
                             matriculados = data.matriculados.filter(d => d.modalidad_laboratorio_grupo ==
@@ -2040,32 +2035,33 @@
                             licenseKey: 'b2455-d0184-9cc94-04409-6b848',
                             language: 'es-MX'
                         };
-                       var isMobile = window.innerWidth <= 768;
+                        var isMobile = window.innerWidth <= 768;
 
-if (isMobile) {
-    hotSettings.stretchH = 'none';
-    hotSettings.fixedColumnsLeft = 0;
-    hotSettings.rowHeaders = false;
-    hotSettings.width = window.innerWidth - 32;  // ancho real de pantalla menos padding
-    hotSettings.colWidths = 90;
-    // Quitar preventOverflow que interfiere con scroll móvil
-    delete hotSettings.preventOverflow;
-}
+                        if (isMobile) {
+                            hotSettings.stretchH = 'none';
+                            hotSettings.fixedColumnsLeft = 0;
+                            hotSettings.rowHeaders = false;
+                            hotSettings.width = window.innerWidth -
+                            32; // ancho real de pantalla menos padding
+                            hotSettings.colWidths = 90;
+                            // Quitar preventOverflow que interfiere con scroll móvil
+                            delete hotSettings.preventOverflow;
+                        }
 
-hot = new Handsontable(hotElement, hotSettings);
+                        hot = new Handsontable(hotElement, hotSettings);
 
-// En móvil, forzar eliminación de clones DESPUÉS de que Handsontable termine de renderizar
-if (isMobile) {
-    setTimeout(function() {
-        var estiloForzado = document.createElement('style');
-        estiloForzado.innerHTML = `
+                        // En móvil, forzar eliminación de clones DESPUÉS de que Handsontable termine de renderizar
+                        if (isMobile) {
+                            setTimeout(function() {
+                                var estiloForzado = document.createElement('style');
+                                estiloForzado.innerHTML = `
             .ht_clone_left { display: none !important; width: 0 !important; }
             .ht_clone_top_left_corner { display: none !important; width: 0 !important; }
         `;
-        document.head.appendChild(estiloForzado);
-        hot.render();
-    }, 500);
-}
+                                document.head.appendChild(estiloForzado);
+                                hot.render();
+                            }, 500);
+                        }
 
 
                         Swal.close();
@@ -2124,6 +2120,7 @@ if (isMobile) {
 
                 $('.modal-footer').on('click', '#btn_guardar_aca_seccion_comentario', function() {
                     texto_comentario = $('#texto_comentario').val();
+                    espera('Guardando observación...');
                     guardar_aca_seccion_comentario();
                 });
 
@@ -2136,39 +2133,39 @@ if (isMobile) {
             // Funciones globales
             // ================================================================
 
-            function espera(html){
-    let timerInterval
-    Swal.fire({
-        imageUrl: "{{ url(asset('/assets/images/unag_loading.gif')) }}",
-        title: '¡Espera!',
-        html: html,
-        timer: null,
-        timerProgressBar: true,
-        allowOutsideClick: false,  // ← no se cierra al hacer click afuera
-        allowEscapeKey: false,     // ← no se cierra con ESC
-        allowEnterKey: false,      // ← no se cierra con Enter
-        didOpen: () => {
-            Swal.showLoading()
-            timerInterval = setInterval(() => {
-                const content = Swal.getHtmlContainer()
-                if (content) {
-                    const b = content.querySelector('b')
-                    if (b) {
-                        b.textContent = Swal.getTimerLeft()
+            function espera(html) {
+                let timerInterval
+                Swal.fire({
+                    imageUrl: "{{ url(asset('/assets/images/unag_loading.gif')) }}",
+                    title: '¡Espera!',
+                    html: html,
+                    timer: null,
+                    timerProgressBar: true,
+                    allowOutsideClick: false, // ← no se cierra al hacer click afuera
+                    allowEscapeKey: false, // ← no se cierra con ESC
+                    allowEnterKey: false, // ← no se cierra con Enter
+                    didOpen: () => {
+                        Swal.showLoading()
+                        timerInterval = setInterval(() => {
+                            const content = Swal.getHtmlContainer()
+                            if (content) {
+                                const b = content.querySelector('b')
+                                if (b) {
+                                    b.textContent = Swal.getTimerLeft()
+                                }
+                            }
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
                     }
-                }
-            }, 100)
-        },
-        willClose: () => {
-            clearInterval(timerInterval)
-        }
-    })
-}
+                })
+            }
 
             function guardarCalificaciones() {
                 espera('Tu información se esta guardando...');
                 $.ajax({
-                    url: '{{ url("/docentes/guardarCalificaciones") }}',
+                    url: '{{ url('/docentes/guardarCalificaciones') }}',
                     type: 'POST',
                     data: {
                         matriculados: JSON.stringify(matriculados),
@@ -2323,6 +2320,7 @@ if (isMobile) {
                         accion: accion
                     },
                     success: function(data) {
+                        Swal.close();
                         if (data.msgError != null) {
                             Swal.fire('Error', data.msgError, 'error');
                         } else {
@@ -2334,15 +2332,20 @@ if (isMobile) {
                                 showConfirmButton: false
                             });
                             $('#modal_aca_seccion_comentario').modal('hide');
-                            for (var i = 0; i < data.aca_seccion_comentario_list.length; i++) {
-                                var r = data.aca_seccion_comentario_list[i];
-                                var fila = [r.id, r.id_seccion, r.texto_comentario];
-                                if (accion == 1) {
-                                    table.row.add(fila).draw();
-                                } else if (accion == 2) {
-                                    table.row(rowNumber).data(fila);
+
+                            // Solo procesar la lista si no es eliminación y si existe
+                            if (accion != 3 && data.aca_seccion_comentario_list != null) {
+                                for (var i = 0; i < data.aca_seccion_comentario_list.length; i++) {
+                                    var r = data.aca_seccion_comentario_list[i];
+                                    var fila = [r.id, r.id_seccion, r.texto_comentario];
+                                    if (accion == 1) {
+                                        table.row.add(fila).draw();
+                                    } else if (accion == 2) {
+                                        table.row(rowNumber).data(fila).draw();
+                                    }
                                 }
                             }
+
                             if (accion == 3) {
                                 $('#modal_eliminar_aca_seccion_comentario').modal('hide');
                                 table.row(rowNumber).remove().draw();
@@ -2426,8 +2429,5 @@ if (isMobile) {
             const intervalo = setInterval(actualizarTemporizador, 1000);
             actualizarTemporizador();
         });
-
-
-        
     </script>
 @endpush
