@@ -23,6 +23,8 @@ use App\Http\Controllers\Setic\SeticController;
 use App\Http\Controllers\Psicologia\PsicologiaController;
 use App\Http\Controllers\GestionSolicitudes\GestionSolicitudesController;
 use App\Http\Controllers\Indicadores\IndicadoresController;
+use App\Http\Controllers\Docentes\DocentesController;
+use App\Http\Controllers\Reportes\ReportsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -189,6 +191,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/psicologia/historialClinico', [PsicologiaController::class, 'historial_clinico'])->name('historial_clinico');
             Route::get('/psicologia/catalogos-clinica', [PsicologiaController::class, 'obtener_catalogos_clinica'])->name('obtener_catalogos_clinica');
     //Finaliza Psicologia
+
+    //Inicia Docentes
+        //Rutas carga academica docentes
+        Route::get('/docentes/cargaAcademica', [DocentesController::class, 'ver_carga_academica_docente'])->name('ver_carga_academica_docente');
+        Route::get('/docentes/{docenteId}/secciones/{idSeccion}/calificaciones/{modulo_back}', [DocentesController::class, 'asignarCalificacionesNuevaModalidad'])->name('asignar_calificaciones_nueva_modalidad');
+        Route::match(['get', 'post'], '/docentes/obtener-matriculados-seccion', [DocentesController::class, 'nuevaModalidadMatriculadosSeccion']);
+        Route::match(['get', 'post'], '/docentes/guardarCalificaciones', [DocentesController::class, 'guardarCalificaciones']);
+        Route::get('/docentes/{docenteId}/secciones/{seccionId}/calificaciones/{idAsignatura}/cuadro-calificaciones', [ReportsController::class, 'cuadroCalificacionesSeccion']);
+    //Finaliza Docentes
 });
 
 Route::group(['prefix' => 'email'], function(){

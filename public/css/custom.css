@@ -131,4 +131,63 @@
     background-color: var(--amarillo) !important;
     border: none !important;
   }
+
+
   /* Fin Botones */
+
+ .dataTables_paginate span .paginate_button.current,
+.dataTables_paginate span .paginate_button.current:hover,
+.page-item.active .page-link {
+    background-color: var(--amarillo) !important;
+    border-color: var(--amarillo) !important;
+    color: var(--blanco) !important;
+}
+
+.btn-warning {
+    background-color: var(--amarillo) !important;
+    border: none !important;
+    color: var(--colorTexto) !important;
+}
+
+.btn-warning:hover {
+    background-color: var(--cafe) !important;
+    border: none !important;
+    color: var(--blanco) !important;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:hover {
+    color: var(--azul) !important;
+}
+
+/*SWEET ALERT*/
+/* ── SWEETALERT2 - Colores institucionales ── */
+.swal2-confirm {
+    background-color: var(--verdeOscuro) !important;
+    border-color: var(--verdeOscuro) !important;
+}
+.swal2-confirm:hover {
+    background-color: var(--verde) !important;
+    border-color: var(--verde) !important;
+}
+.swal2-cancel {
+    background-color: var(--gris6) !important;
+    border-color: var(--gris6) !important;
+}
+.swal2-deny {
+    background-color: var(--rojo) !important;
+    border-color: var(--rojo) !important;
+}
+.swal2-timer-progress-bar {
+    background-color: var(--verde) !important;
+}
+.swal2-icon.swal2-success .swal2-success-ring {
+    border-color: var(--verde) !important;
+}
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+    background-color: var(--verde) !important;
+}
+
+/*SWEET ALERT*/
+/* ── SWEETALERT2 - Colores institucionales ── */
+/*TERMINA*/
