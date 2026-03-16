@@ -86,7 +86,7 @@ class ApiAuthController extends Controller
         } elseif($response->status() === 403) {
             throw new Exception('¡Acceso al sistema denegado!');
         } else {
-            return redirect('/login')->withErrors(['error' => 'Usuario o contraseña incorrectos']);
+            return redirect('/login_graduados')->withErrors(['error' => 'Usuario o contraseña incorrectos']);
         }
     } catch (ConnectionException $e) {
         return view('pages.error.timeout');
@@ -130,7 +130,7 @@ class ApiAuthController extends Controller
         $msgError = $response['msgError'];
 
         if($response->status() === 200 && $estatus == true){
-            return redirect('/');
+            return redirect('/login_graduados')->with('success', 'Contraseña actualizada correctamente. Escriba su usuario y contraseña nueva para ingresar.');
         }else{
             return view('pages.auth.changepassword', [
                     'url' => '/change_password_view',
