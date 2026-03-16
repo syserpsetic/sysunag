@@ -69,7 +69,6 @@ class DocentesController extends Controller
         $docenteId = $encabezado['docenteId'];
         $asignaturas_list = $encabezado['asignaturas_list'];
         $aca_seccion_comentario_list = $encabezado['aca_seccion_comentario_list'];
-        
 
         return view($vista, [
             "seccionId" => $seccionId,
@@ -126,5 +125,43 @@ class DocentesController extends Controller
     // Devuelve la respuesta de la API directo al blade
     return response()->json($response->json());
 }
+
+    public function guardarObservacionesSeccion(Request $request, $seccionId)
+{
+    $response = Http::withHeaders([
+        'Authorization' => session('token'),
+    ])->post(env('API_BASE_URL_ZETA') . "/api/auth/docentes/secciones/{$seccionId}/guardarObservaciones", [
+        'observaciones' => $request->observaciones,
+        'seccionId' => $seccionId
+    ]);
+
+    if ($response->status() === 403) {
+        abort(403);
+    }
+
+    return response()->json($response->json());
+}
+
+public function guardar_aca_seccion_comentario(Request $request)
+{
+    $response = Http::withHeaders([
+        'Authorization' => session('token'),
+    ])->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/secciones/obs-comentarios/guardar', [
+        'id'              => $request->id,
+        'id_seccion'      => $request->id_seccion,
+        'texto_comentario'=> $request->texto_comentario,
+        'accion'          => $request->accion,
+    ]);
+
+    if ($response->status() === 403) {
+        abort(403);
+    }
+
+    return response()->json($response->json());
+}
+
+
+
+
    
 }
