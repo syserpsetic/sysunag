@@ -201,6 +201,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/docentes/{docenteId}/secciones/{seccionId}/calificaciones/{idAsignatura}/cuadro-calificaciones', [ReportsController::class, 'cuadroCalificacionesSeccion']);
         Route::post('docentes/secciones/{seccionId}/guardarObservaciones', [DocentesController::class, 'guardarObservacionesSeccion']);
         Route::post('/docentes/secciones/obs-comentarios/guardar',[DocentesController::class, 'guardar_aca_seccion_comentario']);
+        Route::get('/docentes/{docenteId}/secciones/{seccionId}/configuracion', [DocentesController::class, 'verSeccionConfiguracionEvaluacion']);
+        Route::post('/docentes/secciones/configuracion/columnas', [DocentesController::class, 'getSeccionConfiguracionColumnas']);
+        Route::post('/docentes/secciones/configuracion/columnas/guardar', [DocentesController::class, 'guardarSeccionConfiguracionColumnas']);
 
     //Finaliza Docentes
 });
