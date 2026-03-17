@@ -19,7 +19,7 @@
         }
 
         a.uk-link-reset.bg-green::before {
-            content: 'Egresados →';
+            content: 'Ir a responder →';
             text-align: center;
             line-height: 54px;
             position: absolute;
@@ -129,9 +129,16 @@
         </div>
 
         <div class="uk-position-top-right uk-flex uk-flex-row">
-            <!-- <a class=" bg-green uk-padding-small uk-link-reset" href="{{ route('login_graduados') }}">
-                <img src="{{ asset('/assets/images/svg/school.svg') }}" alt=""> Egresados
-            </a> -->
+            <a class=" bg-green uk-padding-small uk-link-reset" href="https://forms.gle/6or2xvgtGJZQsDgJ7" target="_blank">
+                <!-- https://feathericons.dev/?search=align-justify&iconset=feather -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <line x1="21" x2="3" y1="10" y2="10" />
+                <line x1="21" x2="3" y1="6" y2="6" />
+                <line x1="21" x2="3" y1="14" y2="14" />
+                <line x1="21" x2="3" y1="18" y2="18" />
+                </svg>
+                Formulario de Registro de Graduados
+            </a>
             <a class=" bg-dark-green uk-padding-small uk-link-reset" href="{{ route('error') }}">
                 <img src="{{ asset('/assets/images/svg/checklist.svg') }}" alt=""> Solicitud de Reingreso
             </a>
