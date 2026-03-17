@@ -9,12 +9,12 @@
 @section('content_gs')
 
     
-            <div class="p-3 border-bottom">
+            <div class="p-3 border-bottom bg-primary">
               <div class="row align-items-center">
                 <div class="col-lg-6">
                   <div class="d-flex align-items-end mb-2 mb-md-0">
-                    <i data-feather="send" class="text-muted me-2"></i>
-                    <h4 class="me-1">Solicitudes Enviadas</h4>
+                    <i data-feather="send" class="me-2 text-white"></i>
+                    <h4 class="me-1 text-white">Solicitudes Enviadas</h4>
                      <!-- <span class="text-muted">(2 solitudes nuevas)</span>  -->
                   </div>
                 </div>

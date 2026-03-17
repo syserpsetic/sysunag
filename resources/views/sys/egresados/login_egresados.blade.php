@@ -150,7 +150,7 @@
                 </div> -->
             </div>
 
-         
+         <br>
                 <h2 class="txt-blanco">GRADUADOS</h2>
                 <p class="txt-blanco">Ingrese sus credenciales:</p>
                 <form class="forms-sample" method="POST" action="{{ route('login') }}">
@@ -178,6 +178,12 @@
                                 <strong>{{ $error }}</strong>
                             </p>
                         @endforeach
+                        @if(session('success'))
+                            <small class="txt-blanco">
+                                {{ session('success') }}
+                            </small>
+                        @endif
+
                         {{-- <div class="uk-flex uk-flex-between">
                 <label class="txt-recuerdame"><input class="uk-checkbox uk-margin-remove-left" type="checkbox"> Recuérdame</label>
                 <label class="uk-toggle txt-olvide-contrasenia"><a href="{{url('/reiniciar-contraseña')}}" style="" class="uk-margin-remove-top uk-link-reset">¡Olvidé mi

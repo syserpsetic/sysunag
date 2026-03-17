@@ -6,7 +6,7 @@
     <div class="card">
       <div class="card-body">
         <div class="row">
-          <div class="col-lg-3 border-end-lg">
+          <div class="col-lg-2 border-end-lg">
             <div class="d-flex align-items-center justify-content-between">
               <button class="navbar-toggle btn btn-icon border d-block d-lg-none" data-bs-target=".email-aside-nav" data-bs-toggle="collapse" type="button">
                 <span class="icon"><i data-feather="chevron-down"></i></span>
@@ -94,7 +94,7 @@
               </ul>
             </div>
           </div>
-          <div class="col-lg-9">
+          <div class="col-lg-10">
             @yield('content_gs')
           </div>
         </div>
