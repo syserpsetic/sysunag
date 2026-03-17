@@ -121,7 +121,7 @@
                                                                 <i data-feather="eye"></i>
                                                             </a>
                                                             <a type="button" class="btn btn-warning btn-icon btn-xs"
-                                                                href="{{ url('modalidad/docentes/'.$row['id_usuario'].'/secciones/'.$row['id_seccion'].'/configuracion') }}"
+                                                                href="{{ url('docentes/'.$row['id_usuario'].'/secciones/'.$row['id_seccion'].'/configuracion') }}"
                                                                 title="Configuración">
                                                                 <i data-feather="settings"></i>
                                                             </a>

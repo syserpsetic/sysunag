@@ -135,8 +135,8 @@ class DocentesController extends Controller
         'seccionId' => $seccionId
     ]);
 
-    if ($response->status() === 403) {
-        abort(403);
+    if($response->status() === 403){
+        return view('pages.error.403')->with('scopes', $scopes = array());
     }
 
     return response()->json($response->json());
@@ -153,11 +153,67 @@ public function guardar_aca_seccion_comentario(Request $request)
         'accion'          => $request->accion,
     ]);
 
-    if ($response->status() === 403) {
-        abort(403);
+   if($response->status() === 403){
+        return view('pages.error.403')->with('scopes', $scopes = array());
     }
 
     return response()->json($response->json());
+}
+
+public function getSeccionConfiguracionColumnas(Request $request)
+{
+    $response = Http::withHeaders([
+        'Authorization' => session('token'),
+    ])->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/secciones/configuracion/columnas', [
+        'seccionId' => $request->input('seccionId'),
+    ]);
+
+    if($response->status() === 403){
+        return view('pages.error.403')->with('scopes', $scopes = array());
+    }
+
+    return response()->json($response->json());
+}
+
+public function guardarSeccionConfiguracionColumnas(Request $request)
+{
+    $response = Http::withHeaders([
+        'Authorization' => session('token'),
+    ])->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/secciones/configuracion/columnas/guardar', [
+        'columnasEvaluacion' => $request->input('columnasEvaluacion'),
+        'seccionId'          => $request->input('seccionId'),
+    ]);
+
+    if($response->status() === 403){
+        return view('pages.error.403')->with('scopes', $scopes = array());
+    }
+
+    return response()->json($response->json());
+}
+
+public function verSeccionConfiguracionEvaluacion(Request $request, $docenteId, $seccionId)
+{
+    $response = Http::withHeaders([
+        'Authorization' => session('token'),
+    ])->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/' . $docenteId . '/secciones/' . $seccionId . '/configuracion', [
+        'docenteId' => $docenteId,
+        'seccionId' => $seccionId,
+    ]);
+
+    if($response->status() === 403){
+        return view('pages.error.403')->with('scopes', $scopes = array());
+    }
+
+    $data = $response->json();
+    $scopes = array();
+
+    return view('sys.docentes.seccionesConfiguracionColumnas', [
+        'seccionId'                   => $data['seccionId'],
+        'docenteId'                   => $data['docenteId'],
+        'asignaturas_list'            => $data['asignaturas_list'],
+        'aca_seccion_comentario_list' => $data['aca_seccion_comentario_list'],
+        'scopes' =>$scopes
+    ]);
 }
 
 
