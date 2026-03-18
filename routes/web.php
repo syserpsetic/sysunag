@@ -199,11 +199,23 @@ Route::middleware('auth')->group(function () {
         Route::match(['get', 'post'], '/docentes/obtener-matriculados-seccion', [DocentesController::class, 'nuevaModalidadMatriculadosSeccion']);
         Route::match(['get', 'post'], '/docentes/guardarCalificaciones', [DocentesController::class, 'guardarCalificaciones']);
         Route::get('/docentes/{docenteId}/secciones/{seccionId}/calificaciones/{idAsignatura}/cuadro-calificaciones', [ReportsController::class, 'cuadroCalificacionesSeccion']);
+        Route::get('/docentes/{docenteId}/modulos/{bloqueModuloId}/calificaciones/{idModulo}/cuadro', [ReportsController::class, 'cuadroCalificacionesModulo']);
         Route::post('docentes/secciones/{seccionId}/guardarObservaciones', [DocentesController::class, 'guardarObservacionesSeccion']);
         Route::post('/docentes/secciones/obs-comentarios/guardar',[DocentesController::class, 'guardar_aca_seccion_comentario']);
         Route::get('/docentes/{docenteId}/secciones/{seccionId}/configuracion', [DocentesController::class, 'verSeccionConfiguracionEvaluacion']);
         Route::post('/docentes/secciones/configuracion/columnas', [DocentesController::class, 'getSeccionConfiguracionColumnas']);
         Route::post('/docentes/secciones/configuracion/columnas/guardar', [DocentesController::class, 'guardarSeccionConfiguracionColumnas']);
+        // Módulos
+        Route::get('/docentes/{docenteId}/bloques-modulo/{bloqueModuloId}/calificaciones/{modulo_back}', [DocentesController::class, 'asignarCalificacionesModuloNuevaModalidad']);
+        Route::get('/modalidad/docentes/{docenteId}/modulos/{bloqueModuloId}/calificaciones/{modulo_back}', [DocentesController::class, 'asignarCalificacionesModuloNuevaModalidad']);
+        Route::post('/docentes/obtener-matriculados-modulo', [DocentesController::class, 'matriculadosModuloNuevaModalidad']);
+        Route::post('/docentes/guardarCalificacionesModulo', [DocentesController::class, 'guardarCalificacionesModuloNuevaModalidad']);
+        Route::post('/docentes/modulos/{bloqueModuloId}/guardarObservaciones', [DocentesController::class, 'guardarObservacionesModulo']);
+        // Configuración columnas módulo
+        Route::get('/docentes/{docenteId}/bloques-modulo/{bloqueModuloId}/configuracion', [DocentesController::class, 'verBloqueModuloConfiguracionEvaluacion']);
+        Route::get('/modalidad/docentes/{docenteId}/modulos/{bloqueModuloId}/configuracion', [DocentesController::class, 'verBloqueModuloConfiguracionEvaluacion']);
+        Route::post('/docentes/bloques-modulo/configuracion/columnas', [DocentesController::class, 'getBloqueModuloConfiguracionColumnas']);
+        Route::post('/docentes/bloques-modulo/configuracion/columnas/guardar', [DocentesController::class, 'guardarBloqueModuloConfiguracionColumnas']);
 
     //Finaliza Docentes
 });

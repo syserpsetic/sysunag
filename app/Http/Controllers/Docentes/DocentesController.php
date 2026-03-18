@@ -160,6 +160,77 @@ public function guardar_aca_seccion_comentario(Request $request)
     return response()->json($response->json());
 }
 
+// ─── Módulos ─────────────────────────────────────────────────────────────────
+
+    public function asignarCalificacionesModuloNuevaModalidad(Request $request, $docenteId, $bloqueModuloId, $modulo_back)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA') . "/api/auth/docentes/{$docenteId}/bloques-modulo/{$bloqueModuloId}/calificaciones/{$modulo_back}");
+
+        if ($response->status() === 403) {
+            return view('pages.error.403')->with('scopes', []);
+        }
+
+        $data = $response->json();
+
+        return view('sys.docentes.calificacionesModuloNuevaModalidad', [
+            'modulos_list'                           => $data['modulos_list'],
+            'bloqueModuloId'                         => $data['bloqueModuloId'],
+            'docenteId'                              => $data['docenteId'],
+            'tieneAccesoGuardarCalificacionesModulos' => $data['tieneAccesoGuardarCalificacionesModulos'],
+            'modulo_back'                            => $data['modulo_back'],
+            'scopes'                                 => $data['scopes'],
+        ]);
+    }
+
+    public function matriculadosModuloNuevaModalidad(Request $request)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/obtener-matriculados-modulo', [
+            'bloqueModuloId' => $request->input('bloqueModuloId'),
+            'idDocente'      => $request->input('idDocente'),
+        ]);
+
+        if ($response->status() === 403) {
+            return view('pages.error.403')->with('scopes', []);
+        }
+
+        return response()->json($response->json(), 200);
+    }
+
+    public function guardarCalificacionesModuloNuevaModalidad(Request $request)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/guardarCalificacionesModulo', $request->all());
+
+        if ($response->status() === 403) {
+            return view('pages.error.403')->with('scopes', []);
+        }
+
+        return response()->json($response->json());
+    }
+
+    public function guardarObservacionesModulo(Request $request, $bloqueModuloId)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->post(env('API_BASE_URL_ZETA') . "/api/auth/docentes/modulos/{$bloqueModuloId}/guardarObservaciones", [
+            'observaciones'  => $request->observaciones,
+            'bloqueModuloId' => $bloqueModuloId,
+        ]);
+
+        if ($response->status() === 403) {
+            return view('pages.error.403')->with('scopes', []);
+        }
+
+        return response()->json($response->json());
+    }
+
+// ─── Sección configuración ───────────────────────────────────────────────────
+
 public function getSeccionConfiguracionColumnas(Request $request)
 {
     $response = Http::withHeaders([
@@ -219,5 +290,56 @@ public function verSeccionConfiguracionEvaluacion(Request $request, $docenteId, 
 
 
 
-   
+// ─── Configuración columnas módulo ───────────────────────────────────────────
+
+public function verBloqueModuloConfiguracionEvaluacion(Request $request, $docenteId, $bloqueModuloId)
+{
+    $response = Http::withHeaders([
+        'Authorization' => session('token'),
+    ])->get(env('API_BASE_URL_ZETA') . "/api/auth/docentes/{$docenteId}/bloques-modulo/{$bloqueModuloId}/configuracion");
+
+    if ($response->status() === 403) {
+        return view('pages.error.403')->with('scopes', []);
+    }
+
+    $data = $response->json();
+
+    return view('sys.docentes.bloqueModuloConfiguracionColumnas', [
+        'modulos_list'   => $data['modulos_list'],
+        'bloqueModuloId' => $data['bloqueModuloId'],
+        'scopes'         => $data['scopes'],
+    ]);
+}
+
+public function getBloqueModuloConfiguracionColumnas(Request $request)
+{
+    $response = Http::withHeaders([
+        'Authorization' => session('token'),
+    ])->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/bloques-modulo/configuracion/columnas', [
+        'bloqueModuloId' => $request->input('bloqueModuloId'),
+    ]);
+
+    if ($response->status() === 403) {
+        return view('pages.error.403')->with('scopes', []);
+    }
+
+    return response()->json($response->json());
+}
+
+public function guardarBloqueModuloConfiguracionColumnas(Request $request)
+{
+    $response = Http::withHeaders([
+        'Authorization' => session('token'),
+    ])->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/bloques-modulo/configuracion/columnas/guardar', [
+        'columnasEvaluacion' => $request->input('columnasEvaluacion'),
+        'bloqueModuloId'     => $request->input('bloqueModuloId'),
+    ]);
+
+    if ($response->status() === 403) {
+        return view('pages.error.403')->with('scopes', []);
+    }
+
+    return response()->json($response->json());
+}
+
 }
