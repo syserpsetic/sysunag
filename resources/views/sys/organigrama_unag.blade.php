@@ -1,4 +1,5 @@
 
+<link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
