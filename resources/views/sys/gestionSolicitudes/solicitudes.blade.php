@@ -39,7 +39,8 @@
                     @endif
                   </a>
                 </li>
-                <!-- <li class="nav-item {{ active_class(['gestion_solicitudes/proceso']) }}">
+             <!--    <hr>
+                <li class="nav-item {{ active_class(['gestion_solicitudes/proceso']) }}">
                   <a class="nav-link d-flex align-items-center" href="{{ url('/gestion_solicitudes/proceso') }}">
                     <i data-feather="refresh-ccw" class="icon-lg me-2"></i>
                     En Proceso

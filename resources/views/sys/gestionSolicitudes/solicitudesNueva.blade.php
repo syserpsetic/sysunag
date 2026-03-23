@@ -44,7 +44,7 @@
     }
 </style>
 <div>
-    <div class="d-flex align-items-center p-3 border-bottom tx-16">
+    <div class="d-flex align-items-center p-3 border-bottom tx-16 bg-primary">
         <span data-feather="edit" class="icon-md me-2"></span>
         Nueva Solicitud
     </div>
