@@ -86,6 +86,10 @@ Route::get('/graduados_activacion_cuenta', function () {
     return view('sys.egresados.activacion_cuenta');
 });
 
+Route::get('/organigrama_unag', function () {
+    return view('sys.organigrama_unag');
+});
+
 Route::post('/graduados_activacion_cuenta/enviar', [EgresadosController::class, 'activacion_cuenta_enviar'])->name('activacion_cuenta_enviar');
 
 Route::middleware('auth')->group(function () {
