@@ -107,20 +107,21 @@
       @if(in_array('almacen_central', $scopes))
         <li class="nav-item nav-category">ALMACÉN </li>
         <li class="nav-item {{ active_class(['almacen/*']) }}">
-          <a class="nav-link" data-bs-toggle="collapse" href="#psicologia" role="button" aria-expanded="{{ is_active_route(['almacen/*']) }}" aria-controls="email">
-            <i class="link-icon" data-feather="activity"></i>
+          <a class="nav-link" data-bs-toggle="collapse" href="#almacen" role="button" aria-expanded="{{ is_active_route(['almacen/*']) }}" aria-controls="email">
+            <i class="link-icon" data-feather="package"></i>
             <span class="link-title">ALMACEN CENTRAL</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
-          <div class="collapse {{ show_class(['psicologia/*']) }}" id="psicologia">
+          <div class="collapse {{ show_class(['almacen/*']) }}" id="almacen">
             <ul class="nav sub-menu">
-              
                   <li class="nav-item">
-                    <a href="{{ url('/psicologia/calendario') }}" class="nav-link {{ active_class(['psicologia/calendario']) }}">Factura</a>
-                  </li>
-        
+                    <a href="{{ url('/almacen/dashboard') }}" class="nav-link {{ active_class(['almacen/dashboard']) }}">Dashboard</a>
+                  </li> 
+                  <li class="nav-item">
+                    <a href="{{ url('/almacen/factura') }}" class="nav-link {{ active_class(['almacen/factura']) }}">Factura</a>
+                  </li>        
                 <li class="nav-item">
-                  <a href="{{ url('/psicologia/historialClinico') }}" class="nav-link {{ active_class(['psicologia/historialClinico']) }}">Requisición</a>
+                  <a href="{{ url('/almacen/requisicion') }}" class="nav-link {{ active_class(['almacen/requisicion']) }}">Requisición</a>
                 </li>
               
             </ul>
