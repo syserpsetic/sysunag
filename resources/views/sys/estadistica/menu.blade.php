@@ -48,7 +48,7 @@
                                                 <div class="card-header bg-primary">
                                                     <div class="d-flex justify-content-between align-items-baseline">
                                                         <h6 class="mb-0">                                                           
-                                                                <strong class="text-white"><i data-feather="activity" class="me-2"></i> Matricula y Atención de Salud</strong>                                                           
+                                                                <strong class="text-white"><i data-feather="pie-chart" class="me-2"></i> Matricula y Atención de Salud</strong>                                                           
                                                         </h6>                                                       
                                                     </div>
                                                 </div>
@@ -75,7 +75,7 @@
                                                 <div class="card-header bg-primary">
                                                     <div class="d-flex justify-content-between align-items-baseline">
                                                         <h6 class="mb-0">                                                           
-                                                                <strong class="text-white"><i data-feather="activity" class="me-2"></i> Titulación por Carrera</strong>                                                           
+                                                                <strong class="text-white"><i data-feather="pie-chart" class="me-2"></i> Titulación por Carrera</strong>                                                           
                                                         </h6>                                                       
                                                     </div>
                                                 </div>
@@ -102,7 +102,7 @@
                                                 <div class="card-header bg-primary">
                                                     <div class="d-flex justify-content-between align-items-baseline">
                                                         <h6 class="mb-0">                                                           
-                                                                <strong class="text-white"><i data-feather="activity" class="me-2"></i> Titulación Oportuna</strong>                                                           
+                                                                <strong class="text-white"><i data-feather="pie-chart" class="me-2"></i> Titulación Oportuna</strong>                                                           
                                                         </h6>                                                       
                                                     </div>
                                                 </div>
@@ -129,7 +129,7 @@
                                                 <div class="card-header bg-primary">
                                                     <div class="d-flex justify-content-between align-items-baseline">
                                                         <h6 class="mb-0">                                                           
-                                                                <strong class="text-white"><i data-feather="activity" class="me-2"></i> Retención</strong>                                                           
+                                                                <strong class="text-white"><i data-feather="pie-chart" class="me-2"></i> Retención</strong>                                                           
                                                         </h6>                                                       
                                                     </div>
                                                 </div>
@@ -156,7 +156,7 @@
                                                 <div class="card-header bg-primary">
                                                     <div class="d-flex justify-content-between align-items-baseline">
                                                         <h6 class="mb-0">                                                           
-                                                                <strong class="text-white"><i data-feather="activity" class="me-2"></i> Historial</strong>                                                           
+                                                                <strong class="text-white"><i data-feather="pie-chart" class="me-2"></i> Historial</strong>                                                           
                                                         </h6>                                                       
                                                     </div>
                                                 </div>

@@ -28,22 +28,6 @@
           <span class="link-title">Página Principal</span>
         </a>
       </li>
-      @if(in_array('malla_validacion', $scopes))
-      <li class="nav-item {{ active_class(['setic/malla_validacion']) }}">
-        <a href="{{ url('/setic/malla_validacion') }}" class="nav-link">
-          <i class="link-icon" data-feather="grid"></i>
-          <span class="link-title">Malla de Validación</span>
-        </a>
-      </li>
-      @endif
-      @if(in_array('empleado_setic', $scopes))
-      <li class="nav-item {{ active_class(['setic/indicadores']) }}">
-        <a href="{{ url('/setic/indicadores') }}" class="nav-link">
-          <i class="link-icon" data-feather="pie-chart"></i>
-          <span class="link-title">Indicadores</span>
-        </a>
-      </li>
-      @endif
       @if(in_array('egresados_all', $scopes))
       <li class="nav-item {{ active_class(['egresados/datos_generales']) }}">
         <a href="{{ url('/egresados/datos_generales') }}" class="nav-link">
@@ -60,16 +44,91 @@
         </a>
       </li>
       @endif
-      @if(in_array('gestion_graduados', $scopes))
+       @if(in_array('gestion_graduados', $scopes))
       <li class="nav-item {{ active_class(['egresados/gestion_graduados']) }}">
         <a href="{{ url('/egresados/gestion_graduados') }}" class="nav-link">
           <i class="link-icon" data-feather="bookmark"></i>
           <span class="link-title">Gestión de Graduados</span>
         </a>
       </li>
+      @endif       
+
+      <li class="nav-item nav-category">ESTADÍSTICAS</li>      
+        <li class="nav-item {{ active_class(['indicadores/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#indicadores" role="button" aria-expanded="{{ is_active_route(['indicadores/*']) }}" aria-controls="email">
+            <i class="link-icon" data-feather="pie-chart"></i>
+            <span class="link-title">INDICADORES</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>          
+          <div class="collapse {{ show_class(['indicadores/*']) }}" id="indicadores">
+            <ul class="nav sub-menu">
+                @if(in_array('malla_validacion', $scopes))
+                  <li class="nav-item">
+                    <a href="{{ url('/setic/malla_validacion') }}" class="nav-link {{ active_class(['/setic/malla_validacion']) }}">Malla de Validación</a>
+                  </li>
+                @endif
+                <li class="nav-item">
+                    <a target="_blank" href="{{ url('/menu') }}" class="nav-link {{ active_class(['/menu']) }}">Unidad de Análisis</a>
+                  </li>
+                @if(in_array('empleado_setic', $scopes))
+                <li class="nav-item">
+                  <a href="{{ url('/setic/indicadores') }}" class="nav-link {{ active_class(['/setic/indicadores']) }}">Gráficas Empleados</a>
+                </li>
+                @endif
+            </ul>
+          </div>
+        </li>
+      
+     
+      @if(in_array('clinica_psicologica_menu', $scopes))
+        <li class="nav-item nav-category">CLÍNICA</li>
+        <li class="nav-item {{ active_class(['psicologia/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#psicologia" role="button" aria-expanded="{{ is_active_route(['psicologia/*']) }}" aria-controls="email">
+            <i class="link-icon" data-feather="activity"></i>
+            <span class="link-title">CLÍNICA PSICOLÓGICA</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse {{ show_class(['psicologia/*']) }}" id="psicologia">
+            <ul class="nav sub-menu">
+                @if(in_array('clinica_psicologica_leer_calendario_citas', $scopes))
+                  <li class="nav-item">
+                    <a href="{{ url('/psicologia/calendario') }}" class="nav-link {{ active_class(['psicologia/calendario']) }}">Calendario de Citas</a>
+                  </li>
+                @endif
+                @if(in_array('clinica_psicologica_leer_historial_clinico', $scopes))
+                <li class="nav-item">
+                  <a href="{{ url('/psicologia/historialClinico') }}" class="nav-link {{ active_class(['psicologia/historialClinico']) }}">Historial Clinico</a>
+                </li>
+                @endif
+            </ul>
+          </div>
+        </li>
+      @endif
+      @if(in_array('almacen_central', $scopes))
+        <li class="nav-item nav-category">ALMACÉN </li>
+        <li class="nav-item {{ active_class(['almacen/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#psicologia" role="button" aria-expanded="{{ is_active_route(['almacen/*']) }}" aria-controls="email">
+            <i class="link-icon" data-feather="activity"></i>
+            <span class="link-title">ALMACEN CENTRAL</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse {{ show_class(['psicologia/*']) }}" id="psicologia">
+            <ul class="nav sub-menu">
+              
+                  <li class="nav-item">
+                    <a href="{{ url('/psicologia/calendario') }}" class="nav-link {{ active_class(['psicologia/calendario']) }}">Factura</a>
+                  </li>
+        
+                <li class="nav-item">
+                  <a href="{{ url('/psicologia/historialClinico') }}" class="nav-link {{ active_class(['psicologia/historialClinico']) }}">Requisición</a>
+                </li>
+              
+            </ul>
+          </div>
+        </li>
       @endif
       @if(in_array('empleado_setic', $scopes))
-        <li class="nav-item nav-category">SETIC APPS</li>
+        <li class="nav-item nav-category">CONFIGURACIÓN</li>
         <li class="nav-item {{ active_class(['email/*']) }}">
           <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
             <i class="link-icon" data-feather="monitor"></i>
@@ -96,30 +155,7 @@
           </div>
         </li>
       @endif
-      @if(in_array('clinica_psicologica_menu', $scopes))
-        <li class="nav-item nav-category">CLÍNICA PSICOLÓGICA APPS</li>
-        <li class="nav-item {{ active_class(['psicologia/*']) }}">
-          <a class="nav-link" data-bs-toggle="collapse" href="#psicologia" role="button" aria-expanded="{{ is_active_route(['psicologia/*']) }}" aria-controls="email">
-            <i class="link-icon" data-feather="activity"></i>
-            <span class="link-title">CLÍNICA PSICOLÓGICA</span>
-            <i class="link-arrow" data-feather="chevron-down"></i>
-          </a>
-          <div class="collapse {{ show_class(['psicologia/*']) }}" id="psicologia">
-            <ul class="nav sub-menu">
-                @if(in_array('clinica_psicologica_leer_calendario_citas', $scopes))
-                  <li class="nav-item">
-                    <a href="{{ url('/psicologia/calendario') }}" class="nav-link {{ active_class(['psicologia/calendario']) }}">Calendario de Citas</a>
-                  </li>
-                @endif
-                @if(in_array('clinica_psicologica_leer_historial_clinico', $scopes))
-                <li class="nav-item">
-                  <a href="{{ url('/psicologia/historialClinico') }}" class="nav-link {{ active_class(['psicologia/historialClinico']) }}">Historial Clinico</a>
-                </li>
-                @endif
-            </ul>
-          </div>
-        </li>
-      @endif
+
       <!-- <div id="sidebar-menu"> -->
         <!-- Aquí se cargará el menú vía AJAX -->
       <!-- </div> -->
