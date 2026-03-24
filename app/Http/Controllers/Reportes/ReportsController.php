@@ -37,4 +37,19 @@ class ReportsController extends Controller
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'inline; filename="Cuadro de Calificaciones - Modulo ' . $bloqueModuloId . '.pdf"');
     }
+
+    public function reportePrematricula(Request $request, $registro)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->timeout(120)->get(env('API_BASE_URL_ZETA') . "/api/auth/estudiantes/{$registro}/reporte/prematricula");
+
+        if ($response->status() === 403) {
+            abort(403);
+        }
+
+        return response($response->body(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="prematricula_' . $registro . '.pdf"');
+    }
 }

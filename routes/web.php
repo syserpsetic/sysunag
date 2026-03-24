@@ -25,6 +25,7 @@ use App\Http\Controllers\GestionSolicitudes\GestionSolicitudesController;
 use App\Http\Controllers\Indicadores\IndicadoresController;
 use App\Http\Controllers\Docentes\DocentesController;
 use App\Http\Controllers\Reportes\ReportsController;
+use App\Http\Controllers\Estudiantes\MatriculaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -191,6 +192,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/psicologia/historialClinico', [PsicologiaController::class, 'historial_clinico'])->name('historial_clinico');
             Route::get('/psicologia/catalogos-clinica', [PsicologiaController::class, 'obtener_catalogos_clinica'])->name('obtener_catalogos_clinica');
     //Finaliza Psicologia
+
+    // ── Módulo Estudiantes ──
+        Route::get('/estudiantes/{registro}/matricula', [MatriculaController::class, 'ver_prematricula']);
+        Route::post('/estudiantes/matricula/guardar', [MatriculaController::class, 'guardar_prematricula']);
+        Route::post('/estudiantes/matricula/desmatricular', [MatriculaController::class, 'desmatricular']);
+        Route::get('/estudiantes/{registro}/reporte/prematricula', [ReportsController::class, 'reportePrematricula']);
+    // ── Fin Módulo Estudiantes ──
 
     //Inicia Docentes
         //Rutas carga academica docentes
