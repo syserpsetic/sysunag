@@ -26,6 +26,7 @@ use App\Http\Controllers\Indicadores\IndicadoresController;
 use App\Http\Controllers\Docentes\DocentesController;
 use App\Http\Controllers\Reportes\ReportsController;
 use App\Http\Controllers\Estudiantes\MatriculaController;
+use App\Http\Controllers\Almacen\AlmacenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -119,7 +120,7 @@ Route::middleware('auth')->group(function () {
     //Finaliza SETIC
 
     //Inincia Malla Validaciones
-        Route::get('/setic/malla_validacion', [MallaValidacionController::class, 'malla_validaciones'])->name('malla_validacion');
+        Route::get('/indicadores/malla_validacion', [MallaValidacionController::class, 'malla_validaciones'])->name('malla_validacion');
         Route::post("setic/malla_validacion/tareas_pendientes_personas", [MallaValidacionController::class, 'malla_validaciones_tareas_pendientes_personas']); 
         Route::get("setic/malla_validacion/cobro_repetido_estudiantes", [MallaValidacionController::class, 'malla_cobro_repetido_estudiantes']); 
         Route::get("setic/malla_validacion/malla_secciones_sin_docente", [MallaValidacionController::class, 'malla_secciones_sin_docente']); 
@@ -141,7 +142,7 @@ Route::middleware('auth')->group(function () {
     //Finaliza Malla Validaciones
 
     //Inicia Indicadores
-        Route::get('/setic/indicadores', [IndicadoresController::class, 'indicadores'])->name('indicadores');
+        Route::get('/indicadores/indicadores', [IndicadoresController::class, 'indicadores'])->name('indicadores');
     //Finaliza Indicadores
 
     //Inicia Egresados
@@ -169,6 +170,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/gestion_solicitudes/trazabilidad', [GestionSolicitudesController::class, 'ver_solicitudes_trazabilidad']);
         Route::get('/gestion_solicitudes/vencidas', [GestionSolicitudesController::class, 'ver_solicitudes_vencidas']);
     //Finaliza Solicitudes
+
+    //Inicia Almacen
+        Route::get('/almacen/dashboard', [AlmacenController::class, 'almacen_dashboard'])->name('almacen_dashboard');
+    //Finaliza Almacen
 
      //Inicia Psicologia
         //Rutas de calendario

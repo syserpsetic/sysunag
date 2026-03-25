@@ -64,15 +64,15 @@
             <ul class="nav sub-menu">
                 @if(in_array('malla_validacion', $scopes))
                   <li class="nav-item">
-                    <a href="{{ url('/setic/malla_validacion') }}" class="nav-link {{ active_class(['/setic/malla_validacion']) }}">Malla de Validación</a>
+                    <a href="{{ url('/indicadores/malla_validacion') }}" class="nav-link {{ active_class(['/indicadores/malla_validacion']) }}">Malla de Validación</a>
                   </li>
                 @endif
                 <li class="nav-item">
-                    <a target="_blank" href="{{ url('/menu') }}" class="nav-link {{ active_class(['/menu']) }}">Unidad de Análisis</a>
+                    <a target="_blank" href="{{ url('/menu') }}" class="nav-link {{ active_class(['/indicadores/indicadores']) }}">Unidad de Análisis</a>
                   </li>
                 @if(in_array('empleado_setic', $scopes))
                 <li class="nav-item">
-                  <a href="{{ url('/setic/indicadores') }}" class="nav-link {{ active_class(['/setic/indicadores']) }}">Gráficas Empleados</a>
+                  <a href="{{ url('/indicadores/indicadores') }}" class="nav-link {{ active_class(['/indicadores/indicadores']) }}">Gráficas Empleados</a>
                 </li>
                 @endif
             </ul>
@@ -130,13 +130,13 @@
       @endif
       @if(in_array('empleado_setic', $scopes))
         <li class="nav-item nav-category">CONFIGURACIÓN</li>
-        <li class="nav-item {{ active_class(['email/*']) }}">
-          <a class="nav-link" data-bs-toggle="collapse" href="#email" role="button" aria-expanded="{{ is_active_route(['email/*']) }}" aria-controls="email">
+        <li class="nav-item {{ active_class(['setic/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#setic" role="button" aria-expanded="{{ is_active_route(['setic/*']) }}" aria-controls="setic">
             <i class="link-icon" data-feather="monitor"></i>
             <span class="link-title">SETIC</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
-          <div class="collapse {{ show_class(['email/*']) }}" id="email">
+          <div class="collapse {{ show_class(['setic/*']) }}" id="setic">
             <ul class="nav sub-menu">
               @if(in_array('administrar_asuarios', $scopes))
                 <li class="nav-item">
