@@ -1,4 +1,4 @@
-
+<link rel="shortcut icon" href="{{ asset('/favicon.png') }}">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -106,7 +106,7 @@ body{background:#fff;}
         <div class="row" id="row-jdu-staff" style="width:100%;align-items:center;gap:0;">
           <!-- LEFT: Órganos -->
           <div style="flex:1;display:flex;justify-content:flex-end;padding-right:16px;">
-            <div class="pill p-cyan no-click" id="organos" style="white-space:normal;max-width:150px;text-align:center;">Órganos de Control y Apoyo (SEAPI, SETIC)</div>
+            <div class="pill p-cyan no-click" id="organos" style="white-space:normal;max-width:150px;text-align:center;">Órganos de Control y Apoyo (SEAPI, SETIC, SEPEG)</div>
           </div>
           <!-- CENTER spine going down to Rectoría -->
           <div class="col" style="flex:0 0 auto;">
@@ -129,7 +129,7 @@ body{background:#fff;}
             <!-- ROW: Gerencia | [spine→Vices] | Asesoría -->
             <div class="row" id="row-rect-staff" style="width:100%;align-items:center;gap:0;">
               <div style="flex:1;display:flex;justify-content:flex-end;padding-right:16px;">
-                <div class="pill p-cyan no-click" id="gerencia" style="white-space:normal;max-width:150px;text-align:center;">Gerencia Financiera y Administrativa</div>
+                <div class="pill p-cyan no-click" id="gerencia" style="white-space:normal;max-width:150px;text-align:center;">Gerencia Financiera y admi</div>
               </div>
               <div class="col" style="flex:0 0 auto;">
                 <div class="spine" style="height:48px;" id="pre-vice-spine"></div>
