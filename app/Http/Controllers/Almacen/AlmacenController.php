@@ -52,14 +52,14 @@ class AlmacenController extends Controller
             $empleados = $responseEmpleados->json('empleados', []);
             $tipocita = $responseTipoCita->json('tipos_cita', []);
 
-            return view("sys.psicologia.calendarioCita")
+            return view("sys.almacen.dashboard")
                 ->with("pacientes", $pacientes)
                 ->with("empleados", $empleados)
                 ->with("tipos_cita", $tipocita)
                 ->with('scopes', $scopes);
 
         } catch (Exception $e) {
-            return view("sys.psicologia.calendarioCita")
+            return view("sys.almacen.dashboard")
                 ->with("pacientes", [])
                 ->with("empleados", [])
                 ->with("tipos_cita", [])

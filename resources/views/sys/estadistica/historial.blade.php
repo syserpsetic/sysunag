@@ -325,7 +325,8 @@ select:focus { outline:none; border-color:var(--verde); }
     <div style="font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.2em;color:var(--verde);text-transform:uppercase;font-weight:700;margin:4px 0;">
       Secretaría de Tecnología de la Información y Comunicaciones (SETIC)
     </div>
-    <p>UNAG · Historiales Estudiantiles · Rendimiento por Carrera y Género</p><br>
+    <p>UNAG · Historiales Estudiantiles · Rendimiento por Carrera y Género</p>
+     <p >Nota: Este análisis está hecho en base a una muestra de 256,565 registros de notas de 2024 y 2025 </p>
   </div>
 
   <!-- FILTERS -->

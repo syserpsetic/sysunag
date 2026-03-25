@@ -245,6 +245,7 @@ main { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; padding-bott
     <div class="plabel">Análisis por Ubicación · Cohortes 2019 – 2026</div>
     <h1 class="ptitle">Dashboard — <span>Retención</span> Estudiantil</h1>
     <p class="psubtitle">Comparación de permanencia, graduación y deserción entre estudiantes de internado y externado</p>
+    <p class="psubtitle">Nota: Este análisis está hecho en base a una muestra de 5,301 registros de estudiantes </p>
   </div>
 </div>
 
@@ -253,14 +254,14 @@ main { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; padding-bott
 
   <!-- ── KPIs ────────────────────────────────── -->
   <div class="card gr">
-    <div class="card-title">Total Estudiantes</div>
+    <div class="card-title">Estudiantes</div>
     <div class="card-value" id="kv-total">—</div>
     <div class="card-sub" id="ks-total">en dataset filtrado</div>
   </div>
   <div class="card kpi-green">
-    <div class="card-title">Activos (Matriculados)</div>
+    <div class="card-title">Activos </div>
     <div class="card-value" id="kv-active">—</div>
-    <div class="card-sub" id="ks-active">tienen matrícula actual</div>
+    <div class="card-sub" id="ks-active">tienen matrícula 2026 p1</div>
   </div>
   <div class="card ce">
     <div class="card-title">Graduados</div>
@@ -268,9 +269,9 @@ main { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; padding-bott
     <div class="card-sub" id="ks-grad">completaron carrera</div>
   </div>
   <div class="card rd">
-    <div class="card-title">Desertores</div>
+    <div class="card-title">Desertores </div>
     <div class="card-value kpi-red" id="kv-drop">—</div>
-    <div class="card-sub" id="ks-drop">sin matrícula, no graduados</div>
+    <div class="card-sub" id="ks-drop">sin matrícula 2026 p1, no graduados</div>
   </div>
 
   <!-- ── Section 1 ──────────────────────────── -->
@@ -473,11 +474,11 @@ function updateAll(){
   document.getElementById('kv-total').textContent=fmt(ts);
   document.getElementById('ks-total').textContent='en dataset filtrado';
   document.getElementById('kv-active').textContent=fmt(ta)+' ('+pct(ta,ts)+'%)';
-  document.getElementById('ks-active').textContent='tienen matrícula actual';
+  document.getElementById('ks-active').textContent='tienen matrícula 2026 p1';
   document.getElementById('kv-grad').textContent=fmt(tg)+' ('+pct(tg,ts)+'%)';
   document.getElementById('ks-grad').textContent='completaron carrera';
   document.getElementById('kv-drop').textContent=fmt(td)+' ('+pct(td,ts)+'%)';
-  document.getElementById('ks-drop').textContent='sin matrícula, no graduados';
+  document.getElementById('ks-drop').textContent='sin matrícula 2026 p1, no graduados';
 
   const ri=pct(int.active+int.graduated,int.total), re=pct(ext.active+ext.graduated,ext.total);
   document.getElementById('rbar-int').style.width=ri+'%';

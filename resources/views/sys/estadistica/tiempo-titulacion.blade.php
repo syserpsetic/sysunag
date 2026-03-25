@@ -69,7 +69,7 @@ header { background:var(--white); border-bottom:3px solid var(--verde); padding:
 .plabel { display:inline-flex; align-items:center; background:var(--verde); color:#fff; padding:4px 14px; border-radius:4px; font-family:'Montserrat',sans-serif; font-size:9px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; margin-bottom:10px; }
 .ptitle { font-family:'Montserrat',sans-serif; font-size:clamp(24px,4vw,40px); font-weight:900; color:var(--azul); line-height:1.05; letter-spacing:-.02em; margin-bottom:8px; }
 .ptitle span { color:var(--verde); }
-.psubtitle { font-size:13px; color:var(--text-muted); line-height:1.5; max-width:500px; }
+.psubtitle { font-size:13px; color:var(--text-muted); line-height:1.5; }
 .pmeta { display:flex; flex-direction:column; gap:5px; text-align:right; flex-shrink:0; background:var(--white); border:1px solid var(--border); border-left:4px solid var(--verde); border-radius:8px; padding:14px 18px; box-shadow:var(--shadow-sm); }
 .pmeta-item { font-size:11px; color:var(--text-muted); }
 .pmeta-item strong { color:var(--azul); font-weight:700; }
@@ -214,8 +214,9 @@ tr:hover td { background:#f7fdf7; }
   <div class="page-header">
     <div>
       <div class="plabel">Cohortes 2016 – 2022 · Análisis de Egreso</div>
-      <h1 class="ptitle">Dashboard — <span>Titulación</span> Oportuna</h1>
-      <p class="psubtitle">Tiempo real de graduación vs. duración oficial por carrera y cohorte de ingreso</p>
+      <h1 class="ptitle">Dashboard — <span>Titulación</span> por Carrera</h1>
+      <p class="psubtitle">Tiempo real de graduación vs. duración oficial por carrera </p>
+      <p class="psubtitle">Nota: Este análisis está hecho en base a una muestra de 2,151 registros de estudiantes graduados que ingresaron del 2016 al 2022</p>
     </div>
     <div class="pmeta">
       <div class="pmeta-item hl">Registros: <strong id="total-count">—</strong></div>

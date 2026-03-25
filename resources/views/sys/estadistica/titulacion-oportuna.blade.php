@@ -71,7 +71,7 @@ header { background:var(--white); border-bottom:3px solid var(--verde); padding:
 .plabel { display:inline-flex; align-items:center; background:var(--verde); color:#fff; padding:4px 14px; border-radius:4px; font-family:'Montserrat',sans-serif; font-size:9px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; margin-bottom:10px; }
 .ptitle { font-family:'Montserrat',sans-serif; font-size:clamp(22px,3.5vw,38px); font-weight:900; color:var(--azul); line-height:1.05; letter-spacing:-.02em; margin-bottom:8px; }
 .ptitle span { color:var(--verde); }
-.psubtitle { font-size:13px; color:var(--muted); line-height:1.5; max-width:520px; }
+.psubtitle { font-size:13px; color:var(--muted); line-height:1.5;  }
 
 /* NOTE BAR */
 .note-bar { background:rgba(0,148,233,0.06); border:1px solid rgba(0,148,233,0.2); border-left:4px solid var(--celeste); border-radius:8px; padding:10px 16px; font-size:12px; color:var(--azul); margin-bottom:20px; display:flex; align-items:center; gap:8px; font-family:'Open Sans',sans-serif; animation:fadeUp .4s ease both; }
@@ -226,6 +226,7 @@ select:focus { outline:none; border-color:var(--verde); }
       <div class="plabel">Cohortes 2016 – 2022 · Seguimiento de Egreso</div>
       <h1 class="ptitle">Dashboard — <span>Titulación</span> Oportuna</h1>
       <p class="psubtitle">Medición de cuántos estudiantes se gradúan dentro del tiempo establecido por el plan de estudios</p>
+      <p class="psubtitle">Nota: Este análisis está hecho en base a una muestra de 4,792 registros de estudiantes que ingresaron del 2016 al 2022</p>
     </div>
   </div>
 

@@ -255,35 +255,35 @@
                 id: "totalCitas", 
                 title: "Total Citas", 
                 color: "primary", 
-                icon: "fa-calendar-alt",
+                icon: "calendar",
                 key: "totalcitas" 
             },
             { 
                 id: "citasCompletadas", 
                 title: "Completadas", 
                 color: "success", 
-                icon: "fa-check-circle",
+                icon: "check",
                 key: "citascompletadas" 
             },
             { 
                 id: "citasProgramadas", 
                 title: "Programadas", 
                 color: "warning", 
-                icon: "fa-clock",
+                icon: "clock",
                 key: "citasprogramadas" 
             },
             { 
                 id: "citasCanceladas", 
                 title: "Canceladas", 
                 color: "danger", 
-                icon: "fa-times-circle",
+                icon: "x",
                 key: "citascanceladas" 
             },
             { 
                 id: "citasPospuestas", 
                 title: "Pospuestas", 
                 color: "info", 
-                icon: "fa-calendar-plus",
+                icon: "watch",
                 key: "citaspospuestas" 
             },
         ];
@@ -305,8 +305,8 @@
                                             <i class="fas fa-spinner fa-spin text-white"></i>
                                         </h3>
                                     </div>
-                                    <div>
-                                        <i class="fas ${item.icon} fa-2x text-white"></i>
+                                    <div>                                        
+                                        <i style="color:white" class="link-icon" data-feather="${item.icon}"></i>
                                     </div>
                                 </div>
                             </div>
