@@ -54,25 +54,25 @@
       @endif       
 
       <li class="nav-item nav-category">ESTADÍSTICAS</li>      
-        <li class="nav-item {{ active_class(['indicadores/*']) }}">
+        <li class="nav-item {{ active_class(['indicadores/*',]) }}">
           <a class="nav-link" data-bs-toggle="collapse" href="#indicadores" role="button" aria-expanded="{{ is_active_route(['indicadores/*']) }}" aria-controls="email">
             <i class="link-icon" data-feather="pie-chart"></i>
             <span class="link-title">INDICADORES</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>          
-          <div class="collapse {{ show_class(['indicadores/*']) }}" id="indicadores">
+          <div class="collapse {{ show_class(['indicadores/*','setic/malla_validacion','setic/malla_validacion/*']) }}" id="indicadores">
             <ul class="nav sub-menu">
                 @if(in_array('malla_validacion', $scopes))
                   <li class="nav-item">
-                    <a href="{{ url('/indicadores/malla_validacion') }}" class="nav-link {{ active_class(['/indicadores/malla_validacion']) }}">Malla de Validación</a>
+                    <a href="{{ url('/setic/malla_validacion') }}" class="nav-link {{ active_class(['setic/malla_validacion']) }}">Malla de Validación</a>
                   </li>
                 @endif
                 <li class="nav-item">
-                    <a target="_blank" href="{{ url('/menu') }}" class="nav-link {{ active_class(['/indicadores/indicadores']) }}">Unidad de Análisis</a>
+                    <a target="_blank" href="{{ url('/menu') }}" class="nav-link {{ active_class(['menu']) }}">Unidad de Análisis</a>
                   </li>
                 @if(in_array('empleado_setic', $scopes))
                 <li class="nav-item">
-                  <a href="{{ url('/indicadores/indicadores') }}" class="nav-link {{ active_class(['/indicadores/indicadores']) }}">Gráficas Empleados</a>
+                  <a href="{{ url('/indicadores/indicadores') }}" class="nav-link {{ active_class(['indicadores/indicadores']) }}">Gráficas Empleados</a>
                 </li>
                 @endif
             </ul>
