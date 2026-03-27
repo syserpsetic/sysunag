@@ -20,10 +20,30 @@ class AlmacenController extends Controller
 
     public function almacen_dashboard(Request $request)
     {       
-        $scopes = new ControladorPermisos();
-        $scopes = $scopes->ver_permisos();
+        //$scopes = new ControladorPermisos();
+        //$scopes = $scopes->ver_permisos();
 
-        return view("sys.almacen.dashboard")->with('scopes', $scopes);       
+         $proveedores_list = Http::withHeaders([
+                'Authorization' => session('token'),
+            ])->get(env('API_BASE_URL_ZETA').'/api/auth/almacen/proveedores');
+
+            if($proveedores_list->status() === 403){
+                return view('pages.error.403')->with('scopes', []);
+            }
+
+            $area_list = Http::withHeaders([
+                'Authorization' => session('token'),
+            ])->get(env('API_BASE_URL_ZETA').'/api/auth/almacen/areas');
+
+            if($area_list->status() === 403){
+                return view('pages.error.403')->with('scopes', []);
+            }
+
+            $scopes = $proveedores_list->json('scopes', []);
+            $proveedores_list = $proveedores_list->json('proveedores_list', []);
+            $area_list = $area_list->json('area_list', []);
+
+        return view("sys.almacen.dashboard")->with('scopes', $scopes)->with('proveedores_list', $proveedores_list)->with('area_list', $area_list);       
     }
 
     public function almacen_resumen(Request $request)

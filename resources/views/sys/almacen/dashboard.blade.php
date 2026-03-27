@@ -25,11 +25,88 @@
         <h2 class="mb-3">Reportes</h2>
         <div class="card shadow-sm">
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Descargar</h5>
-                 
+                <!-- Fechas -->
+                <div class="d-flex align-items-center flex-wrap gap-3 mb-3">
+                    <div>
+                        Fecha inicio: <input class="form-control" type="date" id="inicio">
+                    </div>
+                    <div>
+                        Fecha fin: <input class="form-control" type="date" id="fin">
+                    </div>
                 </div>
-          
+
+                <!-- Cards en fila -->
+                <div class="row g-3">
+
+                    <!-- Card Proveedor -->
+                    <div class="col-xl-6 col-12">
+                        <div class="card bg-info text-white h-100 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-1 text-white">Proveedores</h6>
+                                        <h3 class="card-text mb-0 fw-bold text-white">
+                                            <i class="fas fa-spinner fa-spin text-white"></i>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <i style="color:white" class="link-icon" data-feather="download"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <small class="text-white">
+                                    <i class="fas fa-clock me-1"></i>
+                                    <span style="color:white !important">Descargar</span>
+                                </small>
+                                <!-- Select dentro del footer de la card -->
+                                <div class="mt-2">
+                                    <select class="form-control form-control-sm" name="prov" id="prov">
+                                        <option selected disabled value="0">Seleccionar Proveedor</option>
+                                        @foreach($proveedores_list as $row)
+                                        <option value="{{ $row['id'] }}">{{ $row['nombre'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Área -->
+                    <div class="col-xl-6 col-12">
+                        <div class="card bg-info text-white h-100 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="card-title mb-1 text-white">AREA</h6>
+                                        <h3 class="card-text mb-0 fw-bold text-white">
+                                            <i class="fas fa-spinner fa-spin text-white"></i>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <i style="color:white" class="link-icon" data-feather="download"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <small class="text-white">
+                                    <i class="fas fa-clock me-1"></i>
+                                    <span style="color:white !important">Descargar</span>
+                                </small>
+                                <!-- Select dentro del footer de la card -->
+                                <div class="mt-2">
+                                    <select class="form-control form-control-sm" name="areas" id="areas">
+                                        <option selected disabled value="0">Seleccionar Area</option>
+                                        @foreach($area_list as $row1)
+                                        <option value="{{ $row1['id_departamento'] }}">{{ $row1['descripcion'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- fin row g-3 -->
             </div>
         </div>
     </div>
