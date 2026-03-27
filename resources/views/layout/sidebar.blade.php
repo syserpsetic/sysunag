@@ -156,7 +156,75 @@
           </div>
         </li>
       @endif
+       <!-- EL MENU REINGRESO-->
+      @if(in_array('reingresos', $scopes))
+      <li class="nav-item nav-category">Gestión Académica</li>
 
+      <li class="nav-item {{ active_class(['reingresos/*', 'solicitudesnuevas/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#reingreso_submenu" role="button"
+            aria-expanded="{{ is_active_route(['reingresos/*', 'solicitudesnuevas/*']) }}"
+            aria-controls="reingreso_submenu">
+              <i class="link-icon" data-feather="chevrons-right"></i>
+              <span class="link-title">Reingresos</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+
+          <div class="collapse {{ show_class(['reingresos/*', 'solicitudesnuevas/*']) }}" id="reingreso_submenu">
+              <ul class="nav sub-menu">
+                  @if(in_array('reingresos_coordinador', $scopes))
+                  <li class="nav-item">
+                      <a href="{{ route('solicitudesn') }}" class="nav-link {{ active_class(['solicitudesnuevas/solicitudesn']) }}">
+                          <i data-feather="inbox" class="me-1" style="width:14px;"></i>
+                          Coordinador
+                      </a>
+                  </li>
+                  @endif
+                  @if(in_array('reingresos_vicerrector', $scopes))
+                  <li class="nav-item">
+                      <a href="{{ route('solicitudes.vicerrector') }}" class="nav-link {{ active_class(['solicitudesnuevas/solicitudesvicerrector']) }}">
+                          <i data-feather="inbox" class="me-1" style="width:14px;"></i>
+                          Vicerrector
+                      </a>
+                  </li>
+                  @endif
+              </ul>
+          </div>
+      </li>
+      @endif
+      @if(in_array('empleado_setic', $scopes))
+      <li class="nav-item {{ active_class(['catalogo/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#catalogo_submenu" role="button"
+            aria-expanded="{{ is_active_route(['catalogo/*']) }}"
+            aria-controls="catalogo_submenu">
+              <i class="link-icon" data-feather="layers"></i>
+              <span class="link-title">Catálogos</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+
+          <div class="collapse {{ show_class(['catalogo/*']) }}" id="catalogo_submenu">
+              <ul class="nav sub-menu">
+                  <li class="nav-item">
+                      <a href="{{ url('/reingresos/ver') }}" class="nav-link {{ active_class(['reingresos/ver']) }}">
+                          <i data-feather="dollar-sign" class="me-1" style="width:14px;"></i>
+                          Tipos de Cobros
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ url('/coordinadores/verc') }}" class="nav-link {{ active_class(['coordinadores/ver']) }}">
+                          <i data-feather="user" class="me-1" style="width:14px;"></i>
+                          Coordinadores
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ url('/autoridades/vera') }}" class="nav-link {{ active_class(['autoridades/ver']) }}">
+                          <i data-feather="shield" class="me-1" style="width:14px;"></i>
+                          Autoridades
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </li>
+      @endif
       <!-- <div id="sidebar-menu"> -->
         <!-- Aquí se cargará el menú vía AJAX -->
       <!-- </div> -->

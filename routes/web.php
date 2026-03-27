@@ -27,6 +27,7 @@ use App\Http\Controllers\Docentes\DocentesController;
 use App\Http\Controllers\Reportes\ReportsController;
 use App\Http\Controllers\Estudiantes\MatriculaController;
 use App\Http\Controllers\Almacen\AlmacenController;
+use App\Http\Controllers\Reingresos\ReingresosController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -235,7 +236,33 @@ Route::middleware('auth')->group(function () {
         Route::post('/docentes/bloques-modulo/configuracion/columnas/guardar', [DocentesController::class, 'guardarBloqueModuloConfiguracionColumnas']);
 
     //Finaliza Docentes
+
+        //Inicia reingresos Viviana
+        Route::get('/reingresos/ver', [ReingresosController::class, 'ver_reingresos'])->name('reingresos');
+        Route::post('/reingresos/guardar', [ReingresosController::class, 'guardar_tipos_reingresos']);
+        Route::get('/solicitudesnuevas/solicitudesn', [ReingresosController::class, 'solicitudes_nuevas'])->name('solicitudesn');
+        Route::post('/solicitudesnuevas/guardar-dictamen-coordinador', [ReingresosController::class, 'guardar_dictamen_coordinador']);
+        Route::get('/solicitudesnuevas/solicitudesvicerrector', [ReingresosController::class, 'solicitudes_vicerrector'])->name('solicitudes.vicerrector');
+        Route::post('/solicitudesnuevas/guardar-dictamen-vicerrector', [ReingresosController::class, 'guardar_dictamen_vicerrector']);
+        Route::post('/solicitudesnuevas/cerrar-solicitud', [ReingresosController::class, 'cerrar_solicitud']);
+        Route::get('/tipos-beca/lista', [ReingresosController::class, 'obtener_tipos_beca'])->name('reingresos.tipos-beca');
+        Route::get('/solicitudesnuevas/procesos-solicitudes', [ReingresosController::class, 'ObtenerProcesos'])->name('solicitudes.ObtenerProcesos');
+        Route::get('/solicitudesnuevas/finalizadas', [ReingresosController::class, 'solicitudes_finalizadas'])->name('solicitudes.finalizadas');
+        Route::get('/coordinadores/verc', [ReingresosController::class, 'verc_coordinadores'])->name('coordinadores');
+        Route::post('/coordinadores/guardarc', [ReingresosController::class, 'guardarc_coordinadores']);
+        Route::get('/coordinadores/listas', [ReingresosController::class, 'listar_datos_coordinadores']);
+        Route::get('/autoridades/vera',      [ReingresosController::class, 'vera_autoridades'])->name('autoridades');
+        Route::post('/autoridades/guardara', [ReingresosController::class, 'guardara_autoridades']);
+        Route::get('/autoridades/listasa',    [ReingresosController::class, 'listar_datos_autoridades']);
+        //Finaliza reingresos Viviana
 });
+
+    //INICIA RUTA PUBLICA DE REINGRESOS VIVIANA
+        Route::get('/buscador/buscar', [ReingresosController::class, 'buscar_persona']);
+        Route::get('/formulario/registro', [ReingresosController::class, 'mostrar_formulario']);
+        Route::post('/formulario/guardar', [ReingresosController::class, 'guardar_formulario']);
+        Route::get('/reingresos/trazabilidad', [ReingresosController::class, 'ver_trazabilidad'])->name('reingresos.trazabilidad');
+    //FINALIZA RUTA PUBLICA DE REINGRESOS VIVIANA
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });
