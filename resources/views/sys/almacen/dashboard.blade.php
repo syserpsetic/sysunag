@@ -76,32 +76,32 @@
         // Configuración de las tarjetas del resumen (actualizada)
         const resumenConfig = [
             { 
-                id: "totalCitas", 
+                id: "facturas", 
                 title: "Facturas", 
                 color: "primary", 
                 icon: "credit-card",
-                key: "totalcitas" 
+                key: "facturas" 
             },
             { 
-                id: "citasCompletadas", 
+                id: "requisiciones", 
                 title: "Requisiciones", 
                 color: "success", 
                 icon: "file-text",
-                key: "citascompletadas" 
+                key: "requisiciones" 
             },
             { 
-                id: "citasProgramadas", 
+                id: "productos", 
                 title: "Productos", 
                 color: "warning", 
                 icon: "shopping-bag",
-                key: "citasprogramadas" 
+                key: "productos" 
             },
             { 
-                id: "citasCanceladas", 
+                id: "proveedores", 
                 title: "Proveedores", 
                 color: "danger", 
                 icon: "users",
-                key: "citascanceladas" 
+                key: "proveedores" 
             },
             
         ];
@@ -155,7 +155,7 @@
                 });
 
                 const response = await $.ajax({
-                    url: '{{ route("estadisticas_citas") }}',
+                    url: '{{ route("almacen_resumen") }}',
                     method: 'GET',
                     dataType: 'json'
                 });

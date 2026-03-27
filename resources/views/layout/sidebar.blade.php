@@ -123,7 +123,12 @@
                 <li class="nav-item">
                   <a href="{{ url('/almacen/requisicion') }}" class="nav-link {{ active_class(['almacen/requisicion']) }}">Requisición</a>
                 </li>
-              
+                <li class="nav-item">
+                  <a href="{{ url('/almacen/producto') }}" class="nav-link {{ active_class(['almacen/producto']) }}">Producto</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ url('/almacen/proveedor') }}" class="nav-link {{ active_class(['almacen/proveedor']) }}">Proveedor</a>
+                </li>
             </ul>
           </div>
         </li>
