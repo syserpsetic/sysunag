@@ -50,7 +50,7 @@
                                         </h3>
                                     </div>
                                     <div>
-                                        <i style="color:white" class="link-icon" data-feather="download"></i>
+                                       <a id="proveedor"> <i style="color:white" class="link-icon" data-feather="download"></i> </a>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                         </h3>
                                     </div>
                                     <div>
-                                        <i style="color:white" class="link-icon" data-feather="download"></i>
+                                       <a  id="area"> <i style="color:white" class="link-icon" data-feather="download"></i> </a>
                                     </div>
                                 </div>
                             </div>
@@ -131,6 +131,7 @@
 
 @push('custom-scripts')
     <script>
+            
     document.addEventListener("DOMContentLoaded", function () {
         $.ajaxSetup({
             headers: {
@@ -142,13 +143,121 @@
         let citaSeleccionada = null;
         let todasLasCitas = [];
 
-        // Inicializar Select2
-        $(".select2-estudiante, .select2-profesional").select2({
-            placeholder: "Seleccione una opción",
-            allowClear: true,
-            dropdownParent: $("#crearCitaModal"),
-            width: "100%",
+        var inicio = null;
+        var fin = null;
+        var areas = null;
+        var proveedores = null;
+
+
+        //reportes
+        $("#proveedor").on("click", function(e){
+            e.preventDefault(); 
+
+            inicio=document.getElementById("inicio").value;
+            fin=document.getElementById("fin").value;
+            proveedores=document.getElementById("prov").value;
+            //alert(proveedores);
+
+            if (proveedores==0 || proveedores==null) {
+                // Mostrar notificación de error (opcional)
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Seleccionar un proveedor.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+                //alert('Seleccionar un proveedor.'); 
+                return;
+            }
+
+            check();                 
         });
+
+
+        $("#area").on("click", function(e){
+            e.preventDefault(); 
+        
+            inicio=document.getElementById("inicio").value;
+            fin=document.getElementById("fin").value;
+            areas=document.getElementById("areas").value;
+            //alert(proveedores);
+
+            if (areas==0 || areas==null) {
+                  // Mostrar notificación de error (opcional)
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Seleccionar una area.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }
+                //alert('Seleccionar una area.'); 
+                return;
+            }
+            check2();                 
+        });
+
+        
+
+        function check(){
+            //alert(document.getElementById("inicio").value);
+            if(inicio>fin || !inicio || !fin){      
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'La fecha de inicio es menor que la final o no son validas.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                }      
+                //alert("La fecha de inicio es menor que la final o no son validas.");
+                return;
+            }
+
+            //alert(inicio);return;
+
+            window.open("{{url('reporte_proveedores')}}"+"/"+inicio+"/"+fin+"/"+proveedores);
+
+        }
+
+
+
+        function check2(){
+            //alert(document.getElementById("inicio").value);
+            if(inicio>fin || !inicio || !fin){
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'La fecha de inicio es menor que la final o no son validas.',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                } 
+                //alert("La fecha de inicio es menor que la final o no son validas.");
+                return;
+            }
+
+
+            window.open("{{url('reporte_areas')}}"+"/"+inicio+"/"+fin+"/"+areas);
+
+        }
+
+      
 
         // Configuración de las tarjetas del resumen (actualizada)
         const resumenConfig = [
@@ -219,12 +328,12 @@
 
         
 
-        actualizarResumenCitas();
+        actualizarResumenAlmacen();
 
 
 
-        // Función para actualizar resumen de citas (mejorada)
-        async function actualizarResumenCitas() {
+        // Función para actualizar resumen de almacen 
+        async function actualizarResumenAlmacen() {
             try {
                 // Mostrar indicador de carga
                 resumenConfig.forEach((item) => {

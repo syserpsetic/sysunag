@@ -52,4 +52,35 @@ class ReportsController extends Controller
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'inline; filename="prematricula_' . $registro . '.pdf"');
     }
+
+    public function reporte_proveedores(Request $request, $fecha1,$fecha2,$proveedor)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->timeout(120)->get(env('API_BASE_URL_ZETA') . "/api/auth/almacen/reporte_proveedores/{$fecha1}/{$fecha2}/{$proveedor}");
+
+        if ($response->status() === 403) {
+            abort(403);
+        }
+
+        return response($response->body(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="proveedores_' . $fecha1 . '.pdf"');
+    }
+
+      public function reporte_areas(Request $request, $fecha1,$fecha2,$area)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->timeout(120)->get(env('API_BASE_URL_ZETA') . "/api/auth/almacen/reporte_area/{$fecha1}/{$fecha2}/{$area}");
+
+        if ($response->status() === 403) {
+            abort(403);
+        }
+
+        return response($response->body(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="area_' . $fecha1 . '.pdf"');
+    }
+
 }

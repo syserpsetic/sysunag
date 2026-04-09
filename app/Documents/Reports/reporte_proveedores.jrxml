@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0bb810e8-4a85-4672-9c15-07626b7d5727">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="199"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="una_2023_periodo_i"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="fecha1" class="java.lang.String"/>
+	<parameter name="fecha2" class="java.lang.String"/>
+	<parameter name="proveedor" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select row_number() over(order by 1) numero, df.n_factura, pr.nombre,round(sum(df.precio*df.cantidad+(df.precio*df.cantidad*df.impuesto/100)),2) total
+from  almacen.facturas f 
+left join almacen.detalle_facturas df on f.n_factura=df.n_factura
+left join almacen.proveedores pr on pr.id=f.id_proveedor
+where f.id_proveedor= $P{proveedor}  and f.deleted_at is null and df.deleted_at is null
+and fecha_libros between  $P{fecha1}::date  and  $P{fecha2}::date 
+group by pr.nombre,df.n_factura]]>
+	</queryString>
+	<field name="numero" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="numero"/>
+	</field>
+	<field name="n_factura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="n_factura"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<variable name="total_total" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="139" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="2" width="542" height="24" uuid="d23c6e04-a4fc-48b9-815e-0ea384acdc17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD NACIONAL DE Agricultura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="47" width="542" height="65" uuid="f9278f7c-d8af-4cf4-b545-34a21d272df6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Catacamas, Olancho, Honduras, C.A.
+Recepción: +504 2799-4133
+www.portal.unag.edu.hn
+E-mail: info@unag.edu.hn]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="89" height="84" uuid="135135d3-22ba-4798-b549-75578f4c2acb"/>
+				<imageExpression><![CDATA["/images/logou.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="30" y="16" width="542" height="32" uuid="53875a7c-0c48-46a8-b7e2-cc2976d5b49d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNAG]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="116" width="542" height="21" uuid="669ee626-f408-4833-b3ac-0a97acf1a27b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Reporte por Proveedor"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="6" width="106" height="20" uuid="b33ef193-7d9c-4ec2-a152-3020f6d3e8f8"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Desde:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="6" width="99" height="20" uuid="02177365-9e18-4837-9bd5-b312f8a15f6b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Hasta:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="30" width="572" height="49" uuid="b496dadd-e868-4f58-bb1d-66b04f85a8f6"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="0" width="572" height="1" uuid="d47d152b-a621-4f11-8955-ff0967e99076"/>
+			</line>
+			<staticText>
+				<reportElement x="4" y="34" width="116" height="20" uuid="e17f34be-957a-4de5-a8a1-88e71e4811ad"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proveedor:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="380" y="5" width="192" height="20" uuid="ac99730d-22aa-4861-a569-849b377dfe26"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="37" width="449" height="20" uuid="c8857151-b54a-46dd-999f-4d718187c543"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="106" y="5" width="156" height="20" uuid="871a7392-e4f4-400e-a107-a0428137d75d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="56" width="117" height="20" uuid="68cce914-9138-4a22-96fc-c768d02ea1e6"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Generación:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="120" y="57" width="200" height="17" uuid="efe22612-7739-4a2a-b675-f878689b1f22"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="572" height="25" uuid="39ee1f8d-f3f3-4ed9-8c95-8ce5fe2215fe"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="5" width="27" height="20" uuid="8e20a25d-5af4-4f51-a307-19b754fd70e5"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="5" width="364" height="20" uuid="5339be78-b16b-4c9a-b9fb-50ae70ed90b6"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="488" y="5" width="69" height="20" uuid="e1931eef-782a-4cc0-a95f-cbe8f5de477e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="37" height="20" uuid="dde6e0d9-56e0-4709-9a67-5dfffdf69f6a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="0" width="364" height="20" uuid="dca79923-e033-44fc-940d-b7eede9872ce"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{n_factura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="488" y="0" width="69" height="20" uuid="31650e79-6621-4b4c-a543-cc3b68e3d2f8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="16" width="572" height="1" uuid="df432746-b479-4235-892f-60a1d9670c8c"/>
+			</line>
+			<staticText>
+				<reportElement x="448" y="16" width="44" height="20" uuid="0b832a99-436f-4d3a-a9a7-49a2c9579851"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Página:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="491" y="17" width="19" height="19" uuid="ef15fd27-99f8-4543-bb1b-eb1cdc8b1d74"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="521" y="17" width="35" height="14" uuid="e9f6ef9b-de9b-458a-9c0b-eaff51805ed8"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="503" y="17" width="17" height="19" uuid="fe53d555-3aee-416b-86cd-153a803b8b54"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[de]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="445" y="22" width="109" height="20" uuid="59022111-8ada-481b-8506-257d24f8fdec"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="21" width="132" height="20" uuid="333cde0d-624f-4abd-ba1d-f1a55543cc15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="472" y="12" width="97" height="1" uuid="b80bd25b-cf9a-437f-b023-bed243c0d813"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

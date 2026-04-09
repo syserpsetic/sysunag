@@ -179,6 +179,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/almacen/producto', [AlmacenController::class, 'almacen_producto'])->name('almacen_producto');
         Route::get('/almacen/proveedor', [AlmacenController::class, 'almacen_proveedor'])->name('almacen_proveedor');
         Route::get('/almacen/resumen', [AlmacenController::class, 'almacen_resumen'])->name('almacen_resumen');
+        Route::get('reporte_proveedores/{fecha1}/{fecha2}/{proveedor}', [ReportsController::class, 'reporte_proveedores']); 
+        Route::get('reporte_areas/{fecha1}/{fecha2}/{area}', [ReportsController::class, 'reporte_areas']);   
     //Finaliza Almacen
 
      //Inicia Psicologia
