@@ -102,13 +102,21 @@ body{background:#fff;}
       <!-- JDU children wrap -->
       <div class="cw" id="jdu-cw">
 
-        <!-- ROW: Órganos | [spine→Rectoría] | Comisionado -->
-        <div class="row" id="row-jdu-staff" style="width:100%;align-items:center;gap:0;">
+        <!-- RECTORÍA -->
+        <div class="col">
+          <div class="pill p-navy" id="rect-node">Rectoría</div>
+          <div class="spine" style="height:24px;" id="rect-spine"></div>
+
+          <!-- RECT children wrap -->
+          <div class="cw" id="rect-cw">
+
+          <!-- ROW: Órganos | [spine] | Comisionado -->
+          <div class="row" id="row-jdu-staff" style="width:100%;align-items:center;gap:0;">
           <!-- LEFT: Órganos -->
           <div style="flex:1;display:flex;justify-content:flex-end;padding-right:16px;">
             <div class="pill p-cyan no-click" id="organos" style="white-space:normal;max-width:150px;text-align:center;">Órganos de Control y Apoyo (SEAPI, SETIC, SEPEG)</div>
           </div>
-          <!-- CENTER spine going down to Rectoría -->
+          <!-- CENTER spine going down -->
           <div class="col" style="flex:0 0 auto;">
             <div class="spine" style="height:48px;" id="pre-rect-spine"></div>
           </div>
@@ -117,14 +125,6 @@ body{background:#fff;}
             <div class="pill p-cyan no-click" id="comisionado" style="white-space:normal;max-width:150px;text-align:center;">Comisionado Universitario de Derechos Humanos</div>
           </div>
         </div>
-
-        <!-- RECTORÍA -->
-        <div class="col">
-          <div class="pill p-navy" id="rect-node">Rectoría</div>
-          <div class="spine" style="height:24px;" id="rect-spine"></div>
-
-          <!-- RECT children wrap -->
-          <div class="cw" id="rect-cw">
 
             <!-- ROW: Gerencia | [spine→Vices] | Asesoría -->
             <div class="row" id="row-rect-staff" style="width:100%;align-items:center;gap:0;">
@@ -138,6 +138,8 @@ body{background:#fff;}
                 <div class="pill p-cyan no-click" id="asesoria" style="white-space:normal;max-width:150px;text-align:center;">Asesoría Legal</div>
               </div>
             </div>
+
+           
 
             <!-- VICERRECTORÍAS ROW -->
             <div class="col">

@@ -44,7 +44,7 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h6 class="card-title mb-1 text-white">Proveedores</h6>
+                                        <h6 class="card-title mb-1 text-white">Proveedor</h6>
                                         <h3 class="card-text mb-0 fw-bold text-white">
                                             <i class="fas fa-spinner fa-spin text-white"></i>
                                         </h3>
@@ -57,7 +57,7 @@
                             <div class="card-footer bg-transparent border-0">
                                 <small class="text-white">
                                     <i class="fas fa-clock me-1"></i>
-                                    <span style="color:white !important">Descargar</span>
+                                    <span style="color:white !important"></span>
                                 </small>
                                 <!-- Select dentro del footer de la card -->
                                 <div class="mt-2">
@@ -91,7 +91,7 @@
                             <div class="card-footer bg-transparent border-0">
                                 <small class="text-white">
                                     <i class="fas fa-clock me-1"></i>
-                                    <span style="color:white !important">Descargar</span>
+                                    <span style="color:white !important"></span>
                                 </small>
                                 <!-- Select dentro del footer de la card -->
                                 <div class="mt-2">
