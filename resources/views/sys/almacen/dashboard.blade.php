@@ -253,7 +253,7 @@
             }
 
 
-            window.open("{{url('reporte_areas')}}"+"/"+inicio+"/"+fin+"/"+areas);
+            window.open("{{url('reporte_area')}}"+"/"+inicio+"/"+fin+"/"+areas);
 
         }
 
