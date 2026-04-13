@@ -175,6 +175,7 @@ Route::middleware('auth')->group(function () {
     //Inicia Almacen
         Route::get('/almacen/dashboard', [AlmacenController::class, 'almacen_dashboard'])->name('almacen_dashboard');
         Route::get('/almacen/factura', [AlmacenController::class, 'almacen_factura'])->name('almacen_factura');
+        Route::get('/almacen/factura/data', [AlmacenController::class, 'almacen_factura_data'])->name('almacen_factura_data');
         Route::get('/almacen/requisicion', [AlmacenController::class, 'almacen_requisicion'])->name('almacen_requisicion');
         Route::get('/almacen/producto', [AlmacenController::class, 'almacen_producto'])->name('almacen_producto');
         Route::get('/almacen/proveedor', [AlmacenController::class, 'almacen_proveedor'])->name('almacen_proveedor');
