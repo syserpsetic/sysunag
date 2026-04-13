@@ -125,9 +125,14 @@ class GestionSolicitudesController extends Controller
 
         try {
             // Prepara la solicitud HTTP
+            // $http = Http::withHeaders([
+            //     'Authorization' => session('token'),
+            // ])->timeout(10)->asMultipart();
+
             $http = Http::withHeaders([
                 'Authorization' => session('token'),
-            ])->timeout(10)->asMultipart();
+            ])->asMultipart();
+
 
             // Adjunta todos los archivos
             if($request->hasFile('archivos')) {
@@ -196,11 +201,11 @@ class GestionSolicitudesController extends Controller
         $timeout = false;
 
         try {
-            //throw new Exception($request->empleado);
+            //throw new Exception($request->id_estado);
             // Prepara la solicitud HTTP
             $http = Http::withHeaders([
                 'Authorization' => session('token'),
-            ])->timeout(10)->asMultipart();
+            ])->asMultipart();
 
             // Adjunta todos los archivos
             if($request->hasFile('archivos')) {

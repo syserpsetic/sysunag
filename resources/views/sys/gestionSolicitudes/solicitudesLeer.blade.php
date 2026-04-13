@@ -395,15 +395,15 @@
                             </div>
                             <div class="col-md-3 d-flex justify-content-end">
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    @if($estado_actual['id'] == 2 || ($estado_actual['id'] == 3 && $yo_solicitante))
+                                    @if(($yo_help_desk))
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradioProceso" autocomplete="off" checked>
                                     <label class="btn btn-outline-info" for="btnradioProceso"><i data-feather="refresh-cw" class="icon-sm"></i> Proceso</label>
                                     @endif
-                                    @if($estado_actual['id'] == 2)
+                                    @if($yo_help_desk && !$yo_solicitante)
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradioRevision" autocomplete="off">
                                     <label class="btn btn-outline-success" for="btnradioRevision"><i data-feather="eye" class="icon-sm"></i> Revisión</label>
                                     @endif
-                                    @if($estado_actual['id'] == 3 && $yo_solicitante)
+                                    @if($yo_solicitante)
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradioTerminado" autocomplete="off">
                                     <label class="btn btn-outline-dark" for="btnradioTerminado"><i data-feather="check" class="icon-sm"></i> Terminado</label>
                                     @endif
@@ -484,6 +484,8 @@
     var hora_vencimiento = null;
     var descripcion = null;
     var adjuntos = null;
+    var yo_help_desk = "{{$yo_help_desk}}";
+    var yo_solicitante = "{{$yo_solicitante}}";
     var id_estado = {{$estado_actual['id']}};
     var url_guardar_remision = "{{url('/gestion_solicitudes/solicitud/remitir/guardar')}}"; 
     $(document).ready(function () {
@@ -518,6 +520,11 @@
                 btn.classList.remove("btn-fixed-top");
             }
         });
+
+        if(yo_help_desk || yo_solicitante){
+            eleccion_estado();
+        }
+    
 
     $(function() {
                 'use strict';
@@ -692,6 +699,11 @@
       });
 
       $('input[name="btnradio"]').on('change', function() {
+        eleccion_estado();
+      });
+    });
+
+    function eleccion_estado(){
         if ($('#btnradioProceso').is(':checked')) {
           id_estado = 2;
         } else if($('#btnradioRevision').is(':checked')){
@@ -699,8 +711,7 @@
         } else if($('#btnradioTerminado').is(':checked')){
           id_estado = 4;
         }
-      });
-    });
+    }
 
      const inputArchivos = document.getElementById('inputArchivos');
         const fileUpload = document.getElementById('fileUpload');
