@@ -104,6 +104,71 @@
           </div>
         </li>
       @endif
+      @if(in_array('secretaria_general_menu', $scopes))
+        {{-- <li class="nav-item nav-category">PROCESOS APPS</li> --}}
+        <li class="nav-item {{ active_class(['secretariageneral/*']) }}">
+          
+          <a class="nav-link" data-bs-toggle="collapse" href="#secretariageneral" role="button" aria-expanded="{{ is_active_route(['secretariageneral/*']) }}" aria-controls="procesos">
+            <i class="link-icon" data-feather="folder"></i> 
+            <span class="link-title">SECRETARIA GENERAL</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse {{ show_class(['secretariageneral/*']) }}" id="secretariageneral">
+            <ul class="nav sub-menu">
+              @if(in_array('secretaria_general_leer_proceso_graduacion', $scopes))
+                <li class="nav-item">
+                  <a href="{{ route('proceso_graduacion') }}" class="nav-link {{ active_class(['secretariageneral/procesoGraduacion']) }}">
+                    Proceso Graduación
+                  </a>
+                </li>
+              @endif
+                @if(in_array('secretaria_general_leer_documentos_validacion', $scopes))
+                  <li class="nav-item">
+                    <a href="{{ route('documentos_validacion') }}" class="nav-link {{ active_class(['secretariageneral/documentosValidacion']) }}">
+                      Documentos de Validación
+                    </a>
+                  </li>
+                @endif
+                @if(in_array('secretaria_general_leer_modalidades_de_graduacion', $scopes))
+                  <li class="nav-item">
+                    <a href="{{ route('modalidad_proceso') }}" class="nav-link {{ active_class(['secretariageneral/modalidadProceso']) }}">
+                      Modalidades de Proceso
+                    </a>
+                  </li>
+                @endif 
+              @if(in_array('secretaria_general_leer_actos_graduacion', $scopes))
+                <li class="nav-item">
+                  <a href="{{ route('actos_proceso') }}" class="nav-link {{ active_class(['secretariageneral/actosProceso']) }}">
+                    Actos de Graduación
+                  </a>
+                </li>
+              @endif 
+            </ul>
+          </div>
+        </li>
+      @endif
+      @if(in_array('estudiantes_menu', $scopes))
+        {{-- <li class="nav-item nav-category">PROCESOS APPS</li> --}}
+        <li class="nav-item {{ active_class(['estudiante/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#estudiante" role="button" aria-expanded="{{ is_active_route(['estudiante/*']) }}" aria-controls="procesos">
+            <i class="link-icon" data-feather="users"></i> 
+            <span class="link-title">Estudiantes</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse {{ show_class(['estudiante/*']) }}" id="estudiante">
+            <ul class="nav sub-menu">
+              @if(in_array('estudiantes_menu', $scopes))
+                <li class="nav-item">
+                    <a href="{{ route('solicitud_Estudiante') }}" class="nav-link {{ active_class(['secretariageneral/solicitudEstudiante']) }}">
+                      Solicitud de Graduación
+                  </a>
+                </li>
+              @endif
+            </ul>
+          </div>
+        </li>
+      @endif
+
       @if(in_array('almacen_central', $scopes))
         <li class="nav-item nav-category">ALMACÉN </li>
         <li class="nav-item {{ active_class(['almacen/*']) }}">

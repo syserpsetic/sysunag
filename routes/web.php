@@ -28,6 +28,7 @@ use App\Http\Controllers\Reportes\ReportsController;
 use App\Http\Controllers\Estudiantes\MatriculaController;
 use App\Http\Controllers\Almacen\AlmacenController;
 use App\Http\Controllers\Reingresos\ReingresosController;
+use App\Http\Controllers\SecretariaGeneral\SecretariaGeneralController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -270,6 +271,36 @@ Route::middleware('auth')->group(function () {
         Route::post('/formulario/guardar', [ReingresosController::class, 'guardar_formulario']);
         Route::get('/reingresos/trazabilidad', [ReingresosController::class, 'ver_trazabilidad'])->name('reingresos.trazabilidad');
     //FINALIZA RUTA PUBLICA DE REINGRESOS VIVIANA
+
+    //Inicia rutas practicante Lenard
+        //Inicia Secretaria General
+            Route::group(['prefix' => 'secretariageneral'], function(){
+                Route::get('/procesoGraduacion', [SecretariaGeneralController::class, 'proceso_graduacion'])->name('proceso_graduacion');
+                Route::post('/procesoGraduacion/guardar', [SecretariaGeneralController::class, 'guardar_procesograduacion']);
+            /*Route::get('/estudiantes', [SecretariaGeneralController::class,'estudiantes'])->name('estudiantes');
+        Route::get('/estudiantes/data', [SecretariaGeneralController::class,'estudiantesdatos'])->name('estudiantesdatos');*/
+                Route::get('/estudiantes/perfil/{numero_registro_asignado}', [SecretariaGeneralController::class,'estudiantesperfil'])->name('estudiantesperfil');
+                Route::get('/procesoGraduacion/{id_proceso}/estudiantes', [SecretariaGeneralController::class, 'proceso_estudiantes'])->name('proceso_estudiantes');            
+                /*Route::post('/procesoGraduacion/estudiantes/guardar', [SecretariaGeneralController::class, 'guardar_vinculacion_estudiante']);*/
+                Route::post('/estudiantes/documento/validar', [SecretariaGeneralController::class, 'validar_documento_estudiante']);
+                Route::get('/estudiantes/documento/descargar/{id_proceso}/{id_sol}/{id_val}/{archivo}', [SecretariaGeneralController::class, 'descargar_documento']);
+                Route::post('/estudiantes/documento/archivo/eliminar', [SecretariaGeneralController::class, 'eliminar_archivo_estudiante']);
+                Route::get('/documentosValidacion', [SecretariaGeneralController::class, 'documentos_validacion'])->name('documentos_validacion');
+                Route::post('/documentosValidacion/guardar', [SecretariaGeneralController::class, 'guardar_documentos_validacion']);
+                Route::get('/modalidadProceso', [SecretariaGeneralController::class, 'modalidades_proceso'])->name('modalidad_proceso');
+                Route::post('/modalidadProceso/guardar', [SecretariaGeneralController::class, 'guardar_modalidades_proceso']);
+                Route::get('/actosProceso', [SecretariaGeneralController::class, 'actos_proceso'])->name('actos_proceso');
+                Route::post('/actosProceso/guardar', [SecretariaGeneralController::class, 'guardar_actos_proceso']);
+                Route::get('/solicitudEstudiante', [SecretariaGeneralController::class, 'solicitud_estudiante'])->name('solicitud_Estudiante');
+                Route::post('/solicitudEstudiante/guardar', [SecretariaGeneralController::class, 'guardar_solicitud_estudiante']);
+                Route::post('/proceso/graduacion/masiva/ejecutar', [SecretariaGeneralController::class, 'ejecutarGraduacionMasiva']);
+                Route::get('/estudiantes/perfil/reporte/{numero_registro_asignado}', [ReportsController::class,'reporteSolevenciaAdministrativa']);
+                Route::get('/estudiantes/perfil/reporteregistro/{numero_registro_asignado}', [ReportsController::class, 'reporteSolvenciaRegistro']);
+                Route::get('/estudiantes/perfil/reportearchivo/{numero_registro_asignado}', [ReportsController::class, 'reporteSolvenciaArchivo']);
+            });
+        //Finaliza Secretaria General
+
+    //Finaliza rutas practicante Lenard
 
 Route::group(['prefix' => 'email'], function(){
     Route::get('inbox', function () { return view('pages.email.inbox'); });
