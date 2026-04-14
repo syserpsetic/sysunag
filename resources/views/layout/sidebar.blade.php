@@ -244,7 +244,7 @@
                   @if(in_array('reingresos_coordinador', $scopes))
                   <li class="nav-item">
                       <a href="{{ route('solicitudesn') }}" class="nav-link {{ active_class(['solicitudesnuevas/solicitudesn']) }}">
-                          <i data-feather="inbox" class="me-1" style="width:14px;"></i>
+                         
                           Coordinador
                       </a>
                   </li>
@@ -252,7 +252,7 @@
                   @if(in_array('reingresos_vicerrector', $scopes))
                   <li class="nav-item">
                       <a href="{{ route('solicitudes.vicerrector') }}" class="nav-link {{ active_class(['solicitudesnuevas/solicitudesvicerrector']) }}">
-                          <i data-feather="inbox" class="me-1" style="width:14px;"></i>
+                         
                           Vicerrector
                       </a>
                   </li>
@@ -275,19 +275,19 @@
               <ul class="nav sub-menu">
                   <li class="nav-item">
                       <a href="{{ url('/reingresos/ver') }}" class="nav-link {{ active_class(['reingresos/ver']) }}">
-                          <i data-feather="dollar-sign" class="me-1" style="width:14px;"></i>
+                          
                           Tipos de Cobros
                       </a>
                   </li>
                   <li class="nav-item">
                       <a href="{{ url('/coordinadores/verc') }}" class="nav-link {{ active_class(['coordinadores/ver']) }}">
-                          <i data-feather="user" class="me-1" style="width:14px;"></i>
+                          
                           Coordinadores
                       </a>
                   </li>
                   <li class="nav-item">
                       <a href="{{ url('/autoridades/vera') }}" class="nav-link {{ active_class(['autoridades/ver']) }}">
-                          <i data-feather="shield" class="me-1" style="width:14px;"></i>
+                          
                           Autoridades
                       </a>
                   </li>

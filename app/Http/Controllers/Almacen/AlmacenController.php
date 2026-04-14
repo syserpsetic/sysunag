@@ -92,5 +92,66 @@ class AlmacenController extends Controller
         }
     }
 
+      function almacen_factura(){
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/almacen/factura');
+
+        if($response->status() === 403){
+            return view('pages.error.403')->with('scopes', $scopes = array());
+        }
+        //return view('pages.error.construccion')->with('scopes', $scopes = array());
+        $scopes = $response['scopes'];
+        $resumen = $response['resumen'];
+
+
+        return view('sys.almacen.factura')
+        ->with('resumen',$resumen)
+        ->with('scopes',$scopes)
+        ;
+    }
+
+
+    function almacen_factura_data(Request $request){
+       $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->get(env('API_BASE_URL_ZETA').'/api/auth/almacen/factura/data');
+
+        $draw = intval($request->input('draw'));
+        $start = intval($request->input('start'));
+        $length = intval($request->input('length'));
+        $search = $request->input('search.value');
+
+        $estudiantesQuery = $response['estudiantesQuery'];
+
+        // Total sin filtro
+        $recordsTotal = count($estudiantesQuery);
+
+        // Aplicar filtro si hay búsqueda
+        if (!empty($search)) {
+            $estudiantesQuery = array_filter($estudiantesQuery, function ($row) use ($search) {
+                return stripos($row['n_factura'], $search) !== false ||
+                    stripos($row['usuario'], $search) !== false ||
+                    stripos($row['fecha_libros'], $search) !== false;
+            });
+        }
+
+        $recordsFiltered = count($estudiantesQuery);
+
+        // Cortar para paginación
+        $data = array_slice($estudiantesQuery, $start, $length);
+
+        // Respuesta
+        $response = [
+            "draw" => $draw,
+            "recordsTotal" => $recordsTotal,
+            "recordsFiltered" => $recordsFiltered,
+            "data" => array_values($data)
+        ];
+
+
+        return json_encode($response);
+    }
+
 
 }
