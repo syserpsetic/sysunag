@@ -105,12 +105,12 @@
         </li>
       @endif
       @if(in_array('secretaria_general_menu', $scopes))
-        {{-- <li class="nav-item nav-category">PROCESOS APPS</li> --}}
+         <li class="nav-item nav-category">SECRETARIA GENERAL</li> 
         <li class="nav-item {{ active_class(['secretariageneral/*']) }}">
           
           <a class="nav-link" data-bs-toggle="collapse" href="#secretariageneral" role="button" aria-expanded="{{ is_active_route(['secretariageneral/*']) }}" aria-controls="procesos">
             <i class="link-icon" data-feather="folder"></i> 
-            <span class="link-title">SECRETARIA GENERAL</span>
+            <span class="link-title">GRADUACION</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse {{ show_class(['secretariageneral/*']) }}" id="secretariageneral">
@@ -118,7 +118,7 @@
               @if(in_array('secretaria_general_leer_proceso_graduacion', $scopes))
                 <li class="nav-item">
                   <a href="{{ route('proceso_graduacion') }}" class="nav-link {{ active_class(['secretariageneral/procesoGraduacion']) }}">
-                    Proceso Graduación
+                    Proceso
                   </a>
                 </li>
               @endif
@@ -148,11 +148,11 @@
         </li>
       @endif
       @if(in_array('estudiantes_menu', $scopes))
-        {{-- <li class="nav-item nav-category">PROCESOS APPS</li> --}}
+         <li class="nav-item nav-category">ESTUDIANTES</li> 
         <li class="nav-item {{ active_class(['estudiante/*']) }}">
           <a class="nav-link" data-bs-toggle="collapse" href="#estudiante" role="button" aria-expanded="{{ is_active_route(['estudiante/*']) }}" aria-controls="procesos">
             <i class="link-icon" data-feather="users"></i> 
-            <span class="link-title">Estudiantes</span>
+            <span class="link-title">GRADUACION</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse {{ show_class(['estudiante/*']) }}" id="estudiante">
@@ -160,7 +160,7 @@
               @if(in_array('estudiantes_menu', $scopes))
                 <li class="nav-item">
                     <a href="{{ route('solicitud_Estudiante') }}" class="nav-link {{ active_class(['secretariageneral/solicitudEstudiante']) }}">
-                      Solicitud de Graduación
+                      Solicitud
                   </a>
                 </li>
               @endif
@@ -225,6 +225,38 @@
             </ul>
           </div>
         </li>
+        <li class="nav-item {{ active_class(['catalogo/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#catalogo_submenu" role="button"
+            aria-expanded="{{ is_active_route(['catalogo/*']) }}"
+            aria-controls="catalogo_submenu">
+              <i class="link-icon" data-feather="layers"></i>
+              <span class="link-title">Catálogos</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+
+          <div class="collapse {{ show_class(['catalogo/*']) }}" id="catalogo_submenu">
+              <ul class="nav sub-menu">
+                  <li class="nav-item">
+                      <a href="{{ url('/reingresos/ver') }}" class="nav-link {{ active_class(['reingresos/ver']) }}">
+                          
+                          Tipos de Cobros
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ url('/coordinadores/verc') }}" class="nav-link {{ active_class(['coordinadores/ver']) }}">
+                          
+                          Coordinadores
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ url('/autoridades/vera') }}" class="nav-link {{ active_class(['autoridades/ver']) }}">
+                          
+                          Autoridades
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </li>
       @endif
        <!-- EL MENU REINGRESO-->
       @if(in_array('reingresos', $scopes))
@@ -261,40 +293,7 @@
           </div>
       </li>
       @endif
-      @if(in_array('empleado_setic', $scopes))
-      <li class="nav-item {{ active_class(['catalogo/*']) }}">
-          <a class="nav-link" data-bs-toggle="collapse" href="#catalogo_submenu" role="button"
-            aria-expanded="{{ is_active_route(['catalogo/*']) }}"
-            aria-controls="catalogo_submenu">
-              <i class="link-icon" data-feather="layers"></i>
-              <span class="link-title">Catálogos</span>
-              <i class="link-arrow" data-feather="chevron-down"></i>
-          </a>
-
-          <div class="collapse {{ show_class(['catalogo/*']) }}" id="catalogo_submenu">
-              <ul class="nav sub-menu">
-                  <li class="nav-item">
-                      <a href="{{ url('/reingresos/ver') }}" class="nav-link {{ active_class(['reingresos/ver']) }}">
-                          
-                          Tipos de Cobros
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="{{ url('/coordinadores/verc') }}" class="nav-link {{ active_class(['coordinadores/ver']) }}">
-                          
-                          Coordinadores
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="{{ url('/autoridades/vera') }}" class="nav-link {{ active_class(['autoridades/ver']) }}">
-                          
-                          Autoridades
-                      </a>
-                  </li>
-              </ul>
-          </div>
-      </li>
-      @endif
+ 
       <!-- <div id="sidebar-menu"> -->
         <!-- Aquí se cargará el menú vía AJAX -->
       <!-- </div> -->
