@@ -30,7 +30,7 @@
                             <h5 class="text-white mb-0">
                                 <i class="text-white icon-lg pb-3px" data-feather="list"></i> Facturas
                             </h5>
-                            <button class="btn btn-primary btn-xs" id="btn_agregar_rol" data-bs-toggle="modal" data-bs-target="#modal_agregar_rol">
+                            <button class="btn btn-primary btn-xs" id="btn_agregar_rol" onclick="factura()">
                                 <i class="btn-icon-prepend" data-feather="plus"></i> Agregar Factura
                             </butotn>
                         </div>
@@ -149,13 +149,13 @@
                         render: function (data, type, row) {
                             if (row.requisicion) {
                             return `
-                                <button class="btn btn-sm btn-primary me-1" onclick="editarUsuario('${row.username}')">
+                                <a target="_blank" class="btn btn-sm btn-primary me-1" href="{{url('/almacen/reporte/factura/')}}/${row.id}">
                                     <svg width="15" height="15" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                     <path fill="#fff" d="M8,2 C14,2 16,8 16,8 C16,8 14,14 8,14 C2,14 0,8 0,8 C0,8 2,2 8,2 Z M8,4 C5.76219,4 4.27954,5.08865 3.28644,6.28037 C2.78373,6.88363 2.42604,7.49505 2.1951,7.95693 L2.17372,8 L2.1951,8.04307 C2.42604,8.50495 2.78373,9.11637 3.28644,9.71963 C4.27954,10.9113 5.76219,12 8,12 C10.2378,12 11.7205,10.9113 12.7136,9.71963 C13.2163,9.11637 13.574,8.50495 13.8049,8.04307 L13.8263,8 L13.8049,7.95693 C13.574,7.49505 13.2163,6.88363 12.7136,6.28037 C11.7205,5.08865 10.2378,4 8,4 Z M8,5 C8.30747,5 8.60413,5.04625 8.88341,5.13218 C8.36251,5.36736 8,5.89135 8,6.5 C8,7.32843 8.67157,8 9.5,8 C10.1087,8 10.6326,7.63749 10.8678,7.11659 C10.9537,7.39587 11,7.69253 11,8 C11,9.65685 9.65685,11 8,11 C6.34315,11 5,9.65685 5,8 C5,6.34315 6.34315,5 8,5 Z"/>
                                     </svg> Ver
-                                </button>
-                                <button class="btn btn-sm btn-primary me-1" onclick="editarUsuario('${row.username}')">
-                                    <svg fill="#fff" width="15" height="15" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"/></svg> Editar
+                                </a>
+                                <button class="btn btn-sm btn-warning me-1" onclick="editarFactura('${row.id}')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Editar
                                 </button>
                                 <button title='Ya existe una requisición'  class="btn btn-sm btn-secondary me-1" >
                                     <svg fill="#fff" width="15" height="15" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -180,16 +180,16 @@
                                 </button>
                             `;}else {
                                 return `
-                                <button class="btn btn-sm btn-primary me-1" onclick="editarUsuario('${row.username}')">
+                                <a target="_blank" class="btn btn-sm btn-primary me-1" href="{{url('/almacen/reporte/factura/')}}/${row.id}">
                                     <svg width="15" height="15" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                     <path fill="#fff" d="M8,2 C14,2 16,8 16,8 C16,8 14,14 8,14 C2,14 0,8 0,8 C0,8 2,2 8,2 Z M8,4 C5.76219,4 4.27954,5.08865 3.28644,6.28037 C2.78373,6.88363 2.42604,7.49505 2.1951,7.95693 L2.17372,8 L2.1951,8.04307 C2.42604,8.50495 2.78373,9.11637 3.28644,9.71963 C4.27954,10.9113 5.76219,12 8,12 C10.2378,12 11.7205,10.9113 12.7136,9.71963 C13.2163,9.11637 13.574,8.50495 13.8049,8.04307 L13.8263,8 L13.8049,7.95693 C13.574,7.49505 13.2163,6.88363 12.7136,6.28037 C11.7205,5.08865 10.2378,4 8,4 Z M8,5 C8.30747,5 8.60413,5.04625 8.88341,5.13218 C8.36251,5.36736 8,5.89135 8,6.5 C8,7.32843 8.67157,8 9.5,8 C10.1087,8 10.6326,7.63749 10.8678,7.11659 C10.9537,7.39587 11,7.69253 11,8 C11,9.65685 9.65685,11 8,11 C6.34315,11 5,9.65685 5,8 C5,6.34315 6.34315,5 8,5 Z"/>
                                     </svg> Ver
+                                </a>
+                                <button class="btn btn-sm btn-warning me-1"  onclick="editarFactura('${row.id}')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg> Editar
                                 </button>
-                                <button class="btn btn-sm btn-primary me-1"  onclick="editarUsuario('${row.username}')">
-                                    <svg fill="#fff" width="15" height="15" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"/></svg> Editar
-                                </button>
-                                <button title='Crear requisición' class="btn btn-sm btn-primary me-1" onclick="editarUsuario('${row.username}')">
-                                    <svg fill="#fff" width="15" height="15" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                <button title='Crear requisición' class="btn btn-sm btn-info me-1" onclick="requisicion('${row.id}')">
+                                    <svg  width="15" height="15" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 363.579 363.579" style="enable-background:new 0 0 363.579 363.579;" xml:space="preserve">
                                     <g>
                                     <path d="M360.082,175.411l-82.42-57.744c-1.413-0.99-2.725-1.514-4.249-1.514c-3.307,0-6.413,2.512-6.413,7.313v34.323H161.436
@@ -232,9 +232,21 @@
 
     });
 
-    function editarUsuario(username){
+   
+
+     function editarFactura(id){
         //alert(username)
-        window.location.href = "{{url('/setic/usuarios/perfil/')}}/"+username;
+        window.location.href = "{{url('/setic/usuarios/perfil/')}}/"+id;
+    }
+
+     function requisicion(id){
+        //alert(username)
+        window.location.href = "{{url('/setic/usuarios/perfil/')}}/"+id;
+    }
+
+    function factura(){
+        //alert(username)
+        window.location.href = "{{url('/almacen/nueva/factura/')}}";
     }
 
   </script>

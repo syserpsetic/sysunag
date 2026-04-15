@@ -153,5 +153,35 @@ class AlmacenController extends Controller
         return json_encode($response);
     }
 
+    public function almacen_nueva_factura()
+    {       
+        //$scopes = new ControladorPermisos();
+        //$scopes = $scopes->ver_permisos();
+
+         $proveedores_list = Http::withHeaders([
+                'Authorization' => session('token'),
+            ])->get(env('API_BASE_URL_ZETA').'/api/auth/almacen/proveedores');
+
+            if($proveedores_list->status() === 403){
+                return view('pages.error.403')->with('scopes', []);
+            }
+
+            $producto_list = Http::withHeaders([
+                'Authorization' => session('token'),
+            ])->get(env('API_BASE_URL_ZETA').'/api/auth/almacen/productos');
+
+            if($producto_list->status() === 403){
+                return view('pages.error.403')->with('scopes', []);
+            }
+
+            $scopes = $proveedores_list->json('scopes', []);
+            $proveedores_list = $proveedores_list->json('proveedores_list', []);
+            $producto_list = $producto_list->json('producto_list', []);
+
+            //dd($producto_list);
+
+        return view("sys.almacen.nuevaFactura")->with('scopes', $scopes)->with('proveedores_list', $proveedores_list)->with('producto_list', $producto_list);       
+    }
+
 
 }

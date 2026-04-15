@@ -182,7 +182,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/almacen/proveedor', [AlmacenController::class, 'almacen_proveedor'])->name('almacen_proveedor');
         Route::get('/almacen/resumen', [AlmacenController::class, 'almacen_resumen'])->name('almacen_resumen');
         Route::get('reporte_proveedores/{fecha1}/{fecha2}/{proveedor}', [ReportsController::class, 'reporte_proveedores']); 
-        Route::get('reporte_area/{fecha1}/{fecha2}/{area}', [ReportsController::class, 'reporte_areas']);   
+        Route::get('reporte_area/{fecha1}/{fecha2}/{area}', [ReportsController::class, 'reporte_areas']);  
+        Route::get('/almacen/nueva/factura', [AlmacenController::class, 'almacen_nueva_factura'])->name('almacen_nueva_factura'); 
+        Route::get('/almacen/reporte/factura/{id}', [ReportsController::class, 'reporte_facturas']); 
     //Finaliza Almacen
 
      //Inicia Psicologia
