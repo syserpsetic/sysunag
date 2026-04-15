@@ -265,7 +265,7 @@
                                                         @endif
 
                                                         @if($documento_actual['id_documento'] == 1)
-                                                            <a href="{{ asset('documentos/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia">
+                                                            <a href="{{ asset('documentos/graduacion/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia">
                                                                 <i data-feather="download" style="width: 14px; height: 14px;"></i>
                                                             </a>
                                                         @endif
@@ -1018,7 +1018,7 @@
 
                         var btn_constancia_js = '';
                         if (documento_procesado.id_documento == 1) {
-                            btn_constancia_js = `<a href="{{ asset('documentos/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia"><i data-feather="download" style="width: 14px; height: 14px;"></i></a>`;
+                            btn_constancia_js = `<a href="{{ asset('documentos/graduacion/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia"><i data-feather="download" style="width: 14px; height: 14px;"></i></a>`;
                         }
 
                         celda_accion = `
