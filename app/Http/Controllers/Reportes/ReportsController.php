@@ -83,6 +83,24 @@ class ReportsController extends Controller
             ->header('Content-Disposition', 'inline; filename="area_' . $fecha1 . '.pdf"');
     }
 
+
+     public function reporte_facturas(Request $request, $id)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->timeout(120)->get(env('API_BASE_URL_ZETA') . "/api/auth/almacen/reporte_facturas/{$id}");
+
+        if ($response->status() === 403) {
+            abort(403);
+        }
+
+        return response($response->body(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="factura_' . $id . '.pdf"');
+    }
+
+
+
      public function reporteSolevenciaAdministrativa(Request $request, $numero_registro_asignado)
     {
         $response = Http::withHeaders([
