@@ -105,7 +105,7 @@
         </li>
       @endif
 
-      @if(in_array('reingresos', $scopes) || in_array('secretaria_general_menu', $scopes))
+      @if(in_array('reingresos', $scopes) || in_array('secretaria_general_menu', $scopes) || in_array('empleado_setic', $scopes))
       <li class="nav-item nav-category">Gestión Académica</li>
       @endif
       @if(in_array('reingresos', $scopes))
@@ -140,7 +140,7 @@
           </div>
       </li>
       @endif
-      @if(in_array('secretaria_general_menu', $scopes))
+      @if(in_array('secretaria_general_menu', $scopes) || in_array('empleado_setic', $scopes))
          
         <li class="nav-item {{ active_class(['secretariageneral/*']) }}">
           
@@ -169,21 +169,23 @@
                   </a>
                 </li>
               @endif
-                @if(in_array('secretaria_general_leer_documentos_validacion', $scopes))
+              
+              @if(in_array('empleado_setic', $scopes))
+                {{--  @if(in_array('secretaria_general_leer_documentos_validacion', $scopes)) --}}
                   <li class="nav-item">
                     <a href="{{ route('documentos_validacion') }}" class="nav-link {{ active_class(['secretariageneral/documentosValidacion']) }}">
                       Documentos de Validación
                     </a>
                   </li>
-                @endif
-                @if(in_array('secretaria_general_leer_modalidades_de_graduacion', $scopes))
+                {{-- @endif
+                    @if(in_array('secretaria_general_leer_modalidades_de_graduacion', $scopes)) --}}
                   <li class="nav-item">
                     <a href="{{ route('modalidad_proceso') }}" class="nav-link {{ active_class(['secretariageneral/modalidadProceso']) }}">
                       Modalidades de Proceso
                     </a>
                   </li>
-                @endif 
-              @if(in_array('secretaria_general_leer_actos_graduacion', $scopes))
+                {{-- @endif 
+                  @if(in_array('secretaria_general_leer_actos_graduacion', $scopes)) --}}
                 <li class="nav-item">
                   <a href="{{ route('actos_proceso') }}" class="nav-link {{ active_class(['secretariageneral/actosProceso']) }}">
                     Actos
