@@ -217,19 +217,42 @@
                                                         {{-- LÓGICA DEL BOTÓN ARCHIVOS / IMPRIMIR REPORTE --}}
                                                         @if($es_documento_automatico)
                                                             @if(in_array('secretaria_general_imprimir_solvencia', $scopes))
+                                                                
                                                                 @if($documento_actual['id_documento'] == 10)
-                                                                    <a href="{{ url('/secretariageneral/estudiantes/perfil/reporte/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Reporte">
-                                                                        <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
-                                                                    </a>
+                                                                    @if(isset($es_solvente_administrativo) && $es_solvente_administrativo == true)
+                                                                        <a href="{{ url('/secretariageneral/estudiantes/perfil/reporte/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Reporte">
+                                                                            <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                                                        </a> 
+                                                                    @else
+                                                                        {{-- RELLENO INVISIBLE: Mantiene el ancho y alto del botón Imprimir para que la fila no colapse --}}
+                                                                        <button type="button" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
+                                                                            <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                                                        </button>
+                                                                    @endif
+                                                                    
                                                                 @elseif($documento_actual['id_documento'] == 6) 
-                                                                    <a href="{{ url('/secretariageneral/estudiantes/perfil/reporteregistro/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Registro">
-                                                                        <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
-                                                                </a>
+                                                                    @if(isset($es_solvente_registro) && $es_solvente_registro == true)
+                                                                        <a href="{{ url('/secretariageneral/estudiantes/perfil/reporteregistro/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Registro">
+                                                                            <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                                                        </a>
+                                                                    @else
+                                                                        <button type="button" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
+                                                                            <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                                                        </button>
+                                                                    @endif
+                                                                    
                                                                 @elseif($documento_actual['id_documento'] == 7) 
-                                                                    <a href="{{ url('/secretariageneral/estudiantes/perfil/reportearchivo/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Archivo">
-                                                                        <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
-                                                                    </a>
+                                                                    @if(isset($es_solvente_archivo) && $es_solvente_archivo == true)
+                                                                        <a href="{{ url('/secretariageneral/estudiantes/perfil/reportearchivo/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Archivo">
+                                                                            <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                                                        </a>
+                                                                    @else
+                                                                        <button type="button" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
+                                                                            <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                                                        </button>
+                                                                    @endif
                                                                 @endif
+                                                                
                                                            @else
                                                                 {{-- RELLENO INVISIBLE PARA MANTENER LA ESTÉTICA EXACTA --}}
                                                                 <button type="button" class="btn btn-secondary btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
@@ -265,7 +288,7 @@
                                                         @endif
 
                                                         @if($documento_actual['id_documento'] == 1)
-                                                            <a href="{{ asset('documentos/graduacion/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia">
+                                                            <a href="{{ asset('documentos/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia">
                                                                 <i data-feather="download" style="width: 14px; height: 14px;"></i>
                                                             </a>
                                                         @endif
@@ -535,6 +558,11 @@
     
     var esta_graduado_js = {{ $esta_graduado ? 'true' : 'false' }};
     var scopes_js = @json($scopes ?? []); 
+    
+    // NUEVA VARIABLE GLOBAL PARA LOS BOTONES INVISIBLES EN JS
+    var es_solvente_admin_js = {{ (isset($es_solvente_administrativo) && $es_solvente_administrativo) ? 'true' : 'false' }};
+    var es_solvente_registro_js = {{ (isset($es_solvente_registro) && $es_solvente_registro) ? 'true' : 'false' }};
+    var es_solvente_archivo_js = {{ (isset($es_solvente_archivo) && $es_solvente_archivo) ? 'true' : 'false' }};
 
     $(document).ready(function () {
         $.ajaxSetup({
@@ -976,27 +1004,55 @@
                             
                             // VALIDACIÓN DEL PERMISO DE IMPRIMIR EN JS
                             if(scopes_js.includes('secretaria_general_imprimir_solvencia')) {
+                                
                                 if(documento_procesado.id_documento == 10) {
-                                    var url_imprimir_admin = "{{ url('/secretariageneral/estudiantes/perfil/reporte') }}/" + num_registro_estudiante;
-                                    boton_accion_principal = `
-                                        <a href="${url_imprimir_admin}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Reporte Admin">
-                                            <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
-                                        </a>
-                                    `;
+                                    if(es_solvente_admin_js) {
+                                        var url_imprimir_admin = "{{ url('/secretariageneral/estudiantes/perfil/reporte') }}/" + num_registro_estudiante;
+                                        boton_accion_principal = `
+                                            <a href="${url_imprimir_admin}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Reporte Admin">
+                                                <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                            </a>
+                                        `;
+                                    } else {
+                                        // RELLENO INVISIBLE: Mantiene el ancho y alto del botón Imprimir para que la fila no colapse en AJAX
+                                        boton_accion_principal = `
+                                            <button type="button" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
+                                                <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                            </button>
+                                        `;
+                                    }
+                                    
                                 } else if(documento_procesado.id_documento == 6) { 
-                                    var url_imprimir_registro = "{{ url('/secretariageneral/estudiantes/perfil/reporteregistro') }}/" + num_registro_estudiante;
-                                    boton_accion_principal = `
-                                        <a href="${url_imprimir_registro}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Registro">
-                                            <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
-                                        </a>
-                                    `;
+                                    if(es_solvente_registro_js) {
+                                        var url_imprimir_registro = "{{ url('/secretariageneral/estudiantes/perfil/reporteregistro') }}/" + num_registro_estudiante;
+                                        boton_accion_principal = `
+                                            <a href="${url_imprimir_registro}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Registro">
+                                                <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                            </a>
+                                        `;
+                                    } else {
+                                        boton_accion_principal = `
+                                            <button type="button" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
+                                                <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                            </button>
+                                        `;
+                                    }
+                                    
                                 } else if(documento_procesado.id_documento == 7) {
-                                    var url_imprimir_archivo = "{{ url('/secretariageneral/estudiantes/perfil/reportearchivo') }}/" + num_registro_estudiante;
-                                    boton_accion_principal = `
-                                        <a href="${url_imprimir_archivo}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Archivo">
-                                            <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
-                                        </a>
-                                    `;
+                                    if(es_solvente_archivo_js) {
+                                        var url_imprimir_archivo = "{{ url('/secretariageneral/estudiantes/perfil/reportearchivo') }}/" + num_registro_estudiante;
+                                        boton_accion_principal = `
+                                            <a href="${url_imprimir_archivo}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Archivo">
+                                                <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                            </a>
+                                        `;
+                                    } else {
+                                        boton_accion_principal = `
+                                            <button type="button" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
+                                                <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
+                                            </button>
+                                        `;
+                                    }
                                 }
                             } else {
                                // RELLENO INVISIBLE PARA MANTENER LA ESTÉTICA EXACTA
@@ -1018,7 +1074,7 @@
 
                         var btn_constancia_js = '';
                         if (documento_procesado.id_documento == 1) {
-                            btn_constancia_js = `<a href="{{ asset('documentos/graduacion/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia"><i data-feather="download" style="width: 14px; height: 14px;"></i></a>`;
+                            btn_constancia_js = `<a href="{{ asset('documentos/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia"><i data-feather="download" style="width: 14px; height: 14px;"></i></a>`;
                         }
 
                         celda_accion = `
