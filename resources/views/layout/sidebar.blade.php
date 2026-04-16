@@ -53,11 +53,11 @@
       </li>
       @endif       
 
-      <li class="nav-item nav-category">ESTADÍSTICAS</li>      
+      <li class="nav-item nav-category">ESTADÍSTICA</li>      
         <li class="nav-item {{ active_class(['indicadores/*',]) }}">
           <a class="nav-link" data-bs-toggle="collapse" href="#indicadores" role="button" aria-expanded="{{ is_active_route(['indicadores/*']) }}" aria-controls="email">
             <i class="link-icon" data-feather="pie-chart"></i>
-            <span class="link-title">INDICADORES</span>
+            <span class="link-title">Indicadores</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>          
           <div class="collapse {{ show_class(['indicadores/*','setic/malla_validacion','setic/malla_validacion/*']) }}" id="indicadores">
@@ -85,7 +85,7 @@
         <li class="nav-item {{ active_class(['psicologia/*']) }}">
           <a class="nav-link" data-bs-toggle="collapse" href="#psicologia" role="button" aria-expanded="{{ is_active_route(['psicologia/*']) }}" aria-controls="email">
             <i class="link-icon" data-feather="activity"></i>
-            <span class="link-title">CLÍNICA PSICOLÓGICA</span>
+            <span class="link-title">Clínica Psicológica</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse {{ show_class(['psicologia/*']) }}" id="psicologia">
@@ -104,13 +104,60 @@
           </div>
         </li>
       @endif
+
+      @if(in_array('reingresos', $scopes) || in_array('secretaria_general_menu', $scopes))
+      <li class="nav-item nav-category">Gestión Académica</li>
+      @endif
+      @if(in_array('reingresos', $scopes))
+      <li class="nav-item {{ active_class(['reingresos/*', 'solicitudesnuevas/*']) }}">
+          <a class="nav-link" data-bs-toggle="collapse" href="#reingreso_submenu" role="button"
+            aria-expanded="{{ is_active_route(['reingresos/*', 'solicitudesnuevas/*']) }}"
+            aria-controls="reingreso_submenu">
+              <i class="link-icon" data-feather="chevrons-right"></i>
+              <span class="link-title">Reingresos</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+
+          <div class="collapse {{ show_class(['reingresos/*', 'solicitudesnuevas/*']) }}" id="reingreso_submenu">
+              <ul class="nav sub-menu">
+                  @if(in_array('reingresos_coordinador', $scopes))
+                  <li class="nav-item">
+                      <a href="{{ route('solicitudesn') }}" class="nav-link {{ active_class(['solicitudesnuevas/solicitudesn']) }}">
+                         
+                          Coordinador
+                      </a>
+                  </li>
+                  @endif
+                  @if(in_array('reingresos_vicerrector', $scopes))
+                  <li class="nav-item">
+                      <a href="{{ route('solicitudes.vicerrector') }}" class="nav-link {{ active_class(['solicitudesnuevas/solicitudesvicerrector']) }}">
+                         
+                          Vicerrector
+                      </a>
+                  </li>
+                  @endif
+              </ul>
+          </div>
+      </li>
+      @endif
       @if(in_array('secretaria_general_menu', $scopes))
-         <li class="nav-item nav-category">SECRETARIA GENERAL</li> 
+         
         <li class="nav-item {{ active_class(['secretariageneral/*']) }}">
           
           <a class="nav-link" data-bs-toggle="collapse" href="#secretariageneral" role="button" aria-expanded="{{ is_active_route(['secretariageneral/*']) }}" aria-controls="procesos">
-            <i class="link-icon" data-feather="folder"></i> 
-            <span class="link-title">GRADUACION</span>
+            <svg class="link-icon" 
+                xmlns="http://w3.org" 
+                width="24" height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-width="2" 
+                stroke-linecap="round" 
+                stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            <span class="link-title">Graduación</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse {{ show_class(['secretariageneral/*']) }}" id="secretariageneral">
@@ -139,7 +186,7 @@
               @if(in_array('secretaria_general_leer_actos_graduacion', $scopes))
                 <li class="nav-item">
                   <a href="{{ route('actos_proceso') }}" class="nav-link {{ active_class(['secretariageneral/actosProceso']) }}">
-                    Actos de Graduación
+                    Actos
                   </a>
                 </li>
               @endif 
@@ -147,12 +194,13 @@
           </div>
         </li>
       @endif
+      
       @if(in_array('estudiantes_menu', $scopes))
-         <li class="nav-item nav-category">ESTUDIANTES</li> 
+         <li class="nav-item nav-category">ESTUDIANTE</li> 
         <li class="nav-item {{ active_class(['estudiante/*']) }}">
           <a class="nav-link" data-bs-toggle="collapse" href="#estudiante" role="button" aria-expanded="{{ is_active_route(['estudiante/*']) }}" aria-controls="procesos">
-            <i class="link-icon" data-feather="users"></i> 
-            <span class="link-title">GRADUACION</span>
+            <i class="link-icon" data-feather="award"></i> 
+            <span class="link-title">Graduación</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse {{ show_class(['estudiante/*']) }}" id="estudiante">
@@ -174,7 +222,7 @@
         <li class="nav-item {{ active_class(['almacen/*']) }}">
           <a class="nav-link" data-bs-toggle="collapse" href="#almacen" role="button" aria-expanded="{{ is_active_route(['almacen/*']) }}" aria-controls="email">
             <i class="link-icon" data-feather="package"></i>
-            <span class="link-title">ALMACEN CENTRAL</span>
+            <span class="link-title">Almacén Central</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse {{ show_class(['almacen/*']) }}" id="almacen">
@@ -203,7 +251,7 @@
         <li class="nav-item {{ active_class(['setic/*']) }}">
           <a class="nav-link" data-bs-toggle="collapse" href="#setic" role="button" aria-expanded="{{ is_active_route(['setic/*']) }}" aria-controls="setic">
             <i class="link-icon" data-feather="monitor"></i>
-            <span class="link-title">SETIC</span>
+            <span class="link-title">Setic</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse {{ show_class(['setic/*']) }}" id="setic">
@@ -258,41 +306,10 @@
           </div>
       </li>
       @endif
-       <!-- EL MENU REINGRESO-->
-      @if(in_array('reingresos', $scopes))
-      <li class="nav-item nav-category">Gestión Académica</li>
+     
+      
 
-      <li class="nav-item {{ active_class(['reingresos/*', 'solicitudesnuevas/*']) }}">
-          <a class="nav-link" data-bs-toggle="collapse" href="#reingreso_submenu" role="button"
-            aria-expanded="{{ is_active_route(['reingresos/*', 'solicitudesnuevas/*']) }}"
-            aria-controls="reingreso_submenu">
-              <i class="link-icon" data-feather="chevrons-right"></i>
-              <span class="link-title">Reingresos</span>
-              <i class="link-arrow" data-feather="chevron-down"></i>
-          </a>
-
-          <div class="collapse {{ show_class(['reingresos/*', 'solicitudesnuevas/*']) }}" id="reingreso_submenu">
-              <ul class="nav sub-menu">
-                  @if(in_array('reingresos_coordinador', $scopes))
-                  <li class="nav-item">
-                      <a href="{{ route('solicitudesn') }}" class="nav-link {{ active_class(['solicitudesnuevas/solicitudesn']) }}">
-                         
-                          Coordinador
-                      </a>
-                  </li>
-                  @endif
-                  @if(in_array('reingresos_vicerrector', $scopes))
-                  <li class="nav-item">
-                      <a href="{{ route('solicitudes.vicerrector') }}" class="nav-link {{ active_class(['solicitudesnuevas/solicitudesvicerrector']) }}">
-                         
-                          Vicerrector
-                      </a>
-                  </li>
-                  @endif
-              </ul>
-          </div>
-      </li>
-      @endif
+      
  
       <!-- <div id="sidebar-menu"> -->
         <!-- Aquí se cargará el menú vía AJAX -->
