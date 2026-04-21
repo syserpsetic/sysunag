@@ -4,6 +4,7 @@
   <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 @endpush
 
 @section('content')
@@ -33,10 +34,10 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="jambo_table table table-hover" id="tbl_modalidades" border="1">
+                                <table class="jambo_table table table-hover dt-responsive nowrap" id="tbl_modalidades" border="1" style="width: 100%;">
                                     <thead class="bg-primary text-white">
                                         <tr class="headings">
-                                            <th scope="col" class="text-white">Id</th>
+                                            <th scope="col" class="text-white all">Id</th>
                                             <th scope="col" class="text-white">Nombre</th>
                                             <th scope="col" class="text-white">Descripción</th>
                                             <th scope="col" class="text-white">Opciones</th>
@@ -46,10 +47,10 @@
                                         @if(isset($modalidades))
                                             @foreach ($modalidades as $row)
                                             <tr style="font-size: small;">
-                                                <td scope="row">{{$row['id']}}</td>
-                                                <td scope="row">{{$row['nombre']}}</td>
-                                                <td scope="row">{{$row['descripcion']}}</td>
-                                                <td scope="row">
+                                                <td scope="row" class="align-middle">{{$row['id']}}</td>
+                                                <td scope="row" class="align-middle">{{$row['nombre']}}</td>
+                                                <td scope="row" class="align-middle">{{$row['descripcion']}}</td>
+                                                <td scope="row" class="align-middle">
                                                 @if(in_array('secretaria_general_escribir_modalidades_de_graduacion', $scopes))
                                                     <button type="button" class="btn btn-warning btn-icon btn-xs btn_editar"
                                                         data-bs-toggle="modal" 
@@ -85,7 +86,6 @@
     </div>
 </div>
 
-{{-- MODAL AGREGAR / EDITAR --}}
 <div class="modal fade bd-example" id="modal_gestion_modalidad" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -123,7 +123,6 @@
     </div>
 </div>
 
-{{-- MODAL ELIMINAR --}}
 <div class="modal fade" id="modal_eliminar_modalidad" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog text-center">
         <div class="modal-content">
@@ -166,6 +165,7 @@
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 @endpush
 
 @push('custom-scripts')
@@ -188,6 +188,14 @@
         });
 
         table = $('#tbl_modalidades').DataTable({
+                responsive: true,
+                columnDefs: [
+                    {
+                        className: 'dtr-control',
+                        orderable: false,
+                        targets: 0 // Le decimos a DataTable que el "+" expansivo va en la columna ID
+                    }
+                ],
                 "aLengthMenu": [
                     [10, 30, 50, 100,-1],
                     [10, 30, 50, 100,"Todo"]
@@ -300,7 +308,6 @@
                         table.row(rowNumber).remove().draw();
                         $("#modal_eliminar_modalidad").modal("hide");
                     } else {
-                        // AQUÍ APLICAMOS EL CAMBIO ESTRICTAMENTE NECESARIO DE LA REFACTORIZACIÓN
                         var row = data.modalidad_procesada; 
                         
                         var nuevaFilaDT = [

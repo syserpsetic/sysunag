@@ -4,6 +4,7 @@
   <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 @endpush
 
 @section('content')
@@ -13,7 +14,7 @@
             <div class="card-body">
                 <div class="alert alert-dark" role="alert">
                     <h1 class="display-3 d-flex align-items-center">
-                        <i data-feather="award" class="me-3" style="width: 60px; height: 60px;"></i>
+                        <i data-feather="award" class="me-3" width="60" height="60"></i>
                         <strong>ACTOS DE GRADUACIÓN</strong>
                     </h1>
                     <h4 class="lead bg-white"><div class="alert alert-fill-white" role="alert">Administración de los actos de graduación.</div></h4>
@@ -27,64 +28,62 @@
                             </h5>
                             @if(in_array('secretaria_general_escribir_actos_graduacion', $scopes))
                                 <button class="btn btn-primary btn-xs" id="btn_agregar_acto" data-bs-toggle="modal" data-bs-target="#modal_gestion_acto">
-                                    <i class="btn-icon-prepend" data-feather="plus"></i> Agregar Acto
+                                    <i class="btn-icon-prepend icon-sm" data-feather="plus"></i> Agregar Acto
                                 </button>
                             @endif
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="jambo_table table table-hover" id="tbl_actos" border="1">
-                                    <thead class="bg-primary text-white">
-                                        <tr class="headings">
-                                            <th scope="col" class="text-white">Id</th>
-                                            <th scope="col" class="text-white">Nombre</th>
-                                            <th scope="col" class="text-white">Descripción</th>
-                                            <th scope="col" class="text-white">Estado</th>
-                                            <th scope="col" class="text-white">Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if(isset($actos))
-                                            @foreach ($actos as $row)
-                                            <tr style="font-size: small;">
-                                                <td scope="row">{{$row['id']}}</td>
-                                                <td scope="row">{{$row['nombre']}}</td>
-                                                <td scope="row">{{$row['descripcion']}}</td>
-                                                <td scope="row">
-                                                    <span class="badge {{$row['estado'] ? 'bg-success' : 'bg-danger'}} text-white">
-                                                        {{$row['estado_texto']}}
-                                                    </span>
-                                                </td>
-                                                <td scope="row">
-                                                    @if(in_array('secretaria_general_escribir_actos_graduacion', $scopes))
-                                                        <button type="button" class="btn btn-warning btn-icon btn-xs btn_editar"
-                                                            data-bs-toggle="modal" 
-                                                            data-bs-target="#modal_gestion_acto"
-                                                            data-id="{{$row['id']}}"
-                                                            data-nombre="{{$row['nombre']}}"
-                                                            data-descripcion="{{$row['descripcion']}}"
-                                                            data-estado="{{$row['estado']}}"
-                                                            >
-                                                            <i data-feather="check-square"></i>
-                                                        </button>
-                                                    @endif
-                                                    @if(in_array('secretaria_general_escribir_actos_graduacion', $scopes))
+                            <table class="jambo_table table table-hover dt-responsive nowrap w-100" id="tbl_actos" border="1">
+                                <thead class="bg-primary text-white">
+                                    <tr class="headings">
+                                        <th scope="col" class="text-white all">Id</th>
+                                        <th scope="col" class="text-white">Nombre</th>
+                                        <th scope="col" class="text-white">Descripción</th>
+                                        <th scope="col" class="text-white">Estado</th>
+                                        <th scope="col" class="text-white">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(isset($actos))
+                                        @foreach ($actos as $row)
+                                        <tr class="small">
+                                            <td scope="row" class="align-middle">{{$row['id']}}</td>
+                                            <td scope="row" class="align-middle">{{$row['nombre']}}</td>
+                                            <td scope="row" class="align-middle text-wrap">{{$row['descripcion']}}</td>
+                                            <td scope="row" class="align-middle">
+                                                <span class="badge {{$row['estado'] ? 'bg-success' : 'bg-danger'}} text-white">
+                                                    {{$row['estado_texto']}}
+                                                </span>
+                                            </td>
+                                            <td scope="row" class="align-middle">
+                                                @if(in_array('secretaria_general_escribir_actos_graduacion', $scopes))
+                                                    <button type="button" class="btn btn-warning btn-icon btn-xs btn_editar"
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#modal_gestion_acto"
+                                                        data-id="{{$row['id']}}"
+                                                        data-nombre="{{$row['nombre']}}"
+                                                        data-descripcion="{{$row['descripcion']}}"
+                                                        data-estado="{{$row['estado']}}"
+                                                        >
+                                                        <i data-feather="check-square" class="icon-sm"></i>
+                                                    </button>
+                                                @endif
+                                                @if(in_array('secretaria_general_escribir_actos_graduacion', $scopes))
                                                     <button type="button" class="btn btn-danger btn-icon btn-xs"
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#modal_eliminar_acto"
                                                         data-id="{{$row['id']}}"
                                                         data-nombre="{{$row['nombre']}}"
                                                         >
-                                                        <i data-feather="trash-2"></i>
+                                                        <i data-feather="trash-2" class="icon-sm"></i>
                                                     </button>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -93,7 +92,6 @@
     </div>
 </div>
 
-{{-- MODAL AGREGAR / EDITAR --}}
 <div class="modal fade bd-example" id="modal_gestion_acto" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -106,7 +104,6 @@
                     <div class="card-body">
                         <div class="col-lg-12">
                             <div class="row">
-                                {{-- NOMBRE --}}
                                 <div class="col-md-12">
                                     <div class="mb-4">
                                         <label for="modal_nombre_acto" class="form-label">Nombre</label>
@@ -114,7 +111,6 @@
                                     </div>
                                 </div>
 
-                                {{-- DESCRIPCION CON SWITCH ALINEADO --}}
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <label for="modal_descripcion_acto" class="form-label mb-0">Descripción</label>
@@ -141,7 +137,6 @@
     </div>
 </div>
 
-{{-- MODAL ELIMINAR --}}
 <div class="modal fade" id="modal_eliminar_acto" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog text-center">
         <div class="modal-content">
@@ -154,7 +149,7 @@
                     <div class="col-12 grid-margin">
                         <div class="row">
                             <center>
-                                <i class="btn-icon-prepend text-warning" data-feather="alert-circle" style="width: 90px; height: 90px;"></i>
+                                <i class="btn-icon-prepend text-warning" data-feather="alert-circle" width="90" height="90"></i>
                                 <br><br>
                                 <div class="col-sm-12">
                                     <div class="mb-3">
@@ -184,6 +179,7 @@
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 @endpush
 
 @push('custom-scripts')
@@ -206,6 +202,14 @@
         });
 
         table = $('#tbl_actos').DataTable({
+                responsive: true,
+                columnDefs: [
+                    {
+                        className: 'dtr-control',
+                        orderable: false,
+                        targets: 0 
+                    }
+                ],
                 "aLengthMenu": [
                     [10, 30, 50, 100,-1],
                     [10, 30, 50, 100,"Todo"]
@@ -324,7 +328,7 @@
                         table.row(rowNumber).remove().draw();
                         $("#modal_eliminar_acto").modal("hide");
                     } else {
-                        var row = data.acto_procesado; // Ajustado para coincidir con la respuesta de Zeta
+                        var row = data.acto_procesado; 
                         
                         var badge = row.estado 
                             ? '<span class="badge bg-success text-white">ACTIVO</span>' 
@@ -349,6 +353,10 @@
                         else if(accion == 2) table.row(rowNumber).data(nuevaFilaDT).draw();
                         
                         $("#modal_gestion_acto").modal("hide");
+
+                        if(typeof feather !== 'undefined') {
+                            feather.replace();
+                        }
                     }
 
                     btn_activo = true;

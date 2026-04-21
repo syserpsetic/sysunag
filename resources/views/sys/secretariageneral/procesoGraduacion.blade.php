@@ -254,7 +254,6 @@
   <script src="{{ asset('assets/js/sweet-alert.js') }}"></script>
   <script type="text/javascript">
     
-    // Variables de lógica de negocio claras, sin exagerar
     var tabla_procesos = null; 
     var accion_form = null;
     var btn_activo = true;

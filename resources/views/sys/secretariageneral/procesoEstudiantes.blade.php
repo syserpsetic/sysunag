@@ -56,11 +56,11 @@
                                             <th scope="col" class="text-white">No.Registro</th>
                                             <th scope="col" class="text-white">Identidad</th>
                                             <th scope="col" class="text-white">Nombre Completo</th>
-                                            <th scope="col" class="text-white">ID Carrera</th> 
                                             <th scope="col" class="text-white">Carrera</th>
                                             <th scope="col" class="text-white">Sexo</th>
                                             <th scope="col" class="text-white">Fecha Solicitud</th>
-                                            <th scope="col" class="text-white">Estado</th>
+                                            <th scope="col" class="text-white text-center">Expediente</th>
+                                            <th scope="col" class="text-white text-center">Estado</th>
                                             <th scope="col" class="text-white">Opciones</th>
                                         </tr>
                                     </thead>
@@ -68,22 +68,52 @@
                                         @if(isset($estudiantes_enrolados) && count($estudiantes_enrolados) > 0)
                                             @foreach ($estudiantes_enrolados as $estudiante_individual)
                                             <tr style="font-size: small;">
-                                                <td scope="row" class="fw-bold">{{ $estudiante_individual['numero_registro_asignado'] }}</td>
-                                                <td scope="row">{{ $estudiante_individual['identidad_estudiante'] }}</td>
-                                                <td scope="row">{{ $estudiante_individual['nombre_completo'] }}</td>
-                                                <td scope="row">{{ $estudiante_individual['id_carrera'] }}</td> 
-                                                <td scope="row">{{ $estudiante_individual['nombre_carrera'] }}</td>
-                                                <td scope="row">
-                                                    @php $sexo_evaluado = trim($estudiante_individual['sexo_estudiante'] ?? ''); @endphp
+                                                <td scope="row" class="align-middle fw-bold">{{ $estudiante_individual['numero_registro_asignado'] ?? ($estudiante_individual->numero_registro_asignado ?? '') }}</td>
+                                                <td scope="row" class="align-middle">{{ $estudiante_individual['identidad_estudiante'] ?? ($estudiante_individual->identidad_estudiante ?? '') }}</td>
+                                                <td scope="row" class="align-middle">{{ $estudiante_individual['nombre_completo'] ?? ($estudiante_individual->nombre_completo ?? '') }}</td>
+                                                
+                                                {{-- Columna Carrera en una sola línea y sin negritas --}}
+                                                <td scope="row" class="align-middle text-nowrap">
+                                                    {{ $estudiante_individual['id_carrera'] ?? ($estudiante_individual->id_carrera ?? '') }} - {{ $estudiante_individual['nombre_carrera'] ?? ($estudiante_individual->nombre_carrera ?? '') }}
+                                                </td>
+                                                
+                                                <td scope="row" class="align-middle">
+                                                    @php $sexo_evaluado = trim($estudiante_individual['sexo_estudiante'] ?? ($estudiante_individual->sexo_estudiante ?? '')); @endphp
                                                     @if($sexo_evaluado == 'F') FEMENINO @elseif($sexo_evaluado == 'M') MASCULINO @else {{ $sexo_evaluado }} @endif
                                                 </td>
-                                                <td scope="row">{{ $estudiante_individual['fecha_solicitud'] }}</td>
-                                                <td scope="row">
-                                                    <span class="badge {{ $estudiante_individual['color_estado'] ?? 'bg-secondary' }}">{{ $estudiante_individual['estado_texto'] }}</span>
+                                                <td scope="row" class="align-middle">{{ $estudiante_individual['fecha_solicitud'] ?? ($estudiante_individual->fecha_solicitud ?? '') }}</td>
+                                                
+                                                <td scope="row" class="align-middle text-center">
+                                                    @php
+                                                        $validados = $estudiante_individual['docs_validados'] ?? ($estudiante_individual->docs_validados ?? 0);
+                                                        $requeridos = $estudiante_individual['docs_requeridos'] ?? ($estudiante_individual->docs_requeridos ?? 0);
+                                                        $es_completo = ($requeridos > 0 && $validados == $requeridos);
+                                                        $faltantes = $requeridos - $validados;
+                                                    @endphp
+                                                    
+                                                    {{-- Números sin negrita ni tamaño grande --}}
+                                                    <span>{{ $validados }} / {{ $requeridos }}</span>
+                                                    <br>
+                                                    @if($es_completo)
+                                                        <span class="badge bg-success text-white mt-1">
+                                                            <i data-feather="check-circle" class="text-white" style="width: 12px; height: 12px; margin-right: 2px;"></i> Completo
+                                                        </span>
+                                                    @else
+                                                        <span class="badge bg-warning text-dark mt-1">
+                                                            <i data-feather="clock" class="text-dark" style="width: 12px; height: 12px; margin-right: 2px;"></i> Faltan {{ $faltantes }}
+                                                        </span>
+                                                    @endif
                                                 </td>
-                                                <td scope="row">
-                                                    @if(in_array('secretaria_general_leer_proceso_graduacion_estudiantes_perfil', $scopes))
-                                                        <a href="{{ url('secretariageneral/estudiantes/perfil') }}/{{ $estudiante_individual['numero_registro_asignado'] }}" 
+
+                                                <td scope="row" class="align-middle text-center">
+                                                    <span class="badge {{ $estudiante_individual['color_estado'] ?? ($estudiante_individual->color_estado ?? 'bg-secondary') }}">
+                                                        {{ $estudiante_individual['estado_texto'] ?? ($estudiante_individual->estado_texto ?? '') }}
+                                                    </span>
+                                                </td>
+
+                                                <td scope="row" class="align-middle">
+                                                    @if(in_array('secretaria_general_leer_proceso_graduacion_estudiantes_perfil', $scopes ?? []))
+                                                        <a href="{{ url('secretariageneral/estudiantes/perfil') }}/{{ $estudiante_individual['numero_registro_asignado'] ?? ($estudiante_individual->numero_registro_asignado ?? '') }}" 
                                                         class="btn btn-info btn-xs text-dark fw-bold d-inline-flex align-items-center" 
                                                         title="Verificar Documentación">
                                                             <i data-feather="check-square" style="width: 14px; height: 14px; margin-right: 4px;"></i> Verificar Documentación
@@ -201,7 +231,6 @@
                         success: function(respuesta_servidor) {
                             Swal.close();
                             
-                            // Imprimimos la respuesta en la consola (Presiona F12 para verla si falla)
                             console.log("Respuesta de la API:", respuesta_servidor);
 
                             if(respuesta_servidor && respuesta_servidor.estatus) {
@@ -211,11 +240,9 @@
                                     icon: 'success',
                                     confirmButtonText: 'Entendido'
                                 }).then(() => {
-                                    // Recargamos la página para actualizar los estados a GRADUADO
                                     location.reload();
                                 });
                             } else {
-                                // Extraemos el error real o ponemos un texto de advertencia seguro
                                 var mensaje_falla = (respuesta_servidor && respuesta_servidor.msgError) 
                                                     ? respuesta_servidor.msgError 
                                                     : 'Ocurrió un error en el servidor interno (posible fallo de Base de Datos). Presiona F12 y revisa la Consola.';
@@ -225,11 +252,10 @@
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             Swal.close();
-                            // Capturamos el error HTTP fatal (500) y lo imprimimos
                             console.error("Error AJAX Fatal:", textStatus, errorThrown);
                             console.error("Detalle de respuesta del Backend:", jqXHR.responseText);
                             
-                            Swal.fire('Error Crítico (500)', 'El servidor Backend explotó. Presiona F12, ve a la pestaña "Network" (Red) y lee el mensaje de error para saber qué falló (ej. Credenciales incorrectas o dblink).', 'error');
+                            Swal.fire('Error Crítico (500)', 'El servidor Backend explotó. Presiona F12, ve a la pestaña "Network" (Red) y lee el mensaje de error para saber qué falló.', 'error');
                         }
                     });
                 }
@@ -238,28 +264,33 @@
 
     });
 
-    function espera(mensaje_html){
+    function espera(html){
         let timerInterval
         Swal.fire({
             imageUrl: "{{ url(asset('/assets/images/unag_loading.gif')) }}",
             title: '¡Espera!',
-            html: mensaje_html,
+            html: html,
             timer: null,
             timerProgressBar: true,
-            allowOutsideClick: false,
             didOpen: () => {
-                Swal.showLoading()
-                timerInterval = setInterval(() => {
-                    const content = Swal.getHtmlContainer()
-                    if (content) {
-                        const b = content.querySelector('b')
-                        if (b) { b.textContent = Swal.getTimerLeft() }
-                    }
-                }, 100)
+            Swal.showLoading()
+            timerInterval = setInterval(() => {
+                const content = Swal.getHtmlContainer()
+                if (content) {
+                const b = content.querySelector('b')
+                if (b) {
+                    b.textContent = Swal.getTimerLeft()
+                }
+                }
+            }, 100)
             },
-            willClose: () => { clearInterval(timerInterval) }
+            willClose: () => {
+            clearInterval(timerInterval)
+            }
         }).then((result) => {
-            if (result.dismiss === Swal.DismissReason.timer) { console.log('I was closed by the timer') }
+            if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer')
+            }
         })
     }
   </script>

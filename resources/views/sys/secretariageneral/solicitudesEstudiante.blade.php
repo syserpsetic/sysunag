@@ -4,6 +4,7 @@
   <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 @endpush
 
 @section('content')
@@ -56,10 +57,12 @@
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="jambo_table table table-hover" id="tbl_solicitudes" border="1">
+                                {{-- AQUI agregué las clases dt-responsive y nowrap para que funcione bien --}}
+                                <table class="jambo_table table table-hover dt-responsive nowrap" id="tbl_solicitudes" border="1" style="width: 100%;">
                                     <thead class="bg-primary text-white">
                                         <tr class="headings">
-                                            <th scope="col" class="text-white">ID</th>
+                                            {{-- Aseguramos que la primera columna siempre se vea (all) --}}
+                                            <th scope="col" class="text-white all">ID</th>
                                             <th scope="col" class="text-white">Proceso</th>
                                             <th scope="col" class="text-white">Modalidad</th>
                                             <th scope="col" class="text-white">Fecha Solicitud</th>
@@ -71,18 +74,18 @@
                                         @if(isset($solicitudes) && count($solicitudes) > 0)
                                             @foreach($solicitudes as $fila_solicitud)
                                             <tr style="font-size: small;">
-                                                <td scope="row">{{ $fila_solicitud->id }}</td>
-                                                <td scope="row"><span class="fw-bold">{{ $fila_solicitud->nombre_proceso }}</span></td>
-                                                <td scope="row">{{ $fila_solicitud->modalidad }}</td>
-                                                <td scope="row">{{ $fila_solicitud->fecha_solicitud }}</td>
-                                                <td scope="row">
+                                                <td scope="row" class="align-middle">{{ $fila_solicitud->id }}</td>
+                                                <td scope="row" class="align-middle"><span class="fw-bold">{{ $fila_solicitud->nombre_proceso }}</span></td>
+                                                <td scope="row" class="align-middle">{{ $fila_solicitud->modalidad }}</td>
+                                                <td scope="row" class="align-middle">{{ $fila_solicitud->fecha_solicitud }}</td>
+                                                <td scope="row" class="align-middle">
                                                     @if($fila_solicitud->es_activo == 1)
                                                         <span class="badge bg-success text-white">{{ $fila_solicitud->estado_texto }}</span>
                                                     @else
                                                         <span class="badge bg-danger text-white">{{ $fila_solicitud->estado_texto }}</span>
                                                     @endif
                                                 </td>
-                                                <td scope="row">
+                                                <td scope="row" class="align-middle">
                                                     @if($fila_solicitud->es_activo == 1)
                                                         <div class="d-flex gap-2">
                                                             <a href="{{ url('/secretariageneral/estudiantes/perfil/' . ($perfil->numero_registro_asignado ?? '')) }}" 
@@ -336,6 +339,7 @@
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 @endpush
 
 @push('custom-scripts')
@@ -349,12 +353,10 @@
     var id = null;
     var url_guardar = "{{url('/secretariageneral/solicitudEstudiante/guardar')}}"; 
     
-    // RUTA DINÁMICA DE PERFIL PARA JS
     var num_registro = "{{ $perfil->numero_registro_asignado ?? '' }}";
     var url_perfil = "{{ url('/secretariageneral/estudiantes/perfil/') }}/" + num_registro;
     var rowNumber = null;
 
-    // --- LÓGICA DE CATÁLOGOS DEPARTAMENTO Y MUNICIPIO ---
     var catalogo_municipios = @json($cat['munis'] ?? []);
     var municipio_guardado_perfil = "{{ $perfil->municipio_de_nacimiento_estudiante ?? '' }}";
 
@@ -374,8 +376,7 @@
             });
         }
     }
-    // ----------------------------------------------------
-
+    
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {
@@ -384,6 +385,14 @@
         });
 
         table = $('#tbl_solicitudes').DataTable({
+                responsive: true, 
+                columnDefs: [
+                    {
+                        className: 'dtr-control',
+                        orderable: false,
+                        targets: 0
+                    }
+                ],
                 "aLengthMenu": [
                     [10, 30, 50, 100,-1],
                     [10, 30, 50, 100,"Todo"]
@@ -428,13 +437,11 @@
             $(this).addClass('selected'); 
         });
 
-        // Evento que se dispara al seleccionar un departamento nuevo
         $('#sel_depto').on('change', function() {
             var departamento_elegido = $(this).val();
             actualizar_select_municipios(departamento_elegido, null);
         });
 
-        // Autocompletar los municipios al cargar la página si el perfil ya tiene un departamento asignado
         var departamento_inicial = $('#sel_depto').val();
         if (departamento_inicial) {
             actualizar_select_municipios(departamento_inicial, municipio_guardado_perfil);

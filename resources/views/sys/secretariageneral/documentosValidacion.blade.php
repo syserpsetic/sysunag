@@ -4,6 +4,7 @@
   <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 @endpush
 
 @section('content')
@@ -27,16 +28,16 @@
                             </h5>
                             @if(in_array('secretaria_general_escribir_documentos_validacion', $scopes))
                                 <button class="btn btn-primary btn-xs" id="btn_agregar_documento" data-bs-toggle="modal" data-bs-target="#modal_gestion_documento">
-                                    <i class="btn-icon-prepend" data-feather="plus"></i> Agregar Documento
+                                    <i class="btn-icon-prepend icon-sm" data-feather="plus"></i> Agregar Documento
                                 </button>
                             @endif
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="jambo_table table table-hover" id="tbl_documentos" border="1">
+                                <table class="jambo_table table table-hover dt-responsive nowrap w-100" id="tbl_documentos" border="1">
                                     <thead class="bg-primary text-white">
                                         <tr class="headings">
-                                            <th scope="col" class="text-white">Id</th>
+                                            <th scope="col" class="text-white all">Id</th>
                                             <th scope="col" class="text-white">Nombre</th>
                                             <th scope="col" class="text-white">Permiso Asociado</th>
                                             <th scope="col" class="text-white">Descripción</th>
@@ -47,17 +48,17 @@
                                     <tbody>
                                         @if(isset($documentos))
                                             @foreach ($documentos as $row)
-                                            <tr style="font-size: small;">
-                                                <td scope="row">{{$row['id']}}</td>
-                                                <td scope="row">{{$row['nombre']}}</td>
-                                                <td scope="row">{{$row['nombre_permiso']}}</td>
-                                                <td scope="row">{{$row['descripcion']}}</td>
-                                                <td scope="row">
+                                            <tr class="small">
+                                                <td scope="row" class="align-middle">{{$row['id']}}</td>
+                                                <td scope="row" class="align-middle">{{$row['nombre']}}</td>
+                                                <td scope="row" class="align-middle">{{$row['nombre_permiso']}}</td>
+                                                <td scope="row" class="align-middle text-wrap">{{$row['descripcion']}}</td>
+                                                <td scope="row" class="align-middle">
                                                     <span class="badge {{$row['estado'] ? 'bg-success' : 'bg-danger'}} text-white">
                                                         {{$row['estado_texto']}}
                                                     </span>
                                                 </td>
-                                                <td scope="row">
+                                                <td scope="row" class="align-middle">
                                                 @if(in_array('secretaria_general_escribir_documentos_validacion', $scopes))
                                                     <button type="button" class="btn btn-warning btn-icon btn-xs btn_editar"
                                                         data-bs-toggle="modal" 
@@ -68,7 +69,7 @@
                                                         data-estado="{{$row['estado']}}"
                                                         data-id_permiso="{{$row['id_seg_permiso']}}"
                                                         >
-                                                        <i data-feather="check-square"></i>
+                                                        <i data-feather="check-square" class="icon-sm"></i>
                                                     </button>
                                                 @endif
                                                 @if(in_array('secretaria_general_escribir_documentos_validacion', $scopes))
@@ -78,7 +79,7 @@
                                                         data-id="{{$row['id']}}"
                                                         data-nombre="{{$row['nombre']}}"
                                                         >
-                                                        <i data-feather="trash-2"></i>
+                                                        <i data-feather="trash-2" class="icon-sm"></i>
                                                     </button>
                                                 @endif
                                                 </td>
@@ -96,7 +97,6 @@
     </div>
 </div>
 
-{{-- MODAL AGREGAR / EDITAR --}}
 <div class="modal fade bd-example" id="modal_gestion_documento" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -109,7 +109,7 @@
                     <div class="card-body">
                         <div class="col-lg-12">
                             <div class="row">
-                                {{-- PERMISO --}}
+                                
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="modal_id_permiso" class="form-label">Permiso Requerido</label>
@@ -124,7 +124,6 @@
                                     </div>
                                 </div>
 
-                                {{-- NOMBRE --}}
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="modal_nombre_documento" class="form-label">Nombre del Documento</label>
@@ -132,7 +131,6 @@
                                     </div>
                                 </div>
 
-                                {{-- DESCRIPCION CON SWITCH ALINEADO --}}
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -158,7 +156,6 @@
     </div>
 </div>
 
-{{-- MODAL ELIMINAR --}}
 <div class="modal fade" id="modal_eliminar_documento" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog text-center">
         <div class="modal-content">
@@ -201,6 +198,7 @@
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 @endpush
 
 @push('custom-scripts')
@@ -223,6 +221,14 @@
         });
 
         table = $('#tbl_documentos').DataTable({
+                responsive: true,
+                columnDefs: [
+                    {
+                        className: 'dtr-control',
+                        orderable: false,
+                        targets: 0 
+                    }
+                ],
                 "aLengthMenu": [
                     [10, 30, 50, 100,-1],
                     [10, 30, 50, 100,"Todo"]
@@ -344,7 +350,6 @@
                         table.row(rowNumber).remove().draw();
                         $("#modal_eliminar_documento").modal("hide");
                     } else {
-                        // AQUÍ ESTÁ EL ÚNICO CAMBIO ESTRICTAMENTE NECESARIO (documento_procesado en lugar de acto_procesado)
                         var row = data.documento_procesado; 
                         
                         var badge = row.estado 
@@ -360,11 +365,11 @@
                             '<button type="button" class="btn btn-warning btn-icon btn-xs btn_editar" data-bs-toggle="modal" data-bs-target="#modal_gestion_documento" '+
                             'data-id="'+row.id+'" data-nombre="'+row.nombre+'" data-descripcion="'+row.descripcion+'" '+
                             'data-estado="'+row.estado+'" data-id_permiso="'+row.id_seg_permiso+'">'+
-                                '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>'+
+                                '<i data-feather="check-square" class="icon-sm"></i>'+
                             '</button> '+
                             '<button type="button" class="btn btn-danger btn-icon btn-xs" data-bs-toggle="modal" data-bs-target="#modal_eliminar_documento" '+
                             'data-id="'+row.id+'" data-nombre="'+row.nombre+'">'+
-                                '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>'+
+                                '<i data-feather="trash-2" class="icon-sm"></i>'+
                             '</button>'
                         ];
 
@@ -372,6 +377,11 @@
                         else if(accion == 2) table.row(rowNumber).data(nuevaFilaDT).draw();
                         
                         $("#modal_gestion_documento").modal("hide");
+                        
+                        // Refrescar los iconos de Feather en la nueva fila
+                        if(typeof feather !== 'undefined') {
+                            feather.replace();
+                        }
                     }
 
                     btn_activo = true;
