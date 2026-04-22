@@ -213,13 +213,13 @@
                                                             $lista_archivos = json_decode($archivos_json, true);
                                                             $cant_archivos = is_array($lista_archivos) ? count($lista_archivos) : 0;
                                                         @endphp
-
                                                         {{-- LÓGICA DEL BOTÓN ARCHIVOS / IMPRIMIR REPORTE --}}
                                                         @if($es_documento_automatico)
                                                             @if(in_array('secretaria_general_imprimir_solvencia', $scopes))
                                                                 
+                                                                {{-- ADMINISTRACIÓN (10) --}}
                                                                 @if($documento_actual['id_documento'] == 10)
-                                                                    @if(isset($es_solvente_administrativo) && $es_solvente_administrativo == true)
+                                                                    @if(!empty($es_solvente_administrativo))
                                                                         <a href="{{ url('/secretariageneral/estudiantes/perfil/reporte/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Reporte">
                                                                             <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
                                                                         </a> 
@@ -230,8 +230,9 @@
                                                                         </button>
                                                                     @endif
                                                                     
+                                                                {{-- REGISTRO (6) --}}
                                                                 @elseif($documento_actual['id_documento'] == 6) 
-                                                                    @if(isset($es_solvente_registro) && $es_solvente_registro == true)
+                                                                    @if(!empty($es_solvente_registro))
                                                                         <a href="{{ url('/secretariageneral/estudiantes/perfil/reporteregistro/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Registro">
                                                                             <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
                                                                         </a>
@@ -241,8 +242,9 @@
                                                                         </button>
                                                                     @endif
                                                                     
+                                                                {{-- ARCHIVO (7) --}}
                                                                 @elseif($documento_actual['id_documento'] == 7) 
-                                                                    @if(isset($es_solvente_archivo) && $es_solvente_archivo == true)
+                                                                    @if(!empty($es_solvente_archivo))
                                                                         <a href="{{ url('/secretariageneral/estudiantes/perfil/reportearchivo/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Archivo">
                                                                             <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
                                                                         </a>
