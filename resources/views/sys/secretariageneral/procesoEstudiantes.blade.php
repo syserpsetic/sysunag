@@ -34,10 +34,11 @@
                         <a class="btn btn-info btn-sm" id="btn_volver" href="{{ url('secretariageneral/procesoGraduacion') }}" data-toggle="tooltip" data-placement="top" title="Regresar">
                             <i class="btn-icon-prepend" data-feather="corner-up-left"></i> Regresar
                         </a>
-                        
+                        @if(in_array('secretaria_general_graduar_estudiantes', $scopes ?? []))
                         <button type="button" class="btn btn-success btn-sm font-weight-bold" id="btn_ejecutar_graduacion_masiva" data-identificador_proceso="{{ $proceso['id'] ?? '' }}">
                              Graduar Estudiantes
                         </button>
+                        @endif
                     </div>
                 </div>
                 <hr />
@@ -91,7 +92,6 @@
                                                         $faltantes = $requeridos - $validados;
                                                     @endphp
                                                     
-                                                    {{-- Números sin negrita ni tamaño grande --}}
                                                     <span>{{ $validados }} / {{ $requeridos }}</span>
                                                     <br>
                                                     @if($es_completo)

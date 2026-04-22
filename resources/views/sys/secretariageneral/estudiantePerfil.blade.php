@@ -175,7 +175,6 @@
                                     <tbody>
                                         @if(isset($documentos) && count($documentos) > 0)
                                             @php
-                                                // ORDENAR LOS DOCUMENTOS PARA QUE EL ID 1 SIEMPRE SEA EL PRIMERO
                                                 $documentos_ordenados = collect($documentos)->sortBy(function($documento_orden) {
                                                     return $documento_orden['id_documento'] == 1 ? 0 : 1;
                                                 })->all();
@@ -187,15 +186,13 @@
                                                     <div class="d-inline-flex align-items-center text-nowrap gap-2">
                                                         
                                                         @php
-                                                            // SACAMOS LA VARIABLE DEL IF DE PERMISOS PARA QUE NO DE ERROR DE UNDEFINED A LOS ESTUDIANTES
                                                             $es_documento_automatico = in_array($documento_actual['id_documento'], [6, 7, 10]);
+                                                            $permiso_del_documento = $documento_actual['nombre_permiso_requerido'] ?? null;
+                                                            $falta_permiso_especifico = $permiso_del_documento && !in_array($permiso_del_documento, $scopes);
                                                         @endphp
 
                                                         @if(in_array('secretaria_general_validar_documento', $scopes))
                                                             @php
-                                                                $permiso_del_documento = $documento_actual['nombre_permiso_requerido'] ?? null;
-                                                                $falta_permiso_especifico = $permiso_del_documento && !in_array($permiso_del_documento, $scopes);
-                                                                
                                                                 $debe_bloquear_checkbox = $es_documento_automatico || $esta_graduado || $falta_permiso_especifico;
                                                             @endphp
                                                             
@@ -213,24 +210,21 @@
                                                             $lista_archivos = json_decode($archivos_json, true);
                                                             $cant_archivos = is_array($lista_archivos) ? count($lista_archivos) : 0;
                                                         @endphp
-                                                        {{-- LÓGICA DEL BOTÓN ARCHIVOS / IMPRIMIR REPORTE --}}
+                                                        
                                                         @if($es_documento_automatico)
                                                             @if(in_array('secretaria_general_imprimir_solvencia', $scopes))
                                                                 
-                                                                {{-- ADMINISTRACIÓN (10) --}}
                                                                 @if($documento_actual['id_documento'] == 10)
                                                                     @if(!empty($es_solvente_administrativo))
                                                                         <a href="{{ url('/secretariageneral/estudiantes/perfil/reporte/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Reporte">
                                                                             <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
                                                                         </a> 
                                                                     @else
-                                                                        {{-- RELLENO INVISIBLE: Mantiene el ancho y alto del botón Imprimir para que la fila no colapse --}}
                                                                         <button type="button" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
                                                                             <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
                                                                         </button>
                                                                     @endif
                                                                     
-                                                                {{-- REGISTRO (6) --}}
                                                                 @elseif($documento_actual['id_documento'] == 6) 
                                                                     @if(!empty($es_solvente_registro))
                                                                         <a href="{{ url('/secretariageneral/estudiantes/perfil/reporteregistro/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Registro">
@@ -242,7 +236,6 @@
                                                                         </button>
                                                                     @endif
                                                                     
-                                                                {{-- ARCHIVO (7) --}}
                                                                 @elseif($documento_actual['id_documento'] == 7) 
                                                                     @if(!empty($es_solvente_archivo))
                                                                         <a href="{{ url('/secretariageneral/estudiantes/perfil/reportearchivo/' . $user['numero_registro_asignado']) }}" target="_blank" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; white-space:nowrap;" data-bs-toggle="tooltip" title="Imprimir Solvencia Archivo">
@@ -256,37 +249,29 @@
                                                                 @endif
                                                                 
                                                            @else
-                                                                {{-- RELLENO INVISIBLE PARA MANTENER LA ESTÉTICA EXACTA --}}
                                                                 <button type="button" class="btn btn-secondary btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
                                                                     <i data-feather="folder" style="width: 14px; height: 14px; margin-right: 4px;"></i> Archivos
                                                                 </button>
                                                             @endif
                                                         @else
-                                                            @if(isset($documento_actual['es_completado']) && $documento_actual['es_completado'] == 1)
-                                                                <button type="button" class="btn btn-warning btn-xs btn_abrir_modal d-inline-flex align-items-center" style="padding: 4px 10px;"
-                                                                    data-bs-toggle="tooltip"
-                                                                    data-id_doc="{{$documento_actual['id_documento']}}"
-                                                                    data-id_sol="{{$id_solicitud ?? ''}}"
-                                                                    data-id_val="{{$documento_actual['id_validacion'] ?? ''}}"
-                                                                    data-archivos='{{$archivos_json}}'
-                                                                    data-nombre="{{$documento_actual['nombre']}}"
-                                                                    data-obs="{{$documento_actual['observacion'] ?? ''}}"
-                                                                    data-estado="1" title="Ver / Editar Archivos">
-                                                                    <i data-feather="folder" style="width: 14px; height: 14px; margin-right: 4px;"></i> Archivos
-                                                                </button>
-                                                            @else
-                                                                <button type="button" class="btn btn-secondary btn-xs btn_abrir_modal d-inline-flex align-items-center" style="padding: 4px 10px;"
-                                                                    data-bs-toggle="tooltip"
-                                                                    data-id_doc="{{$documento_actual['id_documento']}}"
-                                                                    data-id_sol="{{$id_solicitud ?? ''}}"
-                                                                    data-id_val="{{$documento_actual['id_validacion'] ?? ''}}"
-                                                                    data-archivos='{{$archivos_json}}' 
-                                                                    data-nombre="{{$documento_actual['nombre']}}"
-                                                                    data-obs="{{$documento_actual['observacion'] ?? ''}}"
-                                                                    data-estado="0" title="Ver / Añadir Archivos">
-                                                                    <i data-feather="folder" style="width: 14px; height: 14px; margin-right: 4px;"></i> Archivos
-                                                                </button>
-                                                            @endif
+                                                            @php
+                                                                $disabled_btn_archivos = ($esta_graduado || $falta_permiso_especifico) ? 'disabled' : '';
+                                                                $color_btn_archivos = (isset($documento_actual['es_completado']) && $documento_actual['es_completado'] == 1) ? 'btn-warning' : 'btn-secondary';
+                                                                $title_attr_archivos = (isset($documento_actual['es_completado']) && $documento_actual['es_completado'] == 1) ? 'Ver Archivos' : 'Ver / Añadir Archivos';
+                                                            @endphp
+                                                            <button type="button" class="btn {{ $color_btn_archivos }} btn-xs btn_abrir_modal d-inline-flex align-items-center" style="padding: 4px 10px;"
+                                                                data-bs-toggle="tooltip"
+                                                                data-id_doc="{{$documento_actual['id_documento']}}"
+                                                                data-id_sol="{{$id_solicitud ?? ''}}"
+                                                                data-id_val="{{$documento_actual['id_validacion'] ?? ''}}"
+                                                                data-archivos='{{$archivos_json}}' 
+                                                                data-nombre="{{$documento_actual['nombre']}}"
+                                                                data-obs="{{$documento_actual['observacion'] ?? ''}}"
+                                                                data-estado="{{ isset($documento_actual['es_completado']) ? $documento_actual['es_completado'] : 0 }}" 
+                                                                title="{{ $title_attr_archivos }}"
+                                                                {{ $disabled_btn_archivos }}>
+                                                                <i data-feather="folder" style="width: 14px; height: 14px; margin-right: 4px;"></i> Archivos
+                                                            </button>
                                                         @endif
 
                                                         @if($documento_actual['id_documento'] == 1)
@@ -298,7 +283,6 @@
                                                 </td>
                                                 
                                                 <td scope="row" class="align-middle">
-                                                    {{-- ESTILO EN NEGRITA, LETRA MÁS PEQUEÑA (tx-11) --}}
                                                     <span class="tx-11 fw-bolder text-uppercase text-dark">{{$documento_actual['nombre']}}</span>
                                                     @if($cant_archivos > 0)
                                                         <br><span class="badge bg-primary mt-1" style="font-size: 10px; color: #ffffff !important;">
@@ -331,7 +315,6 @@
                                                         @php
                                                             $estado_etiqueta = (isset($documento_actual['es_completado']) && $documento_actual['es_completado'] == 1) ? 'VALIDADO POR:' : 'MODIFICADO POR:';
                                                         @endphp
-                                                        {{-- ESTILO EN NEGRITA FUERTE DE LA IMAGEN --}}
                                                         <span class="tx-11 fw-bolder mb-1 text-uppercase text-dark d-block">{{ $estado_etiqueta }}</span>
                                                         
                                                         @if(in_array($documento_actual['id_documento'], [6, 7, 10]) || $documento_actual['username_valido'] == 'automatico' || $documento_actual['username_valido'] == 'SISTEMA' || (isset($documento_actual['name']) && $documento_actual['name'] == 'SISTEMA AUTOMÁTICO'))
@@ -420,7 +403,6 @@
                         <div id="resumen_documentos">
                         @if(isset($documentos) && count($documentos) > 0)
                             @php
-                                // ORDENAR LOS DOCUMENTOS DEL SEMÁFORO PARA QUE EL ID 1 QUEDE DE PRIMERO
                                 $documentos_resumen_ordenados = collect($documentos)->sortBy(function($documento_resumen_actual) {
                                     return $documento_resumen_actual['id_documento'] == 1 ? 0 : 1;
                                 })->all();
@@ -561,10 +543,9 @@
     var esta_graduado_js = {{ $esta_graduado ? 'true' : 'false' }};
     var scopes_js = @json($scopes ?? []); 
     
-    // NUEVA VARIABLE GLOBAL PARA LOS BOTONES INVISIBLES EN JS
-    var es_solvente_admin_js = {{ (isset($es_solvente_administrativo) && $es_solvente_administrativo) ? 'true' : 'false' }};
-    var es_solvente_registro_js = {{ (isset($es_solvente_registro) && $es_solvente_registro) ? 'true' : 'false' }};
-    var es_solvente_archivo_js = {{ (isset($es_solvente_archivo) && $es_solvente_archivo) ? 'true' : 'false' }};
+    var es_solvente_admin_js = {{ !empty($es_solvente_administrativo) ? 'true' : 'false' }};
+    var es_solvente_registro_js = {{ !empty($es_solvente_registro) ? 'true' : 'false' }};
+    var es_solvente_archivo_js = {{ !empty($es_solvente_archivo) ? 'true' : 'false' }};
 
     $(document).ready(function () {
         $.ajaxSetup({
@@ -573,12 +554,10 @@
             }
         });
 
-        // INICIALIZACIÓN GENERAL DE LOS TOOLTIPS AL CARGAR LA PÁGINA
         $('[data-bs-toggle="tooltip"]').tooltip();
 
         table = $('#tbl_documentos_perfil').DataTable({
                 responsive: true, 
-                // APAGAR EL ORDENAMIENTO INICIAL PARA RESPETAR EL ORDEN DEL BACKEND
                 "order": [], 
                 columnDefs: [
                     {
@@ -615,7 +594,6 @@
                         sortDescending: ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-                // REINICIAR TOOLTIPS CADA VEZ QUE SE DIBUJA/PAGINA LA TABLA
                 drawCallback: function(settings) {
                     $('[data-bs-toggle="tooltip"]').tooltip();
                 }
@@ -756,7 +734,6 @@
             arr_archivos.forEach(function(archivo) {
                 var url_descarga = url_base_descarga + "/" + sys_id_proceso + "/" + id_sol + "/" + id_val + "/" + encodeURIComponent(archivo.nombre);
 
-                // AQUÍ AGREGAMOS LA VALIDACIÓN DEL PERMISO PARA EL BOTÓN DE ELIMINAR EN JS
                 var btn_eliminar_html = (esta_graduado_js || !scopes_js.includes('estudiante_adjuntar_archivos')) ? '' : `<button type="button" class="btn btn-danger btn-xs text-white d-flex align-items-center" data-bs-toggle="tooltip" title="Eliminar archivo" onclick="eliminarArchivoExistente(${archivo.id}, this)"><i data-feather="trash-2" class="icon-sm"></i></button>`;
 
                 $('#lista_archivos_existentes').append(`
@@ -793,7 +770,6 @@
     }); 
 
     window.eliminarArchivoExistente = function(id_archivo, btn_element) {
-        // ESCONDER TOOLTIP ANTES DE ABRIR SWAL PARA EVITAR BUGS VISUALES
         $('.tooltip').tooltip('hide');
         
         Swal.fire({
@@ -999,12 +975,10 @@
                             `;
                         }
 
-                       // LÓGICA DE BOTÓN IMPRIMIR PARA DOCUMENTOS AUTOMÁTICOS EN JS
                         var boton_accion_principal = '';
                         if(es_documento_automatico_js) {
                             var num_registro_estudiante = "{{ $user['numero_registro_asignado'] ?? '' }}";
                             
-                            // VALIDACIÓN DEL PERMISO DE IMPRIMIR EN JS
                             if(scopes_js.includes('secretaria_general_imprimir_solvencia')) {
                                 
                                 if(documento_procesado.id_documento == 10) {
@@ -1016,7 +990,6 @@
                                             </a>
                                         `;
                                     } else {
-                                        // RELLENO INVISIBLE: Mantiene el ancho y alto del botón Imprimir para que la fila no colapse en AJAX
                                         boton_accion_principal = `
                                             <button type="button" class="btn btn-success btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
                                                 <i data-feather="printer" style="width: 14px; height: 14px; margin-right: 4px;"></i> Imprimir
@@ -1057,7 +1030,6 @@
                                     }
                                 }
                             } else {
-                               // RELLENO INVISIBLE PARA MANTENER LA ESTÉTICA EXACTA
                                 boton_accion_principal = `
                                     <button type="button" class="btn btn-secondary btn-xs d-inline-flex align-items-center" style="padding: 4px 10px; visibility: hidden;">
                                         <i data-feather="folder" style="width: 14px; height: 14px; margin-right: 4px;"></i> Archivos
@@ -1067,8 +1039,16 @@
                         } else {
                             var btn_class = (documento_procesado.es_completado == 1) ? 'btn-warning' : 'btn-secondary';
                             var title_attr = (documento_procesado.es_completado == 1) ? 'Ver Archivos' : 'Ver / Añadir Archivos';
+                            
+                            var disabled_btn_archivos_js = '';
+                            if (tiene_permiso_maestro) {
+                                var permiso_requerido_arch = documento_procesado.nombre_permiso_requerido;
+                                var falta_permiso_arch = (permiso_requerido_arch && !scopes_js.includes(permiso_requerido_arch));
+                                disabled_btn_archivos_js = (esta_graduado_js || falta_permiso_arch) ? 'disabled' : '';
+                            }
+
                             boton_accion_principal = `
-                                <button type="button" class="btn ${btn_class} btn-xs btn_abrir_modal d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" data-id_doc="${documento_procesado.id_documento}" data-id_sol="${id_sol}" data-id_val="${documento_procesado.id_validacion}" data-archivos='${string_archivos}' data-nombre="${documento_procesado.nombre}" data-obs="${documento_procesado.observacion || ''}" data-estado="${documento_procesado.es_completado}" title="${title_attr}">
+                                <button type="button" class="btn ${btn_class} btn-xs btn_abrir_modal d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" data-id_doc="${documento_procesado.id_documento}" data-id_sol="${id_sol}" data-id_val="${documento_procesado.id_validacion}" data-archivos='${string_archivos}' data-nombre="${documento_procesado.nombre}" data-obs="${documento_procesado.observacion || ''}" data-estado="${documento_procesado.es_completado}" title="${title_attr}" ${disabled_btn_archivos_js}>
                                     <i data-feather="folder" style="width: 14px; height: 14px; margin-right: 4px;"></i> Archivos
                                 </button>
                             `;
@@ -1102,7 +1082,6 @@
                             var num_registro = "{{ $user['numero_registro_asignado'] ?? '' }}";
                             var nombre_estudiante = "{{ $user['nombre_completo'] ?? '' }}";
                             
-                            // ETIQUETA MODIFICADO/VALIDADO EN JAVASCRIPT CON NEGRITA (fw-bolder)
                             var estado_etiqueta_js = (documento_procesado.es_completado == 1) ? 'VALIDADO POR:' : 'MODIFICADO POR:';
                             col_val += '<span class="tx-11 fw-bolder mb-1 text-uppercase text-dark d-block">' + estado_etiqueta_js + '</span>';
                             
@@ -1135,7 +1114,6 @@
                             }
                         }
 
-                        // TEXTO DEL DOCUMENTO EN NEGRITA (fw-bolder) TX-11
                         var nuevaFilaDT = [
                             celda_accion,
                             '<div class="align-middle"><span class="tx-11 fw-bolder text-uppercase text-dark">' + documento_procesado.nombre + '</span>' + badge_archivos + '</div>',
@@ -1155,7 +1133,6 @@
                         var pendientes_js = 0;
                         var total_js = respuesta_api.documentos_lista.length;
 
-                        // ORDENAR TAMBIÉN EN JAVASCRIPT PARA QUE EL ID 1 QUEDE PRIMERO
                         var lista_ordenada_js = respuesta_api.documentos_lista.sort(function(documento_a, documento_b) {
                             if(documento_a.id_documento == 1) return -1;
                             if(documento_b.id_documento == 1) return 1;
@@ -1190,7 +1167,6 @@
                                 texto_estado = '<p class="estado-doc tx-11 fw-bolder text-uppercase text-warning mb-0 mt-1">EN REVISIÓN</p>';
                             }
 
-                            // CIRCULO 16px Y TEXTOS EN NEGRITA (fw-bolder) EN EL RESUMEN JS
                             $("#resumen_documentos").append(`
                                 <div class="d-flex justify-content-between mb-2 pb-2 border-bottom" id="resumen_doc_${documento_iteracion.id_documento}">
                                     <div class="d-flex align-items-start hover-pointer w-100">
@@ -1212,7 +1188,6 @@
 
                     if(typeof feather !== 'undefined') { feather.replace(); }
                     
-                    // REINICIALIZAR TOOLTIPS DESPUES DEL AJAX
                     $('[data-bs-toggle="tooltip"]').tooltip();
 
                     btn_activo = true;
