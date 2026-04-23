@@ -276,14 +276,13 @@ public function verSeccionConfiguracionEvaluacion(Request $request, $docenteId, 
     }
 
     $data = $response->json();
-    $scopes = array();
 
     return view('sys.docentes.seccionesConfiguracionColumnas', [
         'seccionId'                   => $data['seccionId'],
         'docenteId'                   => $data['docenteId'],
         'asignaturas_list'            => $data['asignaturas_list'],
         'aca_seccion_comentario_list' => $data['aca_seccion_comentario_list'],
-        'scopes' =>$scopes
+        'scopes'                      => $data['scopes'],
     ]);
 }
 
@@ -337,6 +336,334 @@ public function guardarBloqueModuloConfiguracionColumnas(Request $request)
 
     if ($response->status() === 403) {
         return view('pages.error.403')->with('scopes', []);
+    }
+
+    return response()->json($response->json());
+}
+
+// ── PPS Evidencia ────────────────────────────────────────────────
+
+public function uploadEvidenciaPps(Request $request)
+{
+    $file = $request->file('file');
+    if (!$file) {
+        return response()->json(['error' => 'El proxy no recibió el archivo.'], 422);
+    }
+
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->timeout(60)
+        ->attach('file', file_get_contents($file->getRealPath()), $file->getClientOriginalName())
+        ->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/pps/upload-evidencia');
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    $data = $response->json();
+
+    if (!$data || !isset($data['filename'])) {
+        return response()->json([
+            'error' => 'API HTTP ' . $response->status() . ': ' . substr($response->body(), 0, 300)
+        ]);
+    }
+
+    return response()->json($data);
+}
+
+public function guardarEvidenciaPps(Request $request)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/pps/guardar-evidencia', $request->all());
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    return response()->json($response->json());
+}
+
+public function verEvidenciaPps(Request $request, $id)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->timeout(30)
+        ->get(env('API_BASE_URL_ZETA') . "/api/auth/docentes/pps/{$id}/evidencia");
+
+    if ($response->status() === 403) { abort(403); }
+    if ($response->status() === 404) { abort(404); }
+
+    return response($response->body(), 200)
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'inline; filename="evidencia_pps.pdf"');
+}
+
+public function deleteEvidenciaTempPps(Request $request)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/pps/delete-evidencia-temp', $request->all());
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    return response()->json($response->json());
+}
+
+public function deleteFileTempPps(Request $request)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/pps/delete-file-temp', $request->all());
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    return response()->json($response->json());
+}
+
+public function evaluacionPps(Request $request, $tipoAsesor, $tipoTrabajo, $numeroRegistro, $id)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->get(env('API_BASE_URL_ZETA') . "/api/auth/docentes/pps/{$tipoAsesor}/{$tipoTrabajo}/{$numeroRegistro}/{$id}/evaluacion");
+
+    if ($response->status() === 403) {
+        return view('pages.error.403')->with('scopes', []);
+    }
+
+    $data = $response->json();
+
+    return view('sys.docentes.evaluacionPps', [
+        'estado'                   => $data['estado'],
+        'tipo_asesor'              => $data['tipo_asesor'],
+        'tipo_trabajo'             => $data['tipo_trabajo'],
+        'numero_registro_asignado' => $data['numero_registro_asignado'],
+        'nombre_estudiante'        => $data['nombre_estudiante'],
+        'id'                       => $data['id'],
+        'nuevo_formato'            => $data['nuevo_formato'],
+        'id_evaluacion'            => $data['id_evaluacion'],
+        'evaluacion'               => $data['evaluacion'],
+        'nota_docentes'            => $data['nota_docentes'],
+        'nota_promedio'            => $data['nota_promedio'],
+        'validar'                  => $data['validar'],
+        'nota_final'               => $data['nota_final'],
+        'scopes'                   => $data['scopes'],
+    ]);
+}
+
+public function guardarNotaPps(Request $request)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/pps/guardar-nota', $request->all());
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    return response()->json($response->json());
+}
+
+public function uploadFilePps(Request $request)
+{
+    $file = $request->file('file');
+    if (!$file) {
+        return response()->json(['error' => 'No se recibió el archivo.'], 422);
+    }
+
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->timeout(60)
+        ->attach('file', file_get_contents($file->getRealPath()), $file->getClientOriginalName())
+        ->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/pps/upload-file');
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    $data = $response->json();
+    if (!$data || !isset($data['filename'])) {
+        return response()->json(['error' => 'API HTTP ' . $response->status() . ': ' . substr($response->body(), 0, 200)]);
+    }
+
+    return response()->json($data);
+}
+
+public function validarNotaPps(Request $request, $id)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . "/api/auth/docentes/pps/{$id}/validar-nota", $request->all());
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    return response()->json($response->json());
+}
+
+public function observacionesPps(Request $request)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/pps/observaciones', $request->all());
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    return response()->json($response->json());
+}
+
+// ══════════════════════════════════════════════════════
+// SSC — Servicio Social Comunitario
+// ══════════════════════════════════════════════════════
+
+public function ssc_upload_informe(Request $request)
+{
+    $file = $request->file('file');
+    if (!$file) {
+        return response()->json(['error' => 'El proxy no recibio el archivo.'], 422);
+    }
+
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->timeout(60)
+        ->attach('file', file_get_contents($file->getRealPath()), $file->getClientOriginalName())
+        ->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/ssc/upload-informe');
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    $data = $response->json();
+    if (!$data || !isset($data['filename'])) {
+        return response()->json([
+            'error' => 'API HTTP ' . $response->status() . ': ' . substr($response->body(), 0, 300)
+        ]);
+    }
+
+    return response()->json($data);
+}
+
+public function ssc_ver_documento($filename)
+{
+    if (strpos($filename, '/') !== false || strpos($filename, '\\') !== false || strpos($filename, '..') !== false) {
+        abort(400);
+    }
+    $response = Http::timeout(30)
+        ->get(env('API_BASE_URL_ZETA') . '/documentos/ssc/' . $filename);
+
+    if ($response->status() !== 200) {
+        abort(404);
+    }
+
+    return response($response->body())
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'inline; filename="' . $filename . '"');
+}
+
+public function ssc_delete_informe_archivo(Request $request)
+{
+    $filename = $request->input('filename');
+    if (!$filename) {
+        return response()->json(['error' => 'Nombre de archivo requerido.'], 422);
+    }
+
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->delete(env('API_BASE_URL_ZETA') . '/api/auth/docentes/ssc/informes/archivo/' . $filename);
+
+    if ($response->status() === 403) {
+        return response()->json(['error' => 'Sin permiso.'], 403);
+    }
+
+    return response()->json($response->json());
+}
+
+public function ssc_cerrar_proyecto(Request $request)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . '/api/auth/docentes/ssc/proyectos/cerrar', $request->all());
+
+    if ($response->status() === 403) {
+        return view('pages.error.403')->with('scopes', []);
+    }
+
+    $data = $response->json();
+
+    if (!empty($data['msgError'])) {
+        return redirect()->back()->with('ssc_error', $data['msgError']);
+    }
+
+    return redirect()->back()->with('ssc_success', $data['msgSuccess']);
+}
+
+public function ssc_ver_detalle_horas(Request $request, $id)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->get(env('API_BASE_URL_ZETA') . "/api/auth/docentes/ssc/proyectos/{$id}/detalle-horas");
+
+    if ($response->status() === 403) {
+        return view('pages.error.403')->with('scopes', []);
+    }
+
+    $data = $response->json();
+
+    return view('sys.docentes.sscDetalleHoras', [
+        'id_solicitud' => $data['id_solicitud'],
+        'nombre'       => $data['nombre'] ?? null,
+        'horas_max'    => $data['horas_max'],
+        'estado'       => $data['estado'],
+        'scopes'       => $data['scopes'] ?? [],
+    ]);
+}
+
+public function ssc_detalle_horas_data(Request $request, $id)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . "/api/auth/docentes/ssc/proyectos/{$id}/detalle-horas/data", $request->all());
+
+    if ($response->status() === 403) {
+        return response()->json(['msgError' => 'Sin permiso.'], 403);
+    }
+
+    return response()->json($response->json());
+}
+
+public function ssc_detalle_horas_guardar(Request $request, $id)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . "/api/auth/docentes/ssc/proyectos/{$id}/detalle-horas/guardar", $request->all());
+
+    if ($response->status() === 403) {
+        return response()->json(['msgError' => 'Sin permiso.'], 403);
+    }
+
+    return response()->json($response->json());
+}
+
+public function ssc_ver_informes(Request $request, $id)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->get(env('API_BASE_URL_ZETA') . "/api/auth/docentes/ssc/proyectos/{$id}/informes");
+
+    if ($response->status() === 403) {
+        return view('pages.error.403')->with('scopes', []);
+    }
+
+    $data = $response->json();
+
+    return view('sys.docentes.sscInformes', [
+        'id_solicitud'           => $id,
+        'nombre'                 => $data['nombre'] ?? null,
+        'estado'                 => $data['estado'],
+        'todos'                  => $data['todos'],
+        'ssc_informes_list'      => $data['ssc_informes_list'],
+        'estudiantes_disponibles'=> $data['estudiantes_disponibles'],
+        'scopes'                 => $data['scopes'] ?? [],
+    ]);
+}
+
+public function ssc_informes_guardar(Request $request, $id)
+{
+    $response = Http::withHeaders(['Authorization' => session('token')])
+        ->post(env('API_BASE_URL_ZETA') . "/api/auth/docentes/ssc/proyectos/{$id}/informes/guardar", $request->all());
+
+    if ($response->status() === 403) {
+        return response()->json(['msgError' => 'Sin permiso.'], 403);
     }
 
     return response()->json($response->json());

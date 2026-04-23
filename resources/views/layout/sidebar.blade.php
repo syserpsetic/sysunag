@@ -28,6 +28,24 @@
           <span class="link-title">Página Principal</span>
         </a>
       </li>
+      @if(in_array('gestion_docente', $scopes))
+      <li class="nav-item {{ active_class(['docentes/*']) }}">
+        <a class="nav-link" data-bs-toggle="collapse" href="#docentes" role="button" aria-expanded="{{ is_active_route(['docentes/*']) }}" aria-controls="docentes">
+          <i class="link-icon" data-feather="book-open"></i>
+          <span class="link-title">Docente</span>
+          <i class="link-arrow" data-feather="chevron-down"></i>
+        </a>
+        <div class="collapse {{ show_class(['docentes/*']) }}" id="docentes">
+          <ul class="nav sub-menu">
+            @if(in_array('leer_carga_academica_docente', $scopes))
+            <li class="nav-item">
+              <a href="{{ url('/docentes/cargaAcademica') }}" class="nav-link {{ active_class(['docentes/cargaAcademica']) }}">Carga Académica</a>
+            </li>
+            @endif
+          </ul>
+        </div>
+      </li>
+      @endif
       @if(in_array('egresados_all', $scopes))
       <li class="nav-item {{ active_class(['egresados/datos_generales']) }}">
         <a href="{{ url('/egresados/datos_generales') }}" class="nav-link">

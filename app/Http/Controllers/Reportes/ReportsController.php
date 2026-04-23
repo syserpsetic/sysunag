@@ -38,6 +38,41 @@ class ReportsController extends Controller
             ->header('Content-Disposition', 'inline; filename="Cuadro de Calificaciones - Modulo ' . $bloqueModuloId . '.pdf"');
     }
 
+    public function reporteActaPPS(Request $request, $id, $numeroRegistroAsignado)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->timeout(120)->get(env('API_BASE_URL_ZETA') . "/api/auth/docentes/pps/{$id}/{$numeroRegistroAsignado}/acta", [
+            'nuevo_formato' => $request->query('nuevo_formato', 'NO'),
+        ]);
+
+        if ($response->status() === 403) {
+            abort(403);
+        }
+
+        return response($response->body(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="acta_pps_' . $numeroRegistroAsignado . '.pdf"');
+    }
+
+    public function reporteEvaluacionPPS(Request $request, $id, $numeroRegistroAsignado)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => session('token'),
+        ])->timeout(120)->get(env('API_BASE_URL_ZETA') . "/api/auth/docentes/pps/{$id}/{$numeroRegistroAsignado}/evaluacion-reporte", [
+            'nuevo_formato' => $request->query('nuevo_formato', 'NO'),
+            'tipo_trabajo'  => $request->query('tipo_trabajo', ''),
+        ]);
+
+        if ($response->status() === 403) {
+            abort(403);
+        }
+
+        return response($response->body(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="evaluacion_pps_' . $numeroRegistroAsignado . '.pdf"');
+    }
+
     public function reportePrematricula(Request $request, $registro)
     {
         $response = Http::withHeaders([

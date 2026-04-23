@@ -800,6 +800,8 @@
             var dataOutput = null;
             var gradeValidator = null;
             var txtObservaciones = null;
+            var hayChangios = false;
+            var navegandoConPermiso = false;
 
             var columnaNotaFinal =
                 3 +
@@ -1401,6 +1403,7 @@
                             //dropdownMenu: true,
                             afterChange: function(changes, source) {
                                 if (source === 'loadData') return;
+                                hayChangios = true;
                                 changes.forEach(([row, prop, oldValue, newValue]) => {
                                     if (prop == 'nota' || prop == 'estado_calificacion')
                                         return;
@@ -2078,12 +2081,47 @@
                     guardarCalificaciones();
                 });
 
+                // ----- Regresar con confirmación SweetAlert2 -----
                 @if (
                     $tieneAccesoGuardarCalificacionesAsignaturas == 1 &&
                         (Session::get('id_usuario') == $row['docente_calificador_1'] ||
                             Session::get('id_usuario') == $row['docente_calificador_2'] ||
                             $tieneAsignaturasLaboratorioGrupo == 1))
+                    $('#btnRegresar').on('click', function(e) {
+                        e.preventDefault();
+                        var url = $(this).attr('href');
+                        if (!hayChangios) {
+                            navegandoConPermiso = true;
+                            window.location.href = url;
+                            return;
+                        }
+                        Swal.fire({
+                            title: '¿Desea salir?',
+                            html: 'Tiene cambios sin guardar.<br>¿Qué desea hacer?',
+                            icon: 'warning',
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: 'Guardar y Salir',
+                            denyButtonText: 'Salir sin guardar',
+                            cancelButtonText: 'Cancelar',
+                            confirmButtonColor: '#1ba333',
+                            denyButtonColor: '#6c757d',
+                            customClass: { denyButton: 'text-white' },
+                        }).then(function(result) {
+                            if (result.isConfirmed) {
+                                guardarCalificaciones(function() {
+                                    navegandoConPermiso = true;
+                                    window.location.href = url;
+                                });
+                            } else if (result.isDenied) {
+                                navegandoConPermiso = true;
+                                window.location.href = url;
+                            }
+                        });
+                    });
+
                     window.addEventListener('beforeunload', function(e) {
+                        if (navegandoConPermiso) return;
                         guardarCalificaciones();
                         e.preventDefault();
                         e.returnValue = '¿Estás seguro?';
@@ -2162,7 +2200,7 @@
                 })
             }
 
-            function guardarCalificaciones() {
+            function guardarCalificaciones(onSuccessCallback) {
                 espera('Tu información se esta guardando...');
                 $.ajax({
                     url: '{{ url('/docentes/guardarCalificaciones') }}',
@@ -2264,16 +2302,21 @@
                     success: function(data) {
                         Swal.close();
                         dataOutput = data;
+                        hayChangios = false;
                         if (dataOutput.msgError != null) {
                             Swal.fire('Error', dataOutput.msgError, 'error');
                         } else {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Guardado',
-                                text: dataOutput.msgSuccess,
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
+                            if (typeof onSuccessCallback === 'function') {
+                                onSuccessCallback();
+                            } else {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Guardado',
+                                    text: dataOutput.msgSuccess,
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                            }
                         }
 
                         var acc = dataOutput.tieneAccesoGuardarCalificacionesAsignaturas;

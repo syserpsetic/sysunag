@@ -42,7 +42,7 @@
             font-size: 13px;
         }
         .saldo-row:last-child { border-bottom: none; }
-        .saldo-row .monto { font-weight: 700; color: var(--azul); font-family: monospace; }
+        .saldo-row .monto { font-weight: 700; color: var(--azul); }
 
         /* ── BADGES DE TIPO ── */
         .badge-tipo {
@@ -68,6 +68,7 @@
         }
         .table-matricula tbody td {
             font-size: 13px;
+            font-weight: 600;
             vertical-align: middle;
             padding: 9px 12px;
         }
@@ -100,6 +101,10 @@
 table.dataTable thead td {
     background-color: var(--verdeClaro) !important;
     color: var(--azul) !important;
+}
+
+#ico_info, #ico_saldo {
+    transition: transform 0.25s ease;
 }
     </style>
 @endpush
@@ -136,96 +141,158 @@ table.dataTable thead td {
 {{-- ============================================================ --}}
 {{-- INFO ESTUDIANTE + SALDO                                       --}}
 {{-- ============================================================ --}}
-<div class="row g-3 mb-4">
+{{-- ============================================================ --}}
+{{-- TARJETA COMPACTA — solo mobile (< lg)                         --}}
+{{-- ============================================================ --}}
+<div class="d-lg-none mb-4">
+    <div class="card shadow-sm" style="border:none;overflow:hidden;">
+        {{-- Header con nombre y registro --}}
+        <div style="background:var(--azul);padding:14px 18px;">
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <i data-feather="user" style="width:18px;height:18px;stroke:#fff;flex-shrink:0;"></i>
+                <span style="color:#fff !important;font-size:16px;font-weight:700;line-height:1.2;">{{ $estudiante->name }}</span>
+            </div>
+            <span style="background:var(--amarillo);color:var(--azul);font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.5px;">
+                <i data-feather="hash" style="width:10px;height:10px;"></i> {{ $estudiante->numero_registro_asignado }}
+            </span>
+        </div>
 
-    <div class="col-lg-9">
-        <div class="row g-3">
+        {{-- Grilla de datos colapsable --}}
+        <div class="card-body p-0">
 
-            <div class="col-md-5 col-sm-6">
-                <div class="card stat-card azul h-100">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <div class="stat-label mb-1"><i data-feather="user" style="width:13px;height:13px;"></i> Nombre</div>
-                        <div class="stat-value" style="font-size:17px;">{{ $estudiante->name }}</div>
+            {{-- Toggle info --}}
+            <button class="btn w-100 d-flex justify-content-between align-items-center px-3 py-2"
+                data-bs-toggle="collapse" data-bs-target="#collapse_info_estudiante"
+                style="background:#f0f4ff;border:none;border-bottom:1px solid #e0e7ff;border-radius:0;font-size:12px;font-weight:700;color:var(--azul);">
+                <span><i data-feather="info" style="width:13px;height:13px;"></i> Datos del estudiante</span>
+                <i data-feather="chevron-down" style="width:14px;height:14px;transform:rotate(-90deg);" id="ico_info"></i>
+            </button>
+
+            <div class="collapse" id="collapse_info_estudiante">
+                <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #f0f0f0;">
+                    <div style="padding:10px 14px;border-right:1px solid #f0f0f0;">
+                        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#999;font-weight:600;margin-bottom:2px;">
+                            <i data-feather="award" style="width:10px;height:10px;color:var(--verde);"></i> Carrera
+                        </div>
+                        <div style="font-size:13px;font-weight:700;color:var(--azul);">{{ $estudiante->carrera }}</div>
+                    </div>
+                    <div style="padding:10px 14px;">
+                        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#999;font-weight:600;margin-bottom:2px;">
+                            <i data-feather="map-pin" style="width:10px;height:10px;color:var(--verde);"></i> Sede
+                        </div>
+                        <div style="font-size:13px;font-weight:700;color:var(--azul);">{{ $estudiante->sede }}</div>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;">
+                    <div style="padding:10px 14px;border-right:1px solid #f0f0f0;">
+                        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#999;font-weight:600;margin-bottom:2px;">
+                            <i data-feather="calendar" style="width:10px;height:10px;color:var(--amarillo);"></i> Periodo
+                        </div>
+                        <div style="font-size:13px;font-weight:700;color:var(--azul);">{{ $estudiante->periodo_academico }}</div>
+                    </div>
+                    <div style="padding:10px 14px;border-right:1px solid #f0f0f0;">
+                        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#999;font-weight:600;margin-bottom:2px;">
+                            <i data-feather="layers" style="width:10px;height:10px;color:var(--amarillo);"></i> Sección
+                        </div>
+                        <div style="font-size:13px;font-weight:700;color:var(--azul);">{{ $estudiante->etiqueta_seccion }}</div>
+                    </div>
+                    <div style="padding:10px 14px;">
+                        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#999;font-weight:600;margin-bottom:2px;">
+                            <i data-feather="clock" style="width:10px;height:10px;color:var(--amarillo);"></i> Jornada
+                        </div>
+                        <div style="font-size:13px;font-weight:700;color:var(--azul);">{{ $estudiante->id_jornada_modular }}{{ $estudiante->numero_rotacion }}</div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card amarillo h-100">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <div class="stat-label mb-1"><i data-feather="hash" style="width:13px;height:13px;"></i> N° Registro</div>
-                        <div class="stat-value">{{ $estudiante->numero_registro_asignado }}</div>
-                    </div>
-                </div>
-            </div>
+            {{-- Toggle saldo --}}
+            <button class="btn w-100 d-flex justify-content-between align-items-center px-3 py-2"
+                data-bs-toggle="collapse" data-bs-target="#collapse_saldo_mobile"
+                style="background:#fffbea;border:none;border-top:1px solid #f0e68c;border-radius:0;font-size:12px;font-weight:700;color:var(--azul);">
+                <span><i data-feather="dollar-sign" style="width:13px;height:13px;"></i> Saldo</span>
+                <i data-feather="chevron-down" style="width:14px;height:14px;transform:rotate(-90deg);" id="ico_saldo"></i>
+            </button>
 
-            <div class="col-md-4 col-sm-6">
-                <div class="card stat-card verde h-100">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <div class="stat-label mb-1"><i data-feather="award" style="width:13px;height:13px;"></i> Carrera</div>
-                        <div class="stat-value" style="font-size:14px;">{{ $estudiante->carrera }}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card azul h-100">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <div class="stat-label mb-1"><i data-feather="map-pin" style="width:13px;height:13px;"></i> Sede</div>
-                        <div class="stat-value" style="font-size:14px;">{{ $estudiante->sede }}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card amarillo h-100">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <div class="stat-label mb-1"><i data-feather="calendar" style="width:13px;height:13px;"></i> Periodo</div>
-                        <div class="stat-value" style="font-size:16px;">{{ $estudiante->periodo_academico }}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card verde h-100">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <div class="stat-label mb-1"><i data-feather="layers" style="width:13px;height:13px;"></i> Sección</div>
-                        <div class="stat-value" style="font-size:16px;">{{ $estudiante->etiqueta_seccion }}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card azul h-100">
-                    <div class="card-body d-flex flex-column justify-content-center">
-                        <div class="stat-label mb-1"><i data-feather="clock" style="width:13px;height:13px;"></i> Jornada Modular</div>
-                        <div class="stat-value" style="font-size:16px;">{{ $estudiante->id_jornada_modular }}{{ $estudiante->numero_rotacion }}</div>
+            <div class="collapse" id="collapse_saldo_mobile">
+                <div style="background:#f8f9fa;padding:8px 14px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+                        @foreach ($saldo as $saldorow)
+                            <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:6px;padding:5px 10px;border:1px solid #eee;">
+                                <span style="font-size:10px;color:#777;">{{ $saldorow['descripcionmonto'] }}</span>
+                                <span style="font-size:12px;font-weight:700;color:var(--azul);">L.{{ number_format($saldorow['monto'], 2) }}</span>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+</div>
 
-    <div class="col-lg-3">
-        <div class="card h-100">
-            <div class="card-header bg-amarillo text-white py-2">
-                <h6 class="mb-0 d-flex align-items-center gap-2" style="color: var(--azul);">
-                    <i data-feather="dollar-sign" style="width:15px;height:15px;color: var(--azul);"></i> SALDO
-                </h6>
+{{-- ============================================================ --}}
+{{-- CARD DESKTOP — solo lg+                                        --}}
+{{-- ============================================================ --}}
+<div class="d-none d-lg-block mb-4">
+    <div class="card shadow-sm" style="border:none;border-radius:10px;overflow:hidden;">
+
+        {{-- Fila 1: nombre + registro --}}
+        <div style="background:var(--azul);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;">
+            <div class="d-flex align-items-center gap-3">
+                <i data-feather="user" style="width:20px;height:20px;stroke:#fff;flex-shrink:0;"></i>
+                <span style="color:#fff !important;font-size:17px;font-weight:700;letter-spacing:.3px;">{{ $estudiante->name }}</span>
             </div>
-            <div class="card-body p-0">
-                @foreach ($saldo as $saldorow)
-                    <div class="saldo-row">
-                        <span style="color:#555;font-size:12px;">{{ $saldorow['descripcionmonto'] }}</span>
-                        <span class="monto">L. {{ number_format($saldorow['monto'], 2) }}</span>
+            <span style="background:var(--amarillo);color:var(--azul);font-size:12px;font-weight:700;padding:4px 16px;border-radius:20px;letter-spacing:.5px;">
+                <i data-feather="hash" style="width:11px;height:11px;"></i> {{ $estudiante->numero_registro_asignado }}
+            </span>
+        </div>
+
+        {{-- Fila 2: datos + saldo --}}
+        <div style="background:#fff;padding:0;display:flex;align-items:stretch;overflow-x:auto;">
+
+            {{-- Datos académicos --}}
+            <div style="flex:1;display:flex;align-items:center;justify-content:space-evenly;padding:12px 16px;gap:0;border-right:1px solid #e8edf5;min-width:0;">
+                @php
+                    $items = [
+                        ['icon'=>'award',    'label'=>'Carrera',  'value'=> $estudiante->carrera],
+                        ['icon'=>'map-pin',  'label'=>'Sede',     'value'=> $estudiante->sede],
+                        ['icon'=>'calendar', 'label'=>'Periodo',  'value'=> $estudiante->periodo_academico],
+                        ['icon'=>'layers',   'label'=>'Sección',  'value'=> $estudiante->etiqueta_seccion],
+                        ['icon'=>'clock',    'label'=>'Jornada',  'value'=> $estudiante->id_jornada_modular . $estudiante->numero_rotacion],
+                    ];
+                @endphp
+                @foreach ($items as $i => $item)
+                    @if ($i > 0)
+                        <div style="width:1px;height:32px;background:#e8edf5;flex-shrink:0;margin:0 12px;"></div>
+                    @endif
+                    <div style="flex-shrink:0;">
+                        <div style="font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#aaa;font-weight:600;margin-bottom:3px;white-space:nowrap;">
+                            <i data-feather="{{ $item['icon'] }}" style="width:11px;height:11px;color:var(--verde);"></i> {{ $item['label'] }}
+                        </div>
+                        <div style="font-size:15px;font-weight:700;color:var(--azul);white-space:nowrap;">{{ $item['value'] }}</div>
                     </div>
                 @endforeach
             </div>
+
+            {{-- Saldo 2x2 --}}
+            <div style="flex-shrink:0;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px 16px;align-content:center;">
+                @foreach ($saldo as $saldorow)
+                    @php
+                        $esPagado    = str_contains(strtolower($saldorow['descripcionmonto']), 'pagado');
+                        $esPendiente = str_contains(strtolower($saldorow['descripcionmonto']), 'pendiente');
+                        $colorMonto  = $esPagado ? '#0F6E56' : ($esPendiente ? '#A32D2D' : 'var(--azul)');
+                        $bgCard      = $esPagado ? '#E1F5EE' : ($esPendiente ? '#FCEBEB' : '#f0f4ff');
+                    @endphp
+                    <div style="background:{{ $bgCard }};border-radius:8px;padding:7px 12px;text-align:center;">
+                        <div style="font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#888;font-weight:600;margin-bottom:3px;white-space:nowrap;">{{ $saldorow['descripcionmonto'] }}</div>
+                        <div style="font-size:13px;font-weight:700;color:{{ $colorMonto }};">L. {{ number_format($saldorow['monto'], 2) }}</div>
+                    </div>
+                @endforeach
+            </div>
+
         </div>
     </div>
-
-</div>
+</div>{{-- /card desktop --}}
 
 {{-- ============================================================ --}}
 {{-- TABS: OFERTADOS / MATRICULADOS                                --}}
@@ -458,6 +525,20 @@ table.dataTable thead td {
 
 @push('custom-scripts')
 <script>
+    // Rotar flechas de los colapsables mobile
+    document.getElementById('collapse_info_estudiante').addEventListener('hide.bs.collapse', function () {
+        document.getElementById('ico_info').style.transform = 'rotate(-90deg)';
+    });
+    document.getElementById('collapse_info_estudiante').addEventListener('show.bs.collapse', function () {
+        document.getElementById('ico_info').style.transform = 'rotate(0deg)';
+    });
+    document.getElementById('collapse_saldo_mobile').addEventListener('hide.bs.collapse', function () {
+        document.getElementById('ico_saldo').style.transform = 'rotate(-90deg)';
+    });
+    document.getElementById('collapse_saldo_mobile').addEventListener('show.bs.collapse', function () {
+        document.getElementById('ico_saldo').style.transform = 'rotate(0deg)';
+    });
+
     var table_ofertadas    = null;
     var table_matriculadas = null;
     var id_ofertada        = null;
@@ -486,6 +567,7 @@ table.dataTable thead td {
             language: dtLang,
             pageLength: 25,
             aLengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todo"]],
+            autoWidth: false,
             responsive: true,
             columnDefs: [
                 { responsivePriority: 1,     targets: 1  }, // Asignatura — nunca se oculta
@@ -498,19 +580,15 @@ table.dataTable thead td {
             ]
         };
 
-        // tbl_ofertadas está visible al cargar — se inicializa normalmente
-        table_ofertadas = $('#tbl_ofertadas').DataTable(dtOpts);
+        // Ambas tablas se inicializan al cargar
+        table_ofertadas    = $('#tbl_ofertadas').DataTable(dtOpts);
+        table_matriculadas = $('#tbl_matriculadas').DataTable(dtOpts);
 
-        // tbl_matriculadas está oculta al cargar — se inicializa la primera vez que se abre el tab
+        // Al abrir el tab de matriculadas, solo ajustar anchos (ya está inicializada)
         $('#tabsMatricula button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-            var target = $(e.target).data('bs-target');
-            if (target === '#pane-matriculadas') {
-                if (table_matriculadas === null) {
-                    table_matriculadas = $('#tbl_matriculadas').DataTable(dtOpts);
-                } else {
-                    table_matriculadas.columns.adjust();
-                    table_matriculadas.responsive.recalc();
-                }
+            if ($(e.target).data('bs-target') === '#pane-matriculadas') {
+                table_matriculadas.columns.adjust().draw();
+                table_matriculadas.responsive.recalc();
             }
             feather.replace();
         });
@@ -532,26 +610,27 @@ table.dataTable thead td {
         });
 
         // ── MATRICULAR ─────────────────────────────────────────
-        // rowNumber se toma del TR del botón (no de un click separado en TR)
         $('#tbl_ofertadas').on('click', '.btn_prematricula', function (e) {
             e.stopPropagation();
-            id_ofertada     = $(this).data('id_ofertada');
-            var rowNumber   = table_ofertadas.row($(this).closest('tr')).index();
-            gestionar_matricula(rowNumber);
+            id_ofertada  = $(this).data('id_ofertada');
+            var $clicked = $(this).closest('tr');
+            var $tr      = $clicked.hasClass('child') ? $clicked.prev('tr') : $clicked;
+            gestionar_matricula($tr);
         });
 
         // ── DESMATRICULAR ───────────────────────────────────────
         $('#tbl_matriculadas').on('click', '.btn_desmatricular', function (e) {
             e.stopPropagation();
-            id_ofertada     = $(this).data('id');
-            var rowNumber2  = table_matriculadas.row($(this).closest('tr')).index();
-            gestionar_desmatricular(rowNumber2);
+            id_ofertada  = $(this).data('id');
+            var $clicked = $(this).closest('tr');
+            var $tr      = $clicked.hasClass('child') ? $clicked.prev('tr') : $clicked;
+            gestionar_desmatricular($tr);
         });
 
     });
 
     // ── AJAX MATRICULAR ─────────────────────────────────────────
-    function gestionar_matricula(rowNumber) {
+    function gestionar_matricula($tr) {
         $.ajax({
             url: url_guardar,
             type: 'post',
@@ -563,7 +642,7 @@ table.dataTable thead td {
                     Swal.fire({ icon: 'success', title: '¡Matriculado!', text: data.msgSuccess, timer: 2000, showConfirmButton: false });
                     actualizarContadores(data.conteo_modulos_asignaturas_matriculadas);
                     var row = data.listado_asignaturas_modulos_matriculados[0];
-                    table_ofertadas.row(rowNumber).remove().draw();
+                    table_ofertadas.row($tr).remove().draw();
                     $('#cnt_ofertados_tab').text(table_ofertadas.rows().count());
                     table_matriculadas.row.add([
                         badgePorTipo(row.tipo),
@@ -585,7 +664,7 @@ table.dataTable thead td {
     }
 
     // ── AJAX DESMATRICULAR ──────────────────────────────────────
-    function gestionar_desmatricular(rowNumber2) {
+    function gestionar_desmatricular($tr) {
         Swal.fire({
             title: '¿Cancelar matrícula?',
             text: 'Se quitará la asignatura/módulo de tu matrícula.',
@@ -608,7 +687,7 @@ table.dataTable thead td {
                         Swal.fire({ icon: 'success', title: 'Cancelado', text: data.msgSuccess, timer: 2000, showConfirmButton: false });
                         actualizarContadores(data.conteo_modulos_asignaturas_matriculadas);
                         var row = data.listado_asignaturas_modulos[0];
-                        table_matriculadas.row(rowNumber2).remove().draw();
+                        table_matriculadas.row($tr).remove().draw();
                         table_ofertadas.row.add([
                             badgePorTipo(row.tipo),
                             row.asignatura,

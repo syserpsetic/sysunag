@@ -42,8 +42,17 @@
   .nav-link::before{
     background-color: var(--verde) !important;
   }
-  
+
   .sidebar .sidebar-body .nav .nav-item.active .nav-link .link-icon{
+    color: var(--verdeOscuro) !important;
+  }
+
+  /* Sub-menú: color normal y activo sin morado */
+  .sidebar .sub-menu .nav-item .nav-link {
+    color: var(--gris6) !important;
+  }
+  .sidebar .sub-menu .nav-item .nav-link:hover,
+  .sidebar .sub-menu .nav-item .nav-link.active {
     color: var(--verdeOscuro) !important;
   }
 

@@ -245,6 +245,32 @@ Route::middleware('auth')->group(function () {
         Route::get('/modalidad/docentes/{docenteId}/modulos/{bloqueModuloId}/configuracion', [DocentesController::class, 'verBloqueModuloConfiguracionEvaluacion']);
         Route::post('/docentes/bloques-modulo/configuracion/columnas', [DocentesController::class, 'getBloqueModuloConfiguracionColumnas']);
         Route::post('/docentes/bloques-modulo/configuracion/columnas/guardar', [DocentesController::class, 'guardarBloqueModuloConfiguracionColumnas']);
+        // PPS Evidencia
+        Route::post('/docentes/pps/upload-evidencia',       [DocentesController::class, 'uploadEvidenciaPps']);
+        Route::post('/docentes/pps/guardar-evidencia',      [DocentesController::class, 'guardarEvidenciaPps']);
+        Route::get('/docentes/pps/{id}/evidencia',          [DocentesController::class, 'verEvidenciaPps']);
+        Route::post('/docentes/pps/delete-evidencia-temp',  [DocentesController::class, 'deleteEvidenciaTempPps']);
+        // PPS Evaluación
+        Route::get('/docentes/pps/{tipoAsesor}/{tipoTrabajo}/{numeroRegistro}/{id}/evaluacion', [DocentesController::class, 'evaluacionPps']);
+        Route::post('/docentes/pps/guardar-nota', [DocentesController::class, 'guardarNotaPps']);
+        Route::post('/docentes/pps/upload-file', [DocentesController::class, 'uploadFilePps']);
+        Route::post('/docentes/pps/delete-file-temp', [DocentesController::class, 'deleteFileTempPps']);
+        Route::post('/docentes/pps/{id}/validar-nota', [DocentesController::class, 'validarNotaPps']);
+        Route::post('/asignaturas/pps/observaciones', [DocentesController::class, 'observacionesPps']);
+        Route::get('/docentes/pps/{id}/{numeroRegistroAsignado}/acta', [ReportsController::class, 'reporteActaPPS']);
+        Route::get('/docentes/pps/{id}/{numeroRegistroAsignado}/evaluacion-reporte', [ReportsController::class, 'reporteEvaluacionPPS']);
+
+        // ── SSC ──
+        Route::post('/ssc/upload-informe',               [DocentesController::class, 'ssc_upload_informe']);
+        Route::post('/ssc/informes/archivo/eliminar',    [DocentesController::class, 'ssc_delete_informe_archivo']);
+        Route::get('/ssc/documentos/{filename}',         [DocentesController::class, 'ssc_ver_documento']);
+        Route::post('/ssc/proyectos/estados',                   [DocentesController::class, 'ssc_cerrar_proyecto']);
+        Route::get('/ssc/proyectos/detalleHoras/{id}',          [DocentesController::class, 'ssc_ver_detalle_horas']);
+        Route::post('/ssc/proyectos/detalleHoras/{id}/data',    [DocentesController::class, 'ssc_detalle_horas_data']);
+        Route::post('/ssc/proyectos/detalleHoras/{id}/guardar', [DocentesController::class, 'ssc_detalle_horas_guardar']);
+        Route::get('/ssc/proyectos/informes/{id}',              [DocentesController::class, 'ssc_ver_informes']);
+        Route::post('/ssc/proyectos/informes/{id}/guardar',     [DocentesController::class, 'ssc_informes_guardar']);
+        // ── Fin SSC ──
 
     //Finaliza Docentes
 

@@ -236,7 +236,7 @@
 
                         {{-- Toolbar --}}
                         <div class="acciones-toolbar">
-                            <a class="btn bg-azul btn-sm" href="{{ url('/') }}/docentes/cargaAcademica">
+                            <a class="btn bg-azul btn-sm" id="btnRegresar" href="{{ url('/') }}/docentes/cargaAcademica">
                                 <i data-feather="arrow-left" style="width:15px;height:15px;"></i> Regresar
                             </a>
                             <a class="btn btn-warning btn-sm" id="btnObservaciones">
@@ -318,6 +318,8 @@
             var hot           = null;
             var dataOutput    = null;
             var gradeValidator = null;
+            var hayChangios = false;
+            var navegandoConPermiso = false;
 
             // ─── Columna nota final (no hay recuperacion en módulos) ──────
             var columnaNotaFinal =
@@ -605,6 +607,7 @@
                             },
                             afterChange: function (changes, source) {
                                 if (source === 'loadData') return;
+                                hayChangios = true;
                                 changes.forEach(([row, prop, oldValue, newValue]) => {
                                     if (prop === 'nota' || prop === 'estado_calificacion') return;
 
@@ -632,9 +635,9 @@
                                             if (v !== null && v >= 0 && v <= 100) {
                                                 var tipo    = {{ $row['nota_tipo_evaluacion_' . $i] ?? 'null' }};
                                                 var parcial = {{ $row['nota_parcial_' . $i] ?? 'null' }};
-                                                if (tipo === 1)      totalAcumulativo[parcial - 1] += v;
-                                                else if (tipo === 2) totalEvaluacion [parcial - 1] += v;
-                                                else if (tipo === 3) totalLaboratorio[parcial - 1] += v;
+                                                if (tipo === 1)      totalAcumulativo[parcial - 1] += parseFloat(v);
+                                                else if (tipo === 2) totalEvaluacion [parcial - 1] += parseFloat(v);
+                                                else if (tipo === 3) totalLaboratorio[parcial - 1] += parseFloat(v);
                                                 // tipo 4 (reposicion) no suma al total
                                             }
                                         })();
@@ -690,10 +693,54 @@
                     guardarCalificaciones();
                 });
 
+                // ── Regresar con confirmación SweetAlert2 ──────────────────
+                @if ($tieneAccesoGuardarCalificacionesModulos == 1 && Session::get('id_usuario') == $docenteId)
+                    $('#btnRegresar').on('click', function (e) {
+                        e.preventDefault();
+                        var url = $(this).attr('href');
+                        if (!hayChangios) {
+                            navegandoConPermiso = true;
+                            window.location.href = url;
+                            return;
+                        }
+                        Swal.fire({
+                            title: '¿Desea salir?',
+                            html: 'Tiene cambios sin guardar.<br>¿Qué desea hacer?',
+                            icon: 'warning',
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: 'Guardar y Salir',
+                            denyButtonText: 'Salir sin guardar',
+                            cancelButtonText: 'Cancelar',
+                            confirmButtonColor: '#1ba333',
+                            denyButtonColor: '#6c757d',
+                            customClass: { denyButton: 'text-white' },
+                        }).then(function (result) {
+                            if (result.isConfirmed) {
+                                guardarCalificaciones(function () {
+                                    navegandoConPermiso = true;
+                                    window.location.href = url;
+                                });
+                            } else if (result.isDenied) {
+                                navegandoConPermiso = true;
+                                window.location.href = url;
+                            }
+                        });
+                    });
+
+                    window.addEventListener('beforeunload', function (e) {
+                        if (navegandoConPermiso) return;
+                        guardarCalificaciones();
+                        e.preventDefault();
+                        e.returnValue = '¿Estás seguro?';
+                        return '¿Seguro que desea dejar este sitio?';
+                    });
+                @endif
+
             });
 
             // ─── Guardar calificaciones ───────────────────────────────────
-            function guardarCalificaciones() {
+            function guardarCalificaciones(onSuccessCallback) {
                 espera('Guardando calificaciones...');
                 $.ajax({
                     url: "{{ url('docentes/guardarCalificacionesModulo') }}",
@@ -765,6 +812,7 @@
                     success: function (data) {
                         Swal.close();
                         dataOutput = data;
+                        hayChangios = false;
                         if (dataOutput.msgError != null) {
                             Swal.fire('Error', dataOutput.msgError, 'error');
                         } else {
@@ -786,7 +834,11 @@
                                 $('#divInfoCerrado').addClass('d-none');
                                 $('#divInfoAperturado').removeClass('d-none');
                             }
-                            Swal.fire({ icon: 'success', title: 'Guardado', text: dataOutput.msgSuccess, timer: 2000, showConfirmButton: false });
+                            if (typeof onSuccessCallback === 'function') {
+                                onSuccessCallback();
+                            } else {
+                                Swal.fire({ icon: 'success', title: 'Guardado', text: dataOutput.msgSuccess, timer: 2000, showConfirmButton: false });
+                            }
                         }
                     },
                     error: function (xhr) { Swal.close(); console.log(xhr.responseText); }
