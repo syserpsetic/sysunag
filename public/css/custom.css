@@ -47,6 +47,11 @@
     color: var(--verdeOscuro) !important;
   }
 
+  .sidebar .sidebar-body .nav .nav-item:hover .nav-link .link-icon {
+    color: var(--verde) !important;
+    fill: rgba(27, 163, 51, 0.15) !important;
+  }
+
   /* Sub-menú: color normal y activo sin morado */
   .sidebar .sub-menu .nav-item .nav-link {
     color: var(--gris6) !important;
