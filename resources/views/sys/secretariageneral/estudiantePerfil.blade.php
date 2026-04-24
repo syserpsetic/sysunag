@@ -54,7 +54,19 @@
 </style>
 
 @php 
+    // EVALUACIÓN DE BLOQUEO MAESTRO: Si ya se graduó O si la fecha del proceso ya caducó
     $esta_graduado = (isset($graduado) && $graduado != null);
+    
+    $proceso_vencido = false;
+    if(isset($proceso['fecha_final_proceso'])) {
+        // Asumimos formato YYYY-MM-DD
+        $fecha_limite = strtotime($proceso['fecha_final_proceso'] . ' 23:59:59');
+        if(time() > $fecha_limite) {
+            $proceso_vencido = true;
+        }
+    }
+    
+    $bloquear_edicion = ($esta_graduado || $proceso_vencido);
 @endphp
 
 <input type="hidden" id="sys_id_proceso_graduacion" value="{{ $id_proceso_graduacion ?? '' }}">
@@ -149,6 +161,13 @@
                     <label class="tx-11 fw-bolder mb-0 text-uppercase">PERIODO:</label>
                     <p class="text-muted">{{$user['periodo_academico'] ?? ''}}</p>
                 </div>
+                
+                {{-- Alerta visual si el proceso está cerrado --}}
+                @if($bloquear_edicion)
+                <div class="mt-3 alert alert-warning p-2">
+                    <span class="tx-11 fw-bolder text-dark d-block text-center"><i data-feather="lock" style="width: 14px; height: 14px;"></i> EXPEDIENTE CERRADO</span>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -193,7 +212,8 @@
 
                                                         @if(in_array('secretaria_general_validar_documento', $scopes))
                                                             @php
-                                                                $debe_bloquear_checkbox = $es_documento_automatico || $esta_graduado || $falta_permiso_especifico;
+                                                                // Bloqueo del switch incluye $bloquear_edicion
+                                                                $debe_bloquear_checkbox = $es_documento_automatico || $bloquear_edicion || $falta_permiso_especifico;
                                                             @endphp
                                                             
                                                             <div class="form-check form-switch mb-0" data-bs-toggle="tooltip" title="Validar / Cancelar">
@@ -255,7 +275,9 @@
                                                             @endif
                                                         @else
                                                             @php
-                                                                $disabled_btn_archivos = ($esta_graduado || $falta_permiso_especifico) ? 'disabled' : '';
+                                                                // Bloqueo del modal incluye $bloquear_edicion
+                                                                $puede_subir = (!$bloquear_edicion && in_array('estudiante_adjuntar_archivos', $scopes) && !$falta_permiso_especifico) ? 1 : 0;
+                                                                
                                                                 $color_btn_archivos = (isset($documento_actual['es_completado']) && $documento_actual['es_completado'] == 1) ? 'btn-warning' : 'btn-secondary';
                                                                 $title_attr_archivos = (isset($documento_actual['es_completado']) && $documento_actual['es_completado'] == 1) ? 'Ver Archivos' : 'Ver / Añadir Archivos';
                                                             @endphp
@@ -268,14 +290,14 @@
                                                                 data-nombre="{{$documento_actual['nombre']}}"
                                                                 data-obs="{{$documento_actual['observacion'] ?? ''}}"
                                                                 data-estado="{{ isset($documento_actual['es_completado']) ? $documento_actual['es_completado'] : 0 }}" 
-                                                                title="{{ $title_attr_archivos }}"
-                                                                {{ $disabled_btn_archivos }}>
+                                                                data-puede_subir="{{ $puede_subir }}"
+                                                                title="{{ $title_attr_archivos }}">
                                                                 <i data-feather="folder" style="width: 14px; height: 14px; margin-right: 4px;"></i> Archivos
                                                             </button>
                                                         @endif
 
                                                         @if($documento_actual['id_documento'] == 1)
-                                                            <a href="{{ asset('documentos/graduacion/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia">
+                                                            <a href="{{ asset('documentos/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia">
                                                                 <i data-feather="download" style="width: 14px; height: 14px;"></i>
                                                             </a>
                                                         @endif
@@ -466,12 +488,11 @@
                 @if(in_array('secretaria_general_escribir_observacion', $scopes))
                 <div class="mb-3">
                     <label class="form-label fw-bold">Observación (Opcional):</label>
-                    <textarea class="form-control" id="mdl_observacion" rows="3" placeholder="Escriba alguna nota o comentario..." {{ $esta_graduado ? 'disabled' : '' }}></textarea>
+                    <textarea class="form-control" id="mdl_observacion" rows="3" placeholder="Escriba alguna nota o comentario..." {{ $bloquear_edicion ? 'disabled' : '' }}></textarea>
                 </div>
                 @endif
 
-                @if(in_array('estudiante_adjuntar_archivos', $scopes) && !$esta_graduado)
-                <div class="mb-3">
+                <div class="mb-3 d-none" id="zona_subir_archivos">
                     <label class="form-label fw-bold" id="lbl_adjuntar">Adjuntar Archivos Nuevos (Opcional):</label>
                     <div class="file-upload" id="fileUpload">
                         <p class="text-muted m-0"><i data-feather="upload-cloud" class="icon-lg mb-2"></i><br>Arrastra o haz clic para seleccionar archivos</p>
@@ -479,7 +500,6 @@
                     </div>
                     <div id="fileList" class="file-list"></div>
                 </div>
-                @endif
 
                 <div id="contenedor_archivos_existentes" class="mb-2 d-none">
                     <hr>
@@ -490,10 +510,7 @@
             </div>
             <div class="modal-footer bg-light">
                 <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
-                
-                @if(!$esta_graduado && (in_array('secretaria_general_escribir_observacion', $scopes) || in_array('estudiante_adjuntar_archivos', $scopes)))
-                    <button type="button" class="btn btn-primary btn-sm" id="btn_guardar_modal">Guardar Archivos/Notas</button>
-                @endif
+                <button type="button" class="btn btn-primary btn-sm d-none" id="btn_guardar_modal">Guardar Archivos/Notas</button>
             </div>
         </div>
     </div>
@@ -540,7 +557,8 @@
     var btn_activo = true;
     var url_guardar_validacion = "{{url('/secretariageneral/estudiantes/documento/validar')}}"; 
     
-    var esta_graduado_js = {{ $esta_graduado ? 'true' : 'false' }};
+    // JS toma la nueva variable maestra que incluye el bloqueo de fecha
+    var bloquear_edicion_js = {{ $bloquear_edicion ? 'true' : 'false' }};
     var scopes_js = @json($scopes ?? []); 
     
     var es_solvente_admin_js = {{ !empty($es_solvente_administrativo) ? 'true' : 'false' }};
@@ -623,7 +641,7 @@
     });
     
     $('#tbl_documentos_perfil').on('change', '.chk_validar', function () {
-        if(esta_graduado_js) return; 
+        if(bloquear_edicion_js) return; 
 
         var chk = $(this);
         var id_doc = chk.data('id_doc');
@@ -691,6 +709,22 @@
         var nombre = btn.data('nombre');
         var obs = btn.data('obs');
         var estado = btn.data('estado'); 
+        var puede_subir = btn.data('puede_subir'); 
+
+        // LÓGICA PARA MOSTRAR/OCULTAR CAJA DE ARCHIVOS DEPENDIENDO DEL PERMISO
+        if(puede_subir == 1) {
+            $('#zona_subir_archivos').removeClass('d-none');
+            $('#btn_guardar_modal').removeClass('d-none');
+            archivosSeleccionados = [];
+            mostrarListaArchivos();
+        } else {
+            $('#zona_subir_archivos').addClass('d-none');
+            if(!scopes_js.includes('secretaria_general_escribir_observacion')) {
+                $('#btn_guardar_modal').addClass('d-none');
+            } else {
+                $('#btn_guardar_modal').removeClass('d-none');
+            }
+        }
 
         var json_archivos_raw = btn.attr('data-archivos');
         var arr_archivos = [];
@@ -701,18 +735,12 @@
         }
         
         rowNumber = table.row(btn.closest('tr')).index();
-        var tr = btn.closest('tr');
 
         if(!id_sol || id_sol == ''){
             Toast.fire({ icon: 'error', title: 'No hay solicitud activa para este estudiante.' });
             return;
         }
 
-        if(!esta_graduado_js) {
-            archivosSeleccionados = [];
-            mostrarListaArchivos();
-        }
-        
         $('#mdl_id_doc').val(id_doc);
         $('#mdl_id_sol').val(id_sol);
         $('#mdl_nombre_doc').text(nombre);
@@ -728,13 +756,13 @@
 
         if (arr_archivos && arr_archivos.length > 0) {
             $('#contenedor_archivos_existentes').removeClass('d-none');
-            
             var url_base_descarga = "{{ url('/secretariageneral/estudiantes/documento/descargar') }}";
 
             arr_archivos.forEach(function(archivo) {
                 var url_descarga = url_base_descarga + "/" + sys_id_proceso + "/" + id_sol + "/" + id_val + "/" + encodeURIComponent(archivo.nombre);
 
-                var btn_eliminar_html = (esta_graduado_js || !scopes_js.includes('estudiante_adjuntar_archivos')) ? '' : `<button type="button" class="btn btn-danger btn-xs text-white d-flex align-items-center" data-bs-toggle="tooltip" title="Eliminar archivo" onclick="eliminarArchivoExistente(${archivo.id}, this)"><i data-feather="trash-2" class="icon-sm"></i></button>`;
+                // OCULTA EL BOTÓN DE ELIMINAR SI NO TIENE EL PERMISO (puede_subir == 0)
+                var btn_eliminar_html = (puede_subir == 1) ? `<button type="button" class="btn btn-danger btn-xs text-white d-flex align-items-center" data-bs-toggle="tooltip" title="Eliminar archivo" onclick="eliminarArchivoExistente(${archivo.id}, this)"><i data-feather="trash-2" class="icon-sm"></i></button>` : '';
 
                 $('#lista_archivos_existentes').append(`
                     <div class="d-flex justify-content-between align-items-center bg-light border rounded px-3 py-2 mb-2 w-100">
@@ -758,7 +786,7 @@
             $('#contenedor_archivos_existentes').addClass('d-none');
         }
 
-        if(!esta_graduado_js){
+        if(!bloquear_edicion_js){
             if (estado == 1) {
                 $('#btn_guardar_modal').text('Actualizar Archivos/Notas');
             } else {
@@ -883,7 +911,7 @@
     }
 
     $(document).on("click", "#btn_guardar_modal", function () {
-        if(btn_activo && !esta_graduado_js) {
+        if(btn_activo && !bloquear_edicion_js) {
             $('#modal_validar_documento').modal('hide');
             
             const formData = new FormData();
@@ -923,9 +951,9 @@
                 if (respuesta_api.estatus === false || respuesta_api.msgError != null) {
                     ToastLG.fire({
                         icon: 'error',
-                        title: 'Error',
+                        title: respuesta_api.tituloError ? respuesta_api.tituloError : 'Error',
                         html: respuesta_api.msgError,
-                        timer: 3000
+                        timer: 4000
                     });
                     btn_activo = true;
                 } else {
@@ -933,7 +961,7 @@
                         icon: 'success',
                         title: 'Éxito',
                         html: respuesta_api.msgSuccess,
-                        timer: 2000
+                        timer: 3000
                     });
                     
                     if(respuesta_api.id_proceso_graduacion) {
@@ -965,7 +993,7 @@
                         if (tiene_permiso_maestro) {
                             var permiso_requerido = documento_procesado.nombre_permiso_requerido;
                             var falta_permiso_especifico = (permiso_requerido && !scopes_js.includes(permiso_requerido));
-                            var disabled_attr = (es_documento_automatico_js || esta_graduado_js || falta_permiso_especifico) ? 'disabled' : '';
+                            var disabled_attr = (es_documento_automatico_js || bloquear_edicion_js || falta_permiso_especifico) ? 'disabled' : '';
                             var checked_attr = (documento_procesado.es_completado == 1) ? 'checked' : '';
 
                             html_switch = `
@@ -1040,15 +1068,14 @@
                             var btn_class = (documento_procesado.es_completado == 1) ? 'btn-warning' : 'btn-secondary';
                             var title_attr = (documento_procesado.es_completado == 1) ? 'Ver Archivos' : 'Ver / Añadir Archivos';
                             
-                            var disabled_btn_archivos_js = '';
-                            if (tiene_permiso_maestro) {
-                                var permiso_requerido_arch = documento_procesado.nombre_permiso_requerido;
-                                var falta_permiso_arch = (permiso_requerido_arch && !scopes_js.includes(permiso_requerido_arch));
-                                disabled_btn_archivos_js = (esta_graduado_js || falta_permiso_arch) ? 'disabled' : '';
-                            }
+                            var permiso_requerido_arch = documento_procesado.nombre_permiso_requerido;
+                            var falta_permiso_arch = (permiso_requerido_arch && !scopes_js.includes(permiso_requerido_arch));
+                            
+                            // CALCULAMOS SI PUEDE SUBIR DESPUÉS DEL AJAX
+                            var puede_subir_js = (!bloquear_edicion_js && scopes_js.includes('estudiante_adjuntar_archivos') && !falta_permiso_arch) ? 1 : 0;
 
                             boton_accion_principal = `
-                                <button type="button" class="btn ${btn_class} btn-xs btn_abrir_modal d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" data-id_doc="${documento_procesado.id_documento}" data-id_sol="${id_sol}" data-id_val="${documento_procesado.id_validacion}" data-archivos='${string_archivos}' data-nombre="${documento_procesado.nombre}" data-obs="${documento_procesado.observacion || ''}" data-estado="${documento_procesado.es_completado}" title="${title_attr}" ${disabled_btn_archivos_js}>
+                                <button type="button" class="btn ${btn_class} btn-xs btn_abrir_modal d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" data-id_doc="${documento_procesado.id_documento}" data-id_sol="${id_sol}" data-id_val="${documento_procesado.id_validacion}" data-archivos='${string_archivos}' data-nombre="${documento_procesado.nombre}" data-obs="${documento_procesado.observacion || ''}" data-estado="${documento_procesado.es_completado}" data-puede_subir="${puede_subir_js}" title="${title_attr}">
                                     <i data-feather="folder" style="width: 14px; height: 14px; margin-right: 4px;"></i> Archivos
                                 </button>
                             `;
@@ -1056,7 +1083,7 @@
 
                         var btn_constancia_js = '';
                         if (documento_procesado.id_documento == 1) {
-                            btn_constancia_js = `<a href="{{ asset('documentos/graduacion/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia"><i data-feather="download" style="width: 14px; height: 14px;"></i></a>`;
+                            btn_constancia_js = `<a href="{{ asset('documentos/CONSTANCIADEVERIFICACIONDENOMBRE.pdf') }}" download="CONSTANCIA_DE_VERIFICACION_DE_NOMBRE.pdf" class="btn btn-primary btn-xs ms-1 d-inline-flex align-items-center" style="padding: 4px 10px;" data-bs-toggle="tooltip" title="Descargar Constancia"><i data-feather="download" style="width: 14px; height: 14px;"></i></a>`;
                         }
 
                         celda_accion = `

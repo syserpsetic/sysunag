@@ -5,6 +5,10 @@
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+  
+  {{-- LIBRERÍA SELECT2 Y SU TEMA OFICIAL DE BOOTSTRAP 5 --}}
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 @endpush
 
 @section('content')
@@ -113,7 +117,7 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="modal_id_permiso" class="form-label">Permiso Requerido</label>
-                                        <select class="form-select" id="modal_id_permiso">
+                                        <select class="form-select w-100" id="modal_id_permiso">
                                             <option selected disabled value="">Seleccione un permiso...</option>
                                             @if(isset($permisos))
                                                 @foreach($permisos as $p)
@@ -199,6 +203,9 @@
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
   <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+  
+  {{-- SCRIPT DE SELECT2 --}}
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endpush
 
 @push('custom-scripts')
@@ -218,6 +225,15 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+        
+        // Inicializamos el Select2 CON EL TEMA DE BOOTSTRAP 5
+        $('#modal_id_permiso').select2({
+            theme: 'bootstrap-5', // ESTA ES LA CLAVE PARA QUE SE VEA NÍTIDO
+            placeholder: "Buscar permiso...",
+            allowClear: true,
+            width: '100%',
+            dropdownParent: $('#modal_gestion_documento')
         });
 
         table = $('#tbl_documentos').DataTable({
@@ -280,7 +296,10 @@
         id = null; 
         $("#modal_nombre_documento").val("");
         $("#modal_descripcion_documento").val("");
-        $("#modal_id_permiso").val("");
+        
+        // Resetear el valor de Select2 visualmente
+        $("#modal_id_permiso").val("").trigger("change");
+        
         $("#modal_estado_documento").prop("checked", true); 
     });
 
@@ -291,7 +310,10 @@
             id = trigger.data("id");
             $("#modal_nombre_documento").val(trigger.data("nombre"));
             $("#modal_descripcion_documento").val(trigger.data("descripcion"));
-            $("#modal_id_permiso").val(trigger.data("id_permiso"));
+            
+            // Asignar el valor a Select2 y forzar la actualización visual
+            $("#modal_id_permiso").val(trigger.data("id_permiso")).trigger("change");
+            
             var estado = trigger.data("estado");
             $("#modal_estado_documento").prop("checked", (estado == 1 || estado == true || estado == 'true'));
         }

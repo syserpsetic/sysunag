@@ -4,6 +4,7 @@
   <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 @endpush
 
 @section('content')
@@ -13,7 +14,7 @@
             <div class="card-body">
                 <div class="alert alert-dark" role="alert">
                     <h1 class="display-3 d-flex align-items-center">
-                        <i data-feather="users" class="me-3" style="width: 60px; height: 60px;"></i>
+                        <i data-feather="users" class="me-3" width="60" height="60"></i>
                         <strong>ESTUDIANTES ENROLADOS</strong>
                     </h1>
                     <h4 class="lead bg-white">
@@ -48,13 +49,16 @@
                             <h5 class="text-white mb-0">
                                 <i class="text-white icon-lg pb-3px" data-feather="list"></i> Estudiantes
                             </h5>
+                            <button type="button" class="btn btn-success btn-sm font-weight-bold text-white d-inline-flex align-items-center" id="btn_exportar_excel">
+                                <i data-feather="download" class="icon-sm me-1 text-white"></i> Exportar a Excel
+                            </button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="jambo_table table table-hover" id="tbl_estudiantes_enrolados" border="1">
+                                <table class="jambo_table table table-hover dt-responsive nowrap w-100" id="tbl_estudiantes_enrolados" border="1">
                                     <thead class="bg-primary">
                                         <tr class="headings">
-                                            <th scope="col" class="text-white">No.Registro</th>
+                                            <th scope="col" class="text-white all">No.Registro</th>
                                             <th scope="col" class="text-white">Identidad</th>
                                             <th scope="col" class="text-white">Nombre Completo</th>
                                             <th scope="col" class="text-white">Carrera</th>
@@ -68,12 +72,11 @@
                                     <tbody>
                                         @if(isset($estudiantes_enrolados) && count($estudiantes_enrolados) > 0)
                                             @foreach ($estudiantes_enrolados as $estudiante_individual)
-                                            <tr style="font-size: small;">
+                                            <tr class="small">
                                                 <td scope="row" class="align-middle fw-bold">{{ $estudiante_individual['numero_registro_asignado'] ?? ($estudiante_individual->numero_registro_asignado ?? '') }}</td>
                                                 <td scope="row" class="align-middle">{{ $estudiante_individual['identidad_estudiante'] ?? ($estudiante_individual->identidad_estudiante ?? '') }}</td>
                                                 <td scope="row" class="align-middle">{{ $estudiante_individual['nombre_completo'] ?? ($estudiante_individual->nombre_completo ?? '') }}</td>
                                                 
-                                                {{-- Columna Carrera en una sola línea y sin negritas --}}
                                                 <td scope="row" class="align-middle text-nowrap">
                                                     {{ $estudiante_individual['id_carrera'] ?? ($estudiante_individual->id_carrera ?? '') }} - {{ $estudiante_individual['nombre_carrera'] ?? ($estudiante_individual->nombre_carrera ?? '') }}
                                                 </td>
@@ -96,11 +99,11 @@
                                                     <br>
                                                     @if($es_completo)
                                                         <span class="badge bg-success text-white mt-1">
-                                                            <i data-feather="check-circle" class="text-white" style="width: 12px; height: 12px; margin-right: 2px;"></i> Completo
+                                                            <i data-feather="check-circle" class="text-white icon-sm me-1"></i> Completo
                                                         </span>
                                                     @else
                                                         <span class="badge bg-warning text-dark mt-1">
-                                                            <i data-feather="clock" class="text-dark" style="width: 12px; height: 12px; margin-right: 2px;"></i> Faltan {{ $faltantes }}
+                                                            <i data-feather="clock" class="text-dark icon-sm me-1"></i> Faltan {{ $faltantes }}
                                                         </span>
                                                     @endif
                                                 </td>
@@ -116,7 +119,7 @@
                                                         <a href="{{ url('secretariageneral/estudiantes/perfil') }}/{{ $estudiante_individual['numero_registro_asignado'] ?? ($estudiante_individual->numero_registro_asignado ?? '') }}" 
                                                         class="btn btn-info btn-xs text-dark fw-bold d-inline-flex align-items-center" 
                                                         title="Verificar Documentación">
-                                                            <i data-feather="check-square" style="width: 14px; height: 14px; margin-right: 4px;"></i> Verificar Documentación
+                                                            <i data-feather="check-square" class="icon-sm me-1"></i> Verificar Documentación
                                                         </a>
                                                     @endif
                                                 </td>
@@ -139,6 +142,8 @@
   <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
   <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 @endpush
 
 @push('custom-scripts')
@@ -157,6 +162,7 @@
         });
 
         tabla_estudiantes_enrolados = $('#tbl_estudiantes_enrolados').DataTable({
+            responsive: true,
             "aLengthMenu": [
                 [10, 30, 50, 100,-1],
                 [10, 30, 50, 100,"Todo"]
@@ -184,6 +190,41 @@
                     sortDescending: ": Activar para ordenar la columna de manera descendente"
                 }
             }
+        });
+
+        $('#btn_exportar_excel').on('click', function() {
+            var datosCrudos = tabla_estudiantes_enrolados.rows({ search: 'applied' }).data().toArray();
+            var datosParaExcel = [];
+            
+            var nombre_proceso_excel = "{{ $proceso['nombre_proceso'] ?? '' }}";
+            
+            datosParaExcel.push([
+                "No.Registro", "Identidad", "Nombre Completo", "Proceso", 
+                "Carrera", "Sexo", "Fecha Solicitud", 
+                "Expediente (Validados / Requeridos)", "Estado"
+            ]);
+
+            datosCrudos.forEach(function(fila) {
+                var filaLimpia = [];
+                for(var i = 0; i <= 7; i++) {
+                    var divTemporal = document.createElement("div");
+                    divTemporal.innerHTML = fila[i];
+                    var textoCelda = divTemporal.textContent || divTemporal.innerText || "";
+                    
+                    textoCelda = textoCelda.replace(/\s+/g, ' ').trim();
+                    filaLimpia.push(textoCelda);
+                    
+                    if(i === 2) {
+                        filaLimpia.push(nombre_proceso_excel);
+                    }
+                }
+                datosParaExcel.push(filaLimpia);
+            });
+
+            var libro_trabajo = XLSX.utils.book_new();
+            var hoja_calculo = XLSX.utils.aoa_to_sheet(datosParaExcel);
+            XLSX.utils.book_append_sheet(libro_trabajo, hoja_calculo, "Estudiantes");
+            XLSX.writeFile(libro_trabajo, "Listado_Estudiantes_Enrolados.xlsx");
         });
 
         $('#tbl_estudiantes_enrolados').each(function() {
