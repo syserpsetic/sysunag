@@ -179,6 +179,10 @@ public function guardar_aca_seccion_comentario(Request $request)
 
         $data = $response->json();
 
+        $tokenString = substr(session('token'), 7);
+        $payload = json_decode(base64_decode(explode('.', $tokenString)[1]), true);
+        $currentUserId = (int)($payload['sub'] ?? 0);
+
         return view('sys.docentes.calificacionesModuloNuevaModalidad', [
             'modulos_list'                           => $data['modulos_list'],
             'bloqueModuloId'                         => $data['bloqueModuloId'],
@@ -186,6 +190,7 @@ public function guardar_aca_seccion_comentario(Request $request)
             'tieneAccesoGuardarCalificacionesModulos' => $data['tieneAccesoGuardarCalificacionesModulos'],
             'modulo_back'                            => $data['modulo_back'],
             'scopes'                                 => $data['scopes'],
+            'currentUserId'                          => $currentUserId,
         ]);
     }
 

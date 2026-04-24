@@ -246,7 +246,7 @@
                                href="{{ url('/docentes/' . $row['id_empleado'] . '/modulos/' . $row['id_bloque_modulo'] . '/calificaciones/' . $row['id_modulo'] . '/cuadro') }}">
                                 <i data-feather="file-text" style="width:15px;height:15px;"></i> Cuadro PDF
                             </a>
-                            @if ($tieneAccesoGuardarCalificacionesModulos == 1 && Session::get('id_usuario') == $docenteId)
+                            @if ($tieneAccesoGuardarCalificacionesModulos == 1 && $currentUserId == $docenteId)
                                 <a class="btn bg-azul btn-sm" id="btnGuardarCalificaciones">
                                     <i data-feather="save" style="width:15px;height:15px;"></i> Guardar
                                 </a>
@@ -407,7 +407,7 @@
                                 @if ($row['nota_nombre_1'] != null)
                                 {
                                     data: 'nota_1', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_1'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_1'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -418,7 +418,7 @@
                                 @if ($row['nota_nombre_2'] != null)
                                 {
                                     data: 'nota_2', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_2'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_2'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -429,7 +429,7 @@
                                 @if ($row['nota_nombre_3'] != null)
                                 {
                                     data: 'nota_3', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_3'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_3'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -440,7 +440,7 @@
                                 @if ($row['nota_nombre_4'] != null)
                                 {
                                     data: 'nota_4', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_4'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_4'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -451,7 +451,7 @@
                                 @if ($row['nota_nombre_5'] != null)
                                 {
                                     data: 'nota_5', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_5'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_5'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -462,7 +462,7 @@
                                 @if ($row['nota_nombre_6'] != null)
                                 {
                                     data: 'nota_6', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_6'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_6'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -473,7 +473,7 @@
                                 @if ($row['nota_nombre_7'] != null)
                                 {
                                     data: 'nota_7', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_7'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_7'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -484,7 +484,7 @@
                                 @if ($row['nota_nombre_8'] != null)
                                 {
                                     data: 'nota_8', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_8'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_8'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -495,7 +495,7 @@
                                 @if ($row['nota_nombre_9'] != null)
                                 {
                                     data: 'nota_9', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_9'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_9'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -506,7 +506,7 @@
                                 @if ($row['nota_nombre_10'] != null)
                                 {
                                     data: 'nota_10', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_10'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_10'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -517,7 +517,7 @@
                                 @if ($row['nota_nombre_11'] != null)
                                 {
                                     data: 'nota_11', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_11'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_11'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -528,7 +528,7 @@
                                 @if ($row['nota_nombre_12'] != null)
                                 {
                                     data: 'nota_12', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_12'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_12'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -539,7 +539,7 @@
                                 @if ($row['nota_nombre_13'] != null)
                                 {
                                     data: 'nota_13', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_13'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_13'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -550,7 +550,7 @@
                                 @if ($row['nota_nombre_14'] != null)
                                 {
                                     data: 'nota_14', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_14'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_14'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -561,7 +561,7 @@
                                 @if ($row['nota_nombre_15'] != null)
                                 {
                                     data: 'nota_15', type: 'numeric',
-                                    @if (Session::get('id_usuario') != $row['docente_calificador_15'] || $tieneAccesoGuardarCalificacionesModulos != 1)
+                                    @if ($currentUserId != $row['docente_calificador_15'] || $tieneAccesoGuardarCalificacionesModulos != 1)
                                         readOnly: true,
                                     @else
                                         readOnly: false,
@@ -694,7 +694,7 @@
                 });
 
                 // ── Regresar con confirmación SweetAlert2 ──────────────────
-                @if ($tieneAccesoGuardarCalificacionesModulos == 1 && Session::get('id_usuario') == $docenteId)
+                @if ($tieneAccesoGuardarCalificacionesModulos == 1 && $currentUserId == $docenteId)
                     $('#btnRegresar').on('click', function (e) {
                         e.preventDefault();
                         var url = $(this).attr('href');
