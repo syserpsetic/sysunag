@@ -70,6 +70,10 @@ class DocentesController extends Controller
         $asignaturas_list = $encabezado['asignaturas_list'];
         $aca_seccion_comentario_list = $encabezado['aca_seccion_comentario_list'];
 
+        $tokenString = substr(session('token'), 7);
+        $payload = json_decode(base64_decode(explode('.', $tokenString)[1]), true);
+        $currentUserId = (int)($payload['sub'] ?? 0);
+
         return view($vista, [
             "seccionId" => $seccionId,
             "docenteId" => $docenteId,
@@ -80,7 +84,8 @@ class DocentesController extends Controller
             "modulo_back" => $modulo_back,
             "calendario_calificaciones_asignatura" => $calendario_calificaciones_asignatura,
             "calendario_calificaciones_asignatura_segundos_restantes" => $calendario_calificaciones_asignatura_segundos_restantes,
-            "scopes"=> $scopes
+            "scopes"=> $scopes,
+            "currentUserId" => $currentUserId
         ]);
     }
 
