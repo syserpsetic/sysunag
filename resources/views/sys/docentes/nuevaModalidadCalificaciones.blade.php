@@ -17,6 +17,13 @@
 
 
 
+        /* Fila con suma de notas que excede 100 */
+        .htCore td.fila-suma-excedida {
+            background-color: #fde8e8 !important;
+            border-top: 1px solid #dc3545 !important;
+            border-bottom: 1px solid #dc3545 !important;
+        }
+
         /* Ocultar el scroll del clone superior */
         .ht_clone_top .wtHolder {
             overflow-x: hidden !important;
@@ -800,6 +807,8 @@
             var dataOutput = null;
             var gradeValidator = null;
             var txtObservaciones = null;
+            var filasConError = new Set();
+            var _toastErrorTimeout = null;
             var hayChangios = false;
             var navegandoConPermiso = false;
 
@@ -2004,6 +2013,43 @@
                                         100) {
                                         calificacionFinal = null;
                                     }
+
+                                    // Highlight de fila: rojo si suma > 100, limpio si está bien
+                                    var _hot = this, _row = row;
+                                    var _sumaExcedida = (calificacionFinal === null &&
+                                        (totalParcial[0] + totalParcial[1] + totalParcial[2] + totalParcial[3]) > 100);
+                                    setTimeout(function() {
+                                        var numCols = _hot.countCols();
+                                        for (var c = 0; c < numCols; c++) {
+                                            _hot.setCellMeta(_row, c, 'className',
+                                                _sumaExcedida ? 'fila-suma-excedida' : '');
+                                        }
+                                        _hot.render();
+                                        if (_sumaExcedida) {
+                                            filasConError.add(_row + 1);
+                                        } else {
+                                            filasConError.delete(_row + 1);
+                                        }
+                                        clearTimeout(_toastErrorTimeout);
+                                        if (filasConError.size > 0) {
+                                            _toastErrorTimeout = setTimeout(function() {
+                                                var lista = Array.from(filasConError)
+                                                    .sort(function(a, b) { return a - b; })
+                                                    .join(', ');
+                                                var label = filasConError.size > 1 ? 'Filas' : 'Fila';
+                                                Swal.fire({
+                                                    toast: true,
+                                                    position: 'bottom-end',
+                                                    icon: 'warning',
+                                                    title: 'La suma de notas supera 100',
+                                                    text: label + ': ' + lista,
+                                                    showConfirmButton: false,
+                                                    timer: 4000,
+                                                    timerProgressBar: true
+                                                });
+                                            }, 150);
+                                        }
+                                    }, 0);
 
                                     if (idEstadoCalificacionForzado == 0 ||
                                         idEstadoCalificacionForzado == null) {
