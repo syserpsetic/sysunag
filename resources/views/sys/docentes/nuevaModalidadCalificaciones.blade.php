@@ -2014,10 +2014,16 @@
                                         calificacionFinal = null;
                                     }
 
-                                    // Highlight de fila: rojo si suma > 100, limpio si está bien
+                                    // Highlight de fila: rojo si suma > 100 o si alguna celda individual > 100
+                                    var _algunaExcede = [eval1,eval2,eval3,eval4,eval5,eval6,eval7,eval8,
+                                        eval9,eval10,eval11,eval12,eval13,eval14,eval15]
+                                        .some(function(v) {
+                                            return v !== null && v !== '' && !isNaN(parseFloat(v)) && parseFloat(v) > 100;
+                                        });
                                     var _hot = this, _row = row;
                                     var _sumaExcedida = (calificacionFinal === null &&
-                                        (totalParcial[0] + totalParcial[1] + totalParcial[2] + totalParcial[3]) > 100);
+                                        (totalParcial[0] + totalParcial[1] + totalParcial[2] + totalParcial[3]) > 100)
+                                        || _algunaExcede;
                                     setTimeout(function() {
                                         var numCols = _hot.countCols();
                                         for (var c = 0; c < numCols; c++) {
